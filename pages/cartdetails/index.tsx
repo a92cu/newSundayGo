@@ -1,7 +1,8 @@
 import Image from "next/image";
 // import { runSQL } from "../../lib/mysql";
 import Script from "next/script";
-
+import Head from "next/head";
+import HeadMeta from "../../public/js/HeadMeta.js";
 function Header() {
     return (
       <div className="header">
@@ -85,9 +86,9 @@ function CartItem(){
                     <div>$ <span className="price">200</span> </div>
                     <div className="count">
                         {/* <!-- 商品個別+- --> */}
-                        <button className="add">+</button>
-                        <span className="count">1</span>
                         <button className="reduce">-</button>
+                        <span className="count">1</span>
+                        <button className="add">+</button>
                     </div>
                     {/* <!-- 商品個別小計 --> */}
                     <div className="amount"><span className="sub_total">200</span></div>
@@ -109,9 +110,9 @@ function CartItem(){
                     <div>$ <span className="price">300</span> </div>
                     <div className="count">
                         {/* <!-- 商品個別+- --> */}
-                        <button className="add">+</button>
-                        <span className="count">1</span>
                         <button className="reduce">-</button>
+                        <span className="count">1</span>
+                        <button className="add">+</button>
                     </div>
                     {/* <!-- 商品個別小計 --> */}
                     <div className="amount"><span className="sub_total">300</span></div>
@@ -120,6 +121,25 @@ function CartItem(){
                     </div>
                 </div>
             </div>
+            <div className="carTotal">
+            <div>
+                <div>
+                    <span>總金額</span>
+                    <span className="total">0</span>
+                </div>
+                <div>
+                    <span>回饋金</span>
+                    <span className="gold">0</span>
+                </div>
+            </div>
+            <a href="#" >前往結帳</a>
+        </div>
+
+        <div className="continueBtn">
+            <a href="">繼續購物
+                <i className="fa fa-angle-double-right" aria-hidden="true"></i>
+            </a>
+        </div>
         </>
     )
 }
@@ -225,8 +245,11 @@ function Footer() {
 
 export default function CartDetails(){
     return(
-        <>
-            <Script src="/js/cart.js"/>
+        <>  
+            <Head>
+              <HeadMeta />
+              <Script src="/js/cart.js"/>
+            </Head>
             <Header/>
             <CartItem/>
             <HotItem/>
@@ -235,7 +258,7 @@ export default function CartDetails(){
     )
 }
 
-// export async function getStaticPaths(props) {
+    // export async function getStaticPaths(props) {
 //     const sq1 = "SELECT * FROM item";
 //     const data: any = await runSQL(sq1);
 //     const paths = data.map((item) => ({
