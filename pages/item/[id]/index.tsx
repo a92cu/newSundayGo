@@ -1,7 +1,10 @@
-import { useRouter } from "next/router";
+//嵌入img
 import Image from "next/image";
+//引入NEXT內建的script
 import Script from "next/script";
+//lib裡的指令重複使用
 import { runSQL } from "../../../lib/mysql";
+//整理日期格式
 import { format } from "date-fns";
 
 function Calendar({ price, itemId }) {
@@ -198,10 +201,8 @@ function Carousel({ imgList }) {
     </div>
   );
 }
+//ItemPage
 export default function ItemPage(props) {
-  const router = useRouter();
-  const id = router.query.id as string;
-  console.log(props);
   return (
     <>
       <Script src="/js/calendar.js" />
@@ -293,6 +294,10 @@ export default function ItemPage(props) {
     </>
   );
 }
+
+//getStaticPaths是next的內建方法傳入props參數
+//靜態產生頁面去抓所有的item頁面
+//產生73個頁面
 export async function getStaticPaths(props) {
   const sq1 = "SELECT * FROM item";
   const data: any = await runSQL(sq1);
@@ -304,21 +309,22 @@ export async function getStaticPaths(props) {
     fallback: false,
   };
 }
+//頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
   const sq1 = `SELECT * FROM item WHERE itemId = ${params.id}`;
   const sq3 = `SELECT * FROM itemimg WHERE itemId = ${params.id}`;
-  // The value of the `props` key will be
+  // any是沒有定義的意思
   const imgList: any = [];
 
   const data = (await runSQL(sq1))[0];
   const imgListRaw: any = await runSQL(sq3);
-
+//forEach是在轉格式,原本出來是database物件
   imgListRaw.forEach((item: any) => {
     imgList.push({ ...item });
   });
-
+//下面是在轉日期格式
   data.itemListedDate = format(data.itemListedDate, "yyyy-MM-dd");
-
+//把要的資料拿出來
   return {
     props: {
       ...data,

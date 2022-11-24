@@ -11,8 +11,6 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js" />
-      <Script src="/js/company.js" />
-      <Script src="/js/jquery-3.6.0.js" />
       <Script src="/js/itemCountBtn.js" />
       <Head>
         <link
