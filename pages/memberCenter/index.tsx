@@ -117,6 +117,7 @@ export default function Company() {
     return <>
 
         <Header />
+        123
         <Footer />
 
     </>
