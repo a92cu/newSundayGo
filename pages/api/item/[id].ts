@@ -12,7 +12,7 @@ export default async function userHandler(
   switch (method) {
     case "GET":
       try {
-        // 修改商品內容
+        // 取得商品內容
         const sq1 = `SELECT * FROM item WHERE itemId = ${id}`;
         const data = await runSQL(sq1);
         res.status(200).json({ data });
@@ -26,7 +26,7 @@ export default async function userHandler(
         const values = Object.values(req.body)
           .map((i) => (typeof i === "string" ? `"${i}"` : i))
           .join(",");
-        // 修改商品內容
+        // 新增商品內容
         const sq1 = `INSERT INTO item (${keys}) VALUES (${values})`;
         console.log(sq1);
         runSQL(sq1);
@@ -34,7 +34,6 @@ export default async function userHandler(
       } catch (error) {
         res.status(500);
       }
-      // Update or create data in your database
       break;
     case "PUT":
       try {
@@ -47,11 +46,10 @@ export default async function userHandler(
       } catch (error) {
         res.status(500);
       }
-      // Update or create data in your database
       break;
     case "DELETE":
       try {
-        // 修改商品內容
+        // 刪除商品內容
         const sq1 = `DELETE FROM item WHERE itemId = ${id}`;
         console.log(sq1);
         runSQL(sq1);
@@ -59,7 +57,6 @@ export default async function userHandler(
       } catch (error) {
         res.status(500);
       }
-      // Update or create data in your database
       break;
     default:
       res.setHeader("Allow", ["GET", "PUT"]);
