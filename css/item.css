@@ -1,0 +1,10 @@
+.item-container {
+  border: 1px solid #8c5c02;
+  width: 1280px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.item-container > .item-desc {
+    white-space: pre-line;
+}

@@ -1,0 +1,51 @@
+/* 商品數量按鈕的CSS */
+
+.counterBtn p {
+    float:right;
+    list-style-type: none;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border: #F2B704 thin solid;
+    border-radius: 25px;
+    background-color: #fff
+    
+}
+.counterBtn {
+    background-color: red;
+}
+.counterBtn p input {
+    font-size: 30px;
+    width: 100%;
+    height: 100%;
+    outline:none;
+    appearance:none;
+    background:fixed;
+    margin: 0;
+    padding: 0;
+    border: 1px solid transparent;
+    
+}
+
+.addToCarBtn {
+    font-size: 20px;
+    border: 0;
+    background-color: #F2B704;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.addToCarBtn:hover {
+    color: #F2B704;
+    background-color: #fff;
+    border: 2px #F2B704 solid;
+}
+
+.addToCarPrice {
+    font-size: 30px;
+    margin: auto;
+    padding: auto;
+    text-align: center;
+    
+}
