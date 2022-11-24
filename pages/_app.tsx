@@ -5,6 +5,7 @@ import "../css/calendar.css";
 import "../css/itemCountBtn.css";
 import "../css/company.css";
 import "../css/cartdetails.css"
+import "../css/companyUpItem.css";
 import Script from "next/script";
 import Head from "next/head";
 

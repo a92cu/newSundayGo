@@ -1,9 +1,18 @@
 import { useState } from "react";
 import { runSQL } from "../../lib/mysql";
 import { format } from "date-fns";
+import * as R from "ramda";
 
-function MemberOrder({ itemList, imgList }) {
-  const deleteItem = () => {};
+function MemberOrder({ itemList, imgList, setItemList }) {
+  const deleteItem = (itemId) => {
+    if (window.confirm("請確認你要刪除項目") === true) {
+      const newItemList = R.reject(R.propEq("itemId", itemId), itemList);
+      setItemList(newItemList);
+      fetch(`http://localhost:3000/api/item/${itemId}`, {
+        method: "DELETE",
+      });
+    }
+  };
   return (
     <div id="memberOrder" className="tabcontent">
       <div className="setBody">
@@ -48,11 +57,8 @@ function MemberOrder({ itemList, imgList }) {
                         <a href="/companyEdit">編輯</a>
                       </button>{" "}
                       <br />
-                      <button
-                        onClick={() => deleteItem()}
-                        className="companyDelete"
-                      >
-                        刪除
+                      <button >
+                        <a href="#" onClick={() => deleteItem(i.itemId)}>刪除</a>
                       </button>
                     </td>
                   </tr>
@@ -132,6 +138,7 @@ function Account({
 }
 export default function Company(props) {
   const [tab, setTab] = useState("account");
+  const [itemList, setItemList] = useState(props.itemList);
   return (
     <>
       <div className="companyName">
@@ -166,7 +173,11 @@ export default function Company(props) {
         </div>
         {tab === "account" && <Account {...props.company} />}
         {tab === "memberOrder" && (
-          <MemberOrder itemList={props.itemList} imgList={props.imgList} />
+          <MemberOrder
+            setItemList={setItemList}
+            itemList={itemList}
+            imgList={props.imgList}
+          />
         )}
       </div>
     </>
