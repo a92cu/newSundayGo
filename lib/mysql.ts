@@ -14,10 +14,10 @@ export const runSQL = (query) =>
 const connection = mysql.createConnection({
   host:'localhost',
   user: "root",
-  password: "root", //預設phpmyadmin密碼是空值
+  password: "", //預設phpmyadmin密碼是空值
   database: "database", //指定剛剛新增的Mask資料庫
   multipleStatements: true, //新增此項，同時執行兩個語句
-  port:8889,
+  port:3306,
 });
 //連線
 connection.connect(function (error) {
