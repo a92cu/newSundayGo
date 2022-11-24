@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { getItem } from "../../../lib/mysql";
+import Script from "next/script";
+import { runSQL } from "../../../lib/mysql";
 import { format } from "date-fns";
 
 function Calendar({ price, itemId }) {
@@ -200,8 +201,10 @@ function Carousel({ imgList }) {
 export default function ItemPage(props) {
   const router = useRouter();
   const id = router.query.id as string;
+  console.log(props);
   return (
     <>
+      <Script src="/js/calendar.js" />
       <Header />
       <Carousel imgList={props.imgList} />
       <div className="item-container">
@@ -268,6 +271,23 @@ export default function ItemPage(props) {
           </div>
         </div>
       </div>
+      <button
+        onClick={() => {
+          fetch("http://localhost:3000/api/item/1", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json;charset=utf-8",
+            },
+            body: JSON.stringify({
+              itemAddr: "test1",
+              itemPrice: 100,
+              itemTotalStar: 2,
+            }),
+          });
+        }}
+      >
+        {"Test"}
+      </button>
       <br />
       <Footer />
     </>
@@ -275,11 +295,10 @@ export default function ItemPage(props) {
 }
 export async function getStaticPaths(props) {
   const sq1 = "SELECT * FROM item";
-  const data: any = await getItem(sq1);
+  const data: any = await runSQL(sq1);
   const paths = data.map((item) => ({
     params: { id: `${item.itemId}` },
   }));
-
   return {
     paths,
     fallback: false,
@@ -291,8 +310,8 @@ export async function getStaticProps({ params }) {
   // The value of the `props` key will be
   const imgList: any = [];
 
-  const data = (await getItem(sq1))[0];
-  const imgListRaw: any = await getItem(sq3);
+  const data = (await runSQL(sq1))[0];
+  const imgListRaw: any = await runSQL(sq3);
 
   imgListRaw.forEach((item: any) => {
     imgList.push({ ...item });
