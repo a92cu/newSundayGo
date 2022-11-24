@@ -1,7 +1,7 @@
 import mysql from "mysql";
 
 ///取得商品頁面的資料
-export const getItem = (query) =>
+export const runSQL = (query) =>
   new Promise((resolve) => {
     connection.query(query, function (error, rows) {
       if (error) {
