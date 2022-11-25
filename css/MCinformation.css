@@ -459,6 +459,14 @@ select {
     background-size: cover;
 }
 
+.stateRight {
+    border-radius: 10px;
+    border-color: #F29F04;
+    background-color: white;
+    float: right;
+    margin-top: 10px;
+    cursor: pointer;
+}
 .collectHeart {
     border: none;
     background-color: white;

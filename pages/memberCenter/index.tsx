@@ -302,6 +302,7 @@ function MemberOrder() {
               <div className="OrderReadyImg"><img src="./images/商品暫用圖/A02.jpg" /></div>
               <div className="OrderReadyRight">
                 <div className="ORRightName">
+                <button className="stateRight"><b>準備出發</b></button>
                   <h4>台灣宜蘭｜國立傳統藝術中心｜門票、畫舫船遊河券、遊程體驗遊程體驗遊程體驗</h4>
                   <span>訂單編號</span><span>#22KK250156250</span>
                 </div>
@@ -317,6 +318,7 @@ function MemberOrder() {
                 <div className="OrderReadyImg"><img src="./images/商品暫用圖/A02.jpg" /></div>
                 <div className="OrderReadyRight">
                   <div className="ORRightName">
+                  <button className="stateRight"><b>已取消</b></button>
                     <h4>台灣宜蘭｜國立傳統藝術中心｜門票、畫舫船遊河券、遊程體驗遊程體驗遊程體驗</h4>
                     <span>訂單編號</span><span>#22KK250156250</span>
                   </div>
@@ -334,6 +336,7 @@ function MemberOrder() {
                 <div className="OrderReadyImg"><img src="./images/商品暫用圖/A02.jpg" /></div>
                 <div className="OrderReadyRight">
                   <div className="ORRightName">
+                  <button className="stateRight"><b>已出發</b></button>
                     <h4>台灣宜蘭｜國立傳統藝術中心｜門票、畫舫船遊河券、遊程體驗遊程體驗遊程體驗</h4>
                     <span>訂單編號</span><span>#22KK250156250</span>
                   </div>
