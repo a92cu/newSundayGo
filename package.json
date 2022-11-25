@@ -9,7 +9,7 @@
     "@types/ramda": "^0.28.20",
     "cross-env": "^7.0.3",
     "date-fns": "^2.29.3",
-    "flickity": "^3.0.0",
+    "flickity": "^2.3.0",
     "jquery": "^3.6.1",
     "mysql": "^2.18.1",
     "next": "latest",

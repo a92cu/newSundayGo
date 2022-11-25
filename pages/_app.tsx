@@ -14,7 +14,6 @@ import Head from "next/head";
 export default function App({ Component, pageProps }) {
   return (
     <>
-      <Script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js" />
       <Script src="/js/itemCountBtn.js" />
       <Head>
         <link

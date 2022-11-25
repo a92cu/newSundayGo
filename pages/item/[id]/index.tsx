@@ -6,6 +6,8 @@ import Script from "next/script";
 import { runSQL } from "../../../lib/mysql";
 //整理日期格式
 import { format } from "date-fns";
+import Router from "next/router";
+import { useEffect } from "react";
 
 function Calendar({ price, itemId }) {
   return (
@@ -166,8 +168,8 @@ function Header() {
         <a href="#">活動</a>
         <a href="#">住宿</a>
         <a href="#">交通</a>
-        <a href="#">
-          <img src="./images/cart.png" style={{ width: 25 }} />
+        <a onClick={() => Router.push("/cartdetails")}>
+          <img src="/images/cart.png" style={{ width: 25 }} />
         </a>
         <a href="#divOne" className="loginbutton">
           登入|註冊
@@ -184,15 +186,7 @@ function Header() {
 }
 function Carousel({ imgList }) {
   return (
-    <div className="main-carousel" data-flickity='{ "wrapAround": true }'>
-      {/* {props.imgList.map(
-    (i) =>
-      i.itemLead == "1" && (
-        <div className="carousel-cell" key={i.imgId}>
-          <img src={`${i.itemImgUrl}`} alt="" />
-        </div>
-      )
-  )} */}
+    <div className="main-carousel">
       {imgList.map((i) => (
         <div className="carousel-cell" key={i.imgId}>
           <img src={`${i.itemImgUrl}`} alt="" />
@@ -203,7 +197,10 @@ function Carousel({ imgList }) {
 }
 //ItemPage
 export default function ItemPage(props) {
-  console.log(props);
+  useEffect(() => {
+    const Flickity = require("flickity");
+    new Flickity(".main-carousel");
+  }, []);
   return (
     <>
       <Script src="/js/calendar.js" />
