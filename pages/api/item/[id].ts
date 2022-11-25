@@ -27,7 +27,7 @@ export default async function userHandler(
           .map((i) => (typeof i === "string" ? `"${i}"` : i))
           .join(",");
         // 新增商品內容
-        const sq1 = `INSERT INTO item (${keys}) VALUES (${values})`;
+        const sq1 = `INSERT INTO item (${keys},itemId,firmId) VALUES (${values},${id},${id})`;
         console.log(sq1);
         runSQL(sq1);
         res.status(200).json({ message: "ok" });
@@ -38,9 +38,16 @@ export default async function userHandler(
     case "PUT":
       try {
         // 修改商品內容
-        const { itemId, itemAddr, itemPrice, itemTotalStar } = req.body;
-        const sq1 = `UPDATE item SET itemAddr="${itemAddr}",itemPrice=${itemPrice},itemTotalStar=${itemTotalStar} where itemId = ${id}`;
-        console.log(sq1);
+        const keys = Object.keys(req.body);
+        const values = Object.values(req.body).map((i, index) => {
+          return typeof i === "string" ? `"${i}"`.trim() : i;
+        });
+        let query = "";
+        for (let j = 0; j < keys.length; j++) {
+          query =
+            query + keys[j] + "=" + values[j] + (j === keys.length - 1 ? "" : ",");
+        }
+        const sq1 = `UPDATE item SET ${query} where itemId = ${id}`;
         runSQL(sq1);
         res.status(200).json({ message: "ok" });
       } catch (error) {
@@ -51,7 +58,6 @@ export default async function userHandler(
       try {
         // 刪除商品內容
         const sq1 = `DELETE FROM item WHERE itemId = ${id}`;
-        console.log(sq1);
         runSQL(sq1);
         res.status(200).json({ message: "ok" });
       } catch (error) {

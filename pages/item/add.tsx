@@ -1,23 +1,11 @@
-import { format } from "date-fns";
-import { runSQL } from "../../../../lib/mysql";
 import { useState, useEffect } from "react";
-import useFile from "../../../../hook/useFile";
+import useFile from "../../hook/useFile";
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 
 export default function UpdateItemPage(props) {
-  const {
-    itemId,
-    firmId,
-    itemListedDate,
-    itemPeriod,
-    itemSales,
-    itemInvent,
-    itemTotalStar,
-    itemFilter1,
-    itemFilter2,
-    itemFilter3,
-    itemFilter4,
-    imgList,
-  } = props;
   const { image1Url, image2Url, image3Url, changeHandler } = useFile();
   const [itemTitle, setItemTitle] = useState(props.itemTitle);
   const [itemPrice, setItemPrice] = useState(props.itemPrice);
@@ -35,10 +23,10 @@ export default function UpdateItemPage(props) {
     if (index === 1) return image2Url === null ? originUrl : image2Url;
     if (index === 2) return image3Url === null ? originUrl : image3Url;
   };
-  const updateItem = () => {
-    if (window.confirm("請確認是否要修改商品") === true) {
-      fetch(`http://localhost:3000/api/item/${props.itemId}`, {
-        method: "PUT",
+  const uploadItem = () => {
+    if (window.confirm("請確認是否要上傳商品") === true) {
+      fetch(`http://localhost:3000/api/item/${getRandomInt(9999)}`, {
+        method: "POST",
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -46,7 +34,6 @@ export default function UpdateItemPage(props) {
         body: JSON.stringify({
           itemTitle,
           itemPrice,
-          itemTotalStar,
           itemLocation,
           itemInfo,
           itemName,
@@ -55,10 +42,19 @@ export default function UpdateItemPage(props) {
           itemNote,
           itemStartDate,
           itemEndDate,
+          itemListedDate: itemStartDate,
+          itemSales: 0,
+          itemInvent: 0,
+          itemTotalStar: 0,
+          itemFilter1: "",
+          itemFilter2: "",
+          itemFilter3: "",
+          itemFilter4: "",
         }),
       });
     }
   };
+
   return (
     <div
       style={{
@@ -69,17 +65,17 @@ export default function UpdateItemPage(props) {
       }}
     >
       <div>
-        <h1>廠商編輯商品頁面</h1>
+        <h1>廠商上傳商品頁面</h1>
       </div>
       <div className="container">
-        {imgList.map((i, index) => (
+        {[0, 0, 0].map((i, index) => (
           <div>
             <button>刪除</button>
-            <img className="itemImg" src={getUrl(index, i.itemImgUrl)} alt="" />
+            <img className="itemImg" src={getUrl(index, null)} alt="" />
             <br />
             <input
               type="file"
-              onChange={(e) => changeHandler(index, i.imgId, e)}
+              onChange={(e) => changeHandler(index, getRandomInt(9999), e)}
               // onChange={(e) => setImage(index, i.imgId, e.target.files)}
             />
           </div>
@@ -178,7 +174,7 @@ export default function UpdateItemPage(props) {
             <input
               type="submit"
               value="確認修改"
-              onClick={() => updateItem()}
+              onClick={() => uploadItem()}
             />
           </form>
         </div>
@@ -187,37 +183,9 @@ export default function UpdateItemPage(props) {
   );
 }
 
-export async function getStaticPaths(props) {
-  const sq1 = "SELECT * FROM item";
-  const data: any = await runSQL(sq1);
-  const paths = data.map((item) => ({
-    params: { id: `${item.itemId}` },
-  }));
-  return {
-    paths,
-    fallback: false,
-  };
-}
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
-  const id = params.id;
-  const imgList: any = [];
-  const sq1 = `SELECT * FROM item WHERE itemId = ${params.id}`;
-  const sq3 = `SELECT * FROM itemimg WHERE itemId = ${params.id}`;
-  const data = (await runSQL(sq1))[0];
-  const imgListRaw: any = await runSQL(sq3);
-  //forEach是在轉格式,原本出來是database物件
-  imgListRaw.forEach((item: any) => {
-    imgList.push({ ...item });
-  });
-  data.itemListedDate = format(data.itemListedDate, "yyyy-MM-dd");
-  data.itemStartDate = format(data.itemStartDate, "yyyy-MM-dd");
-  data.itemEndDate = format(data.itemEndDate, "yyyy-MM-dd");
-
   return {
-    props: {
-      ...data,
-      imgList,
-    },
+    props: {},
   };
 }
