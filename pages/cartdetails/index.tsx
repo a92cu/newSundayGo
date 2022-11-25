@@ -2,7 +2,7 @@ import Image from "next/image";
 // import { runSQL } from "../../lib/mysql";
 import Script from "next/script";
 import Head from "next/head";
-import HeadMeta from "../../public/js/HeadMeta.js";
+// import HeadMeta from "../../public/js/HeadMeta.js";
 function Header() {
     return (
       <div className="header">
@@ -247,7 +247,7 @@ export default function CartDetails(){
     return(
         <>  
             <Head>
-              <HeadMeta />
+              {/* <HeadMeta /> */}
               <Script src="/js/cart.js"/>
             </Head>
             <Header/>
