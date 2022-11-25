@@ -37,6 +37,42 @@ export default function UpdateItemPage(props) {
   };
   const updateItem = () => {
     if (window.confirm("請確認是否要修改商品") === true) {
+      if (image1Url) {
+        fetch(`http://localhost:3000/api/itemimg/${imgList[0].imgId}`, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            itemImgUrl: image1Url,
+          }),
+        });
+      }
+      if (image2Url) {
+        fetch(`http://localhost:3000/api/itemimg/${imgList[1].imgId}`, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            itemImgUrl: image2Url,
+          }),
+        });
+      }
+      if (image3Url) {
+        fetch(`http://localhost:3000/api/itemimg/${imgList[2].imgId}`, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            itemImgUrl: image3Url,
+          }),
+        });
+      }
       fetch(`http://localhost:3000/api/item/${props.itemId}`, {
         method: "PUT",
         headers: {
@@ -79,7 +115,7 @@ export default function UpdateItemPage(props) {
             <br />
             <input
               type="file"
-              onChange={(e) => changeHandler(index, i.imgId, e)}
+              onChange={(e) => changeHandler(index, e)}
               // onChange={(e) => setImage(index, i.imgId, e.target.files)}
             />
           </div>

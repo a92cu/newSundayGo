@@ -7,7 +7,7 @@ export default function useFile() {
   const [image2Url, setImage2Url] = useState(null);
   const [image3Url, setImage3Url] = useState(null);
 
-  const changeHandler = (index, id, e) => {
+  const changeHandler = (index, e) => {
     const file = e.target.files[0];
     if (index === 0) setFile1(file);
     if (index === 1) setFile2(file);

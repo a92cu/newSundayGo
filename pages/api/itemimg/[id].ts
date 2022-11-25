@@ -13,8 +13,8 @@ export default async function userHandler(
     case "GET":
       try {
         // 取得商品內容
-        const sq1 = `SELECT * FROM item WHERE itemId = "${id}"`;
-        const data = await runSQL(sq1);
+        const sql = `SELECT * FROM itemimg WHERE imgId = "${id}"`;
+        const data = await runSQL(sql);
         res.status(200).json({ data });
       } catch (error) {
         res.status(500);
@@ -27,9 +27,8 @@ export default async function userHandler(
           .map((i) => (typeof i === "string" ? `"${i}"` : i))
           .join(",");
         // 新增商品內容
-        const sq1 = `INSERT INTO item (${keys},itemId,firmId) VALUES (${values},"${id}","${id}")`;
-        console.log(sq1);
-        runSQL(sq1);
+        const sql = `INSERT INTO itemimg (${keys},imgId) VALUES (${values},"${id}")`;
+        runSQL(sql);
         res.status(200).json({ message: "ok" });
       } catch (error) {
         res.status(500);
@@ -47,8 +46,8 @@ export default async function userHandler(
           query =
             query + keys[j] + "=" + values[j] + (j === keys.length - 1 ? "" : ",");
         }
-        const sq1 = `UPDATE item SET ${query} where itemId = "${id}"`;
-        runSQL(sq1);
+        const sql = `UPDATE itemimg SET ${query} where imgId = "${id}"`;
+        runSQL(sql);
         res.status(200).json({ message: "ok" });
       } catch (error) {
         res.status(500);
@@ -57,8 +56,8 @@ export default async function userHandler(
     case "DELETE":
       try {
         // 刪除商品內容
-        const sq1 = `DELETE FROM item WHERE itemId = "${id}"`;
-        runSQL(sq1);
+        const sql = `DELETE FROM itemimg WHERE imgId = "${id}"`;
+        runSQL(sql);
         res.status(200).json({ message: "ok" });
       } catch (error) {
         res.status(500);

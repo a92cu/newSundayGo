@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import useFile from "../../hook/useFile";
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
 
 export default function UpdateItemPage(props) {
   const { image1Url, image2Url, image3Url, changeHandler } = useFile();
@@ -25,7 +22,50 @@ export default function UpdateItemPage(props) {
   };
   const uploadItem = () => {
     if (window.confirm("請確認是否要上傳商品") === true) {
-      fetch(`http://localhost:3000/api/item/${getRandomInt(9999)}`, {
+      const itemId = uuidv4();
+      if (image1Url) {
+        fetch(`http://localhost:3000/api/itemimg/${uuidv4()}`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            itemImgUrl: image1Url,
+            itemId,
+            itemLead: "1",
+          }),
+        });
+      }
+      if (image2Url) {
+        fetch(`http://localhost:3000/api/itemimg/${uuidv4()}`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            itemImgUrl: image2Url,
+            itemId,
+            itemLead: "2",
+          }),
+        });
+      }
+      if (image3Url) {
+        fetch(`http://localhost:3000/api/itemimg/${uuidv4()}`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            itemImgUrl: image3Url,
+            itemId,
+            itemLead: "3",
+          }),
+        });
+      }
+      fetch(`http://localhost:3000/api/item/${itemId}`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -75,8 +115,7 @@ export default function UpdateItemPage(props) {
             <br />
             <input
               type="file"
-              onChange={(e) => changeHandler(index, getRandomInt(9999), e)}
-              // onChange={(e) => setImage(index, i.imgId, e.target.files)}
+              onChange={(e) => changeHandler(index, e)}
             />
           </div>
         ))}

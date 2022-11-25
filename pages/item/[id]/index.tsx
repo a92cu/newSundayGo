@@ -203,6 +203,7 @@ function Carousel({ imgList }) {
 }
 //ItemPage
 export default function ItemPage(props) {
+  console.log(props);
   return (
     <>
       <Script src="/js/calendar.js" />
@@ -311,8 +312,8 @@ export async function getStaticPaths(props) {
 }
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
-  const sq1 = `SELECT * FROM item WHERE itemId = ${params.id}`;
-  const sq3 = `SELECT * FROM itemimg WHERE itemId = ${params.id}`;
+  const sq1 = `SELECT * FROM item WHERE itemId = "${params.id}"`;
+  const sq3 = `SELECT * FROM itemimg WHERE itemId = "${params.id}"`;
   // any是沒有定義的意思
   const imgList: any = [];
 
