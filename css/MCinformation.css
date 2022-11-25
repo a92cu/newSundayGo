@@ -106,15 +106,13 @@ select {
 }
 
 /* 折扣券內容 */
-.discountBody,
-.rebateBody {
+/* .rebateBody
+.discountBody {
     display: none;
     padding: 6px 12px;
-    /* border: 1px solid #ccc; */
     border-top: none;
-    /* background-color: aquamarine; */
 
-}
+} */
 
 /* ***折扣券裡的樣式 *** */
 
@@ -263,7 +261,7 @@ select {
 
 /* 訂單管理內容 */
 .memberOrderBody {
-    display: none;
+    /* display: none; */
     padding: 6px 12px;
     border-top: none;
 
@@ -461,6 +459,14 @@ select {
     background-size: cover;
 }
 
+.stateRight {
+    border-radius: 10px;
+    border-color: #F29F04;
+    background-color: white;
+    float: right;
+    margin-top: 10px;
+    cursor: pointer;
+}
 .collectHeart {
     border: none;
     background-color: white;
