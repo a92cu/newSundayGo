@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Router from "next/router";
 import useFile from "../../hook/useFile";
 
 export default function UpdateItemPage(props) {
@@ -7,6 +8,7 @@ export default function UpdateItemPage(props) {
   const [itemTitle, setItemTitle] = useState(props.itemTitle);
   const [itemPrice, setItemPrice] = useState(props.itemPrice);
   const [itemLocation, setItemLocation] = useState(props.itemLocation);
+  const [itemFilter2, setItemFilter2] = useState(props.itemFilter2);
   const [itemInfo, setItemInfo] = useState(props.itemInfo);
   const [itemName, setItemName] = useState(props.itemName);
   const [itemAddr, setItemAddr] = useState(props.itemAddr);
@@ -87,11 +89,14 @@ export default function UpdateItemPage(props) {
           itemInvent: 0,
           itemTotalStar: 0,
           itemFilter1: "",
-          itemFilter2: "",
+          itemFilter2,
           itemFilter3: "",
           itemFilter4: "",
         }),
       });
+      setTimeout(() => {
+        Router.replace("/company");
+      }, 100);
     }
   };
 
@@ -113,16 +118,13 @@ export default function UpdateItemPage(props) {
             <button>刪除</button>
             <img className="itemImg" src={getUrl(index, null)} alt="" />
             <br />
-            <input
-              type="file"
-              onChange={(e) => changeHandler(index, e)}
-            />
+            <input type="file" onChange={(e) => changeHandler(index, e)} />
           </div>
         ))}
       </div>
       <div className="content">
         <div className="container">
-          <form action="#" onSubmit={() => false}>
+          <form action="javascript:void(0)">
             <label>商品標題:</label>
             <input
               type="text"
@@ -133,8 +135,8 @@ export default function UpdateItemPage(props) {
             <label>商品地區:</label>
             <input
               type="text"
-              value={itemLocation}
-              onChange={(e) => setItemLocation(e.target.value)}
+              value={itemFilter2}
+              onChange={(e) => setItemFilter2(e.target.value)}
             />
             <br />
             <label>商品金額:</label>

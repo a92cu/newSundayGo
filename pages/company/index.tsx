@@ -17,7 +17,7 @@ function MemberOrder({ itemList, imgList, setItemList }) {
     <div id="memberOrder" className="tabcontent">
       <div className="setBody">
         <h2 className="memberOrderH2">訂單管理</h2>
-        <a href="/companyUpItem" className="addCommodity">
+        <a href="/item/add" className="addCommodity">
           +上架新商品
         </a>
         <br />
@@ -31,9 +31,9 @@ function MemberOrder({ itemList, imgList, setItemList }) {
                       <div className="OrderReadyImg">
                         <img
                           src={
-                            imgList.find(
+                            imgList?.find(
                               (j) => j.itemId === i.itemId && j.itemLead == 1
-                            ).itemImgUrl
+                            )?.itemImgUrl ?? ''
                           }
                         />
                       </div>
@@ -54,7 +54,7 @@ function MemberOrder({ itemList, imgList, setItemList }) {
                     </td>
                     <td>
                       <button>
-                        <a href="/companyEdit">編輯</a>
+                        <a href={`/item/${i.itemId}/edit`}>編輯</a>
                       </button>{" "}
                       <br />
                       <button >
@@ -201,6 +201,8 @@ export async function getStaticProps({ params }) {
   });
   itemListRaw.forEach((item: any) => {
     item.itemListedDate = format(item.itemListedDate, "yyyy-MM-dd");
+    item.itemStartDate = format(item.itemStartDate, "yyyy-MM-dd");
+    item.itemEndDate = format(item.itemEndDate, "yyyy-MM-dd");
     itemList.push({ ...item });
   });
   //把要的資料拿出來

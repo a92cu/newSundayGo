@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { runSQL } from "../../../../lib/mysql";
-import { useState, useEffect } from "react";
+import Router from "next/router";
+import { useState } from "react";
 import useFile from "../../../../hook/useFile";
 
 export default function UpdateItemPage(props) {
@@ -13,7 +14,6 @@ export default function UpdateItemPage(props) {
     itemInvent,
     itemTotalStar,
     itemFilter1,
-    itemFilter2,
     itemFilter3,
     itemFilter4,
     imgList,
@@ -21,6 +21,7 @@ export default function UpdateItemPage(props) {
   const { image1Url, image2Url, image3Url, changeHandler } = useFile();
   const [itemTitle, setItemTitle] = useState(props.itemTitle);
   const [itemPrice, setItemPrice] = useState(props.itemPrice);
+  const [itemFilter2, setItemFilter2] = useState(props.itemFilter2);
   const [itemLocation, setItemLocation] = useState(props.itemLocation);
   const [itemInfo, setItemInfo] = useState(props.itemInfo);
   const [itemName, setItemName] = useState(props.itemName);
@@ -80,6 +81,7 @@ export default function UpdateItemPage(props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          itemFilter2,
           itemTitle,
           itemPrice,
           itemTotalStar,
@@ -93,6 +95,7 @@ export default function UpdateItemPage(props) {
           itemEndDate,
         }),
       });
+      Router.replace("/company");
     }
   };
   return (
@@ -123,7 +126,7 @@ export default function UpdateItemPage(props) {
       </div>
       <div className="content">
         <div className="container">
-          <form action="#" onSubmit={() => false}>
+          <form action="javascript:void(0)">
             <label>商品標題:</label>
             <input
               type="text"
@@ -134,8 +137,8 @@ export default function UpdateItemPage(props) {
             <label>商品地區:</label>
             <input
               type="text"
-              value={itemLocation}
-              onChange={(e) => setItemLocation(e.target.value)}
+              value={itemFilter2}
+              onChange={(e) => setItemFilter2(e.target.value)}
             />
             <br />
             <label>商品金額:</label>
@@ -238,8 +241,8 @@ export async function getStaticPaths(props) {
 export async function getStaticProps({ params }) {
   const id = params.id;
   const imgList: any = [];
-  const sq1 = `SELECT * FROM item WHERE itemId = ${params.id}`;
-  const sq3 = `SELECT * FROM itemimg WHERE itemId = ${params.id}`;
+  const sq1 = `SELECT * FROM item WHERE itemId = "${params.id}"`;
+  const sq3 = `SELECT * FROM itemimg WHERE itemId = "${params.id}"`;
   const data = (await runSQL(sq1))[0];
   const imgListRaw: any = await runSQL(sq3);
   //forEach是在轉格式,原本出來是database物件
