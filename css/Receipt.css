@@ -1,0 +1,48 @@
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+.receiptTitle {
+    font-size: 20px;
+    color: #8C5C02;
+    width: 428px;
+    margin: 0 0 0 45px;
+    margin-top: 50px;
+    /* background-color: red; */
+    border: 1px solid hsl(0, 0%, 0%, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+
+}
+
+.receiptTitle>img {
+    width: 80px;
+    vertical-align: middle;
+}
+
+/* .receiptTitle>p {
+    float: left;
+} */
+
+.receiptBody,
+.receiptQR {
+    width: 428px;
+    margin: 0 0 0 45px;
+    border: 1px solid hsl(0, 0%, 0%, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.receiptQR {
+    text-align: center;
+}
+
+.receiptBtn {
+    /* width: 150px; */
+    border: 1px solid hsl(0, 0%, 0%, 0.3);
+    border-radius: 5px;
+    background-color: rgb(255, 255, 0, 0.3);
+    color: #8C5C02;
+    text-decoration: none;
+
+}

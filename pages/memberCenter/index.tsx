@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useState } from 'react';
 import Script from "next/script";
+import 'jquery';
 function Footer() {
   return (
     <div className="footer">
@@ -283,26 +284,26 @@ function SevenDay() {
   )
 }
 
+//訂單管理
 function MemberOrder() {
+  const GoEvaluation = () => {
+    // alert('ok');
+    document.getElementById('id01').style.display = "block";
+  }
+
   return (
+
     <div id="memberOrder" className="tabcontent">
       <div className="setBodyB">
         <h2 className="memberOrderH2">訂單管理</h2>
         <div className="memberOrderBtn" style={{ width: "100% " }}>
-          {/* <div className="memberOrderTab">
-                <button className="memberOrderlinks" onclick="memberOrderOpen(event, 'memberOrderReady')"
-                    id="memberOrderOpen">準備出發</button>
-                <button className="memberOrderlinks" onclick="memberOrderOpen(event, 'memberOrderGo')">已出發</button>
-                <button className="memberOrderlinks"
-                    onclick="memberOrderOpen(event, 'memberOrderCancel')">已取消</button>
-            </div> */}
           <div id="memberOrderReady" className="memberOrderBody">
             {/* 準備出發 */}
             <div className="OrderReadyDiv">
               <div className="OrderReadyImg"><img src="./images/商品暫用圖/A02.jpg" /></div>
               <div className="OrderReadyRight">
                 <div className="ORRightName">
-                <button className="stateRight"><b>準備出發</b></button>
+                  <button className="stateRight"><b>準備出發</b></button>
                   <h4>台灣宜蘭｜國立傳統藝術中心｜門票、畫舫船遊河券、遊程體驗遊程體驗遊程體驗</h4>
                   <span>訂單編號</span><span>#22KK250156250</span>
                 </div>
@@ -318,7 +319,7 @@ function MemberOrder() {
                 <div className="OrderReadyImg"><img src="./images/商品暫用圖/A02.jpg" /></div>
                 <div className="OrderReadyRight">
                   <div className="ORRightName">
-                  <button className="stateRight"><b>已取消</b></button>
+                    <button className="stateRight"><b>已取消</b></button>
                     <h4>台灣宜蘭｜國立傳統藝術中心｜門票、畫舫船遊河券、遊程體驗遊程體驗遊程體驗</h4>
                     <span>訂單編號</span><span>#22KK250156250</span>
                   </div>
@@ -336,54 +337,19 @@ function MemberOrder() {
                 <div className="OrderReadyImg"><img src="./images/商品暫用圖/A02.jpg" /></div>
                 <div className="OrderReadyRight">
                   <div className="ORRightName">
-                  <button className="stateRight"><b>已出發</b></button>
+                    <button className="stateRight"><b>已出發</b></button>
                     <h4>台灣宜蘭｜國立傳統藝術中心｜門票、畫舫船遊河券、遊程體驗遊程體驗遊程體驗</h4>
                     <span>訂單編號</span><span>#22KK250156250</span>
                   </div>
                   <div className="ORRightPrice">TWD<span>100</span></div>
                   <div className="ORRightBtn">
-                    <button id="GoEvaluationBtn">前往評價</button>
+                    <button id="GoEvaluationBtn" onClick={() => GoEvaluation()}>前往評價</button>
                     <button>查看憑證</button>
                   </div>
                 </div>
               </div>
 
             </div>
-            {/* <!-- 前往評價燈箱 -->
-                <div id="id01" className="modal">
-                    <form className="modal-content animate" method="post">
-                        <span id="evaluationX" className="close" title="Close Modal">
-                            &times;
-                        </span>
-                        <p>桃園青埔|Xpark 都會型水生公園門票</p>
-                        <div className="evaluationStar">
-                            <div className="evaluationText"> 本次評價好感度
-                                <span style="color: red;">*</span>
-                                <div className="star">
-                                    <!-- 主體 -->
-                                    <div className="box1">
-                                    </div>
-                                    <div className="box1">
-                                    </div>
-                                    <div className="box1">
-                                    </div>
-                                    <div className="box1">
-                                    </div>
-                                    <div className="box1">
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <p>評論內容</p>
-                        <textarea name="" id="" cols="35" rows="5"></textarea>
-                        <button type="submit" className="evaluationSendBtn">送出</button>
-
-                    </form>
-                </div>
-                <!--前往評價燈箱結束 --> */}
-
-
 
           </div>
         </div>
@@ -392,6 +358,45 @@ function MemberOrder() {
     </div>
 
   );
+}
+
+// 評價
+function Evaluation() {
+  const evaluationX = () => {
+    document.getElementById('id01').style.display = "none";
+  };
+
+  return (<div id="id01" className="modal">
+    <form className="modal-content animate" method="post">
+      <span onClick={() => evaluationX()} id="evaluationX" className="close" title="Close Modal">
+        &times;
+      </span>
+      <p>桃園青埔|Xpark 都會型水生公園門票</p>
+      <div className="evaluationStar">
+        <div className="evaluationText"> 本次評價好感度
+          <span style={{ color: "red" }}>*</span>
+          <div className="star">
+            <div className="box1">
+            </div>
+            <div className="box1">
+            </div>
+            <div className="box1">
+            </div>
+            <div className="box1">
+            </div>
+            <div className="box1">
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <p>評論內容</p>
+      <input type="text" style={{ width: "270px", height: "70px" }} />
+      <button type="submit" className="evaluationSendBtn">送出</button>
+
+    </form>
+  </div>
+  )
 }
 
 // 收藏頁面
@@ -435,7 +440,7 @@ function Collect() {
 export default function MemberCentre(props) {
   const [tab, setTab] = useState('information');
   return <>
-    {/* <Script src="/js/MemberCentre.js" /> */}
+
 
     <Header />
     <div className="MemberCentre">
@@ -476,6 +481,7 @@ export default function MemberCentre(props) {
         </div>
 
       </div>
+
       {tab === "information" && <MemberAccount />}
       {tab === "discount" && <Discount />}
       {tab === "rebate" && <Rebate />}
@@ -483,9 +489,18 @@ export default function MemberCentre(props) {
       {tab === "memberOrder" && <MemberOrder />}
       {tab === "collect" && <Collect />}
 
+      <Evaluation />
+
+
+
     </div>
 
+
     <Footer />
+
+    <Script src="/js/MemberCentre.js" />
+
+
 
   </>
 
