@@ -211,7 +211,7 @@ INSERT INTO `item` (`itemId`, `firmId`, `itemTitle`, `itemPrice`, `itemName`, `i
 CREATE TABLE `itemimg` (
   `imgId` varchar(200) NOT NULL,
   `itemId` varchar(200) NOT NULL,
-  `itemImgUrl` LONGBLOB COLLATE utf16_unicode_ci NOT NULL,
+  `itemImgUrl` LONGBLOB NOT NULL,
   `itemLead` varchar(1) COLLATE utf16_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
 
