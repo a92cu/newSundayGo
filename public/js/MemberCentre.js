@@ -37,21 +37,21 @@
 
 //  **回饋金** 可使用已使用
 
-function rebateOpen(evt, cityName) {
-    var i, rebateBody, rebatelinks;
-    rebateBody = document.getElementsByClassName("rebateBody");
-    for (i = 0; i < rebateBody.length; i++) {
-        rebateBody[i].style.display = "none";
-    }
-    rebatelinks = document.getElementsByClassName("rebatelinks");
-    for (i = 0; i < rebatelinks.length; i++) {
-        rebatelinks[i].className = rebatelinks[i].className.replace(" active", "");
-    }
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-// 預設回饋金打開顯示獲得紀錄
-document.getElementById("rebateOpen").click();
+// function rebateOpen(evt, cityName) {
+//     var i, rebateBody, rebatelinks;
+//     rebateBody = document.getElementsByClassName("rebateBody");
+//     for (i = 0; i < rebateBody.length; i++) {
+//         rebateBody[i].style.display = "none";
+//     }
+//     rebatelinks = document.getElementsByClassName("rebatelinks");
+//     for (i = 0; i < rebatelinks.length; i++) {
+//         rebatelinks[i].className = rebatelinks[i].className.replace(" active", "");
+//     }
+//     document.getElementById(cityName).style.display = "block";
+//     evt.currentTarget.className += " active";
+// }
+// // 預設回饋金打開顯示獲得紀錄
+// document.getElementById("rebateOpen").click();
 
 //  **訂單管理** 三個分頁
 
