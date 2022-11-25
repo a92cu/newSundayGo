@@ -321,6 +321,7 @@ export async function getStaticProps({ params }) {
   const imgListRaw: any = await runSQL(sq3);
   //forEach是在轉格式,原本出來是database物件
   imgListRaw.forEach((item: any) => {
+    item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
     imgList.push({ ...item });
   });
   //下面是在轉日期格式
