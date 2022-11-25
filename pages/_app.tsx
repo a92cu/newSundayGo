@@ -2,12 +2,12 @@ import "../css/header.css";
 import "../css/carousels.css";
 import "../css/item.css";
 import "../css/itemCountBtn.css";
+import "../css/calender.css";
 import "../css/company.css";
 import "../css/cartdetails.css";
 import "../css/companyUpItem.css";
 import "../css/MCinformation.css";
 import "../css/MemberCenter.css";
-import 'react-calendar/dist/Calendar.css';
 import Script from "next/script";
 import Head from "next/head";
 
