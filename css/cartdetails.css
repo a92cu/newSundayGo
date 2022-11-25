@@ -1,4 +1,4 @@
-.container {
+.cartcontainer {
     width: 1280px;
     margin: 0 auto;
     min-height: 450px;
@@ -63,8 +63,8 @@
 .toMoreHot {
     width: 1280px !important;
     margin: 0 auto;
-    height: 250px;
-    font-size: 18px;
+    height: 50px;
+    font-size: 20px;
 }
 
 .toMoreHot .item>a>img {
