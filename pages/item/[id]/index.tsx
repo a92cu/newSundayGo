@@ -7,38 +7,14 @@ import { runSQL } from "../../../lib/mysql";
 //整理日期格式
 import { format } from "date-fns";
 import Router from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import ReactCalendar from "react-calendar";
 
 function Calendar({ price, itemId }) {
+  const [value, onChange] = useState(new Date());
   return (
     <div style={{ display: "flex" }}>
-      <div className="wrapper">
-        <div className="wrapperhead">
-          <div className="icons">
-            <span id="prev" className="material-symbols-rounded">
-              chevron_left
-            </span>
-          </div>
-          <p className="current-date"></p>
-          <div className="icons">
-            <span id="next" className="material-symbols-rounded">
-              chevron_right
-            </span>
-          </div>
-        </div>
-        <div className="calendar">
-          <ul className="weeks">
-            <li>Sun</li>
-            <li>Mon</li>
-            <li>Tue</li>
-            <li>Wed</li>
-            <li>Thu</li>
-            <li>Fri</li>
-            <li>Sat</li>
-          </ul>
-          <ul className="days"></ul>
-        </div>
-      </div>
+      <ReactCalendar onChange={onChange} value={value} />
       <div className="addToCarPrice">
         <p>
           售價:<span id="itemPrice">{price}</span>
@@ -61,7 +37,7 @@ function Calendar({ price, itemId }) {
         <p>
           <button
             className="addToCarBtn"
-            onClick={() => window.addToCar(itemId)}
+            onClick={() => window.addToCar(itemId, format(value, "yyyy-MM-dd"))}
           >
             加入購物車
           </button>
@@ -203,7 +179,6 @@ export default function ItemPage(props) {
   }, []);
   return (
     <>
-      <Script src="/js/calendar.js" />
       <Header />
       <Carousel imgList={props.imgList} />
       <div className="item-container">

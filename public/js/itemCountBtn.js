@@ -22,13 +22,7 @@ function minuser() {
   document.getElementById("itemTotal").innerText = subTotal; //總計
 }
 
-function addToCar(itemId) {
-  const daysTag = document.querySelector(".days");
-  const date = daysTag.querySelector("li.active");
-  const curentDate = document
-    .querySelector(".current-date")
-    .innerText.replace("月", "")
-    .split(" ");
+function addToCar(itemId, date) {
   window.localStorage.setItem(
     "shopcar",
     JSON.stringify({
@@ -36,7 +30,7 @@ function addToCar(itemId) {
       [itemId]: {
         total: document.getElementById("itemTotal").innerText,
         count: document.getElementById("countCar").innerText,
-        date: curentDate[1] + "-" + curentDate[0] + "-" + date.innerText,
+        date,
         itemId,
       },
     })
