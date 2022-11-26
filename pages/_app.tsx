@@ -8,6 +8,8 @@ import "../css/cartdetails.css";
 import "../css/companyUpItem.css";
 import "../css/MCinformation.css";
 import "../css/MemberCenter.css";
+import "../css/login.css";
+
 import Script from "next/script";
 import Head from "next/head";
 
