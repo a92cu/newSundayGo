@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState } from 'react';
 import Script from "next/script";
 import html2canvas from "html2canvas";
+import pdfMake from "pdfMake";
 
 // import React from 'react';
 import { useQRCode } from 'next-qrcode';
@@ -76,8 +77,6 @@ export default function Receipt() {
   return (
     <>
     <ReceiptPage />
-    {/* <Script src="/js/html2canvas.js" /> */}
-    <Script src="/js/pdfmake.js" />
     
     </>
   )
