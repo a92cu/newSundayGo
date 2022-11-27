@@ -118,7 +118,7 @@
 }
 
 /* 右邊顯示的樣式 */
-.tabcontent {
+.tabcontentB {
     overflow: auto;
     /* background-color: #8C5C02; */
     float: left;

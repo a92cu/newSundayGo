@@ -10,7 +10,8 @@ function QRCode() {
     const { Canvas } = useQRCode();  
     return (
       <Canvas
-        text={'https://www.google.com.tw'}
+        // text={'https://www.google.com.tw'}
+        text={'http://localhost:3000/memberCenter'}
         options={{
           level: 'M',
           margin: 3,
