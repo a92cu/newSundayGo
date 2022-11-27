@@ -159,3 +159,8 @@
             return `rgb(${r},${g},${b})`;
         }
 
+// window.openPage=openPage;
+// window.TwoPage=TwoPage;
+// window.ThreePage=ThreePage;
+// window.ForgetPage=ForgetPage;
+// window.ForgetPageTwo=ForgetPageTwo;
