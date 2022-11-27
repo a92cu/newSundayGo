@@ -27,7 +27,7 @@ function QRCode() {
   }
 
 
-export default function CartDetails(){
+export default function Receipt(){
     return(
         <>  
              <div id="downloadReceipt">
