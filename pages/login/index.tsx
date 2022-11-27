@@ -365,6 +365,7 @@ export default function Company() {
         <Header />
         <Login />
         <Footer /> 
+        <Script src="/js/loginPage.js" />
 
 
 </>
