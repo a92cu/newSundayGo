@@ -15,6 +15,7 @@ export default async function userHandler(
         // 取得商品內容
         const sq1 = 'SELECT * FROM `itemimg` Left JOIN `item` ON itemimg.itemId=item.itemId WHERE itemLead=1 ORDER BY item.itemTotalStar DESC LIMIT 10;';
         const data = await runSQL(sq1);
+        console.log(data);
         res.status(200).json({ data });
       } catch (error) {
         res.status(500);
