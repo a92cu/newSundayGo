@@ -32,7 +32,7 @@ const fontstyles = {
     "textAlign": "center",
 }
 const imgstyles = {
-    "width": "280px",
+    "width": "280px" ,
     "height": "180px",
     "padding": "10px",
     "margin": "auto",
@@ -41,24 +41,57 @@ const imgstyles = {
     "objectFit": "cover",
     "objectPosition": "center"
 }
-
 export default function HotItem() {
-    var [HotItemData, setHotItemData] = useState([]);
-    function fetchData() {
+    // var [HotItemData, setHotItemData] = useState([]);
+    var [HotItemDataImg,setHotItemDataImg]=useState([]);
+
+    // function fetchData() {
+    //     return (fetch("/api/cart/HotItem",{next:{revalidate: 10}})
+    //             .then((response) => response.json())
+    //             .then((dataresult) => {
+    //                 // setHotItemData(dataresult.data);
+    //                 dataresult.data.forEach((item) => {
+    //                     // 將圖片從buffer轉碼     
+    //                     var binary="";
+    //                     console.log(item.itemImgUrl)
+    //                     var bytes = new Uint8Array(item.itemImgUrl.data);            
+    //                     for (var len = bytes.byteLength, i = 0; i < len; i++) {                
+    //                         binary += String.fromCharCode(bytes[i]);
+    //                         item.itemImgUrl.data[len]=binary  
+    //                     }
+    //                     setHotItemData( dataresult.data )
+    //                     console.log(binary);
+    //                     }
+    //                   );
+    //                 }
+    //                 ))
+    //         }
+    function fetchDataImgUrl() {
         return (fetch("/api/cart/HotItem",{next:{revalidate: 10}})
-                .then((response) => response.json())
-                .then((dataresult) => 
-                dataresult.data.forEach((item) => {
-                    // console.log(item.itemImgUrl)
-                    item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
-                    // imgList.push({ ...item });
-                    
-                setHotItemData(dataresult.data)})))
-            }
+                .then((response) => response.arrayBuffer())
+                .then((dataresult) => {
+                    let Dataimg=new TextDecoder().decode(dataresult);
+                    console.log(Dataimg);
+                    // var itemResult=[];
+                    // Dataimg.data.forEach((i)=>{
+                    //     itemResult.push(i.itemImgUrl)
+                        
+                    // })
+                    // console.log(itemResult)
+                    // img=Buffer.from(i.itemImgUrl.data).toString('base64');
+                    // let Img=atob(img)
+                    // setHotItemDataImg(imgs);
+                    }
+                    )
+                )
+    }
     // 使用component渲染tsx會有一個問題，在你抓資料的同時他在渲染畫面，導致資料進不去畫面
     // 所以在使用 useEffect 把資料放進 return 的時候，先讓useEffect走setSeconds讓資料跑完
     // 再去跑return
-    useEffect(() => {fetchData(),[]})
+    // useEffect(() => {fetchData()},[])
+    useEffect(() =>{fetchDataImgUrl()},[])
+    // useEffect(() => {setSeconds( fetchData() ,10),[]})
+    // console.log(HotItemData)
     return (
         <>
             <div className="cartcontainer">
