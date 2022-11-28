@@ -119,10 +119,10 @@ function Header() {
 }
 // 帳號設定
 function MemberAccount({
-  userPassword, 
-  userName, 
-  useGender, 
-  userPhone, 
+  userPassword,
+  userName,
+  useGender,
+  userPhone,
   userEmail
 }) {
   return (<div id="information" className="tabcontentB">
@@ -132,7 +132,7 @@ function MemberAccount({
       <br /><br />
       <div className="basic">
         <span>姓名<b>*</b> </span>
-        <input type="text" value={userName}  />
+        <input type="text" value={userName} />
       </div>
       <div className="basic">
         <span>性別</span>
@@ -145,7 +145,7 @@ function MemberAccount({
       <br />
       <div className="basic">
         <span>出生日期</span>
-        <input type="date"/>
+        <input type="date" />
       </div>
       <br />
       <div className="basic">
@@ -407,7 +407,7 @@ function Evaluation() {
 }
 
 // 收藏頁面
-function Collect() {
+function Collect({ itemList, imgList, setItemList }) {
   const collectDelete = () => {
     if (window.confirm("確認要從我的商品移除嗎") === true) {
       console.log('ok');
@@ -422,29 +422,35 @@ function Collect() {
     <div id="collect" className="tabcontentB">
       <div className="setBodyB">
         <h2>我的收藏</h2>
-        <div className="collectDiv">
-          <div className="collectImg"><img src="./images/商品暫用圖/A02.jpg" /></div>
-          <div className="collectRight">
-            <div className="collectName">
-              <button className="collectHeart collectDelete" onClick={() => collectDelete()}><i className="fa fa-heart fa-2x"></i></button>
-              <h3>台中 | 幻覺博物館門票台中 | 幻覺博物館門票台中 | 幻覺博物館門票</h3>
-              <p>
-                位於台中精明商圈，現場提供導覽解說，讓您在每一區都能有完整體驗多主題體驗區，變大變小、萬花筒鏡、閃閃燈光屋、漂浮等，邊玩邊拍照，兼具教育、啟發、創造、娛樂體驗，適合大小朋友一同探索
-              </p>
-              <div className="collectNamePrice">
-                <div className="collectstar">
-                  <img src="./images/1.png" />
-                  <img src="./images/1.png" />
-                  <img src="./images/1.png" />
-                  <img src="./images/1.png" />
-                  <img src="./images/1.png" />
-                  <div>(46)</div>
+        {itemList.map((i) => {
+          // console.log(itemList); // {{},{}}
+          return(
+          <div className="collectDiv">
+            <div className="collectImg"><img src="./images/商品暫用圖/A02.jpg" /></div>
+            <div className="collectRight">
+              <div className="collectName">
+                <button className="collectHeart collectDelete" onClick={() => collectDelete()}><i className="fa fa-heart fa-2x"></i></button>
+                <h3>{i.itemName}</h3>
+                <p>
+                  {i.itemNote}
+                </p>
+                <div className="collectNamePrice">
+                  <div className="collectstar">
+                    <img src="./images/1.png" />
+                    <img src="./images/1.png" />
+                    <img src="./images/1.png" />
+                    <img src="./images/1.png" />
+                    <img src="./images/1.png" />
+                    <div>({i.itemTotalStar})</div>
+                  </div>
+                  <span>TWD<span>{i.itemPrice}</span></span>
                 </div>
-                <span>TWD<span>630</span></span>
               </div>
             </div>
           </div>
-        </div>
+          );
+
+        })}
 
       </div>
 
@@ -457,8 +463,8 @@ function Collect() {
 
 
 export default function MemberCentre(props) {
-  const [tab, setTab] = useState('information');  
-  // const [itemList, setItemList] = useState(props.itemList);
+  const [tab, setTab] = useState('information');
+  const [itemList, setItemList] = useState(props.itemList);
   return <>
     <Header />
     <div className="MemberCentre">
@@ -500,15 +506,19 @@ export default function MemberCentre(props) {
 
       </div>
 
-      {tab === "information" && <MemberAccount {...props.memberCentre}/>}
+      {tab === "information" && <MemberAccount {...props.memberCentre} />}
       {tab === "discount" && <Discount />}
       {tab === "rebate" && <Rebate />}
       {tab === "sevenDay" && <SevenDay />}
       {tab === "memberOrder" && <MemberOrder />}
-      {tab === "collect" && <Collect />}
+      {tab === "collect" &&
+        <Collect
+          setItemList={setItemList}
+          itemList={itemList}
+          imgList={props.imgList} 
+        />}
 
       <Evaluation />
-      {/* <button onClick={() => test()}>test</button> */}
     </div>
     <Footer />
     <Script src="/js/MemberCentre.js" />
@@ -517,36 +527,39 @@ export default function MemberCentre(props) {
 
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
+  // 帳號設定抓的資料 (userBirthday有問題)
   const sq1 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
   // const sq1 = `SELECT * FROM usertable WHERE userId = "u123456789"`;
   // const sq2 = `SELECT * FROM item`;
+  // 我的收藏資料庫抓的
   const sq2 = `SELECT * FROM favorite , item WHERE favorite.itemId = item.itemId AND userId = 'u123456789';`;
   const sq3 = `SELECT * FROM itemimg`;
   // const sq4 = `SELECT * FROM favorite WHERE userId = "u123456789"`;
-  // // any是沒有定義的意思
-  // const imgList: any = [];
-  // const itemList: any = [];
+  // any是沒有定義的意思
+  const imgList: any = [];
+  const itemList: any = [];
 
-  const memberCentre = (await runSQL(sq1))[0];
-  // const itemListRaw: any = await runSQL(sq2);
-  // const imgListRaw: any = await runSQL(sq3);
+  const memberCentre = (await runSQL(sq1))[0]; // 帳號設定抓的資料
+  const itemListRaw: any = await runSQL(sq2); // 我的收藏
+  const imgListRaw: any = await runSQL(sq3); // item的圖片
   // forEach是在轉格式,原本出來是database物件
-  // imgListRaw.forEach((item: any) => {
-  //   item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
-  //   imgList.push({ ...item });
-  // });
-  // itemListRaw.forEach((item: any) => {
-  //   item.itemListedDate = format(item.itemListedDate, "yyyy-MM-dd");
-  //   item.itemStartDate = format(item.itemStartDate, "yyyy-MM-dd");
-  //   item.itemEndDate = format(item.itemEndDate, "yyyy-MM-dd");
-  //   itemList.push({ ...item });
-  // });
+  imgListRaw.forEach((item: any) => {
+    item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
+    imgList.push({ ...item });
+  });
+  itemListRaw.forEach((item: any) => {
+    item.itemListedDate = format(item.itemListedDate, "yyyy-MM-dd");
+    item.itemStartDate = format(item.itemStartDate, "yyyy-MM-dd");
+    item.itemEndDate = format(item.itemEndDate, "yyyy-MM-dd");
+    itemList.push({ ...item });
+  });
   //把要的資料拿出來
   return {
     props: {
+      // 帳號設定抓的資料
       memberCentre: { ...memberCentre },
-      // imgList,
-      // itemList,
+      imgList,
+      itemList,
     },
   };
 }
