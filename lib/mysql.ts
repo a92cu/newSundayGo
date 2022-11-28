@@ -12,8 +12,8 @@ export const runSQL = (query) =>
   });
 
 const connection = mysql.createConnection({
-  host: "localhost",
-  user:"root",
+  host:'localhost',
+  user: "root",
   password: "", //預設phpmyadmin密碼是空值
   database: "database",
   multipleStatements: true,
