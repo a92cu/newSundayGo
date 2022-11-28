@@ -79,7 +79,6 @@ function Footer() {
                         <Image width={20} height={20} src="/images/googlepay.jpg" alt="googlepay" />
                         <Image width={20} height={20} src="/images/apple-pay.png" alt="applepay" />
                     </div>
-
                 </div>
             </div>
         </div>

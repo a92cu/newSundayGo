@@ -63,7 +63,7 @@ export const Placezone = () => {
                             篩選目的地
                             <br />
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" style={{ backgroundColor: 'black' }} />北部
+                                <input type="checkbox" className="allcheck" />北部
                             </button>
                             <div className="panel" >
                                 <input type="checkbox" name="citys" />基隆市
@@ -197,7 +197,7 @@ export const Placezone = () => {
                     {/* <!-- 顯示篩選 --> */}
                     < div className="homerightup" >
                         共篩選出
-                        < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
+                        < span style={{ color: '#F29F04' }}>XX</span>
                         項行程
 
                         <button className="filterBtn" > 55</button>
