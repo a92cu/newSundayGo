@@ -44,7 +44,6 @@ const imgstyles = {
 export default function HotItem() {
     // var [HotItemData, setHotItemData] = useState([]);
     var [HotItemDataImg,setHotItemDataImg]=useState([]);
-
     // function fetchData() {
     //     return (fetch("/api/cart/HotItem",{next:{revalidate: 10}})
     //             .then((response) => response.json())
@@ -68,21 +67,16 @@ export default function HotItem() {
     //         }
     function fetchDataImgUrl() {
         return (fetch("/api/cart/HotItem",{next:{revalidate: 10}})
-                .then((response) => response.arrayBuffer())
+                .then((response) => response.json())
                 .then((dataresult) => {
-                    let Dataimg=new TextDecoder().decode(dataresult);
-                    console.log(Dataimg);
-                    // var itemResult=[];
-                    // Dataimg.data.forEach((i)=>{
-                    //     itemResult.push(i.itemImgUrl)
-                        
-                    // })
-                    // console.log(itemResult)
-                    // img=Buffer.from(i.itemImgUrl.data).toString('base64');
-                    // let Img=atob(img)
-                    // setHotItemDataImg(imgs);
-                    }
-                    )
+                        console.log(dataresult)
+                        dataresult.data.forEach((i)=>{
+                            var img=Buffer.from(i.itemImgUrl).toString('base64');
+                            console.log(img);
+                            var call=Buffer.from(img, 'base64').toString('ascii');
+                            console.log(call);
+                        })
+                    })
                 )
     }
     // 使用component渲染tsx會有一個問題，在你抓資料的同時他在渲染畫面，導致資料進不去畫面
@@ -97,6 +91,7 @@ export default function HotItem() {
             <div className="cartcontainer">
                 <div className="toMoreHot">更多推薦商品</div>
                 {/* <span>{HotItemData.forEach((i)=>{i})}</span> */}
+                <img src="https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_125748/20220103071938_8TSLy/png" alt="hi"/>
                 <OwlCarousel
                     loop={true} // 循環播放
                     nav={false} // 顯示點點
