@@ -11,10 +11,10 @@
         //登入及註冊的切換 */}
 
         function openPage(pageName, elmnt, color) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
+            var i, loginTabContent, tablinks;
+            loginTabContent = document.getElementsByClassName("loginTabContent");
+            for (i = 0; i < loginTabContent.length; i++) {
+                loginTabContent[i].style.display = "none";
             }
             tablinks = document.getElementsByClassName("tablink");
             for (i = 0; i < tablinks.length; i++) {
@@ -29,10 +29,10 @@
 
         //會員的切換
         function TwoPage(pageName,  color) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("Twotabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
+            var i, loginTabContent, tablinks;
+            loginTabContent = document.getElementsByClassName("Twotabcontent");
+            for (i = 0; i < loginTabContent.length; i++) {
+                loginTabContent[i].style.display = "none";
             }
             tablinks = document.getElementsByClassName("Twotablink");
             for (i = 0; i < tablinks.length; i++) {
@@ -48,10 +48,10 @@
 
         ////廠商的切換
         function ThreePage(pageName, elmnt, color) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("Threetabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
+            var i, loginTabContent, tablinks;
+            loginTabContent = document.getElementsByClassName("Threetabcontent");
+            for (i = 0; i < loginTabContent.length; i++) {
+                loginTabContent[i].style.display = "none";
             }
             tablinks = document.getElementsByClassName("Threetablink");
             for (i = 0; i < tablinks.length; i++) {
@@ -69,10 +69,10 @@
             document.getElementById("member").style.opacity = 0;
             //顯示廠商頁面的html
             document.getElementById("company").innerHTML = "<h3>廠商忘記密碼請聯繫總公司!!</h3>";
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("ForgetTabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
+            var i, loginTabContent, tablinks;
+            loginTabContent = document.getElementsByClassName("ForgetTabcontent");
+            for (i = 0; i < loginTabContent.length; i++) {
+                loginTabContent[i].style.display = "none";
             }
             tablinks = document.getElementsByClassName("ForgetTablink");
             for (i = 0; i < tablinks.length; i++) {
@@ -93,10 +93,10 @@
             <img src="/img/icons/checked.png" alt="">
             <h3>臨時密碼已發送至信箱<br>請至信箱內收取密碼並重新登入</h3>
             </div>`;
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("ForgetTabcontentTwo");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
+            var i, loginTabContent, tablinks;
+            loginTabContent = document.getElementsByClassName("ForgetTabcontentTwo");
+            for (i = 0; i < loginTabContent.length; i++) {
+                loginTabContent[i].style.display = "none";
             }
             tablinks = document.getElementsByClassName("ForgetTablinkTwo");
             for (i = 0; i < tablinks.length; i++) {

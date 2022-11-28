@@ -6,7 +6,7 @@ form label {
 }
 
 /* 文字輸入框樣式 */
-input[type=text],
+/* input[type=text],
 textarea {
     width: 1000px;
     padding: 12px;
@@ -16,7 +16,7 @@ textarea {
     margin-top: 6px;
     margin-bottom: 16px;
     resize: vertical;
-}
+} */
 
 /* 輸入框時間的樣式 */
 input[type=datetime-local],

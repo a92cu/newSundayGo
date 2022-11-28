@@ -164,7 +164,7 @@ textarea {
 }
 
 /* 會員登入及註冊的內容 */
-.tabcontent {
+.loginTabContent {
     color: black;
     display: none;
     width: 300px;
