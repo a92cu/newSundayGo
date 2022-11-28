@@ -15,7 +15,7 @@ function Header() {
         <img src="l.png" alt="" style={{ width: '30px' }} />
         <div className="header-right">
           <a href="#contact">登入|註冊</a>
-          {/* <button className="openbtn" onclick="myFunction()">&#9776; </button> */}
+          <button className="openbtn" onClick={() => Function()}>&#9776; </button>
         </div>
       </div>
 
@@ -26,6 +26,7 @@ function Header() {
         <a href="#">住宿</a>
         <a href="#">交通</a>
       </div>
+
     </>
   )
 
@@ -34,10 +35,18 @@ function Header() {
 function Homevideo() {
   return (
     <>
-      {/* <video className="videotest" src="../public/images/taiwan.mp4" loop autoPlay muted width="1440"></video> */}
+      {/* <video className="videotest" src="../public/images/taiwan.mp4" loop autoPlay muted width="1440"></video>
       <div className="table_image">
-        <video className="video-player" src={'./public/images/taiwan.mp4'} ></video>
+        <video className="video-player" src={'/public/images/taiwan.mp4'} ></video>
+      </div> */}
+      <div className="table_image">
+        <video className="video-player" x5-video-player-type="h5" x-webkit-airplay="true" webkit-playsinline="true" loop autoPlay muted  
+        style={{width:'1280px',marginLeft:'100px'}}
+        >
+          <source src={require('/public/images/taiwan.mp4')} type="video/mp4" />
+        </video>
       </div>
+
     </>
   )
 }
@@ -49,7 +58,13 @@ export default function Home() {
       <Homevideo />
 
       <button className="homebtn" type="button"><a href="./homepage">出發吧&gt;&gt;&gt;</a></button>
-
+      <Script src="/js/homepage.js" />
     </>
   )
 };
+
+// export default () => (
+//   <div>
+//     <video src={require('./video.mp4')} />
+//   </div>
+// )
