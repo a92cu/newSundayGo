@@ -9,7 +9,10 @@ import "../css/companyUpItem.css";
 import "../css/MCinformation.css";
 import "../css/MemberCenter.css";
 import "../css/login.css";
-import "../css/Receipt.css";
+import "../css/Receipt.css";import "../css/firstpage.css";
+import "../css/homepage.css";
+import "../css/shopping2.css";
+
 import Script from "next/script";
 import Head from "next/head";
 

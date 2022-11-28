@@ -1,0 +1,338 @@
+/* #main-content {
+    margin: 20px 10px;
+} */
+
+#content {
+    float: right;
+    /* border: 1px solid #aaaaaa; */
+    padding: 15px;
+    /* margin-left: 135px; */
+    /* min-height: 2000px; */
+    /* color: #aaaaaa; */
+    /* width: calc(100% - 215px); */
+}
+
+/* 側邊欄 */
+#sidebar {
+    float: left;
+    width: 200px;
+    color: #333333;
+    will-change: min-height;
+}
+
+/* #sidebar2 {
+    float: left;
+    width: 200px;
+    color: #333333;
+    will-change: min-height;
+}*/
+
+#sidebar .sidebar__inner {
+    border: 2px solid #F29F04;
+    border-radius: 5px;
+    padding: 10px;
+    position: relative;
+    transform: translate(0, 0);
+    transform: translate3d(0, 0, 0);
+    /* will-change: position, transform; */
+}
+
+#sidebar .sidebar__inner2 {
+    border: 2px solid #F29F04;
+    border-radius: 5px;
+    padding: 10px;
+    position: relative;
+    transform: translate(0, 0);
+    transform: translate3d(0, 0, 0);
+    will-change: position, transform;
+    margin-top: 20px;
+}
+
+/* 篩選按鈕 */
+.filterBtn {
+    border: 0;
+    width: 10%;
+    background-color: #FAEF8B;
+    color: #8C5C02;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 5px 0;
+    margin:2px 5px;
+}
+
+.filterBtn:hover {
+    color: #8C5C02;
+    background-color: #F29F04;
+    transform: scale(1.1);
+    /* border: 2px #FAEF8B solid; */
+}
+
+/* .clearfix:after {
+    display: block;
+    content: "";
+    clear: both;
+} */
+
+/* 側邊手風琴 */
+.accordion {
+    background-color: #FFFFFF;
+    color: #444;
+    cursor: pointer;
+    padding: 12px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+
+/* 设置点击和鼠标移到选项上面时（悬停）的样式 */
+.active,
+.accordion:hover {
+    background-color: #FAEF8B;
+}
+
+/* 为手风琴面板设计样式。 默认隐藏 */
+.panel {
+    padding: 0 12px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+/* 设置 +、- 标志 */
+.accordion:after {
+    content: '\142F';
+    /* Unicode 字符 + 号 */
+    /* color: #777; */
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    /* content: "&#711"; */
+    content: '\1431';
+    /* 愛心 */
+    /* content: '\2661'; */
+    /* Unicode 字符 - 号 */
+}
+
+/* .homerightup{
+    float:right;
+} */
+
+/* 商品介紹欄 */
+.homeProduct {
+    border: #F29F04 solid 2px;
+    border-radius: 5px;
+    height: 250px;
+    margin-bottom: 50px;
+    width: 1000px;
+}
+
+.homeProduct:hover {
+    cursor: pointer;
+    /* transform: scale(1.1);
+    transition ; */
+}
+/* 商品標題 */
+.introp{
+    /* float: left; */
+    /* background-color: blue; */
+    font-size: larger;
+}
+
+/* .introp+img{
+    z-index: 20;
+    filter: invert(13%) sepia(69%) saturate(7452%) hue-rotate(343deg) brightness(98%) contrast(108%);
+} */
+/* 愛心icon */
+.introimg{
+    float: right;
+}
+.introimg:hover {
+    filter: invert(13%) sepia(69%) saturate(7452%) hue-rotate(343deg) brightness(98%) contrast(108%);
+
+}
+/* 
+.icno+h3>p::after {
+    content: "\2661";
+} */
+
+/* 商品圖片框 */
+.picPlace {
+    /* width: 33%; */
+
+    width: 300px;
+    /* height: 290px; */
+    height: 240px;
+    /* object-fit: contain; */
+    float: left;
+    /* border: 60px; */
+    /* border-radius: 5px; */
+    margin: 5px 5px;
+    /* background-color: blue; */
+    margin-right: 50px;
+}
+
+/* 商品圖片 */
+.proPic {
+    object-fit: cover;
+    min-height: 100%;
+    max-width: 100%;
+    border-radius: 5px;
+    /* background-color: aqua; */
+    /* width: auto;
+    height: auto; */
+    z-index: 5;
+}
+/* .proPic:hover{
+    transform: scale(1.1);
+    overflow: hidden;
+} */
+
+/* 介紹欄 */
+.iteminfo {
+    /* background-color: red; */
+    white-space: normal;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    line-height: 2;
+    -webkit-line-clamp: 3;
+    max-height: 100px;
+    text-overflow: ellipsis;
+    /* z-index: 20; */
+}
+
+/* 地區標籤位置 */
+.tagplace {
+    float: left;
+    /* margin-right: 50px; */
+    /* margin-left: 50px; */
+    margin: 0 10px;
+}
+
+/* 商品星星 */
+.prostar>img {
+    width: 20px;
+    text-align: end;
+    margin-top: 15px;
+    
+}
+
+/* .prostar img:hover {
+    background-image: url("./_img/1.png");
+} */
+
+/* 價格欄位 */
+.homepri {
+    font-size: larger;
+    font-weight: bolder;
+    width: 100px;
+    float: right;
+    /* background-color: #8C5C02; */
+    text-align: right;
+    /* display: inline-block; */
+    margin-bottom: 15px;
+    margin-right: 5px;
+}
+
+/* 星星 */
+.homestar {
+    transform: scale(0.1);
+}
+
+polygon:hover {
+    fill: red
+}
+
+.star {
+    float: left;
+}
+
+
+
+/* 頁籤 */
+
+
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin-left: 20%;
+}
+
+ul.pagination li {
+    display: inline;
+}
+
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+ul.pagination li a.pagetag {
+    background-color: #F29F04;
+    color: white;
+    border-radius: 5px;
+}
+
+ul.pagination li a:hover:not(.active) {
+    background-color: #F2E204;
+}
+
+/* 台灣 */
+
+
+svg {
+
+    height: 100vh
+}
+
+
+path {
+    position: relative;
+    stroke: white;
+    fill: gray;
+    transition: 0.5s;
+    cursor: pointer;
+
+    transform: translate(-5px, -5px)
+}
+
+path:hover {
+
+    fill: yellow
+}
+
+/* .title_area{
+
+position: absolute;
+right: 20px;
+top: 20px;
+color: white;
+font-size: 25px
+} */
+/* 
+hr {
+
+    width: 100px;
+    margin-left: 0;
+    border: none;
+    border-bottom: solid 2px yellow
+} */
+
+
+/* .forcast h2,
+h4,
+h5 {
+
+    margin: 0
+} */
+.forcast {
+    float: right;
+}
