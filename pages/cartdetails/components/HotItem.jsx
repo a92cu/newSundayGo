@@ -42,38 +42,23 @@ const imgstyles = {
     "objectPosition": "center"
 }
 
-fetch("/api/cart/HotItem")
-    .then((response) => response.json())
-    .then((dataresult) => {
-        dataresult.data.forEach(element => {
-            console.log(element.itemImgUrl.text)
-            console.log(element.itemImgUrl.data)
-            let [_file] = element.itemImgUrl.data;
-            console.log('open file', element.itemImgUrl)
-            console.log('_file', _file);
-            let _url = window.URL.createObjectURL(_file);
-            console.log('_url', _url);
-            console.log(URL.createObjectURL(element.itemImgUrl));
-        })
-    });
-
 export default function HotItem() {
-    // var [HotItemData, setHotItemData] = useState([]);
-    // function fetchData() {
-    //     return (fetch("/api/cart/HotItem",{next:{revalidate: 10}})
-    //             .then((response) => response.json())
-    //             .then((dataresult) => {
-    //                 dataresult.data.forEach(element=>{
-    //                    console.log(element.itemImgUrl);
-    //                 })
-    //             })
-    //             // setHotItemData(dataresult.data))
-    //             )
-    // }
+    var [HotItemData, setHotItemData] = useState([]);
+    function fetchData() {
+        return (fetch("/api/cart/HotItem",{next:{revalidate: 10}})
+                .then((response) => response.json())
+                .then((dataresult) => 
+                dataresult.data.forEach((item) => {
+                    // console.log(item.itemImgUrl)
+                    item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
+                    // imgList.push({ ...item });
+                    
+                setHotItemData(dataresult.data)})))
+            }
     // 使用component渲染tsx會有一個問題，在你抓資料的同時他在渲染畫面，導致資料進不去畫面
     // 所以在使用 useEffect 把資料放進 return 的時候，先讓useEffect走setSeconds讓資料跑完
     // 再去跑return
-    // useEffect(() => {fetchData(),[]})
+    useEffect(() => {fetchData(),[]})
     return (
         <>
             <div className="cartcontainer">
