@@ -19,8 +19,9 @@ export const Placezone = () => {
     // console.log(result.data)
     // const fetcher = (user, page) =>
     //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
-    useEffect(() => {
-        setSeconds( fetchdata(item) ,10)
+    useEffect(() => {setSeconds( fetchdata() ,10),[]})
+        useEffect(() => {
+        // console.log(homepagelist)
         var acc = $(".accordion");
         var i;
 
@@ -206,7 +207,7 @@ export const Placezone = () => {
                     </div >
                     <div id="content" className="content">
                         {/* <!-- 商品顯示主體 --> */}
-                        {/* {homepagelist.map((item, index) => */}
+                        {homepagelist.map((item, index) =>
                             <div className="homeProduct">
                                 {/* <!-- 圖片框 --> */}
                                 <div className="picPlace">
@@ -228,7 +229,7 @@ export const Placezone = () => {
 
                                     {/* 商品標題 */}
                                     <p className="iteminfo">
-                                        {/* {item.itemTitle} */}
+                                        {homepagelist.itemTitle}
 
                                     </p>
                                     {/* <!-- 地區標籤 --> */}
@@ -279,7 +280,7 @@ export const Placezone = () => {
                                 </div>
 
                             </div>
-                      {/* )}   */}
+                       )}    
                     </div>
                 </div >
 
