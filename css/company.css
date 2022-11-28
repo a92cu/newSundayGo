@@ -78,9 +78,10 @@
 }
 
 /* 右邊顯示的樣式 */
-.tabcontent {
+.tabcontentQ {
     /* background-color: #8C5C02; */
     float: left;
+    overflow: auto;
     padding: 0 18px;
     border: 2px solid #ccc;
     border-radius: 10px;
@@ -93,14 +94,14 @@
 
 /* 帳號設定 基本資料 */
 
-.tabcontent h2 {
+.tabcontentQ h2 {
     padding: 10px 12px;
     /* background-color: aqua; */
 }
 
 .setBody {
     /* background-color: lightblue; */
-    /* width: 780px; */
+    width: 780px;
     height: 520px;
     margin: auto;
     /* padding: 10px 12px; */
@@ -186,8 +187,8 @@ select {
 
 }
 
-.OrderReadyImg>img {
-    width: 100%;
+.OrderReadyImgQ>img {
+    width: 200px;
     height: 160px;
     border-radius: 20px;
     display: block;
@@ -236,4 +237,15 @@ select {
     border-radius:5px;
     margin-top: 10px;
 
+}
+.setBody input[type=text],
+textarea {
+    width: 300px;
+    padding: 12px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
 }

@@ -219,33 +219,33 @@ export const Mapselect = () => {
 
         //手風琴
 
-        var acc = $(".accordion");
-        var i;
+        // var acc = $(".accordion");
+        // var i;
 
-        for (i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function () {
-                this.classNameList.toggle("active");
-                var panel = this.nextElementSibling;
-                // console.log(this)
-                if (panel.style.maxHeight) {
-                    panel.style.maxHeight = null;
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                }
-            });
-        }
+        // for (i = 0; i < acc.length; i++) {
+        //     acc[i].addEventListener("click", function () {
+        //         this.classNameList.toggle("active");
+        //         var panel = this.nextElementSibling;
+        //         // console.log(this)
+        //         if (panel.style.maxHeight) {
+        //             panel.style.maxHeight = null;
+        //         } else {
+        //             panel.style.maxHeight = panel.scrollHeight + "px";
+        //         }
+        //     });
+        // }
 
-        $(".allcheck").click(function () {
-            if (this.checked) {
-                $("input[name='citys']").each(function () {
-                    $(this).prop("checked", true)
-                });
-            } else {
-                $("input[name='citys']").each(function () {
-                    $(this).prop("checked", false)
-                })
-            }
-        })
+        // $(".allcheck").click(function () {
+        //     if (this.checked) {
+        //         $("input[name='citys']").each(function () {
+        //             $(this).prop("checked", true)
+        //         });
+        //     } else {
+        //         $("input[name='citys']").each(function () {
+        //             $(this).prop("checked", false)
+        //         })
+        //     }
+        // })
     });
     return (
         <main style={{ width: '1280px', margin: '0 auto' }}>

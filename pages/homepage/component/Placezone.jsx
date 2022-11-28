@@ -21,6 +21,9 @@ export const Placezone = () => {
     //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
     useEffect(() => {setSeconds( fetchdata() ,10),[]})
         useEffect(() => {
+            // $(function (){
+
+            
         // console.log(homepagelist)
         var acc = $(".accordion");
         var i;
@@ -60,7 +63,7 @@ export const Placezone = () => {
                             篩選目的地
                             <br />
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" style={{ backgroundColor: 'black' }} />北部
+                                <input type="checkbox" className="allcheck" />北部
                             </button>
                             <div className="panel" >
                                 <input type="checkbox" name="citys" />基隆市
@@ -194,7 +197,7 @@ export const Placezone = () => {
                     {/* <!-- 顯示篩選 --> */}
                     < div className="homerightup" >
                         共篩選出
-                        < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
+                        < span style={{ color: '#F29F04' }}>XX</span>
                         項行程
 
                         <button className="filterBtn" > 55</button>
@@ -207,7 +210,7 @@ export const Placezone = () => {
                     </div >
                     <div id="content" className="content">
                         {/* <!-- 商品顯示主體 --> */}
-                        {homepagelist.map((item, index) =>
+                        {/* {homepagelist.map((item, index) => */}
                             <div className="homeProduct">
                                 {/* <!-- 圖片框 --> */}
                                 <div className="picPlace">
@@ -229,7 +232,7 @@ export const Placezone = () => {
 
                                     {/* 商品標題 */}
                                     <p className="iteminfo">
-                                        {homepagelist.itemTitle}
+                                        {/* {homepagelist.itemTitle} */}
 
                                     </p>
                                     {/* <!-- 地區標籤 --> */}
@@ -280,7 +283,7 @@ export const Placezone = () => {
                                 </div>
 
                             </div>
-                       )}    
+                       {/* )}     */}
                     </div>
                 </div >
 
@@ -300,5 +303,6 @@ export const Placezone = () => {
             </div >
         </div >
     )
+// })
 }
 export default Placezone;

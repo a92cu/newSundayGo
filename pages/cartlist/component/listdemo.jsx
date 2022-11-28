@@ -46,7 +46,7 @@ export const Listdemo = () => {
                             <div className="cartpanel">
                                 <div className="orderleft">
                                     <p>名字</p>
-                                    <input type="text" name="userName" id="userName" required />
+                                    <input type="text" name="userName" id="CartuserName" required />
                                     <p>地區</p>
                                     <input type="text" />
                                     <p>電子信箱</p>
@@ -56,7 +56,7 @@ export const Listdemo = () => {
                                     <p>姓氏</p>
                                     <input type="text" name="username2" required />
                                     <p>連絡電話</p>
-                                    <input type="tel" name="userPhone" pattern="[0-9]{10}" id="userPhone" required />
+                                    <input type="tel" name="userPhone" pattern="[0-9]{10}" id="CartuserPhone" required />
                                 </div>
 
 
@@ -200,7 +200,7 @@ export const Listdemo = () => {
                                 <div className="carthomeProduct">
                                     {/* <!-- 圖片框 --> */}
                                     <div className="cartpicPlace">
-                                        <img className="cartproPic" src="/images/test1.jpg" alt="" />
+                                        <img className="cartproPic" src="/images/20220520170357-1298d211.jpg" alt="" />
                                     </div>
                                     {/* <!-- 介紹欄 --> */}
                                     <div className="cartinco">

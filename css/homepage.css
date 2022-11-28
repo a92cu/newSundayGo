@@ -86,8 +86,8 @@
     transition: 0.4s;
 }
 
-/* 设置点击和鼠标移到选项上面时（悬停）的样式 */
-.active,
+/* 懸停變色 */
+/* .active, */
 .accordion:hover {
     background-color: #FAEF8B;
 }
