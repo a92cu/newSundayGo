@@ -14,7 +14,7 @@ function MemberOrder({ itemList, imgList, setItemList }) {
     }
   };
   return (
-    <div id="memberOrder" className="tabcontent">
+    <div id="memberOrder" className="tabcontentQ">
       <div className="setBody">
         <h2 className="memberOrderH2">訂單管理</h2>
         <a href="/item/add" className="addCommodity">
@@ -28,7 +28,7 @@ function MemberOrder({ itemList, imgList, setItemList }) {
                 return (
                   <tr>
                     <td>
-                      <div className="OrderReadyImg">
+                      <div className="OrderReadyImgQ">
                         <img
                           src={
                             imgList?.find(
@@ -81,7 +81,7 @@ function Account({
   firmPassword,
 }) {
   return (
-    <div id="information" className="tabcontent">
+    <div id="information" className="tabcontentQ">
       <h2>帳號設定 </h2>
       <div className="setBody">
         <span style={{ color: "#8C5C02" }}>
