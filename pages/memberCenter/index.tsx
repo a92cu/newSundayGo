@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { useState } from 'react';
 import Script from "next/script";
-// import 'jquery';
+import { runSQL } from "../../lib/mysql";
+import { format } from "date-fns";
 function Footer() {
   return (
     <div className="footer">
@@ -117,7 +118,13 @@ function Header() {
   );
 }
 // 帳號設定
-function MemberAccount() {
+function MemberAccount({
+  userPassword, 
+  userName, 
+  useGender, 
+  userPhone, 
+  userEmail
+}) {
   return (<div id="information" className="tabcontentB">
     <h2>帳號設定 </h2>
     <div className="setBodyB">
@@ -125,12 +132,12 @@ function MemberAccount() {
       <br /><br />
       <div className="basic">
         <span>姓名<b>*</b> </span>
-        <input type="text" value="王曉明" />
+        <input type="text" value={userName}  />
       </div>
       <div className="basic">
         <span>性別</span>
         <select name="" id="">
-          <option value="man">男生</option>
+          <option value="man">{useGender}</option>
           <option value="girl">女生</option>
           <option value="sec">保密</option>
         </select>
@@ -138,22 +145,22 @@ function MemberAccount() {
       <br />
       <div className="basic">
         <span>出生日期</span>
-        <input type="date" />
+        <input type="date"/>
       </div>
       <br />
       <div className="basic">
         <span>電話號碼<b>*</b></span>
-        <input type="tel" />
+        <input type="tel" value={userPhone} />
       </div>
       <br />
       <div className="basic">
         <span>連絡信箱<b>*</b></span>
-        <input type="email" />
+        <input type="email" value={userEmail} />
       </div>
       <br />
       <div className="basic">
         <span>密碼<b>*</b></span>
-        <input type="password" />
+        <input type="password" value={userPassword} />
       </div>
       <div className="basicBtn">
         <button className="informationBtn"> <b>儲存</b> </button>
@@ -401,6 +408,16 @@ function Evaluation() {
 
 // 收藏頁面
 function Collect() {
+  const collectDelete = () => {
+    if (window.confirm("確認要從我的商品移除嗎") === true) {
+      console.log('ok');
+      // const newItemList = R.reject(R.propEq("itemId", itemId), itemList);
+      // setItemList(newItemList);
+      // fetch(`http://localhost:3000/api/item/${itemId}`, {
+      //   method: "DELETE",
+      // });
+    }
+  };
   return (
     <div id="collect" className="tabcontentB">
       <div className="setBodyB">
@@ -409,7 +426,7 @@ function Collect() {
           <div className="collectImg"><img src="./images/商品暫用圖/A02.jpg" /></div>
           <div className="collectRight">
             <div className="collectName">
-              <button className="collectHeart collectDelete"><i className="fa fa-heart fa-2x"></i></button>
+              <button className="collectHeart collectDelete" onClick={() => collectDelete()}><i className="fa fa-heart fa-2x"></i></button>
               <h3>台中 | 幻覺博物館門票台中 | 幻覺博物館門票台中 | 幻覺博物館門票</h3>
               <p>
                 位於台中精明商圈，現場提供導覽解說，讓您在每一區都能有完整體驗多主題體驗區，變大變小、萬花筒鏡、閃閃燈光屋、漂浮等，邊玩邊拍照，兼具教育、啟發、創造、娛樂體驗，適合大小朋友一同探索
@@ -437,11 +454,12 @@ function Collect() {
 
 
 
+
+
 export default function MemberCentre(props) {
-  const [tab, setTab] = useState('information');
+  const [tab, setTab] = useState('information');  
+  // const [itemList, setItemList] = useState(props.itemList);
   return <>
-
-
     <Header />
     <div className="MemberCentre">
       <div className="tabb">
@@ -482,7 +500,7 @@ export default function MemberCentre(props) {
 
       </div>
 
-      {tab === "information" && <MemberAccount />}
+      {tab === "information" && <MemberAccount {...props.memberCentre}/>}
       {tab === "discount" && <Discount />}
       {tab === "rebate" && <Rebate />}
       {tab === "sevenDay" && <SevenDay />}
@@ -490,18 +508,45 @@ export default function MemberCentre(props) {
       {tab === "collect" && <Collect />}
 
       <Evaluation />
-
-
-
+      {/* <button onClick={() => test()}>test</button> */}
     </div>
-
-
     <Footer />
-
     <Script src="/js/MemberCentre.js" />
-
-
-
   </>
+}
 
+//頁面產生出來之後從params去找出特定需要的那一頁
+export async function getStaticProps({ params }) {
+  const sq1 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
+  // const sq1 = `SELECT * FROM usertable WHERE userId = "u123456789"`;
+  // const sq2 = `SELECT * FROM item`;
+  const sq2 = `SELECT * FROM favorite , item WHERE favorite.itemId = item.itemId AND userId = 'u123456789';`;
+  const sq3 = `SELECT * FROM itemimg`;
+  // const sq4 = `SELECT * FROM favorite WHERE userId = "u123456789"`;
+  // // any是沒有定義的意思
+  // const imgList: any = [];
+  // const itemList: any = [];
+
+  const memberCentre = (await runSQL(sq1))[0];
+  // const itemListRaw: any = await runSQL(sq2);
+  // const imgListRaw: any = await runSQL(sq3);
+  // forEach是在轉格式,原本出來是database物件
+  // imgListRaw.forEach((item: any) => {
+  //   item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
+  //   imgList.push({ ...item });
+  // });
+  // itemListRaw.forEach((item: any) => {
+  //   item.itemListedDate = format(item.itemListedDate, "yyyy-MM-dd");
+  //   item.itemStartDate = format(item.itemStartDate, "yyyy-MM-dd");
+  //   item.itemEndDate = format(item.itemEndDate, "yyyy-MM-dd");
+  //   itemList.push({ ...item });
+  // });
+  //把要的資料拿出來
+  return {
+    props: {
+      memberCentre: { ...memberCentre },
+      // imgList,
+      // itemList,
+    },
+  };
 }
