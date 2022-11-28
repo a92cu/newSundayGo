@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState } from 'react';
 import Script from "next/script";
-import 'jquery';
+// import 'jquery';
 function Footer() {
   return (
     <div className="footer">
@@ -118,7 +118,7 @@ function Header() {
 }
 // 帳號設定
 function MemberAccount() {
-  return (<div id="information" className="tabcontent">
+  return (<div id="information" className="tabcontentB">
     <h2>帳號設定 </h2>
     <div className="setBodyB">
       <span style={{ color: "#8C5C02" }}> <b>基本資料</b> </span>
@@ -164,7 +164,7 @@ function MemberAccount() {
 }
 // 折扣券
 function Discount() {
-  return (<div id="discount" className="tabcontent">
+  return (<div id="discount" className="tabcontentB">
     <h2>折扣券</h2>
     <div className="setBodyB">
       <div className="discountBtn" style={{ width: "100%" }}>
@@ -204,7 +204,7 @@ function Discount() {
 // 回饋金
 function Rebate() {
   return (
-    <div id="rebate" className="tabcontent">
+    <div id="rebate" className="tabcontentB">
       <h2 className="rebateH2">回饋金</h2>
       <div style={{ textAlign: "center" }}>
         <img src="./images/p.png" style={{ width: "30px", verticalAlign: "middle" }} />&emsp;123
@@ -263,7 +263,7 @@ function Rebate() {
 // 七天簽到
 function SevenDay() {
   return (
-    <div id="sevenDay" className="tabcontent">
+    <div id="sevenDay" className="tabcontentB">
       <h2>登入七天簽到活動</h2>
       <br />
       <div className="setBodyB">
@@ -293,7 +293,7 @@ function MemberOrder() {
 
   return (
 
-    <div id="memberOrder" className="tabcontent">
+    <div id="memberOrder" className="tabcontentB">
       <div className="setBodyB">
         <h2 className="memberOrderH2">訂單管理</h2>
         <div className="memberOrderBtn" style={{ width: "100% " }}>
@@ -402,7 +402,7 @@ function Evaluation() {
 // 收藏頁面
 function Collect() {
   return (
-    <div id="collect" className="tabcontent">
+    <div id="collect" className="tabcontentB">
       <div className="setBodyB">
         <h2>我的收藏</h2>
         <div className="collectDiv">

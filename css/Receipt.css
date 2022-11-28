@@ -46,3 +46,43 @@ body {
     text-decoration: none;
 
 }
+
+
+/* 2 */
+
+
+.receiptTitleB {
+    font-size: 20px;
+    color: #8C5C02;
+    width: 428px;
+    margin: 0 auto;
+    margin-top: 50px;
+    border: 1px solid hsl(0, 0%, 0%, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.receiptTitleB>img {
+    width: 80px;
+    vertical-align: middle;
+}
+
+.receiptBodyB {
+    width: 400px;
+    margin: 0 auto;
+    border: 1px solid hsl(0, 0%, 0%, 0.3);
+    border-radius: 10px;
+    padding: 0 10px;
+}
+
+.receiptBodyB button {
+    width: 100px;
+    border: 1px solid hsl(0, 0%, 0%, 0.3);
+    border-radius: 10px;
+    background-color: rgb(255, 255, 0, 0.3);
+    color: #8C5C02;
+    font-size: 24px;
+    float: right;
+    margin-right: 10px;
+    cursor: pointer;
+}

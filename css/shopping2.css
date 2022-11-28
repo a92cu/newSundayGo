@@ -1,0 +1,361 @@
+/* 進度條 */
+#progressBar {
+    width: 1000px;
+    height: 50px;
+    position: relative;
+    margin: auto;
+}
+
+#progressBar div {
+    z-index: 18;
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    background: #ccc;
+}
+
+#progressBar div span {
+    z-index: 18;
+    position: absolute;
+    display: inline-block;
+    background: #F29F04;
+    height: 5px;
+    /* 第一階段購物車清單改25% 訂購完成改100% */
+    width: 50%;
+}
+
+/* 第二朵花灰階
+.cartList>li:nth-child(2)>img {
+    filter: grayscale(100%);
+}         */
+
+.cartList>li:nth-child(3)>img {
+    filter: grayscale(100%);
+}
+
+/* 花跟字內容設定 */
+
+.cartList {
+    display: flex;
+    justify-content: center;
+}
+
+.cartList li {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    /* height: 50px; */
+}
+
+.cartList>li>img {
+    z-index: 19;
+    width: 35px;
+    display: block;
+    margin: 0 auto;
+
+}
+
+.cartList li+li {
+    margin-left: 200px;
+}
+
+/* 進度條結束 */
+
+/* 訂購人 */
+/* .orderman {
+
+    height: 400px;
+
+} */
+/* 訂購人輸入框 */
+.orderleft input {
+    border-radius: 5px;
+    border: 2px solid #F29F04;
+
+}
+.orderright input {
+    border-radius: 5px;
+    border: 2px solid #F29F04;
+
+}
+
+.orderleft {
+    float: left;
+    margin-left: 100px;
+    position: relative;
+
+
+}
+
+.orderright {
+    position: relative;
+    /* left: 50%; */
+    left: 500px;
+}
+
+.orderbtn {
+    float: right;
+}
+
+.orderleft p::after {
+    content: "*";
+    color: red;
+}
+
+.orderright p::after {
+    content: "*";
+    color: red;
+}
+
+/* 旅客資料 */
+/* .travelman {
+    border: 2px solid #F29F04;
+    height: 300px;
+    border-radius: 10px;
+    margin-top: 50px;
+
+} */
+.travelman textarea{
+    width: 300px;
+    height: 100px;
+}
+
+
+/* 付款方式 */
+/* .paylist {
+    border: 2px solid #F29F04;
+    height: 300px;
+    border-radius: 10px;
+    margin-top: 50px;
+} */
+
+/* label {
+    display: block;
+} */
+
+/* label:hover {
+    cursor: pointer;
+} */
+
+/* 當核許框為勾選時，隱藏.toogle-box區塊 */
+input[type="radio"]:checked div {
+    opacity: 0;
+    max-height: 0;
+    display: inline-block;
+    /* display: none; */
+
+}
+
+.toggle {
+    display: inline-block;
+    /* display: none; */
+    padding: 10px;
+    opacity: 1;
+    overflow: hidden;
+    transition: opacity 1.0s linear;
+}
+
+/* 電子發票 */
+/* .billlist {
+    border: 2px solid #F29F04;
+    height: 300px;
+    border-radius: 10px;
+    margin-top: 50px;
+
+} */
+/* 付款明細 */
+.billtotal .carthomeProduct{
+    width: 90%;
+    margin: 0 auto;
+}
+
+.carthrline{
+    margin-left: 50px;
+}
+
+.carthrline+span{
+    float: right;
+    margin-right: 50px;
+}
+.carthrline~hr {
+    width: 90%;
+    border: none;
+    border-bottom: solid 2px #F29F04
+}
+
+/* 結帳區 */
+
+
+.paybill {
+    border: 2px solid #F29F04;
+    height: 100px;
+    border-radius: 10px;
+    /* text-align:right; */
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+}
+/* nth-child(3) */
+/* .paybill+span+span{
+    margin-left: 45660px;
+} */
+.cartprdtit{
+    margin-left: 60px;
+}
+#billok{
+    border: 2px solid  #F29F04;
+    /* width: 10%; */
+    background-color: #F29F04;
+    color: #8C5C02;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px 5px;
+    float: right;
+    margin: 0 50px 50px 0;
+}
+#billok:hover {
+    color: #8C5C02;
+    background-color: #FAEF8B;
+    border: 2px #FAEF8B solid;
+}
+
+
+
+input:active {
+    border: #8C5C02;
+
+}
+
+
+.cartpanel>ul {
+    list-style-type: none;
+}
+
+/* 側邊欄 */
+.cartsidebar {
+    /* float: left; */
+    /* width: 200px; */
+    color: #333333;
+    margin-top: 50px;
+    will-change: min-height;
+}
+
+
+
+.cartsidebar .cartsidebar__inner {
+    border: 2px solid #F29F04;
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+    transform: translate(0, 0);
+    transform: translate3d(0, 0, 0);
+    /* will-change: position, transform; */
+}
+
+/* 手風琴 */
+.cartaccordion {
+    background-color: transparent;
+    cursor: pointer;
+    /* 滑鼠懸停樣式 */
+
+    /* padding-bottom:  5px; */
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+/* 手風琴標頭 */
+.cartaccordion h3 {
+    margin-left: 100px;
+}
+
+.cartaccordion hr {
+    width: 90%;
+    border: none;
+    border-bottom: solid 2px #F29F04
+}
+
+
+
+/* 设置点击和鼠标移到选项上面时（悬停）的样式 */
+/* .active,
+.accordion:hover {
+    background-color: #FAEF8B;
+} */
+
+/* 手風琴內部樣式 默認隱藏 */
+
+.cartpanel {
+    padding: 0px 12px;
+    /* background-color: rgba(0, 0, 0, 0.2); */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    /* border: 2px solid #F29F04; */
+    /* border-radius: 10px; */
+
+}
+
+/* 商品介紹欄 */
+.carthomeProduct {
+    border: #F29F04 solid 2px;
+    border-radius: 10px;
+    height: 180px;
+    width: 100%;
+    /* float: right; */
+
+}
+
+/* 商品圖片框 */
+.cartpicPlace {
+    /* width: 15%; */
+    width: 300px;
+    height: 170px;
+    /* object-fit: cover; */
+    float: left;
+    margin: 5px 5px;
+}
+
+.cartpicPlace>img {
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* .picPlace>img{
+    object-fit: cover;
+
+} */
+.cartproPic {
+    object-fit: cover;
+    max-height: 100%;
+    max-width: 100%;
+    /* width: auto; */
+    height: auto;
+}
+
+/* 前置符號 */
+.cartaccordion:before {
+    content: '\003E';
+    /* content: '\142F'; */
+    /* Unicode 字符*/
+
+    font-weight: bold;
+    float: left;
+    margin: 25px 25px;
+}
+
+.cartactive:before {
+    /* content: "&#711"; */
+    content: '\142F';
+    /* content: '\1431'; */
+    /* 愛心 */
+    /* content: '\2661'; */
+    font-weight: bold;
+    /* Unicode 字符 - 号 */
+}

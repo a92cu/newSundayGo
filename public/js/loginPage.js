@@ -21,14 +21,14 @@
                 tablinks[i].style.backgroundColor = "";
             }
             document.getElementById(pageName).style.display = "block";
-            elmnt.style.backgroundColor = color;
+            // elmnt.style.backgroundColor = color;
         }
         //最先開啟顯示的頁面
         document.getElementById("defaultOpen").click();
 
 
         //會員的切換
-        function TwoPage(pageName, elmnt, color) {
+        function TwoPage(pageName,  color) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("Twotabcontent");
             for (i = 0; i < tabcontent.length; i++) {
@@ -39,7 +39,7 @@
                 tablinks[i].style.backgroundColor = "";
             }
             document.getElementById(pageName).style.display = "block";
-            elmnt.style.backgroundColor = color;
+            //  elmnt.style.backgroundColor = color;
         }
 
         //TwoPage最先開啟顯示的頁面
@@ -58,7 +58,7 @@
                 tablinks[i].style.backgroundColor = "";
             }
             document.getElementById(pageName).style.display = "block";
-            elmnt.style.backgroundColor = color;
+            // elmnt.style.backgroundColor = color;
         }
         //ThreePage最先開啟顯示的頁面
         document.getElementById("ThreedefaultOpen").click();
@@ -79,7 +79,7 @@
                 tablinks[i].style.backgroundColor = "";
             }
             document.getElementById(pageName).style.display = "block";
-            elmnt.style.backgroundColor = color;
+            // elmnt.style.backgroundColor = color;
         }
 
         //忘記密碼輸入成功的切換
@@ -103,7 +103,7 @@
                 tablinks[i].style.backgroundColor = "";
             }
             document.getElementById(pageName).style.display = "block";
-            elmnt.style.backgroundColor = color;
+            // elmnt.style.backgroundColor = color;
         }
 
         // 以下是驗證碼的JS
@@ -159,3 +159,8 @@
             return `rgb(${r},${g},${b})`;
         }
 
+// window.openPage=openPage;
+// window.TwoPage=TwoPage;
+// window.ThreePage=ThreePage;
+// window.ForgetPage=ForgetPage;
+// window.ForgetPageTwo=ForgetPageTwo;
