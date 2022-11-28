@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Script from "next/script";
 import { runSQL } from "../../lib/mysql";
 import { format } from "date-fns";
+import * as R from "ramda";
 function Footer() {
   return (
     <div className="footer">
@@ -408,14 +409,15 @@ function Evaluation() {
 
 // 收藏頁面
 function Collect({ itemList, imgList, setItemList }) {
-  const collectDelete = () => {
+  const collectDelete = (favId) => {
     if (window.confirm("確認要從我的商品移除嗎") === true) {
       console.log('ok');
-      // const newItemList = R.reject(R.propEq("itemId", itemId), itemList);
-      // setItemList(newItemList);
-      // fetch(`http://localhost:3000/api/item/${itemId}`, {
-      //   method: "DELETE",
-      // });
+      const newItemList = R.reject(R.propEq("favId", favId), itemList);
+      setItemList(newItemList);
+      console.log(newItemList);
+      fetch(`http://localhost:3000/api/memberCentre/collectDel`, {
+        method: "DELETE",
+      });
     }
   };
   return (
@@ -424,30 +426,35 @@ function Collect({ itemList, imgList, setItemList }) {
         <h2>我的收藏</h2>
         {itemList.map((i) => {
           // console.log(itemList); // {{},{}}
-          return(
-          <div className="collectDiv">
-            <div className="collectImg"><img src="./images/商品暫用圖/A02.jpg" /></div>
-            <div className="collectRight">
-              <div className="collectName">
-                <button className="collectHeart collectDelete" onClick={() => collectDelete()}><i className="fa fa-heart fa-2x"></i></button>
-                <h3>{i.itemName}</h3>
-                <p>
-                  {i.itemNote}
-                </p>
-                <div className="collectNamePrice">
-                  <div className="collectstar">
-                    <img src="./images/1.png" />
-                    <img src="./images/1.png" />
-                    <img src="./images/1.png" />
-                    <img src="./images/1.png" />
-                    <img src="./images/1.png" />
-                    <div>({i.itemTotalStar})</div>
+          return (
+            <div className="collectDiv">
+              <div className="collectImg">
+                <img src={
+                  imgList?.find(
+                    (j) => j.itemId === i.itemId && j.itemLead == 1
+                  )?.itemImgUrl ?? ''
+                } /></div>
+              <div className="collectRight">
+                <div className="collectName">
+                  <button className="collectHeart collectDelete" onClick={() => collectDelete(i.favId)}><i className="fa fa-heart fa-2x"></i></button>
+                  <h3>{i.itemName}</h3>
+                  <p>
+                    {i.itemNote}
+                  </p>
+                  <div className="collectNamePrice">
+                    <div className="collectstar">
+                      <img src="./images/1.png" />
+                      <img src="./images/1.png" />
+                      <img src="./images/1.png" />
+                      <img src="./images/1.png" />
+                      <img src="./images/1.png" />
+                      <div>({i.itemTotalStar})</div>
+                    </div>
+                    <span>TWD<span>{i.itemPrice}</span></span>
                   </div>
-                  <span>TWD<span>{i.itemPrice}</span></span>
                 </div>
               </div>
             </div>
-          </div>
           );
 
         })}
@@ -515,7 +522,7 @@ export default function MemberCentre(props) {
         <Collect
           setItemList={setItemList}
           itemList={itemList}
-          imgList={props.imgList} 
+          imgList={props.imgList}
         />}
 
       <Evaluation />
@@ -530,11 +537,9 @@ export async function getStaticProps({ params }) {
   // 帳號設定抓的資料 (userBirthday有問題)
   const sq1 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
   // const sq1 = `SELECT * FROM usertable WHERE userId = "u123456789"`;
-  // const sq2 = `SELECT * FROM item`;
   // 我的收藏資料庫抓的
   const sq2 = `SELECT * FROM favorite , item WHERE favorite.itemId = item.itemId AND userId = 'u123456789';`;
   const sq3 = `SELECT * FROM itemimg`;
-  // const sq4 = `SELECT * FROM favorite WHERE userId = "u123456789"`;
   // any是沒有定義的意思
   const imgList: any = [];
   const itemList: any = [];
