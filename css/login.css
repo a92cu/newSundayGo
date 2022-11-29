@@ -113,6 +113,16 @@ textarea {
     margin-bottom: 16px;
 }
 
+
+.logincontent input[type=password],
+textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+
 .logincontent input[type=email],
 textarea {
     padding: 12px;

@@ -189,9 +189,9 @@ function Login() {
 
                                             <form action="" >
                                                 <label htmlFor="">確認帳號</label><br />
-                                                <input type="text" placeholder="帳號" /><br />
+                                                <input type="text" placeholder="請輸入帳號"  /><br />
                                                 <label htmlFor="">請輸入有效信箱</label><br />
-                                                <input type="email" placeholder="E-mail" /><br />
+                                                <input type="email" placeholder="請輸入E-mail" /><br />
                                                 <label htmlFor="">請輸入驗證碼</label><br />
                                                 <input type="text" /><br />
                                                 <canvas id="c1" ></canvas>
@@ -230,9 +230,9 @@ function Login() {
                                                 <div>
                                                     <form action="">
                                                         <label htmlFor="">帳號</label>
-                                                        <input id="" type="text" placeholder="帳號" /><br />
+                                                        <input id="" type="text" placeholder="請輸入帳號" /><br />
                                                         <label htmlFor="">密碼</label>
-                                                        <input type="text" placeholder="密碼" /><br />
+                                                        <input type="password" placeholder="請輸入密碼" /><br />
                                                         <input type="submit" value="確認" />
                                                     </form>
                                                     <br />
@@ -264,9 +264,9 @@ function Login() {
                                                 <div>
                                                     <form action="">
                                                         <label htmlFor="">帳號</label>
-                                                        <input type="text" placeholder="帳號" /><br />
+                                                        <input type="text" placeholder="請輸入帳號" /><br />
                                                         <label htmlFor="">密碼</label>
-                                                        <input type="text" placeholder="密碼" /><br />
+                                                        <input type="password" placeholder="請輸入密碼" /><br />
                                                         <input type="submit" value="確認" />
                                                     </form>
                                                     <br />
@@ -306,9 +306,9 @@ function Login() {
                                                 <div>
                                                     <form action="">
                                                         <label htmlFor="">帳號</label>
-                                                        <input type="text" placeholder="帳號" /><br />
+                                                        <input type="text" placeholder="請輸入帳號" /><br />
                                                         <label htmlFor="">密碼</label>
-                                                        <input type="text" placeholder="密碼" /><br />
+                                                        <input type="password" placeholder="請輸入密碼" /><br />
                                                         <input type="submit" value="確認" />
                                                     </form>
                                                     <br />
@@ -329,9 +329,9 @@ function Login() {
                                                 <div>
                                                     <form action="">
                                                         <label htmlFor="">帳號</label>
-                                                        <input type="text" placeholder="帳號" /><br />
+                                                        <input type="text" placeholder="請輸入帳號" /><br />
                                                         <label htmlFor="">密碼</label>
-                                                        <input type="text" placeholder="密碼" /><br />
+                                                        <input type="password" placeholder="請輸入密碼" /><br />
                                                         <input type="submit" value="確認" />
                                                     </form>
                                                     <br />
