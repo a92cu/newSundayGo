@@ -113,7 +113,7 @@ export default function UpdateItemPage(props) {
       <div className="container">
         {imgList.map((i, index) => (
           <div>
-            <button>刪除</button>
+            {/* <button>刪除</button> */}
             <img className="itemImg" src={getUrl(index, i.itemImgUrl)} alt="" />
             <br />
             <input

@@ -115,7 +115,7 @@ export default function UpdateItemPage(props) {
       <div className="container">
         {[0, 0, 0].map((i, index) => (
           <div>
-            <button>刪除</button>
+            {/* <button>刪除</button> */}
             <img className="itemImg" src={getUrl(index, null)} alt="" />
             <br />
             <input type="file" onChange={(e) => changeHandler(index, e)} />
