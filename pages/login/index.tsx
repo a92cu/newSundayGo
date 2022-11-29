@@ -8,6 +8,11 @@ import { runSQL } from "../../lib/mysql";
 import { format } from "date-fns";
 import { useState } from "react";
 import { none } from "ramda";
+import Router from "next/router";
+import useFile from "../../hook/useFile";
+
+
+
 
 
 // function Footer() {
@@ -134,8 +139,34 @@ function Header() {
 }
 
 
-function Login() {
+function Login(props) {
+
+    const [userId, setuserId] = useState(props.userId);
+    const [userPassword, setuserPassword] = useState(props.userPassword);
+
+    const regMember = () => {
+        if (window.confirm("請確認是否要註冊帳號") === true) {
+            
+            fetch(`http://localhost:3000/api/login/`, {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userId,
+                    userPassword,
+                }),
+            });
+            setTimeout(() => {
+                Router.replace("/login");
+            }, 100);
+        }
+    };
+
+
     return (
+
         <div className="login">
             <div className="loginoverlay" id="divOne">
                 {/* <!-- pop up中層 --> */}
@@ -146,38 +177,38 @@ function Login() {
                     <div className="logincontent">
                         {/* <!-- 這裡是最外層辨識的藍色框框 包住全部的大媽媽-->
                 <!-- style="border:solid 3px ; color: blue;  width: 1000px; height: 1000px;" --> */}
-                        
 
-                            {/* <!-- 這一層是綠色框框  有廠商跟會員的內容 +  廠商跟會員的切換按鈕  -->
+
+                        {/* <!-- 這一層是綠色框框  有廠商跟會員的內容 +  廠商跟會員的切換按鈕  -->
                     <!-- style="border:solid 3px ; color: green; width: 400px; height: 600px;" className="greenLine" --> */}
-                            <div>
-                                <button className="Twotablink" onClick={() => TwoPage("member", "white")}
-                                    id="TwodefaultOpen">會員
-                                </button>
+                        <div>
+                            <button className="Twotablink" onClick={() => TwoPage("member", "white")}
+                                id="TwodefaultOpen">會員
+                            </button>
 
-                                <button className="Twotablink" onClick={() => TwoPage("company", "white")}>
-                                    廠商
-                                </button>
+                            <button className="Twotablink" onClick={() => TwoPage("company", "white")}>
+                                廠商
+                            </button>
 
-                                {/* <!-- 這一層包住  廠商跟會員  的 登入及註冊 以及所有內容+按鈕  的中媽媽框  --> */}
-                                <div >
-                                    {/* /* <!-- <div id="forgetInfo" className="ForgetTabcontent" style="display: none;"> *
+                            {/* <!-- 這一層包住  廠商跟會員  的 登入及註冊 以及所有內容+按鈕  的中媽媽框  --> */}
+                            <div >
+                                {/* /* <!-- <div id="forgetInfo" className="ForgetTabcontent" style="display: none;"> *
                                     <p>忘記密碼資訊</p>
                                       </div> --> */}
-                                    <div id="forget" className="ForgetTabcontent"
-                                        style={{
-                                            display: "none",
-                                            border: "solid 1px orange",
-                                            height: 450,
-                                            backgroundColor: "aliceblue",
-                                        }} >
+                                <div id="forget" className="ForgetTabcontent"
+                                    style={{
+                                        display: "none",
+                                        border: "solid 1px orange",
+                                        height: 450,
+                                        backgroundColor: "aliceblue",
+                                    }} >
 
-                                        <div className="forget">
+                                    <div className="forget">
                                         <div style={{
                                             display: " flex",
                                             justifyContent: "center",
                                             alignItems: " center",
-                                            }}>
+                                        }}>
                                             <h3>重設密碼</h3>
                                         </div>
 
@@ -185,11 +216,11 @@ function Login() {
                                             display: "flex",
                                             justifyContent: " center",
                                             alignItems: "center",
-                                            }}>
+                                        }}>
 
                                             <form action="" >
                                                 <label htmlFor="">確認帳號</label><br />
-                                                <input type="text" placeholder="請輸入帳號"  /><br />
+                                                <input type="text" placeholder="請輸入帳號" /><br />
                                                 <label htmlFor="">請輸入有效信箱</label><br />
                                                 <input type="email" placeholder="請輸入E-mail" /><br />
                                                 <label htmlFor="">請輸入驗證碼</label><br />
@@ -262,12 +293,26 @@ function Login() {
                                             <div id="register" className="loginTabContent">
                                                 <br />
                                                 <div>
-                                                    <form action="">
+                                                    <form action="javascript:void(0)">
                                                         <label htmlFor="">帳號</label>
-                                                        <input type="text" placeholder="請輸入帳號" /><br />
+                                                        <input
+                                                            type="text"
+                                                            value={userId}
+                                                            onChange={(e) => setuserId(e.target.value)}
+                                                            placeholder="請輸入帳號" />
+                                                        <br />
                                                         <label htmlFor="">密碼</label>
-                                                        <input type="password" placeholder="請輸入密碼" /><br />
-                                                        <input type="submit" value="確認" />
+                                                        <input
+                                                            type="password"
+                                                            value={userPassword}
+                                                            onChange={(e) => setuserPassword(e.target.value)}
+                                                            placeholder="請輸入密碼" />
+                                                        <br />
+                                                        <input
+                                                            type="submit"
+                                                            value="確認"
+                                                            onClick={() => regMember()}
+                                                            />
                                                     </form>
                                                     <br />
                                                     <hr />
@@ -304,7 +349,7 @@ function Login() {
                                             <div id="companylogin" className="Threetabcontent">
                                                 <br />
                                                 <div>
-                                                    <form action="">
+                                                    <form action="javascript:void(0)">
                                                         <label htmlFor="">帳號</label>
                                                         <input type="text" placeholder="請輸入帳號" /><br />
                                                         <label htmlFor="">密碼</label>
@@ -359,80 +404,15 @@ function Login() {
     );
 }
 
-// function Login2() {
-//     return (
-
-//         <div className="apple">
-
-//             {/* <!-- 這裡放會員登入 --> */}
-//             <div id="login" className="tabcontent">
-//                 <br />
-//                 <div>
-//                     <form action="">
-//                         <label htmlFor="">帳號</label>
-//                         <input id="" type="text" placeholder="帳號" /><br />
-//                         <label htmlFor="">密碼</label>
-//                         <input type="text" placeholder="密碼" /><br />
-//                         <input type="submit" value="確認" />
-//                     </form>
-//                     <br />
-
-
-//                     {/* <!-- 忘記密碼的頁面 -->
-//                                                 <!-- 包住忘記密碼的框style="border: solid 1px blueviolet;" --> */}
-//                     <div>
-//                         <button className="ForgetTablink"
-//                             style={{ float: "right" }}
-//                             onClick={() => ForgetPage("forget")}>忘記密碼
-//                         </button>
-//                     </div>
-//                     <br />
-//                     <br />
-//                     <hr />
-//                     <p>其他登入方式</p>
-//                     <div className="iconStyle">
-//                         <Image width={20} height={20} src="/images/facebook.png" alt="" />
-//                         <Image width={20} height={20} src="/images/instagram.png" alt="" />
-//                         <Image width={20} height={20} src="/images/google.png" alt="" />
-//                         <Image width={20} height={20} src="/images/line.png" alt="" />
-//                     </div>
-//                 </div>
-//             </div>
-//             {/* <!-- 這裡放會員註冊 --> */}
-//             <div id="register" className="tabcontent">
-//                 <br />
-//                 <div>
-//                     <form action="">
-//                         <label htmlFor="">帳號</label>
-//                         <input type="text" placeholder="帳號" /><br />
-//                         <label htmlFor="">密碼</label>
-//                         <input type="text" placeholder="密碼" /><br />
-//                         <input type="submit" value="確認" />
-//                     </form>
-//                     <br />
-//                     <hr />
-//                     <p>其他註冊方式</p>
-//                     <div className="iconStyle">
-//                         <Image width={20} height={20} src="/images/facebook.png" alt="" />
-//                         <Image width={20} height={20} src="/images/instagram.png" alt="" />
-//                         <Image width={20} height={20} src="/images/google.png" alt="" />
-//                         <Image width={20} height={20} src="/images/line.png" alt="" />
-//                     </div>
-//                     <p>註冊即同意會員約定事項暨隱私權保護政策</p>
-//                 </div>
-//             </div>
-//         </div>
-
-
-//     );
-// }
-
 
 
 
 export default function LoginPage(props) {
     const [tab, setTab] = useState("Login");
     const [itemList, setItemList] = useState(props.itemList);
+
+
+
     return (
         <>
             <Header />
