@@ -9,8 +9,6 @@ if (typeof window !== "undefined") {
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import dynamic from "next/dynamic";
-import { setSeconds } from "date-fns";
-import { data } from "jquery";
 
 const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
     ssr: false,
@@ -44,26 +42,34 @@ const imgstyles = {
 }
 export default function HotItem() {
     var [HotItemData, setHotItemData] = useState([]);
-    function fetchData() {
-        return (fetch("/api/cart/HotItem",{next:{revalidate: 10}})
-                .then((response) => response.json())
-                .then((dataresult) => {
-                        dataresult.data.forEach((i)=>{
-                        var img=Buffer.from(i.itemImgUrl).toString('base64');
-                        var call=Buffer.from(img, 'base64').toString('ascii');
-                        var replaceCallAll=call.replaceAll('\x00', '');
-                        i.itemImgUrl=replaceCallAll;
-                        })
-                        console.log(dataresult.data)
-                        setHotItemData(dataresult.data);
-                    })
-                )
-    }
     // 使用component渲染tsx會有一個問題，在你抓資料的同時他在渲染畫面，導致資料進不去畫面
-    // 所以在使用 useEffect 把資料放進 return 的時候，先讓useEffect走setSeconds讓資料跑完
-    // 再去跑return
-    useEffect(() => {fetchData(),[]})
+    // 所以在使用 useEffect 把資料放進 return 的時候，多跑幾次迴圈，讓他重複執行6次
+    useEffect(()=>{
+        didTake();
+        for(var i=0;i<6;i++){
+            if(HotItemData!==""){
+                didTake();
+            }
+        }
+    },[]);
 
+    function didTake(){
+        if(HotItemData==""){
+        fetch("/api/cart/HotItem",{next:{revalidate: 10}})
+        .then((response) => response.json())
+        .then((dataresult) => {
+                dataresult.data.forEach((i)=>{
+                var img=Buffer.from(i.itemImgUrl).toString('base64');
+                var call=Buffer.from(img, 'base64').toString('ascii');
+                var replaceCallAll=call.replaceAll('\x00', '');
+                i.itemImgUrl=replaceCallAll;
+                })
+                console.log(dataresult.data)
+                setHotItemData(dataresult.data);
+            })
+        }
+    }
+    
     return (
         <>
             <div className="cartcontainer">
@@ -79,7 +85,7 @@ export default function HotItem() {
                 >
                     {HotItemData.map((i,index)=>
                         <div className="item" key={index}>
-                            <a href={`/CartDetails/+${i.itemId}`} style={fontstyles}>
+                            <a href={`/CartDetails/${i.itemId}`} style={fontstyles}>
                                 <img src={i.itemImgUrl} style={imgstyles} alt="img" />
                                 <div>{i.itemTitle}</div>
                             </a>
