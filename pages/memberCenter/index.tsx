@@ -176,11 +176,6 @@ function Discount() {
     <h2>折扣券</h2>
     <div className="setBodyB">
       <div className="discountBtn" style={{ width: "100%" }}>
-        {/* <div className="discountTab">
-          <button className="discountlinks" onClick={this.discountOpen discountUse}
-            id="discountOpen">可使用</button> 
-          <button className="discountlinks" onClick={this.discountOpen discountUsed}>已使用</button>
-        </div> */}
         <div id="discountUse" className="discountBody">
           <div className="discountDiv">
             <span>95折</span> <br />
@@ -196,13 +191,6 @@ function Discount() {
 
         </div>
 
-        {/* <div id="discountUsed" className="discountBody">
-          <div className="discountDivUsed">
-            <span>95折</span> <br/>
-            <span>訂單金額須滿100元</span> <br/>
-            <span>有效期限: 剩餘20天12hr</span> <br/>
-          </div>
-        </div> */}
       </div>
     </div>
   </div>
@@ -221,12 +209,6 @@ function Rebate() {
       </div>
       <div className="setBodyB">
         <div className="rebateBtn" style={{ width: "100%" }}>
-          {/* <div className="rebateTab">
-            <button className="rebatelinks " onClick={()=>rebateOpen(event, 'rebateUse')}
-              id="rebateOpen ">獲得紀錄</button>
-            <button className="rebatelinks" onClick={()=>rebateOpen(event, 'rebateUsed')}>使用紀錄</button>
-          </div> */}
-
           <div id="rebateUse" className="rebateBody">
             <table className="rebateGetTable">
               <tbody>
@@ -248,19 +230,6 @@ function Rebate() {
               </tbody>
             </table>
           </div>
-
-          {/* <div id="rebateUsed" className="rebateBody">
-            <table className="rebateUsedTable">
-              <tbody>
-                <tr className="rebateUsedTr">
-                  <td>桃園青埔|Xpark 都會型水生公園門票</td>
-                  <td>2022-10-25</td>
-                  <td><img src="./images/p.png" style={{ width: "20px", verticalAlign: "middle" }} /> &ensp;-3
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div> */}
         </div>
       </div>
 
@@ -414,10 +383,10 @@ function Collect({ itemList, imgList, setItemList }) {
       console.log('ok');
       const newItemList = R.reject(R.propEq("favId", favId), itemList);
       setItemList(newItemList);
-      console.log(newItemList);
-      fetch(`http://localhost:3000/api/memberCentre/collectDel`, {
-        method: "DELETE",
-      });
+      // console.log(newItemList); // {{},{}}
+      // fetch(`http://localhost:3000/api/memberCentre/collectDel`, {
+      //   method: "DELETE",
+      // });
     }
   };
   return (
@@ -425,9 +394,10 @@ function Collect({ itemList, imgList, setItemList }) {
       <div className="setBodyB">
         <h2>我的收藏</h2>
         {itemList.map((i) => {
-          // console.log(itemList); // {{},{}}
+          // console.log(itemList); // [{},{}]
+          console.log(i); // {}
           return (
-            <div className="collectDiv">
+            <div className="collectDiv" key={i.favId}>
               <div className="collectImg">
                 <img src={
                   imgList?.find(
