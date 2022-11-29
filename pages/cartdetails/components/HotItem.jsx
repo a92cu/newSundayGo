@@ -62,7 +62,7 @@ export default function HotItem() {
     // 使用component渲染tsx會有一個問題，在你抓資料的同時他在渲染畫面，導致資料進不去畫面
     // 所以在使用 useEffect 把資料放進 return 的時候，先讓useEffect走setSeconds讓資料跑完
     // 再去跑return
-    useEffect(() => {setSeconds( fetchData() ,10),[]})
+    useEffect(() => {fetchData(),[]})
 
     return (
         <>
