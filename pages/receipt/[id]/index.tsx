@@ -1,7 +1,10 @@
-// import { runSQL } from "../../lib/mysql";
+import { runSQL } from "../../../lib/mysql";
 import Image from "next/image";
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 import Script from "next/script";
+import Router from "next/router";
+import { format } from "date-fns";
+
 import html2canvas from "html2canvas";
 import pdfMake from "pdfMake";
 
@@ -30,26 +33,26 @@ function QRCode() {
 
 function ReceiptPage() {
   const PdfDownload = () => {
-    
+
     const pdf = document.getElementById('downloadReceipt')
     html2canvas(pdf).then((canvas) => {
       var data = canvas.toDataURL('image/png');
       var docDefinition = {
-          content: [{
-              image: data,
-              width: 595
-          }],
-          pageSize: 'A7',
-          pageMargins: [0, 20, 0, 0]
+        content: [{
+          image: data,
+          width: 595
+        }],
+        pageSize: 'A7',
+        pageMargins: [0, 20, 0, 0]
       };
 
       pdfMake.createPdf(docDefinition).download('name.pdf');
-  });
+    });
   }
   return (
     <div id="downloadReceipt">
       <div className="receiptTitle">
-        <img src="./images/群組 1.png" alt="" />憑證
+        <img src="../images/群組 1.png" alt="" />憑證
       </div>
       <br />
       <div className="receiptBody">
@@ -74,10 +77,41 @@ function ReceiptPage() {
 
 
 export default function Receipt() {
+
   return (
     <>
-    <ReceiptPage />
-    
+      <ReceiptPage />
+
     </>
   )
+}
+
+export async function getStaticPaths(props) {
+  const sq1 = "SELECT * FROM ordertable";
+  const data: any = await runSQL(sq1);
+  const paths = data.map((ordertable) => ({
+    params: { id: `${ordertable.orderNumber}` },
+  }));
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const sq1 = `SELECT orderNumber, userId, itemId, orderReceipt, orderReview, orderStar, orderQua, orderDeter FROM ordertable WHERE orderNumber = "${params.id}"`;
+  // const sq1 = `SELECT * FROM ordertable WHERE orderNumber = "${params.id}"`;
+
+  const data = (await runSQL(sq1))[0];
+  //forEach是在轉格式,原本出來是database物件
+  //下面是在轉日期格式
+  // data.orderDate = format(data.orderDate, "yyyy-MM-dd");
+
+  //把要的資料拿出來
+  return {
+    props: {
+      ...data,
+      // imgList,
+    },
+  };
 }
