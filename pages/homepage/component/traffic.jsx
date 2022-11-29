@@ -7,12 +7,12 @@ import { setSeconds } from "date-fns";
 
 
 //商品加入最愛連結
-export const Placezone = () => {
+export const Traffic = () => {
     var [homepagelist, setlist] = useState([]);
     // useEffect(() => fetchdata(), []);
     async function fetchdata() {
 
-        return (await fetch("/api/home/homepage")
+        return (await fetch("/api/home/traffic")
             .then((res) => res.json())
             .then((result) => setlist(result.data))
         )
@@ -178,18 +178,18 @@ export const Placezone = () => {
 
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />交通
+                                <input type="checkbox" className="allcheck" checked/>交通
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" />租車
+                                <input type="checkbox" name="citys" checked/>租車
                                 <br />
-                                <input type="checkbox" name="citys" />飛機
+                                <input type="checkbox" name="citys" checked/>飛機
                                 <br />
-                                <input type="checkbox" name="citys" />船班
+                                <input type="checkbox" name="citys" checked/>船班
                                 <br />
-                                <input type="checkbox" name="citys" />高鐵
+                                <input type="checkbox" name="citys" checked/>高鐵
                                 <br />
-                                <input type="checkbox" name="citys" />客運
+                                <input type="checkbox" name="citys" checked/>客運
                             </div>
                         </div>
                     </div >
@@ -310,4 +310,4 @@ export const Placezone = () => {
     )
     // })
 }
-export default Placezone;
+export default Traffic;

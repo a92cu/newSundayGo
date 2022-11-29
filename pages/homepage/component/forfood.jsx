@@ -7,12 +7,12 @@ import { setSeconds } from "date-fns";
 
 
 //商品加入最愛連結
-export const Placezone = () => {
+export const Forfood = () => {
     var [homepagelist, setlist] = useState([]);
     // useEffect(() => fetchdata(), []);
     async function fetchdata() {
 
-        return (await fetch("/api/home/homepage")
+        return (await fetch("/api/home/food")
             .then((res) => res.json())
             .then((result) => setlist(result.data))
         )
@@ -142,7 +142,7 @@ export const Placezone = () => {
                             商品類別篩選
                             <br />
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />美食
+                                <input type="checkbox" className="allcheck" checked="checked"/>美食
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />餐廳
@@ -310,4 +310,4 @@ export const Placezone = () => {
     )
     // })
 }
-export default Placezone;
+export default Forfood;
