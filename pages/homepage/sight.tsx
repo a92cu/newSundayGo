@@ -9,8 +9,8 @@ import { format } from "date-fns";
 // 帶入react 與 axios 套件
 import React, { Component } from 'react';
 // import Link from 'next/link';s
-import Mapselect from "./component/Taiwanmap.jsx";
-import Placezone from "./component/Placezone2.jsx";
+// import Mapselect from "./component/Taiwanmap.jsx";
+import Sight from "./component/sight.jsx";
 
 
 
@@ -86,13 +86,13 @@ function Footer() {
 }
 
 //homepage 畫面路由
-export default function homepage({ data }) {
+export default function homepage({data}) {
     return (
         <>
             <Header />
-            <Mapselect />
-            <Placezone />
-
+            
+            <Sight/>
+         
             <Footer />
             {/* <Script src="/js/home.js" /> */}
         </>

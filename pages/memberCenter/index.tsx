@@ -176,11 +176,6 @@ function Discount() {
     <h2>折扣券</h2>
     <div className="setBodyB">
       <div className="discountBtn" style={{ width: "100%" }}>
-        {/* <div className="discountTab">
-          <button className="discountlinks" onClick={this.discountOpen discountUse}
-            id="discountOpen">可使用</button> 
-          <button className="discountlinks" onClick={this.discountOpen discountUsed}>已使用</button>
-        </div> */}
         <div id="discountUse" className="discountBody">
           <div className="discountDiv">
             <span>95折</span> <br />
@@ -196,13 +191,6 @@ function Discount() {
 
         </div>
 
-        {/* <div id="discountUsed" className="discountBody">
-          <div className="discountDivUsed">
-            <span>95折</span> <br/>
-            <span>訂單金額須滿100元</span> <br/>
-            <span>有效期限: 剩餘20天12hr</span> <br/>
-          </div>
-        </div> */}
       </div>
     </div>
   </div>
@@ -221,12 +209,6 @@ function Rebate() {
       </div>
       <div className="setBodyB">
         <div className="rebateBtn" style={{ width: "100%" }}>
-          {/* <div className="rebateTab">
-            <button className="rebatelinks " onClick={()=>rebateOpen(event, 'rebateUse')}
-              id="rebateOpen ">獲得紀錄</button>
-            <button className="rebatelinks" onClick={()=>rebateOpen(event, 'rebateUsed')}>使用紀錄</button>
-          </div> */}
-
           <div id="rebateUse" className="rebateBody">
             <table className="rebateGetTable">
               <tbody>
@@ -248,19 +230,6 @@ function Rebate() {
               </tbody>
             </table>
           </div>
-
-          {/* <div id="rebateUsed" className="rebateBody">
-            <table className="rebateUsedTable">
-              <tbody>
-                <tr className="rebateUsedTr">
-                  <td>桃園青埔|Xpark 都會型水生公園門票</td>
-                  <td>2022-10-25</td>
-                  <td><img src="./images/p.png" style={{ width: "20px", verticalAlign: "middle" }} /> &ensp;-3
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div> */}
         </div>
       </div>
 
@@ -293,72 +262,102 @@ function SevenDay() {
 }
 
 //訂單管理
-function MemberOrder() {
+function MemberOrder(orderList, imgList) {
   const GoEvaluation = () => {
     // alert('ok');
     document.getElementById('id01').style.display = "block";
+    // console.log(orderList);//[{orderList} {imgList}]
+    // console.log(orderList.orderList);//[{}{}]
   }
-
   return (
-
     <div id="memberOrder" className="tabcontentB">
       <div className="setBodyB">
         <h2 className="memberOrderH2">訂單管理</h2>
         <div className="memberOrderBtn" style={{ width: "100% " }}>
           <div id="memberOrderReady" className="memberOrderBody">
             {/* 準備出發 */}
-            <div className="OrderReadyDiv">
-              <div className="OrderReadyImg"><img src="./images/商品暫用圖/A02.jpg" /></div>
-              <div className="OrderReadyRight">
-                <div className="ORRightName">
-                  <button className="stateRight"><b>準備出發</b></button>
-                  <h4>台灣宜蘭｜國立傳統藝術中心｜門票、畫舫船遊河券、遊程體驗遊程體驗遊程體驗</h4>
-                  <span>訂單編號</span><span>#22KK250156250</span>
-                </div>
-                <div className="ORRightPrice">TWD<span>100</span></div>
-                <div className="ORRightBtn">
-                  <button> <a href="Receipt.html">查看憑證</a> </button>
-                </div>
-              </div>
-            </div>
-            {/* 已取消 */}
-            <div id="memberOrderCancel" className="memberOrderBody">
-              <div className="OrderReadyDiv">
-                <div className="OrderReadyImg"><img src="./images/商品暫用圖/A02.jpg" /></div>
-                <div className="OrderReadyRight">
-                  <div className="ORRightName">
-                    <button className="stateRight"><b>已取消</b></button>
-                    <h4>台灣宜蘭｜國立傳統藝術中心｜門票、畫舫船遊河券、遊程體驗遊程體驗遊程體驗</h4>
-                    <span>訂單編號</span><span>#22KK250156250</span>
+            {orderList.orderList.map((i) => {
+              // console.log(i); //{}
+              if (i.orderDeter === 1) {
+                return (
+                  <div className="OrderReadyDiv" key={i.itemId}>
+                    <div className="OrderReadyImg">
+                      <img src={
+                        orderList.imgList?.find(
+                          (j) => j.itemId === i.itemId && j.itemLead == 1
+                        )?.itemImgUrl ?? ''
+                      } />
+                    </div>
+                    <div className="OrderReadyRight">
+                      <div className="ORRightName">
+                        <button className="stateRight"><b>準備出發</b></button>
+                        <h4>{i.itemTitle}</h4>
+                        <span>訂單編號</span><span>#{i.orderReceipt}</span>
+                      </div>
+                      <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
+                      <div className="ORRightBtn">
+                        <button> <a href="Receipt.html">查看憑證</a> </button>
+                      </div>
+                    </div>
                   </div>
-                  <div className="ORRightPrice">TWD<span>100</span></div>
-                  <div className="ORRightBtn">
-                    <button>重新訂購</button>
+                )
+              }
+              {/* 已出發 */ }
+              if (i.orderDeter === 2) {
+                return (
+                  <div id="memberOrderGo" className="memberOrderBody" key={i.itemId}>
+                    <div className="OrderReadyDiv">
+                      <div className="OrderReadyImg">
+                        <img src={
+                          orderList.imgList?.find(
+                            (j) => j.itemId === i.itemId && j.itemLead == 1
+                          )?.itemImgUrl ?? ''
+                        } />
+                      </div>
+                      <div className="OrderReadyRight">
+                        <div className="ORRightName">
+                          <button className="stateRight"><b>已出發</b></button>
+                          <h4>{i.itemTitle}</h4>
+                          <span>訂單編號</span><span>#{i.orderReceipt}</span>
+                        </div>
+                        <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
+                        <div className="ORRightBtn">
+                          <button id="GoEvaluationBtn" onClick={() => GoEvaluation()}>前往評價</button>
+                          <button>查看憑證</button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 已出發 */}
-            <div id="memberOrderGo" className="memberOrderBody">
-              <div className="OrderReadyDiv">
-                <div className="OrderReadyImg"><img src="./images/商品暫用圖/A02.jpg" /></div>
-                <div className="OrderReadyRight">
-                  <div className="ORRightName">
-                    <button className="stateRight"><b>已出發</b></button>
-                    <h4>台灣宜蘭｜國立傳統藝術中心｜門票、畫舫船遊河券、遊程體驗遊程體驗遊程體驗</h4>
-                    <span>訂單編號</span><span>#22KK250156250</span>
-                  </div>
-                  <div className="ORRightPrice">TWD<span>100</span></div>
-                  <div className="ORRightBtn">
-                    <button id="GoEvaluationBtn" onClick={() => GoEvaluation()}>前往評價</button>
-                    <button>查看憑證</button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
+                )
+              }
+              {/* 已取消 */ }
+              // if (i.orderDeter === 3) {
+              //   return (
+              //     <div id="memberOrderCancel" className="memberOrderBody" key={i.itemId}>
+              //       <div className="OrderReadyDiv">
+              //         <div className="OrderReadyImg">
+              //           <img src={
+              //             orderList.imgList?.find(
+              //               (j) => j.itemId === i.itemId && j.itemLead == 1
+              //             )?.itemImgUrl ?? ''
+              //           } />
+              //         </div>
+              //         <div className="OrderReadyRight">
+              //           <div className="ORRightName">
+              //             <button className="stateRight"><b>已取消</b></button>
+              //             <h4>{i.itemTitle}</h4>
+              //             <span>訂單編號</span><span>#{i.orderReceipt}</span>
+              //           </div>
+              //           <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
+              //           <div className="ORRightBtn">
+              //             <button>重新訂購</button>
+              //           </div>
+              //         </div>
+              //       </div>
+              //     </div>
+              //   )
+              // }
+            })}
           </div>
         </div>
       </div>
@@ -414,10 +413,10 @@ function Collect({ itemList, imgList, setItemList }) {
       console.log('ok');
       const newItemList = R.reject(R.propEq("favId", favId), itemList);
       setItemList(newItemList);
-      console.log(newItemList);
-      fetch(`http://localhost:3000/api/memberCentre/collectDel`, {
-        method: "DELETE",
-      });
+      // console.log(newItemList); // {{},{}}
+      // fetch(`http://localhost:3000/api/memberCentre/collectDel`, {
+      //   method: "DELETE",
+      // });
     }
   };
   return (
@@ -425,9 +424,11 @@ function Collect({ itemList, imgList, setItemList }) {
       <div className="setBodyB">
         <h2>我的收藏</h2>
         {itemList.map((i) => {
-          // console.log(itemList); // {{},{}}
+          // console.log(itemList); // [{},{}]
+          // console.log(imgList); //[{}{}]
+          // console.log(i); // {}
           return (
-            <div className="collectDiv">
+            <div className="collectDiv" key={i.favId}>
               <div className="collectImg">
                 <img src={
                   imgList?.find(
@@ -472,6 +473,7 @@ function Collect({ itemList, imgList, setItemList }) {
 export default function MemberCentre(props) {
   const [tab, setTab] = useState('information');
   const [itemList, setItemList] = useState(props.itemList);
+  const [orderList, setOrderList] = useState(props.orderList);
   return <>
     <Header />
     <div className="MemberCentre">
@@ -517,7 +519,11 @@ export default function MemberCentre(props) {
       {tab === "discount" && <Discount />}
       {tab === "rebate" && <Rebate />}
       {tab === "sevenDay" && <SevenDay />}
-      {tab === "memberOrder" && <MemberOrder />}
+      {tab === "memberOrder" &&
+        <MemberOrder
+          orderList={orderList}
+          imgList={props.imgList}
+        />}
       {tab === "collect" &&
         <Collect
           setItemList={setItemList}
@@ -540,13 +546,16 @@ export async function getStaticProps({ params }) {
   // 我的收藏資料庫抓的
   const sq2 = `SELECT * FROM favorite , item WHERE favorite.itemId = item.itemId AND userId = 'u123456789';`;
   const sq3 = `SELECT * FROM itemimg`;
+  const sq4 = `SELECT item.itemId , userId, orderReceipt,orderReview, orderStar, orderDate, orderQua, orderDeter , itemTitle, itemPrice FROM ordertable, item WHERE ordertable.itemId = item.itemId;`;
   // any是沒有定義的意思
   const imgList: any = [];
   const itemList: any = [];
+  const orderList: any = [];
 
   const memberCentre = (await runSQL(sq1))[0]; // 帳號設定抓的資料
   const itemListRaw: any = await runSQL(sq2); // 我的收藏
   const imgListRaw: any = await runSQL(sq3); // item的圖片
+  const orderListRaw: any = (await runSQL(sq4)); // 訂單管理抓的資料
   // forEach是在轉格式,原本出來是database物件
   imgListRaw.forEach((item: any) => {
     item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
@@ -558,6 +567,11 @@ export async function getStaticProps({ params }) {
     item.itemEndDate = format(item.itemEndDate, "yyyy-MM-dd");
     itemList.push({ ...item });
   });
+  orderListRaw.forEach((ordertable: any) => {
+    ordertable.orderDate = format(ordertable.orderDate, "yyyy-MM-dd");
+    orderList.push({ ...ordertable });
+  });
+
   //把要的資料拿出來
   return {
     props: {
@@ -565,6 +579,7 @@ export async function getStaticProps({ params }) {
       memberCentre: { ...memberCentre },
       imgList,
       itemList,
+      orderList,
     },
   };
 }

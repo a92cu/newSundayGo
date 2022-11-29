@@ -9,8 +9,8 @@ import { format } from "date-fns";
 // 帶入react 與 axios 套件
 import React, { Component } from 'react';
 // import Link from 'next/link';s
-import Mapselect from "./component/Taiwanmap.jsx";
-import Placezone from "./component/Placezone2.jsx";
+// import Mapselect from "./component/Taiwanmap.jsx";
+import Play from "./component/play.jsx";
 
 
 
@@ -90,8 +90,8 @@ export default function homepage({ data }) {
     return (
         <>
             <Header />
-            <Mapselect />
-            <Placezone />
+
+            <Play />
 
             <Footer />
             {/* <Script src="/js/home.js" /> */}
