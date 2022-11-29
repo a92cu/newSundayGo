@@ -10,6 +10,7 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import dynamic from "next/dynamic";
 import { setSeconds } from "date-fns";
+import { data } from "jquery";
 
 const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
     ssr: false,
@@ -42,56 +43,32 @@ const imgstyles = {
     "objectPosition": "center"
 }
 export default function HotItem() {
-    // var [HotItemData, setHotItemData] = useState([]);
-    var [HotItemDataImg,setHotItemDataImg]=useState([]);
-    // function fetchData() {
-    //     return (fetch("/api/cart/HotItem",{next:{revalidate: 10}})
-    //             .then((response) => response.json())
-    //             .then((dataresult) => {
-    //                 // setHotItemData(dataresult.data);
-    //                 dataresult.data.forEach((item) => {
-    //                     // 將圖片從buffer轉碼     
-    //                     var binary="";
-    //                     console.log(item.itemImgUrl)
-    //                     var bytes = new Uint8Array(item.itemImgUrl.data);            
-    //                     for (var len = bytes.byteLength, i = 0; i < len; i++) {                
-    //                         binary += String.fromCharCode(bytes[i]);
-    //                         item.itemImgUrl.data[len]=binary  
-    //                     }
-    //                     setHotItemData( dataresult.data )
-    //                     console.log(binary);
-    //                     }
-    //                   );
-    //                 }
-    //                 ))
-    //         }
-    function fetchDataImgUrl() {
+    var [HotItemData, setHotItemData] = useState([]);
+    function fetchData() {
         return (fetch("/api/cart/HotItem",{next:{revalidate: 10}})
                 .then((response) => response.json())
                 .then((dataresult) => {
-                        console.log(dataresult)
                         dataresult.data.forEach((i)=>{
-                            var img=Buffer.from(i.itemImgUrl).toString('base64');
-                            console.log(img);
-                            var call=Buffer.from(img, 'base64').toString('ascii');
-                            console.log(call);
+                        var img=Buffer.from(i.itemImgUrl).toString('base64');
+                        var call=Buffer.from(img, 'base64').toString('ascii');
+                        var replaceCallAll=call.replaceAll('\x00', '');
+                        i.itemImgUrl=replaceCallAll;
                         })
+                        console.log(dataresult.data)
+                        setHotItemData(dataresult.data);
                     })
                 )
     }
     // 使用component渲染tsx會有一個問題，在你抓資料的同時他在渲染畫面，導致資料進不去畫面
     // 所以在使用 useEffect 把資料放進 return 的時候，先讓useEffect走setSeconds讓資料跑完
     // 再去跑return
-    // useEffect(() => {fetchData()},[])
-    useEffect(() =>{fetchDataImgUrl()},[])
-    // useEffect(() => {setSeconds( fetchData() ,10),[]})
-    // console.log(HotItemData)
+    useEffect(() => {setSeconds( fetchData() ,10),[]})
+
     return (
         <>
             <div className="cartcontainer">
                 <div className="toMoreHot">更多推薦商品</div>
                 {/* <span>{HotItemData.forEach((i)=>{i})}</span> */}
-                <img src="https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_125748/20220103071938_8TSLy/png" alt="hi"/>
                 <OwlCarousel
                     loop={true} // 循環播放
                     nav={false} // 顯示點點
@@ -100,14 +77,14 @@ export default function HotItem() {
                     autoplaySpeed={600} // 滑動速度
                     responsive={Responsive}
                 >
-                    {/* {HotItemData.map((i,index)=>
+                    {HotItemData.map((i,index)=>
                         <div className="item" key={index}>
                             <a href={`/CartDetails/+${i.itemId}`} style={fontstyles}>
                                 <img src={i.itemImgUrl} style={imgstyles} alt="img" />
                                 <div>{i.itemTitle}</div>
                             </a>
                         </div>
-                    )} */}
+                    )}
                 </OwlCarousel>
             </div>
         </>
