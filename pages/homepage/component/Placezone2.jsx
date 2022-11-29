@@ -2,30 +2,16 @@ import $ from 'jquery';
 import React, { useEffect, useState } from 'react';
 // import { runSQL } from "/../../lib/mysql";
 import { setSeconds } from "date-fns";
-import { exit } from 'process';
 
 
+
+
+//商品加入最愛連結
 export const Placezone = () => {
-    var [homepagelist, setlist] = useState({});
-    // useEffect(()=>{
-    //     setlist(true);
-    // },[]);
-
-    // useEffect(()=>{
-    //     console.log(homepagelist)
-    //     // 先在元件建立時印出false，修改完homepagelist後再印出true
-    // },[homepagelist]);
-    //test2
-    // export async function getStaticProps(prop) {
-    //     const res = await fetch("/api/home/homepage");
-    //     const data = await res.json();
-
-
-    //     return {
-    //         props: { data },
-    //     };
-    //org
+    var [homepagelist, setlist] = useState([]);
+    // useEffect(() => fetchdata(), []);
     async function fetchdata() {
+
         return (await fetch("/api/home/homepage")
             .then((res) => res.json())
             .then((result) => setlist(result.data))
@@ -34,43 +20,40 @@ export const Placezone = () => {
     // console.log(result.data)
     // const fetcher = (user, page) =>
     //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
-    window.onload = function () {
-        useEffect(() => { setSeconds(fetchdata(), 1000), [] })
-        useEffect(() => {
-            // $(function (){
+
+    useEffect(() => {
+        fetchdata()
+        // $(function (){
 
 
-            // console.log(homepagelist)
-            var acc = document.getElementsByClassName("accordion");
-            var i;
+        // console.log(homepagelist)
+        var acc = $(".accordion");
+        var i;
 
-            for (i = 0; i < acc.length; i++) {
-                acc[i].addEventListener("click", function () {
-                    this.classList.toggle("active");
-                    var panel = this.nextElementSibling;
-                    if (panel.style.maxHeight) {
-                        panel.style.maxHeight = null;
-                    } else {
-                        panel.style.maxHeight = panel.scrollHeight + "px";
-                    }
-                });
-            }
-            var allbtn = document.getElementsByClassName("allcheck");
-            $(".allcheck").click(function () {
-                if (this.checked) {
-                    $("input[name='citys']").each(function () {
-                        $(this).prop("checked", true)
-                    });
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
                 } else {
-                    $("input[name='citys']").each(function () {
-                        $(this).prop("checked", false)
-                    })
+                    panel.style.maxHeight = panel.scrollHeight + "px";
                 }
-            })
-                , [homepagelist]
+            });
+        }
+
+        $(".allcheck").click(function () {
+            if (this.checked) {
+                $("input[name='citys']").each(function () {
+                    $(this).prop("checked", true)
+                });
+            } else {
+                $("input[name='citys']").each(function () {
+                    $(this).prop("checked", false)
+                })
+            }
         })
-    }
-    //use結尾
+    })
     return (
         <div style={{ width: '1280px', margin: '0 auto' }} >
             {/* <!-- 主要篩選區 --> */}
@@ -229,7 +212,7 @@ export const Placezone = () => {
                     </div >
                     <div id="content" className="content">
                         {/* <!-- 商品顯示主體 --> */}
-                        {homepagelist.map((item, index) => {
+                        {homepagelist.map((item, index) =>
                             <div className="homeProduct">
                                 {/* <!-- 圖片框 --> */}
                                 <div className="picPlace">
@@ -303,7 +286,8 @@ export const Placezone = () => {
                                 </div>
 
                             </div>
-                        })}
+                        )}
+                        {/* map結尾 */}
                     </div>
                 </div >
 
@@ -324,15 +308,5 @@ export const Placezone = () => {
         </div >
     )
     // })
-
 }
-
-// export async function getServerSideProps(context) {
-//     const res = await fetch("/api/home/homepage");
-//     const data = await res.json();
-
-//     return {
-//         props: { data },
-//     };
-// }
 export default Placezone;

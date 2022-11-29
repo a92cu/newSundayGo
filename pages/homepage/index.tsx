@@ -3,14 +3,14 @@ import Image from "next/image";
 //引入NEXT內建的script
 import Script from "next/script";
 //lib裡的指令重複使用
-// import { runSQL } from "../../../lib/mysql";
+import { runSQL } from "../../lib/mysql";
 //整理日期格式
 import { format } from "date-fns";
 // 帶入react 與 axios 套件
 import React, { Component } from 'react';
 // import Link from 'next/link';s
 import Mapselect from "./component/Taiwanmap.jsx";
-import Placezone from "./component/Placezone.jsx";
+import Placezone from "./component/Placezone2.jsx";
 
 
 
@@ -23,11 +23,11 @@ function Header() {
                     alt=""
                     style={{ width: '90px', top: '-8px', position: 'relative' }} /></a>
             <div className="header-right">
-                <a href="/home/food">美食</a>
-                <a href="/home/place">景點</a>
-                <a href="/home/play">活動</a>
-                <a href="/home/living">住宿</a>
-                <a href="/home/car">交通</a>
+                <a href="/homepage/food">美食</a>
+                <a href="/homepage/place">景點</a>
+                <a href="/homepage/play">活動</a>
+                <a href="/homepage/living">住宿</a>
+                <a href="/homepage/car">交通</a>
                 <a href="#"><img src="/images/cart.png" style={{ width: '25px' }} /></a>
                 <a href="#">登入|註冊</a>
             </div>
@@ -86,31 +86,17 @@ function Footer() {
 }
 
 //homepage 畫面路由
-export default function homepage() {
+export default function homepage({data}) {
     return (
         <>
             <Header />
             <Mapselect />
             <Placezone/>
+         
             <Footer />
+            {/* <Script src="/js/home.js" /> */}
         </>
-
-
-
     )
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-// export default Test;

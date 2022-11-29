@@ -15,7 +15,9 @@ const connection = mysql.createConnection({
   host:'localhost',
   user: "root",
   password: "", //預設phpmyadmin密碼是空值
-  database: "sundaygodata",
+
+  database: "travel",
+
   multipleStatements: true,
 });
 //連線
