@@ -111,6 +111,7 @@ textarea {
     border-radius: 5px;
     margin-top: 6px;
     margin-bottom: 16px;
+    width: fit-content;
 }
 
 

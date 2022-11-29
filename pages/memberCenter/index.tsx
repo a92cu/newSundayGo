@@ -4,6 +4,9 @@ import Script from "next/script";
 import { runSQL } from "../../lib/mysql";
 import { format } from "date-fns";
 import * as R from "ramda";
+// import router from "next/router";
+import { useRouter } from 'next/router'
+
 function Footer() {
   return (
     <div className="footer">
@@ -408,6 +411,7 @@ function Evaluation() {
 
 // 收藏頁面
 function Collect({ itemList, imgList, setItemList }) {
+  const router = useRouter()
   const collectDelete = (favId) => {
     if (window.confirm("確認要從我的商品移除嗎") === true) {
       console.log('ok');
@@ -428,7 +432,7 @@ function Collect({ itemList, imgList, setItemList }) {
           // console.log(imgList); //[{}{}]
           // console.log(i); // {}
           return (
-            <div className="collectDiv" key={i.favId}>
+            <div className="collectDiv" key={i.favId} onClick={() => router.push(`/item/${i.itemId}`)}>                          
               <div className="collectImg">
                 <img src={
                   imgList?.find(
@@ -456,6 +460,8 @@ function Collect({ itemList, imgList, setItemList }) {
                 </div>
               </div>
             </div>
+
+
           );
 
         })}
