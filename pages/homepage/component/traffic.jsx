@@ -10,30 +10,8 @@ import { setSeconds } from "date-fns";
 export const Traffic = () => {
     var [homepagelist, setlist] = useState([]);
     // useEffect(() => fetchdata(), []);
-    async function fetchdata() {
-
-        return (await fetch("/api/home/traffic")
-            .then((res) => res.json())
-            .then((result) => {
-                result.data.forEach((i)=>{
-                    var img=Buffer.from(i.itemImgUrl).toString('base64');
-                    var call=Buffer.from(img, 'base64').toString('ascii');
-                    var replaceCallAll=call.replaceAll('\x00', '');
-                    i.itemImgUrl=replaceCallAll;
-                    })
-                    // console.log(result.data)
-                    setlist(result.data);
-                    //
-                    //setlist(result.data))
-                })
-        )
-    }
-    // console.log(result.data)
-    // const fetcher = (user, page) =>
-    //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
-
     useEffect(() => {
-        fetchdata()
+        fetchdata();
         // $(function (){
 
 
@@ -69,7 +47,38 @@ export const Traffic = () => {
             // $(this)(".filterBtn").hide()
             $(this).parent('button').hide()
         });
-    })
+    },[])
+    async function fetchdata() {
+
+        return (await fetch("/api/home/traffic")
+            .then((res) => res.json())
+            .then((result) => {
+                result.data.forEach((i) => {
+                    var img = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call = Buffer.from(img, 'base64').toString('ascii');
+                    var replaceCallAll = call.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll;
+                })
+                console.log(result.data)
+                setlist(result.data);
+                //
+                //setlist(result.data))
+            })
+        )
+    }
+    //篩選不重覆項目
+    var redata = homepagelist.map(function (item) {
+        return item.itemFilter2;
+    });
+    var noredata = redata.filter(function (item, index, array) {
+        return array.indexOf(item) === index;
+        // console.log(only);
+    });
+    // console.log(result.data)
+    // const fetcher = (user, page) =>
+    //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
+
+    
     return (
         <div style={{ width: '1280px', margin: '0 auto' }} >
             {/* <!-- 主要篩選區 --> */}
@@ -217,9 +226,9 @@ export const Traffic = () => {
                         共篩選出
                         < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
                         項行程
-                        {homepagelist.map((item) =>
+                        {noredata.map((i) =>
                             <button className="filterBtn" >
-                                {item.itemFilter2}<span className="delbtn">X</span>
+                                {i}<span className="delbtn">X</span>
                             </button>
                         )}
                         {homepagelist.map((item) =>

@@ -11,31 +11,10 @@ import { useRouter } from 'next/router';
 export const Placezone = () => {
     const router = useRouter();
     var [homepagelist, setlist] = useState([]);
-    // useEffect(() => fetchdata(), []);
-    async function fetchdata() {
-
-        return (await fetch("/api/home/homepage")
-            .then((res) => res.json())
-            .then((result) => {
-                result.data.forEach((i)=>{
-                    var img=Buffer.from(i.itemImgUrl).toString('base64');
-                    var call=Buffer.from(img, 'base64').toString('ascii');
-                    var replaceCallAll=call.replaceAll('\x00', '');
-                    i.itemImgUrl=replaceCallAll;
-                    })
-                    // console.log(result.data)
-                    setlist(result.data);
-                    //
-                    //setlist(result.data))
-                })
-        )
-    }
-    // console.log(result.data)
-    // const fetcher = (user, page) =>
-    //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
-
+    // useEffect(() => {fetchdata()}, []);
+    //生命週期先執行一次,2個參數，1.{裡面放要執行或宣告的動態},2.[]放個空陣列useState狀態有改變才再執行
     useEffect(() => {
-        fetchdata()
+        fetchdata();
         // $(function (){
 
 
@@ -80,7 +59,37 @@ export const Placezone = () => {
             // $(this)(".filterBtn").hide()
             $(this).parent('button').hide()
         });
-    })
+    },[])
+    async function fetchdata() {
+
+        return (await fetch("/api/home/homepage")
+            .then((res) => res.json())
+            .then((result) => {
+                result.data.forEach((i) => {
+                    var img = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call = Buffer.from(img, 'base64').toString('ascii');
+                    var replaceCallAll = call.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll;
+                })
+                // console.log(result.data)
+                setlist(result.data);
+                //
+                //setlist(result.data))
+            })
+        )
+    }
+    // console.log(result.data)
+    // const fetcher = (user, page) =>
+    //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
+    //篩選不重覆項目
+    var redata = homepagelist.map(function (item) {
+        return item.itemFilter2,item.itemFilter4;
+    });
+    var noredata = redata.filter(function (item, index, array) {
+        return array.indexOf(item) === index;
+        // console.log(only);
+    });
+   
     return (
         <div style={{ width: '1280px', margin: '0 auto' }} >
             {/* <!-- 主要篩選區 --> */}
@@ -228,23 +237,23 @@ export const Placezone = () => {
                         共篩選出
                         < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
                         項行程
-                        {/* {homepagelist.map((item)=>
+                         {noredata.map((i)=>
                         <button className="filterBtn" >
-                            {item.itemFilter4}<span className="delbtn">X</span>
+                            {i}<span className="delbtn">X</span>
                         </button>
                          )} 
-                          {homepagelist.map((item)=>
-                        <button className="filterBtn">
-                            {item.itemFilter2}<span className="delbtn">X</span>
-                            </button>
-                        )} */}
-                        <button className="filterBtn" >
-                          12<span className="delbtn">X</span>
+                            {/* {homepagelist.map((item)=>
+                            <button className="filterBtn">
+                                {item.itemFilter2}<span className="delbtn">X</span>
+                                </button>
+                            )}  */}
+                        {/* <button className="filterBtn" >
+                            12<span className="delbtn">X</span>
                         </button>
-                         
+
                         <button className="filterBtn">
-                            33<span className="delbtn" style={{float:'right',marginright:'10    0px'}}>X</span>
-                         </button>
+                            33<span className="delbtn" style={{ float: 'right', marginright: '10    0px' }}>X</span>
+                        </button> */}
 
                         <hr />
                         <span className="homerightup2"> 排序|<a href="">熱門程度</a>|<a href="">用戶評價</a>|<a

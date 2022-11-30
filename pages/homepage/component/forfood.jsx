@@ -11,30 +11,8 @@ export const Forfood = () => {
     const router = useRouter();
     var [homepagelist, setlist] = useState([]);
     // useEffect(() => fetchdata(), []);
-    async function fetchdata() {
-
-        return (await fetch("/api/home/food")
-            .then((res) => res.json())
-            .then((result) => {
-                result.data.forEach((i)=>{
-                    var img=Buffer.from(i.itemImgUrl).toString('base64');
-                    var call=Buffer.from(img, 'base64').toString('ascii');
-                    var replaceCallAll=call.replaceAll('\x00', '');
-                    i.itemImgUrl=replaceCallAll;
-                    })
-                    console.log(result.data)
-                    setlist(result.data);
-                    //
-                    //setlist(result.data))
-                })
-        )
-    }
-    // console.log(result.data)
-    // const fetcher = (user, page) =>
-    //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
-
     useEffect(() => {
-        fetchdata()
+        fetchdata();
         // $(function (){
 
 
@@ -72,12 +50,74 @@ export const Forfood = () => {
         });
 
         // $("input[type='checkbox']").on('click',function(){
-        //     $(".homerightup").append(`<input type="button"  value="${this.citys}" className="filterBtn">`)
+        //     var item = $(":radio:checked"); 
+        //     var len=item.length; 
+        //     if(len>0){ 
+        //       alert("yes--："+$(":radio:checked").val());
+        //     }
+        //     // $(".homerightup").append(`<input type="button"  value="${this.citys}" className="filterBtn">`)
         // //   console.log(this)  
         // })
-    })
+        //    $('.ckbox').on('click',function(){
+        //     alert()
+        //    })
+        function cekbox(){
+            var arr=[];
+            $('input[type="checkbox"]').on('click',function(){
+
+              $(this).each(function (i) {
+                arr.push($(this).parent().text()) ;
+                console.log(arr);
+
+            })
+                // var text = "";
+                // text += $(this).parent().text();
+              
+            })
+        }
+        cekbox();
+
+       
+        
+    },[])
+    async function fetchdata() {
+        if (homepagelist == "") {
+
+
+            return (await fetch("/api/home/food")
+                .then((res) => res.json())
+                .then((result) => {
+                    result.data.forEach((i) => {
+                        var img = Buffer.from(i.itemImgUrl).toString('base64');
+                        var call = Buffer.from(img, 'base64').toString('ascii');
+                        var replaceCallAll = call.replaceAll('\x00', '');
+                        i.itemImgUrl = replaceCallAll;
+                    })
+                    // console.log(result.data)
+                    setlist(result.data);
+                    //
+                    //setlist(result.data))
+                })
+            )
+        }
+    }
+    //篩選不重覆項目
+    var redata = homepagelist.map(function(item){
+        return item.itemFilter2;
+    });
+    var noredata = redata.filter(function(item, index, array){
+        return array.indexOf(item) === index;
+        // console.log(only);
+    });
+    // console.log(only);
+    // console.log(result.data)
+    // const fetcher = (user, page) =>
+    //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
+
+   
 
     return (
+        
         <div style={{ width: '1280px', margin: '0 auto' }} >
             {/* <!-- 主要篩選區 --> */}
             <div className="hometop" >
@@ -91,7 +131,7 @@ export const Forfood = () => {
                                 <input type="checkbox" className="allcheck" />北部
                             </button>
                             <div className="panel" >
-                                <input type="checkbox" name="citys" />基隆市
+                                <input type="checkbox" name="citys" value={'基隆市'} className="ckbox" />基隆市
                                 <br />
                                 <input type="checkbox" name="citys" />新北市
                                 <br />
@@ -165,7 +205,7 @@ export const Forfood = () => {
                             商品類別篩選
                             <br />
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" checked="checked"/>美食
+                                <input type="checkbox" className="allcheck" checked="checked" />美食
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />餐廳
@@ -224,14 +264,14 @@ export const Forfood = () => {
                         共篩選出
                         < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
                         項行程
-                        {homepagelist.map((item)=>
-                        <button className="filterBtn" >
-                            {item.itemFilter2}<span className="delbtn">X</span>
-                        </button>
-                        )} 
-                          {homepagelist.map((item)=>
-                        <button className="filterBtn">
-                            {item.itemFilter3}<span className="delbtn">X</span>
+                        {noredata.map((i) =>
+                            <button className="filterBtn" >
+                                {i}<span className="delbtn">X</span>
+                            </button>
+                        )}
+                        {homepagelist.map((item) =>
+                            <button className="filterBtn">
+                                {item.itemFilter3}<span className="delbtn">X</span>
                             </button>
                         )}
                         <hr />
@@ -291,12 +331,13 @@ export const Forfood = () => {
                                     </div>
                                     {/* <!-- 星星評價 --> */}
                                     <div className="prostar">
-                                        {homepagelist.map((item,idx)=>
-                                        {for(var i=1;i<={idx};i++){
-                                        // {item.itemTotalStar}
-                                        {/* // (item==5?"":item.itemTotalStar) */}
-                                        <img src="/images/1.png" alt="" />
-                                       }})}  
+                                        {homepagelist.map((item, idx) => {
+                                            for (var i = 1; i <= { idx }; i++) {
+                                                // {item.itemTotalStar}
+                                                {/* // (item==5?"":item.itemTotalStar) */ }
+                                                <img src="/images/1.png" alt="" />
+                                            }
+                                        })}
                                         <img src="/images/1.png" alt="" />
                                         <img src="/images/1.png" alt="" />
                                         <img src="/images/0.png" alt="" />

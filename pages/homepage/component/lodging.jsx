@@ -12,41 +12,15 @@ export const Lodging = () => {
     const router = useRouter();
     var [homepagelist, setlist] = useState([]);
     // useEffect(() => fetchdata(), []);
-    async function fetchdata() {
 
-        return (await fetch("/api/home/lodging")
-            .then((res) => res.json())
-            .then((result) => {
-                result.data.forEach((i)=>{
-                    var img=Buffer.from(i.itemImgUrl).toString('base64');
-                    var call=Buffer.from(img, 'base64').toString('ascii');
-                    var replaceCallAll=call.replaceAll('\x00', '');
-                    i.itemImgUrl=replaceCallAll;
-                    })
-                    console.log(result.data)
-                    setlist(result.data);
-                    //
-                    //setlist(result.data))
-                })
-        )
-    }
-    // console.log(result.data)
-    // const fetcher = (user, page) =>
-    //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
 
     useEffect(() => {
         // if(homepagelist==""){
-
-        
-        fetchdata()
-        // $(function (){
-
-
-        // console.log(homepagelist)
+        fetchdata() ;
         var acc = $(".accordion");
         var i;
-
         for (i = 0; i < acc.length; i++) {
+            
             acc[i].addEventListener("click", function () {
                 this.classList.toggle("active");
                 var panel = this.nextElementSibling;
@@ -57,7 +31,7 @@ export const Lodging = () => {
                 }
             });
         }
-
+    
         $(".allcheck").click(function () {
             if (this.checked) {
                 $("input[name='citys']").each(function () {
@@ -73,9 +47,47 @@ export const Lodging = () => {
             // console.log(this)
             // $(this)(".filterBtn").hide()
             $(this).parent('button').hide()
-        }); 
+        });
+
+    },[])
+    async function fetchdata() {
+
+        return (await fetch("/api/home/lodging")
+            .then((res) => res.json())
+            .then((result) => {
+                result.data.forEach((i) => {
+                    var img = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call = Buffer.from(img, 'base64').toString('ascii');
+                    var replaceCallAll = call.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll;
+                })
+                console.log(result.data)
+                setlist(result.data);
+                //
+                //setlist(result.data))
+            })
+        )
+    }
+    //篩選不重覆項目
+    var redata = homepagelist.map(function (item) {
+        return item.itemFilter2;
+    });
+    var noredata = redata.filter(function (item, index, array) {
+        return array.indexOf(item) === index;
+        // console.log(only);
+    });
+    // console.log(result.data)
+    // const fetcher = (user, page) =>
+    //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
+
+    // $(function (){
+
+
+    // console.log(homepagelist)
+   
+    
     // }
-})
+
     return (
         <div style={{ width: '1280px', margin: '0 auto' }} >
             {/* <!-- 主要篩選區 --> */}
@@ -191,12 +203,12 @@ export const Lodging = () => {
                             </div>
 
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" checked/>住宿
+                                <input type="checkbox" className="allcheck" checked />住宿
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" checked/>民宿
+                                <input type="checkbox" name="citys" checked />民宿
                                 <br />
-                                <input type="checkbox" name="citys" checked/>飯店
+                                <input type="checkbox" name="citys" checked />飯店
 
                             </div>
                             <button className="accordion">
@@ -223,14 +235,14 @@ export const Lodging = () => {
                         共篩選出
                         < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
                         項行程
-                        {homepagelist.map((item)=>
-                        <button className="filterBtn" >
-                            {item.itemFilter2}<span className="delbtn">X</span>
-                        </button>
-                        )} 
-                          {homepagelist.map((item)=>
-                        <button className="filterBtn">
-                            {item.itemFilter4}<span className="delbtn">X</span>
+                        {homepagelist.map((item) =>
+                            <button className="filterBtn" >
+                                {item.itemFilter2}<span className="delbtn">X</span>
+                            </button>
+                        )}
+                        {homepagelist.map((item) =>
+                            <button className="filterBtn">
+                                {item.itemFilter4}<span className="delbtn">X</span>
                             </button>
                         )}
                         <hr />
