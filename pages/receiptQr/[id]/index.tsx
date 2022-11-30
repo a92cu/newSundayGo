@@ -1,15 +1,14 @@
 import { runSQL } from "../../../lib/mysql";
 import Image from "next/image";
 import { useState } from 'react';
-import Script from "next/script";
 import Router from "next/router";
 import { format } from "date-fns";
-import { data } from "jquery";
 
 function ReceiptQr({
   userName,
   orderReceipt,
-  itemTitle }) {
+  itemTitle
+  }) {
   const XBtn = () => {
     document.getElementById("XBtn").style.backgroundColor = "#d5c8ae";
     document.getElementById("XBtn").style.color = "white";

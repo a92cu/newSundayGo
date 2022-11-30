@@ -4,7 +4,6 @@ import Script from "next/script";
 import { runSQL } from "../../lib/mysql";
 import { format } from "date-fns";
 import * as R from "ramda";
-// import router from "next/router";
 import { useRouter } from 'next/router'
 
 function Footer() {

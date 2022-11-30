@@ -2,7 +2,7 @@ import { runSQL } from "../../../lib/mysql";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Script from "next/script";
-import Router from "next/router";
+import { useRouter } from 'next/router'
 import { format } from "date-fns";
 
 import html2canvas from "html2canvas";
@@ -11,28 +11,31 @@ import pdfMake from "pdfMake";
 // import React from 'react';
 import { useQRCode } from 'next-qrcode';
 
-function QRCode() {
-  const { Canvas } = useQRCode();
-  return (
-    <Canvas
-      // text={'https://www.google.com.tw'}
-      // text={'http://localhost:3000/memberCenter'}
-      text={'http://localhost:3000/receiptQr/1'}
-      options={{
-        level: 'M',
-        margin: 3,
-        scale: 4,
-        width: 200,
-        color: {
-          dark: '#000000',
-          light: '#ffffff',
-        },
-      }}
-    />
-  );
-}
+// function QRCode(orderList) {
+//   const { Canvas } = useQRCode();
+//   return (
+//     <Canvas
+//       // text={'https://www.google.com.tw'}
+//       // text={'http://localhost:3000/memberCenter'}
+//       // text={`http://localhost:3000/api/receiptQr/${orderNumber}`}
+//       // text={`http://localhost:3000/receiptQr/${orderNumber}`}
+//       text={`http://localhost:3000/receiptQr/${orderList.orderList[0].orderNumber}`}
+//       options={{
+//         level: 'M',
+//         margin: 3,
+//         scale: 4,
+//         width: 200,
+//         color: {
+//           dark: '#000000',
+//           light: '#ffffff',
+//         },
+//       }}
+//     />
+//   );
+// }
 
 function ReceiptPage(orderList) {
+  const { Canvas } = useQRCode();
   const PdfDownload = () => {
     // console.log(orderList); // {[{}]}
     // console.log(orderList.orderList); // [{}]
@@ -68,7 +71,25 @@ function ReceiptPage(orderList) {
       <br />
       <div className="receiptQR">
         <div id="qrcode">
-          <QRCode />
+          {/* <QRCode /> */}
+          <Canvas
+            // text={'https://www.google.com.tw'}
+            // text={'http://localhost:3000/memberCenter'}
+            // text={`http://localhost:3000/api/receiptQr/${orderNumber}`}
+            // text={`http://localhost:3000/receiptQr/${orderNumber}`}
+            text={`http://localhost:3000/receiptQr/${orderList.orderList[0].orderNumber}`}
+            // text={`http://localhost:3000/receiptQr/1`}
+            options={{
+              level: 'M',
+              margin: 3,
+              scale: 4,
+              width: 200,
+              color: {
+                dark: '#000000',
+                light: '#ffffff',
+              },
+            }}
+          />
         </div>
         <div id="code"></div>
         <br />
@@ -108,7 +129,7 @@ export async function getStaticProps({ params }) {
   const sq1 = `SELECT item.itemId ,orderNumber, userId, orderReceipt, orderDate, orderQua, orderDeter , itemTitle FROM ordertable, item WHERE ordertable.itemId = item.itemId and orderNumber = "${params.id}"`;
 
   const orderList: any = [];
-  const orderListRaw: any = (await runSQL(sq1)); 
+  const orderListRaw: any = (await runSQL(sq1));
 
   //轉日期格式
   orderListRaw.forEach((ordertable: any) => {
