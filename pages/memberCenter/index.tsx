@@ -299,7 +299,7 @@ function MemberOrder(orderList, imgList) {
                       </div>
                       <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
                       <div className="ORRightBtn">
-                        <button> <a href="Receipt.html">查看憑證</a> </button>
+                        <button > <a href={`/receipt/${i.orderNumber}`}>查看憑證</a> </button>
                       </div>
                     </div>
                   </div>
@@ -326,7 +326,7 @@ function MemberOrder(orderList, imgList) {
                         <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
                         <div className="ORRightBtn">
                           <button id="GoEvaluationBtn" onClick={() => GoEvaluation()}>前往評價</button>
-                          <button>查看憑證</button>
+                          <button><a href={`/receipt/${i.orderNumber}`}>查看憑證</a></button>
                         </div>
                       </div>
                     </div>
@@ -552,7 +552,7 @@ export async function getStaticProps({ params }) {
   // 我的收藏資料庫抓的
   const sq2 = `SELECT * FROM favorite , item WHERE favorite.itemId = item.itemId AND userId = 'u123456789';`;
   const sq3 = `SELECT * FROM itemimg`;
-  const sq4 = `SELECT item.itemId , userId, orderReceipt,orderReview, orderStar, orderDate, orderQua, orderDeter , itemTitle, itemPrice FROM ordertable, item WHERE ordertable.itemId = item.itemId;`;
+  const sq4 = `SELECT item.itemId , userId, orderNumber, orderReceipt,orderReview, orderStar, orderDate, orderQua, orderDeter , itemTitle, itemPrice FROM ordertable, item WHERE ordertable.itemId = item.itemId;`;
   // any是沒有定義的意思
   const imgList: any = [];
   const itemList: any = [];
