@@ -420,6 +420,8 @@ function Collect({ itemList, imgList, setItemList }) {
       console.log(newItemList); // {{},{}}
       fetch(`http://localhost:3000/api/memberCentre/collectDel`, {
         method: "DELETE",
+        body: favId
+
       });
     }
   };
