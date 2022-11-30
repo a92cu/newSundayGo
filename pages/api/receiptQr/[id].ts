@@ -19,9 +19,29 @@ export default async function userHandler(
       } catch (error) {
         res.status(500);
       }
-      break;    
+      break;
     default:
       res.setHeader("Allow", ["GET", "PUT"]);
       res.status(405).end(`Method ${method} Not Allowed`);
+    case "PUT":
+      try {
+        // 修改商品內容
+        const keys = Object.keys(req.body);
+        const values = Object.values(req.body).map((i, index) => {
+          return typeof i === "string" ? `"${i}"`.trim() : i;
+        });
+        let query = "";
+        for (let j = 0; j < keys.length; j++) {
+          query =
+            query + keys[j] + "=" + values[j] + (j === keys.length - 1 ? "" : ",");
+        }
+        const sq1 = `UPDATE orderTable SET ${query} where orderNumber = "${id}"`;
+        runSQL(sq1);
+        res.status(200).json({ message: "ok" });
+      } catch (error) {
+        res.status(500);
+      }
+      break;
   }
+
 }
