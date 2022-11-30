@@ -412,14 +412,15 @@ function Evaluation() {
 function Collect({ itemList, imgList, setItemList }) {
   const router = useRouter()
   const collectDelete = (favId) => {
+    console.log(favId);
     if (window.confirm("確認要從我的商品移除嗎") === true) {
       console.log('ok');
       const newItemList = R.reject(R.propEq("favId", favId), itemList);
       setItemList(newItemList);
-      // console.log(newItemList); // {{},{}}
-      // fetch(`http://localhost:3000/api/memberCentre/collectDel`, {
-      //   method: "DELETE",
-      // });
+      console.log(newItemList); // {{},{}}
+      fetch(`http://localhost:3000/api/memberCentre/collectDel`, {
+        method: "DELETE",
+      });
     }
   };
   return (
@@ -431,7 +432,8 @@ function Collect({ itemList, imgList, setItemList }) {
           // console.log(imgList); //[{}{}]
           // console.log(i); // {}
           return (
-            <div className="collectDiv" key={i.favId} onClick={() => router.push(`/item/${i.itemId}`)}>                          
+            // onClick={() => router.push(`/item/${i.itemId}`)}
+            <div className="collectDiv" key={i.favId}>                          
               <div className="collectImg">
                 <img src={
                   imgList?.find(
@@ -542,6 +544,7 @@ export default function MemberCentre(props) {
     <Script src="/js/MemberCentre.js" />
   </>
 }
+
 
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {

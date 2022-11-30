@@ -11,29 +11,6 @@ import pdfMake from "pdfMake";
 // import React from 'react';
 import { useQRCode } from 'next-qrcode';
 
-// function QRCode(orderList) {
-//   const { Canvas } = useQRCode();
-//   return (
-//     <Canvas
-//       // text={'https://www.google.com.tw'}
-//       // text={'http://localhost:3000/memberCenter'}
-//       // text={`http://localhost:3000/api/receiptQr/${orderNumber}`}
-//       // text={`http://localhost:3000/receiptQr/${orderNumber}`}
-//       text={`http://localhost:3000/receiptQr/${orderList.orderList[0].orderNumber}`}
-//       options={{
-//         level: 'M',
-//         margin: 3,
-//         scale: 4,
-//         width: 200,
-//         color: {
-//           dark: '#000000',
-//           light: '#ffffff',
-//         },
-//       }}
-//     />
-//   );
-// }
-
 function ReceiptPage(orderList) {
   const { Canvas } = useQRCode();
   const PdfDownload = () => {
@@ -73,10 +50,6 @@ function ReceiptPage(orderList) {
         <div id="qrcode">
           {/* <QRCode /> */}
           <Canvas
-            // text={'https://www.google.com.tw'}
-            // text={'http://localhost:3000/memberCenter'}
-            // text={`http://localhost:3000/api/receiptQr/${orderNumber}`}
-            // text={`http://localhost:3000/receiptQr/${orderNumber}`}
             text={`http://localhost:3000/receiptQr/${orderList.orderList[0].orderNumber}`}
             // text={`http://localhost:3000/receiptQr/1`}
             options={{

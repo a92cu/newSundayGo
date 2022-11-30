@@ -13,8 +13,8 @@ export default async function userHandler(
     case "DELETE":
       try {
         // 刪除商品內容
-        // const sq1 = `DELETE FROM favtable WHERE favId = "${id}"`;
-        const sq1 = `DELETE FROM favtable WHERE favId = ?`;
+        // const sq1 = `DELETE FROM favorite WHERE favId = "1"`;
+        const sq1 = `DELETE FROM favorite WHERE favId = ?;`;
         runSQL(sq1);
         res.status(200).json({ message: "ok" });
       } catch (error) {
