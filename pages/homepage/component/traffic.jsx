@@ -14,7 +14,18 @@ export const Traffic = () => {
 
         return (await fetch("/api/home/traffic")
             .then((res) => res.json())
-            .then((result) => setlist(result.data))
+            .then((result) => {
+                result.data.forEach((i)=>{
+                    var img=Buffer.from(i.itemImgUrl).toString('base64');
+                    var call=Buffer.from(img, 'base64').toString('ascii');
+                    var replaceCallAll=call.replaceAll('\x00', '');
+                    i.itemImgUrl=replaceCallAll;
+                    })
+                    // console.log(result.data)
+                    setlist(result.data);
+                    //
+                    //setlist(result.data))
+                })
         )
     }
     // console.log(result.data)
@@ -52,7 +63,12 @@ export const Traffic = () => {
                     $(this).prop("checked", false)
                 })
             }
-        })
+        });
+        $(".delbtn").on('click', function () {
+            // console.log(this)
+            // $(this)(".filterBtn").hide()
+            $(this).parent('button').hide()
+        });
     })
     return (
         <div style={{ width: '1280px', margin: '0 auto' }} >
@@ -178,18 +194,18 @@ export const Traffic = () => {
 
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" checked/>交通
+                                <input type="checkbox" className="allcheck" checked />交通
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" checked/>租車
+                                <input type="checkbox" name="citys" checked />租車
                                 <br />
-                                <input type="checkbox" name="citys" checked/>飛機
+                                <input type="checkbox" name="citys" checked />飛機
                                 <br />
-                                <input type="checkbox" name="citys" checked/>船班
+                                <input type="checkbox" name="citys" checked />船班
                                 <br />
-                                <input type="checkbox" name="citys" checked/>高鐵
+                                <input type="checkbox" name="citys" checked />高鐵
                                 <br />
-                                <input type="checkbox" name="citys" checked/>客運
+                                <input type="checkbox" name="citys" checked />客運
                             </div>
                         </div>
                     </div >
@@ -201,10 +217,16 @@ export const Traffic = () => {
                         共篩選出
                         < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
                         項行程
-
-                        <button className="filterBtn" > 55</button>
-
-                        <button className="filterBtn">美食餐廳</button>
+                        {homepagelist.map((item) =>
+                            <button className="filterBtn" >
+                                {item.itemFilter2}<span className="delbtn">X</span>
+                            </button>
+                        )}
+                        {homepagelist.map((item) =>
+                            <button className="filterBtn">
+                                {item.itemFilter4}<span className="delbtn">X</span>
+                            </button>
+                        )}
                         <hr />
                         <span className="homerightup2"> 排序|<a href="">熱門程度</a>|<a href="">用戶評價</a>|<a
                             href="">&#36;價格由低到高</a></span>
@@ -213,7 +235,7 @@ export const Traffic = () => {
                     <div id="content" className="content">
                         {/* <!-- 商品顯示主體 --> */}
                         {homepagelist.map((item, index) =>
-                            <div className="homeProduct">
+                            <div className="homeProduct" onClick={() => router.push(`/item/${item.itemId}`)}>
                                 {/* <!-- 圖片框 --> */}
                                 <div className="picPlace">
 

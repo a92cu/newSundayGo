@@ -66,7 +66,13 @@ export const Placezone = () => {
                         $(this).prop("checked", false)
                     })
                 }
+            });
+            $(".delbtn").on('click', function () {
+                // console.log(this)
+                // $(this)(".filterBtn").hide()
+                $(this).parent('button').hide()
             })
+            
                 , [homepagelist]
         })
     }
@@ -218,10 +224,16 @@ export const Placezone = () => {
                         共篩選出
                         < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
                         項行程
-
-                        <button className="filterBtn" > 55</button>
-
-                        <button className="filterBtn">美食餐廳</button>
+                        {homepagelist.map((item)=>
+                        <button className="filterBtn" >
+                            {item.itemFilter2}<span className="delbtn">X</span>
+                        </button>
+                        )} 
+                          {homepagelist.map((item)=>
+                        <button className="filterBtn">
+                            {item.itemFilter4}<span className="delbtn">X</span>
+                            </button>
+                        )}
                         <hr />
                         <span className="homerightup2"> 排序|<a href="">熱門程度</a>|<a href="">用戶評價</a>|<a
                             href="">&#36;價格由低到高</a></span>
