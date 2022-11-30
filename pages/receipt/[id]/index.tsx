@@ -16,7 +16,8 @@ function QRCode() {
   return (
     <Canvas
       // text={'https://www.google.com.tw'}
-      text={'http://localhost:3000/receiptQr'}
+      // text={'http://localhost:3000/memberCenter'}
+      text={'http://localhost:3000/receiptQr/1'}
       options={{
         level: 'M',
         margin: 3,
