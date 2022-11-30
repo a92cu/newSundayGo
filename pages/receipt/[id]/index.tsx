@@ -31,8 +31,11 @@ function QRCode() {
   );
 }
 
-function ReceiptPage() {
+function ReceiptPage(orderList) {
   const PdfDownload = () => {
+    // console.log(orderList); // {[{}]}
+    // console.log(orderList.orderList); // [{}]
+    // console.log(orderList.orderList[0]); //{}
 
     const pdf = document.getElementById('downloadReceipt')
     html2canvas(pdf).then((canvas) => {
@@ -56,10 +59,10 @@ function ReceiptPage() {
       </div>
       <br />
       <div className="receiptBody">
-        <h3>台灣嘉義｜三隻小豬觀光農場門票</h3>
-        <p> 使用日：<span>2022-11-27</span> </p>
-        <p>訂單編號：<span>21KK218456622</span> </p>
-        <p>數量：<span>4張</span> </p>
+        <h3>{orderList.orderList[0].itemTitle}</h3>
+        <p> 使用日：<span>{orderList.orderList[0].orderDate}</span> </p>
+        <p>訂單編號：<span>{orderList.orderList[0].orderReceipt}</span> </p>
+        <p>數量：<span>{orderList.orderList[0].orderQua}張</span> </p>
       </div>
       <br />
       <div className="receiptQR">
@@ -76,11 +79,12 @@ function ReceiptPage() {
 
 
 
-export default function Receipt() {
+export default function Receipt(props) {
+  const [orderList, setOrderList] = useState(props.orderList);
 
   return (
     <>
-      <ReceiptPage />
+      <ReceiptPage orderList={orderList} />
 
     </>
   )
@@ -99,19 +103,25 @@ export async function getStaticPaths(props) {
 }
 
 export async function getStaticProps({ params }) {
-  const sq1 = `SELECT orderNumber, userId, itemId, orderReceipt, orderReview, orderStar, orderQua, orderDeter FROM ordertable WHERE orderNumber = "${params.id}"`;
-  // const sq1 = `SELECT * FROM ordertable WHERE orderNumber = "${params.id}"`;
+  // const sq1 = `SELECT orderNumber, userId, itemId, orderReceipt, orderReview, orderStar, orderQua, orderDeter FROM ordertable WHERE orderNumber = "${params.id}"`;
+  const sq1 = `SELECT item.itemId ,orderNumber, userId, orderReceipt, orderDate, orderQua, orderDeter , itemTitle FROM ordertable, item WHERE ordertable.itemId = item.itemId and orderNumber = "${params.id}"`;
 
-  const data = (await runSQL(sq1))[0];
-  //forEach是在轉格式,原本出來是database物件
-  //下面是在轉日期格式
-  // data.orderDate = format(data.orderDate, "yyyy-MM-dd");
+  const orderList: any = [];
+  const orderListRaw: any = (await runSQL(sq1)); 
+
+  //轉日期格式
+  orderListRaw.forEach((ordertable: any) => {
+    ordertable.orderDate = format(ordertable.orderDate, "yyyy-MM-dd");
+    orderList.push({ ...ordertable });
+  });
+
+  // const data = (await runSQL(sq1))[0]; //有成功但沒日期暫不刪除
 
   //把要的資料拿出來
   return {
     props: {
-      ...data,
-      // imgList,
+      // ...data,
+      orderList,
     },
   };
 }
