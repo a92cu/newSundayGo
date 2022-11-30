@@ -147,7 +147,7 @@ function Login(props) {
     const regMember = () => {
         if (window.confirm("請確認是否要註冊帳號") === true) {
             
-            fetch(`http://localhost:3000/api/login/`, {
+            fetch(`http://localhost:3000/api/login/${props.userId}`, {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
@@ -158,6 +158,8 @@ function Login(props) {
                     userPassword,
                 }),
             });
+            
+            //註冊後跳轉到設定頁面
             setTimeout(() => {
                 Router.replace("/login");
             }, 100);
