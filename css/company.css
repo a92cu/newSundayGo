@@ -249,3 +249,37 @@ textarea {
     margin-bottom: 16px;
     resize: vertical;
 }
+
+.setBody input[type=tel],
+textarea {
+    width: 300px;
+    padding: 12px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+.setBody input[type=email],
+textarea {
+    width: 300px;
+    padding: 12px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+.setBody input[type=password],
+textarea {
+    width: 300px;
+    padding: 12px;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}

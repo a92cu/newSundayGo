@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import ReactCalendar from "react-calendar";
+import { props } from "ramda";
 
 function Calendar({ price, itemId }) {
   const [value, onChange] = useState(new Date());
@@ -171,6 +172,15 @@ function Carousel({ imgList }) {
     </div>
   );
 }
+function Review(){
+
+  return(<div>
+    <h3>評價:</h3>
+    <span>陳小姐</span>
+    <span>2022/11/22</span>
+    <span>5顆星</span>
+  </div>)
+}
 //ItemPage
 export default function ItemPage(props) {
   useEffect(() => {
@@ -244,6 +254,7 @@ export default function ItemPage(props) {
             </h3>
           </div>
         </div>
+        <Review />
       </div>
       <button
         onClick={() => {
