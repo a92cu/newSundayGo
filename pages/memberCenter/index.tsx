@@ -298,7 +298,7 @@ function MemberOrder(orderList, imgList) {
                       </div>
                       <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
                       <div className="ORRightBtn">
-                        <button > <a href={`/receipt/${i.orderNumber}`}>查看憑證</a> </button>
+                        <button > <a href={`/receipt/${i.orderNumber}`} target="_blank">查看憑證</a> </button>
                       </div>
                     </div>
                   </div>
