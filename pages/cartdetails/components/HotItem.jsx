@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {useState,useEffect,useRef } from "react";
+import dynamic from "next/dynamic";
+import Axios from "axios";
 // import { runSQL } from "../../../lib/mysql";
 // 貓頭鷹輪播
 var $ = require("jquery");
@@ -8,7 +10,7 @@ if (typeof window !== "undefined") {
 }
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import dynamic from "next/dynamic";
+
 
 const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
     ssr: false,
@@ -36,36 +38,27 @@ const imgstyles = {
     "objectFit": "cover",
     "objectPosition": "center"
 }
-export default function HotItem() {
-    var [HotItemData, setHotItemData] = useState([]);
-    // 使用component渲染tsx會有一個問題，在你抓資料的同時他在渲染畫面，導致資料進不去畫面
-    // 所以在使用 useEffect 把資料放進 return 的時候，多跑幾次迴圈，讓他重複執行6次
+function HotItem() {
+    let [HotItemData, setHotItemData] = useState([]);
+    // useEffect渲染會有一個問題，在你抓資料的同時他在渲染畫面，導致資料進不去畫面
+    // 因為是非同步進行，所以必須讓useEffect執行兩次
+    let [far,setfar]=useState(false);
     useEffect(()=>{
-        didTake();
-        for(var i=0;i<6;i++){
-            if(HotItemData!==""){
-                didTake();
-            }
-        }
-    },[]);
-
-    function didTake(){
-        if(HotItemData==""){
-        fetch("/api/cart/HotItem",{next:{revalidate: 10}})
-        .then((response) => response.json())
-        .then((dataresult) => {
-                dataresult.data.forEach((i)=>{
-                    var img=Buffer.from(i.itemImgUrl).toString('base64');
-                    var call=Buffer.from(img, 'base64').toString('ascii');
-                    var replaceCallAll=call.replaceAll('\x00', '');
-                    i.itemImgUrl=replaceCallAll;
+        function axiosdata(){
+                Axios.get("/api/cart/HotItem").then((dataresult) => {
+                    dataresult.data.data.forEach((i)=>{
+                        let img=Buffer.from(i.itemImgUrl).toString('base64');
+                        let call=Buffer.from(img, 'base64').toString('ascii');
+                        let replaceCallAll=call.replaceAll('\x00', '');
+                        i.itemImgUrl=replaceCallAll;
+                        dataresult.data.data
+                    })
+                    setHotItemData(dataresult.data.data);
                 })
-                console.log(dataresult.data)
-                setHotItemData(dataresult.data);
-            })
         }
-    }
-    
+        axiosdata();
+        setfar(true);
+    },[far])
     return (
         <>
             <div className="cartcontainer">
@@ -93,3 +86,5 @@ export default function HotItem() {
         </>
     )
 }
+
+export default HotItem;
