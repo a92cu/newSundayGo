@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import ReactCalendar from "react-calendar";
 import { props } from "ramda";
 import { Console } from "console";
+import ReactStars from 'react-stars';
 
 function Calendar({ price, itemId }) {
   const [value, onChange] = useState(new Date());
@@ -173,14 +174,20 @@ function Carousel({ imgList }) {
     </div>
   );
 }
-function Receipt(orderList){
-  console.log(orderList);
-  return(<div>
+function Receipt(orderList) {
+  //出來的資料是陣列
+  //console.log(orderList);
+  const star = orderList.orderList[0].orderStar
+  return (<div>
     <h3>評價:</h3>
     <p>訂單編號:{orderList.orderList[0].orderReceipt}</p>
     <p>會員帳號:{orderList.orderList[0].userId}</p>
     <p>消費日期:{orderList.orderList[0].orderDate}</p>
-    <p>星等:{orderList.orderList[0].orderStar}</p>
+    <p>星等:{orderList.orderList[0].orderStar}<ReactStars
+      Rating
+      style={{ maxWidth: 180 }}
+      value={`${star}`}
+      readOnly /></p>
     <p>評語:{orderList.orderList[0].orderReview}</p>
   </div>)
 }
@@ -237,7 +244,7 @@ export default function ItemPage(props) {
             <pre style={{ whiteSpace: "pre-line" }}>{props.itemNote}</pre>
           </h3>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ display: "flex" }}>
           <div>
             <h3>{props.itemAddr}</h3>
             <p>
@@ -308,9 +315,10 @@ export async function getStaticProps({ params }) {
   const imgList: any = [];
 
   const data = (await runSQL(sq1))[0];
-  const imgListRaw: any = await runSQL(sq3);  
+  const imgListRaw: any = await runSQL(sq3);
   const orderList: any = [];
   const orderListRaw: any = (await runSQL(sq2));
+
   orderListRaw.forEach((ordertable: any) => {
     ordertable.orderDate = format(ordertable.orderDate, "yyyy-MM-dd");
     orderList.push({ ...ordertable });
