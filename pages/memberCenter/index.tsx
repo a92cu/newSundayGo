@@ -5,6 +5,7 @@ import { runSQL } from "../../lib/mysql";
 import { format } from "date-fns";
 import * as R from "ramda";
 import { useRouter } from 'next/router'
+import { display } from "html2canvas/dist/types/css/property-descriptors/display";
 
 function Footer() {
   return (
@@ -265,12 +266,13 @@ function SevenDay() {
 
 //訂單管理
 function MemberOrder(orderList, imgList) {
-  const GoEvaluation = () => {
-    // alert('ok');
-    document.getElementById('id01').style.display = "block";
-    // console.log(orderList);//[{orderList} {imgList}]
-    // console.log(orderList.orderList);//[{}{}]
-  }
+  // const GoEvaluation = () => {
+  //   // alert('ok');
+  //   document.getElementById('id01').style.display = "block";
+  //   // console.log(orderList);//[{orderList} {imgList}]
+  //   // console.log(orderList.orderList);//[{}{}]
+  // }
+  const router = useRouter()
   return (
     <div id="memberOrder" className="tabcontentB">
       <div className="setBodyB">
@@ -305,7 +307,7 @@ function MemberOrder(orderList, imgList) {
                 )
               }
               {/* 已出發 */ }
-              if (i.orderDeter === 2) {
+              if (i.orderDeter === 2 && i.orderStar === 0) {
                 return (
                   <div id="memberOrderGo" className="memberOrderBody" key={i.itemId}>
                     <div className="OrderReadyDiv">
@@ -324,41 +326,42 @@ function MemberOrder(orderList, imgList) {
                         </div>
                         <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
                         <div className="ORRightBtn">
-                          <button id="GoEvaluationBtn" onClick={() => GoEvaluation()}>前往評價</button>
-                          <button><a href={`/receipt/${i.orderNumber}`}>查看憑證</a></button>
+                        {/* onClick={() => GoEvaluation()} */}
+                          <button onClick={() => router.push(`/evaluation/${i.orderNumber}`)} id="GoEvaluationBtn" >前往評價</button>
+                          <button><a href={`/receipt/${i.orderNumber}`} target="_blank">查看憑證</a></button>
                         </div>
                       </div>
                     </div>
                   </div>
                 )
               }
-              {/* 已取消 */ }
-              // if (i.orderDeter === 3) {
-              //   return (
-              //     <div id="memberOrderCancel" className="memberOrderBody" key={i.itemId}>
-              //       <div className="OrderReadyDiv">
-              //         <div className="OrderReadyImg">
-              //           <img src={
-              //             orderList.imgList?.find(
-              //               (j) => j.itemId === i.itemId && j.itemLead == 1
-              //             )?.itemImgUrl ?? ''
-              //           } />
-              //         </div>
-              //         <div className="OrderReadyRight">
-              //           <div className="ORRightName">
-              //             <button className="stateRight"><b>已取消</b></button>
-              //             <h4>{i.itemTitle}</h4>
-              //             <span>訂單編號</span><span>#{i.orderReceipt}</span>
-              //           </div>
-              //           <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
-              //           <div className="ORRightBtn">
-              //             <button>重新訂購</button>
-              //           </div>
-              //         </div>
-              //       </div>
-              //     </div>
-              //   )
-              // }
+              if (i.orderDeter === 2 && i.orderStar > 0) {
+                return (
+                  <div id="memberOrderGo" className="memberOrderBody" key={i.itemId}>
+                    <div className="OrderReadyDiv">
+                      <div className="OrderReadyImg">
+                        <img src={
+                          orderList.imgList?.find(
+                            (j) => j.itemId === i.itemId && j.itemLead == 1
+                          )?.itemImgUrl ?? ''
+                        } />
+                      </div>
+                      <div className="OrderReadyRight">
+                        <div className="ORRightName">
+                          <button className="stateRight"><b>已出發</b></button>
+                          <h4>{i.itemTitle}</h4>
+                          <span>訂單編號</span><span>#{i.orderReceipt}</span>
+                        </div>
+                        <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
+                        <div className="ORRightBtn">
+                          <button id="GoEvaluationBtn" style={{backgroundColor:"#DCDCDC"}}>已評價</button>
+                          <button><a href={`/receipt/${i.orderNumber}`} target="_blank">查看憑證</a></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }              
             })}
           </div>
         </div>
@@ -369,47 +372,14 @@ function MemberOrder(orderList, imgList) {
   );
 }
 
-// 評價
-function Evaluation() {
-  const evaluationX = () => {
-    document.getElementById('id01').style.display = "none";
-  };
-
-  return (<div id="id01" className="modal">
-    <form className="modal-content animate" method="post">
-      <span onClick={() => evaluationX()} id="evaluationX" className="close" title="Close Modal">
-        &times;
-      </span>
-      <p>桃園青埔|Xpark 都會型水生公園門票</p>
-      <div className="evaluationStar">
-        <div className="evaluationText"> 本次評價好感度
-          <span style={{ color: "red" }}>*</span>
-          <div className="star">
-            <div className="box1">
-            </div>
-            <div className="box1">
-            </div>
-            <div className="box1">
-            </div>
-            <div className="box1">
-            </div>
-            <div className="box1">
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <p>評論內容</p>
-      <input type="text" style={{ width: "270px", height: "70px" }} />
-      <button type="submit" className="evaluationSendBtn">送出</button>
-
-    </form>
-  </div>
-  )
-}
-
 // 收藏頁面
 function Collect({ itemList, imgList, setItemList }) {
+  // function Star() {
+  //   for (var i = 1; i <= itemList.orderStar; i++)
+  //   {<img src="./images/1.png" alt="" />}
+  //   for (var i = 1; i <= (5 - itemList.orderStar); i++)
+  //   {<img src="./images/0.png" alt="" />}    
+  // }
   const router = useRouter()
   const collectDelete = (favId) => {
     console.log(favId);
@@ -435,7 +405,7 @@ function Collect({ itemList, imgList, setItemList }) {
           // console.log(i); // {}
           return (
             // onClick={() => router.push(`/item/${i.itemId}`)}
-            <div className="collectDiv" key={i.favId}>                          
+            <div className="collectDiv" key={i.favId}>
               <div className="collectImg">
                 <img src={
                   imgList?.find(
@@ -540,10 +510,9 @@ export default function MemberCentre(props) {
           imgList={props.imgList}
         />}
 
-      <Evaluation />
+      {/* <Evaluation orderList={orderList}/> */}
     </div>
     <Footer />
-    <Script src="/js/MemberCentre.js" />
   </>
 }
 

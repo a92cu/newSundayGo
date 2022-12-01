@@ -485,7 +485,7 @@ select {
 
 /* 前往評價點進去的的評價頁面 */
 .modal {
-    display: none;
+    /* display: none; */
     position: fixed;
     z-index: 1;
     left: 0;
@@ -505,7 +505,7 @@ select {
     margin: auto;
     border: 1px solid #888;
     width: 300px;
-    height: 250px;
+    height: 280px;
     font-size: 14px;
     padding: 5px 0 5px 10px;
     text-align: center;
