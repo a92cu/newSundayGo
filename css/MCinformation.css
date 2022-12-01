@@ -439,7 +439,7 @@ select {
 /* 我的收藏評價星星 */
 .collectstar {
     float: left;
-    width: 150px;
+    width: 220px;
     height: 50px;
     display: flex;
     align-items: center;
@@ -452,12 +452,11 @@ select {
     font-size: small;
 }
 
-.collectstar>img {
+/* .collectstar>img {
     height: 15px;
     width: 15px;
-    /* background-image: url(./images/0.png); */
     background-size: cover;
-}
+} */
 
 .stateRight {
     border-radius: 10px;
