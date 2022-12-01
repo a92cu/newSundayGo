@@ -1,8 +1,8 @@
-import { privateDecrypt } from "crypto";
 import Image from "next/image";
 // import { runSQL } from "../../lib/mysql";
 import CartItem from "./components/CartItem.jsx";
 import HotItem from "./components/HotItem.jsx";
+
 function Header() {
     return (
       <div className="header">

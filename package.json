@@ -27,7 +27,6 @@
     "react-calendar": "^4.0.0",
     "react-dom": "^18.2.0",
     "react-owl-carousel": "^2.3.3",
-    "tls": "^0.0.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
