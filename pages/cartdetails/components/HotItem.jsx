@@ -15,10 +15,6 @@ const OwlCarousel = dynamic(() => import("react-owl-carousel"), {
 });
 // 輪播圖片數量
 const Responsive = {
-    600: {
-        items: 2, // 螢幕大小為 600~1000 顯示 3 個項目
-        margin: 10
-    },
     1000: {
         items: 4, // 螢幕大小為 1000 以上 顯示 4 個項目
         margin: 25
@@ -59,10 +55,10 @@ export default function HotItem() {
         .then((response) => response.json())
         .then((dataresult) => {
                 dataresult.data.forEach((i)=>{
-                var img=Buffer.from(i.itemImgUrl).toString('base64');
-                var call=Buffer.from(img, 'base64').toString('ascii');
-                var replaceCallAll=call.replaceAll('\x00', '');
-                i.itemImgUrl=replaceCallAll;
+                    var img=Buffer.from(i.itemImgUrl).toString('base64');
+                    var call=Buffer.from(img, 'base64').toString('ascii');
+                    var replaceCallAll=call.replaceAll('\x00', '');
+                    i.itemImgUrl=replaceCallAll;
                 })
                 console.log(dataresult.data)
                 setHotItemData(dataresult.data);
@@ -76,6 +72,7 @@ export default function HotItem() {
                 <div className="toMoreHot">更多推薦商品</div>
                 {/* <span>{HotItemData.forEach((i)=>{i})}</span> */}
                 <OwlCarousel
+                    dots={false} // 取消下方按鈕
                     loop={true} // 循環播放
                     nav={false} // 顯示點點
                     autoplay={true} // 自動撥放
@@ -85,7 +82,7 @@ export default function HotItem() {
                 >
                     {HotItemData.map((i,index)=>
                         <div className="item" key={index}>
-                            <a href={`/CartDetails/${i.itemId}`} style={fontstyles}>
+                            <a href={`/item/${i.itemId}`} style={fontstyles}>
                                 <img src={i.itemImgUrl} style={imgstyles} alt="img" />
                                 <div>{i.itemTitle}</div>
                             </a>
