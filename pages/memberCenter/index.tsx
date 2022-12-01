@@ -4,8 +4,9 @@ import Script from "next/script";
 import { runSQL } from "../../lib/mysql";
 import { format } from "date-fns";
 import * as R from "ramda";
-// import router from "next/router";
 import { useRouter } from 'next/router'
+import { display } from "html2canvas/dist/types/css/property-descriptors/display";
+import ReactStars from 'react-stars'
 
 function Footer() {
   return (
@@ -266,12 +267,13 @@ function SevenDay() {
 
 //訂單管理
 function MemberOrder(orderList, imgList) {
-  const GoEvaluation = () => {
-    // alert('ok');
-    document.getElementById('id01').style.display = "block";
-    // console.log(orderList);//[{orderList} {imgList}]
-    // console.log(orderList.orderList);//[{}{}]
-  }
+  // const GoEvaluation = () => {
+  //   // alert('ok');
+  //   document.getElementById('id01').style.display = "block";
+  //   // console.log(orderList);//[{orderList} {imgList}]
+  //   // console.log(orderList.orderList);//[{}{}]
+  // }
+  const router = useRouter()
   return (
     <div id="memberOrder" className="tabcontentB">
       <div className="setBodyB">
@@ -299,14 +301,14 @@ function MemberOrder(orderList, imgList) {
                       </div>
                       <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
                       <div className="ORRightBtn">
-                        <button> <a href="Receipt.html">查看憑證</a> </button>
+                        <button > <a href={`/receipt/${i.orderNumber}`} target="_blank">查看憑證</a> </button>
                       </div>
                     </div>
                   </div>
                 )
               }
               {/* 已出發 */ }
-              if (i.orderDeter === 2) {
+              if (i.orderDeter === 2 && i.orderStar === 0) {
                 return (
                   <div id="memberOrderGo" className="memberOrderBody" key={i.itemId}>
                     <div className="OrderReadyDiv">
@@ -325,41 +327,42 @@ function MemberOrder(orderList, imgList) {
                         </div>
                         <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
                         <div className="ORRightBtn">
-                          <button id="GoEvaluationBtn" onClick={() => GoEvaluation()}>前往評價</button>
-                          <button>查看憑證</button>
+                          {/* onClick={() => GoEvaluation()} */}
+                          <button onClick={() => router.push(`/evaluation/${i.orderNumber}`)} id="GoEvaluationBtn" >前往評價</button>
+                          <button><a href={`/receipt/${i.orderNumber}`} target="_blank">查看憑證</a></button>
                         </div>
                       </div>
                     </div>
                   </div>
                 )
               }
-              {/* 已取消 */ }
-              // if (i.orderDeter === 3) {
-              //   return (
-              //     <div id="memberOrderCancel" className="memberOrderBody" key={i.itemId}>
-              //       <div className="OrderReadyDiv">
-              //         <div className="OrderReadyImg">
-              //           <img src={
-              //             orderList.imgList?.find(
-              //               (j) => j.itemId === i.itemId && j.itemLead == 1
-              //             )?.itemImgUrl ?? ''
-              //           } />
-              //         </div>
-              //         <div className="OrderReadyRight">
-              //           <div className="ORRightName">
-              //             <button className="stateRight"><b>已取消</b></button>
-              //             <h4>{i.itemTitle}</h4>
-              //             <span>訂單編號</span><span>#{i.orderReceipt}</span>
-              //           </div>
-              //           <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
-              //           <div className="ORRightBtn">
-              //             <button>重新訂購</button>
-              //           </div>
-              //         </div>
-              //       </div>
-              //     </div>
-              //   )
-              // }
+              if (i.orderDeter === 2 && i.orderStar > 0) {
+                return (
+                  <div id="memberOrderGo" className="memberOrderBody" key={i.itemId}>
+                    <div className="OrderReadyDiv">
+                      <div className="OrderReadyImg">
+                        <img src={
+                          orderList.imgList?.find(
+                            (j) => j.itemId === i.itemId && j.itemLead == 1
+                          )?.itemImgUrl ?? ''
+                        } />
+                      </div>
+                      <div className="OrderReadyRight">
+                        <div className="ORRightName">
+                          <button className="stateRight"><b>已出發</b></button>
+                          <h4>{i.itemTitle}</h4>
+                          <span>訂單編號</span><span>#{i.orderReceipt}</span>
+                        </div>
+                        <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
+                        <div className="ORRightBtn">
+                          <button id="GoEvaluationBtn" style={{ backgroundColor: "#DCDCDC" }}>已評價</button>
+                          <button><a href={`/receipt/${i.orderNumber}`} target="_blank">查看憑證</a></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
             })}
           </div>
         </div>
@@ -370,57 +373,27 @@ function MemberOrder(orderList, imgList) {
   );
 }
 
-// 評價
-function Evaluation() {
-  const evaluationX = () => {
-    document.getElementById('id01').style.display = "none";
-  };
-
-  return (<div id="id01" className="modal">
-    <form className="modal-content animate" method="post">
-      <span onClick={() => evaluationX()} id="evaluationX" className="close" title="Close Modal">
-        &times;
-      </span>
-      <p>桃園青埔|Xpark 都會型水生公園門票</p>
-      <div className="evaluationStar">
-        <div className="evaluationText"> 本次評價好感度
-          <span style={{ color: "red" }}>*</span>
-          <div className="star">
-            <div className="box1">
-            </div>
-            <div className="box1">
-            </div>
-            <div className="box1">
-            </div>
-            <div className="box1">
-            </div>
-            <div className="box1">
-            </div>
-          </div>
-        </div>
-
-      </div>
-      <p>評論內容</p>
-      <input type="text" style={{ width: "270px", height: "70px" }} />
-      <button type="submit" className="evaluationSendBtn">送出</button>
-
-    </form>
-  </div>
-  )
-}
-
 // 收藏頁面
 function Collect({ itemList, imgList, setItemList }) {
+  // function Star() {
+  //   for (var i = 1; i <= itemList.orderStar; i++)
+  //   {<img src="./images/1.png" alt="" />}
+  //   for (var i = 1; i <= (5 - itemList.orderStar); i++)
+  //   {<img src="./images/0.png" alt="" />}    
+  // }
   const router = useRouter()
   const collectDelete = (favId) => {
+    console.log(favId);
     if (window.confirm("確認要從我的商品移除嗎") === true) {
       console.log('ok');
       const newItemList = R.reject(R.propEq("favId", favId), itemList);
       setItemList(newItemList);
-      // console.log(newItemList); // {{},{}}
-      // fetch(`http://localhost:3000/api/memberCentre/collectDel`, {
-      //   method: "DELETE",
-      // });
+      console.log(newItemList); // {{},{}}
+      fetch(`http://localhost:3000/api/memberCentre/collectDel`, {
+        method: "DELETE",
+        body: favId
+
+      });
     }
   };
   return (
@@ -431,8 +404,10 @@ function Collect({ itemList, imgList, setItemList }) {
           // console.log(itemList); // [{},{}]
           // console.log(imgList); //[{}{}]
           // console.log(i); // {}
+          const star = (i.itemTotalStar)
           return (
-            <div className="collectDiv" key={i.favId} onClick={() => router.push(`/item/${i.itemId}`)}>                          
+            // onClick={() => router.push(`/item/${i.itemId}`)}
+            <div className="collectDiv" key={i.favId}>
               <div className="collectImg">
                 <img src={
                   imgList?.find(
@@ -448,11 +423,11 @@ function Collect({ itemList, imgList, setItemList }) {
                   </p>
                   <div className="collectNamePrice">
                     <div className="collectstar">
-                      <img src="./images/1.png" />
-                      <img src="./images/1.png" />
-                      <img src="./images/1.png" />
-                      <img src="./images/1.png" />
-                      <img src="./images/1.png" />
+                      <ReactStars
+                        Rating
+                        value={`${star}`}
+                        // color1={'rgba(0,0,0,0)'}
+                        readOnly />
                       <div>({i.itemTotalStar})</div>
                     </div>
                     <span>TWD<span>{i.itemPrice}</span></span>
@@ -537,12 +512,12 @@ export default function MemberCentre(props) {
           imgList={props.imgList}
         />}
 
-      <Evaluation />
+      {/* <Evaluation orderList={orderList}/> */}
     </div>
     <Footer />
-    <Script src="/js/MemberCentre.js" />
   </>
 }
+
 
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
@@ -552,7 +527,7 @@ export async function getStaticProps({ params }) {
   // 我的收藏資料庫抓的
   const sq2 = `SELECT * FROM favorite , item WHERE favorite.itemId = item.itemId AND userId = 'u123456789';`;
   const sq3 = `SELECT * FROM itemimg`;
-  const sq4 = `SELECT item.itemId , userId, orderReceipt,orderReview, orderStar, orderDate, orderQua, orderDeter , itemTitle, itemPrice FROM ordertable, item WHERE ordertable.itemId = item.itemId;`;
+  const sq4 = `SELECT item.itemId , userId, orderNumber, orderReceipt,orderReview, orderStar, orderDate, orderQua, orderDeter , itemTitle, itemPrice FROM ordertable, item WHERE ordertable.itemId = item.itemId;`;
   // any是沒有定義的意思
   const imgList: any = [];
   const itemList: any = [];

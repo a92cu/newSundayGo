@@ -20,9 +20,12 @@ export default async function userHandler(
         res.status(500);
       }
       break;
+    default:
+      res.setHeader("Allow", ["GET", "PUT"]);
+      res.status(405).end(`Method ${method} Not Allowed`);
     case "PUT":
       try {
-        // 修改評價內容
+        // 修改商品內容
         const keys = Object.keys(req.body);
         const values = Object.values(req.body).map((i, index) => {
           return typeof i === "string" ? `"${i}"`.trim() : i;
@@ -39,8 +42,6 @@ export default async function userHandler(
         res.status(500);
       }
       break;
-    default:
-      res.setHeader("Allow", ["GET", "PUT"]);
-      res.status(405).end(`Method ${method} Not Allowed`);
   }
+
 }

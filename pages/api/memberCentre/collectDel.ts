@@ -13,14 +13,15 @@ export default async function userHandler(
     case "DELETE":
       try {
         // 刪除商品內容
-        // const sq1 = `DELETE FROM favtable WHERE favId = "${id}"`;
-        const sq1 = `DELETE FROM favtable WHERE favId = ?`;
+        const sq1 = `DELETE FROM favorite WHERE favId = "${req.body}"`;
+        // const sq1 = `DELETE FROM favorite WHERE favId = ?;`;
         runSQL(sq1);
         res.status(200).json({ message: "ok" });
+        console.log(req)
       } catch (error) {
         res.status(500);
       }
-      break;
+      break;    
     default:
       res.setHeader("Allow", ["GET", "PUT"]);
       res.status(405).end(`Method ${method} Not Allowed`);

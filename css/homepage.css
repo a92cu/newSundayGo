@@ -51,7 +51,7 @@
 /* 篩選按鈕 */
 .filterBtn {
     border: 0;
-    width: 10%;
+    width: 5%;
     background-color: #FAEF8B;
     color: #8C5C02;
     border-radius: 10px;
@@ -110,8 +110,8 @@
     float: right;
     margin-left: 5px;
 }
-
-.active:after {
+/* 篩選框動態字符 */
+.accordion:active:after {
     /* content: "&#711"; */
     content: '\1431';
     /* 愛心 */
@@ -170,6 +170,20 @@
     height: 240px;
     /* object-fit: contain; */
     float: left;
+    /* border: 60px; */
+    /* border-radius: 5px; */
+    margin: 5px 5px;
+    /* background-color: blue; */
+    margin-right: 50px;
+}
+.picPlace2 {
+    /* width: 33%; */
+
+    width: 00px;
+    /* height: 290px; */
+    height: 140px;
+    /* object-fit: contain; */
+    /* float: left;  */
     /* border: 60px; */
     /* border-radius: 5px; */
     margin: 5px 5px;

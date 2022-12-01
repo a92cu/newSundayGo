@@ -1,3 +1,6 @@
+//postman 打post http://localhost:3000/api/login/{id}
+//可以
+
 import type { NextApiRequest, NextApiResponse } from "next";
 import { runSQL } from "../../../lib/mysql";
 
@@ -12,7 +15,7 @@ export default async function userHandler(
     switch (method) {
         case "GET":
             try {
-                // 取得商品內容
+                // 取得userId內容
                 const sq1 = `SELECT * FROM usertable WHERE userId = "${id}"`;
                 const data = await runSQL(sq1);
                 res.status(200).json({ data });
@@ -26,11 +29,13 @@ export default async function userHandler(
                 const values = Object.values(req.body)
                     .map((i) => (typeof i === "string" ? `"${i}"` : i))
                     .join(",");
+                    
                 // 新增商品內容
-                const sq1 = `INSERT INTO usertable (${keys},userId,userPassword) VALUES (${values},"${id}","${id}")`;
-                // const sq1 = `INSERT INTO usertable (userId,userPassword) VALUES ("test1","1234")`;
-                const data = await runSQL(sq1);
-            
+                // const sq1 = `INSERT INTO item (${keys},userId,userPassword) VALUES (${values},"${id}","${id}")`;
+                const sq1 = `INSERT INTO usertable (${keys},userRegisterDate) VALUES (${values},CURRENT_TIMESTAMP)`;
+
+                console.log(sq1);
+                runSQL(sq1);
                 res.status(200).json({ message: "ok" });
             } catch (error) {
                 res.status(500);
@@ -48,7 +53,7 @@ export default async function userHandler(
                     query =
                         query + keys[j] + "=" + values[j] + (j === keys.length - 1 ? "" : ",");
                 }
-                const sq1 = `UPDATE usertable SET ${query} where userId = "${id}"`;
+                const sq1 = `UPDATE item SET ${query} where itemId = "${id}"`;
                 runSQL(sq1);
                 res.status(200).json({ message: "ok" });
             } catch (error) {
@@ -58,7 +63,7 @@ export default async function userHandler(
         case "DELETE":
             try {
                 // 刪除商品內容
-                const sq1 = `DELETE FROM usertable WHERE userId = "${id}"`;
+                const sq1 = `DELETE FROM item WHERE itemId = "${id}"`;
                 runSQL(sq1);
                 res.status(200).json({ message: "ok" });
             } catch (error) {
