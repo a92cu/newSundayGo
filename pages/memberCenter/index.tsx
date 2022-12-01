@@ -426,8 +426,7 @@ function Collect({ itemList, imgList, setItemList }) {
                       <ReactStars
                         Rating
                         value={`${star}`}
-                        // color1={'rgba(0,0,0,0)'}
-                        readOnly />
+                        edit={false} />
                       <div>({i.itemTotalStar})</div>
                     </div>
                     <span>TWD<span>{i.itemPrice}</span></span>

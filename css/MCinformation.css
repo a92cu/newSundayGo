@@ -340,6 +340,12 @@ select {
     text-decoration:none;
     color: #8C5C02;
 }
+#GoEvaluationBtn:hover ,
+.ORRightBtn>button:hover
+{
+    color: white;
+    background-color: #F29F04;
+}
 
 .ORRightBtn>button {
     width: 80px;
@@ -583,6 +589,11 @@ select {
     border-radius: 5px;
     border: 1px solid rgb(198, 197, 197);
     width: 60px;
+    color: #8C5C02;
+}
+
+.evaluationSendBtn>a {
+    text-decoration:none;
     color: #8C5C02;
 }
 

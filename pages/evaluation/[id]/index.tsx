@@ -4,76 +4,79 @@ import Script from "next/script";
 import { useRouter } from 'next/router'
 import Router from "next/router";
 import { useState } from "react";
-import { Rating } from 'react-stars'
 import ReactStars from 'react-stars'
 
-// function App() {
-//     // const [rating, setRating] = useState(3);
-
-//     return (
-//         //   <Rating
-//         //     style={{ maxWidth: 180 }}
-//         //     value={rating}
-//         //     onChange={setRating}
-//         //   />
-//         <ReactStars
-//             count={5}
-//             size={16}
-//             color2={'yellow'} />
-//     )
-// }
-
-function Evaluation({
-    itemTitle,
-}) {
-    const router = useRouter()
-    const evaluationSend = () => {
-        console.log('ok');
-        // console.log(count);
-        //   fetch(`http://localhost:3000/api/receiptQr/${orderNumber}`, {
-        //     method: "PUT",
-        //     headers: {
-        //       "Content-Type": "application/json;charset=utf-8",
-        //     },
-        //     body: JSON.stringify({
-        //       orderDeter: 2,
-        //     }),
-        //   }); 
-    };
-    return (
-        <div id="id01" className="modal">
-            <form className="modal-content animate">
-                <span onClick={() => router.push(`/memberCenter`)} id="evaluationX" className="close" title="Close Modal">
-                    &times;
-                </span>
-                <p>{itemTitle}</p>
-                <div className="evaluationStar">
-                    <div className="evaluationText"> 本次評價好感度
-                        <span style={{ color: "red" }}>*</span>
-                        <div className="star">
-                            <ReactStars
-                                count={5}
-                                size={16}
-                                color1={'yellow'} />
-                        </div>
-                    </div>
-
-                </div>
-                <p>評論內容</p>
-                <input type="text" style={{ width: "270px", height: "70px" }} />
-                <button className="evaluationSendBtn" onClick={() => evaluationSend()}>送出</button>
-            </form>
-        </div>
-
-    )
-
-}
-
 export default function EvaluationB(props) {
+    // const router = useRouter()
+    const {
+        itemTitle,
+        orderNumber
+    } = props;
+    const [orderStar, setorderStar] = useState(props.orderStar);
+    const [orderReview, setorderReview] = useState(props.orderReview);
+
+
+    const ratingChanged = (newRating) => {
+        // console.log(newRating)
+        fetch(`http://localhost:3000/api/evaluation/${orderNumber}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+            },
+            body: JSON.stringify({
+                orderStar: newRating,
+            }),
+        });
+    }
+    const evaluationSend = () => {
+        // console.log('ok');
+        // console.log(orderStar);
+        // console.log(orderReview);
+        fetch(`http://localhost:3000/api/evaluation/${orderNumber}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+            },
+            body: JSON.stringify({
+                orderReview: orderReview,
+            }),
+        });
+        // Router.replace("/memberCenter");
+    }   
+
     return (
         <>
-            <Evaluation {...props.data} />
-            {/* <Script src="/js/MemberCentre.js" /> */}
+            <div id="id01" className="modal">
+                <form className="modal-content animate">
+                    <span onClick={() => Router.push(`/memberCenter`)} id="evaluationX" className="close" title="Close Modal">
+                        &times;
+                    </span>
+                    <p>{itemTitle}</p>
+                    <div className="evaluationStar">
+                        <div className="evaluationText"> 本次評價好感度
+                            <span style={{ color: "red" }}>*</span>
+                            <div className="star">
+                                <ReactStars
+                                    count={5}
+                                    size={16}
+                                    value={orderStar}
+                                    onChange={ratingChanged}
+                                />
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <p>評論內容</p>
+                    <input
+                        type="text"
+                        style={{ width: "270px", height: "70px" }}
+                        value={orderReview}
+                        onChange={(e) => setorderReview(e.target.value)}
+                    />
+                    <button className="evaluationSendBtn" onClick={() => evaluationSend()}> <a href="/memberCenter">送出</a></button>
+                </form>
+            </div>
         </>
     )
 }
@@ -90,11 +93,11 @@ export async function getStaticPaths(props) {
 }
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
-    const sq1 = `SELECT orderReceipt, orderReview, orderStar , itemTitle FROM ordertable, item WHERE ordertable.itemId = item.itemId AND orderNumber = "${params.id}"`;
+    const sq1 = `SELECT orderNumber, orderReceipt, orderReview, orderStar , itemTitle FROM ordertable, item WHERE ordertable.itemId = item.itemId AND orderNumber = "${params.id}"`;
     const data = (await runSQL(sq1))[0];
     return {
         props: {
-            data: { ...data },
+            ...data,
         },
     };
 }
