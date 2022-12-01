@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import * as R from "ramda";
 import { useRouter } from 'next/router'
 import { display } from "html2canvas/dist/types/css/property-descriptors/display";
+import ReactStars from 'react-stars'
 
 function Footer() {
   return (
@@ -326,7 +327,7 @@ function MemberOrder(orderList, imgList) {
                         </div>
                         <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
                         <div className="ORRightBtn">
-                        {/* onClick={() => GoEvaluation()} */}
+                          {/* onClick={() => GoEvaluation()} */}
                           <button onClick={() => router.push(`/evaluation/${i.orderNumber}`)} id="GoEvaluationBtn" >前往評價</button>
                           <button><a href={`/receipt/${i.orderNumber}`} target="_blank">查看憑證</a></button>
                         </div>
@@ -354,14 +355,14 @@ function MemberOrder(orderList, imgList) {
                         </div>
                         <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
                         <div className="ORRightBtn">
-                          <button id="GoEvaluationBtn" style={{backgroundColor:"#DCDCDC"}}>已評價</button>
+                          <button id="GoEvaluationBtn" style={{ backgroundColor: "#DCDCDC" }}>已評價</button>
                           <button><a href={`/receipt/${i.orderNumber}`} target="_blank">查看憑證</a></button>
                         </div>
                       </div>
                     </div>
                   </div>
                 )
-              }              
+              }
             })}
           </div>
         </div>
@@ -403,6 +404,7 @@ function Collect({ itemList, imgList, setItemList }) {
           // console.log(itemList); // [{},{}]
           // console.log(imgList); //[{}{}]
           // console.log(i); // {}
+          const star = (i.itemTotalStar)
           return (
             // onClick={() => router.push(`/item/${i.itemId}`)}
             <div className="collectDiv" key={i.favId}>
@@ -421,11 +423,11 @@ function Collect({ itemList, imgList, setItemList }) {
                   </p>
                   <div className="collectNamePrice">
                     <div className="collectstar">
-                      <img src="./images/1.png" />
-                      <img src="./images/1.png" />
-                      <img src="./images/1.png" />
-                      <img src="./images/1.png" />
-                      <img src="./images/1.png" />
+                      <ReactStars
+                        Rating
+                        value={`${star}`}
+                        // color1={'rgba(0,0,0,0)'}
+                        readOnly />
                       <div>({i.itemTotalStar})</div>
                     </div>
                     <span>TWD<span>{i.itemPrice}</span></span>

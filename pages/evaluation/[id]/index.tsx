@@ -4,16 +4,32 @@ import Script from "next/script";
 import { useRouter } from 'next/router'
 import Router from "next/router";
 import { useState } from "react";
+import { Rating } from 'react-stars'
+import ReactStars from 'react-stars'
 
-function Evaluation(
-    {
+// function App() {
+//     // const [rating, setRating] = useState(3);
+
+//     return (
+//         //   <Rating
+//         //     style={{ maxWidth: 180 }}
+//         //     value={rating}
+//         //     onChange={setRating}
+//         //   />
+//         <ReactStars
+//             count={5}
+//             size={16}
+//             color2={'yellow'} />
+//     )
+// }
+
+function Evaluation({
     itemTitle,
-    
-    }
-) {
+}) {
     const router = useRouter()
     const evaluationSend = () => {
         console.log('ok');
+        // console.log(count);
         //   fetch(`http://localhost:3000/api/receiptQr/${orderNumber}`, {
         //     method: "PUT",
         //     headers: {
@@ -22,9 +38,7 @@ function Evaluation(
         //     body: JSON.stringify({
         //       orderDeter: 2,
         //     }),
-        //   });    
-
-
+        //   }); 
     };
     return (
         <div id="id01" className="modal">
@@ -37,16 +51,10 @@ function Evaluation(
                     <div className="evaluationText"> 本次評價好感度
                         <span style={{ color: "red" }}>*</span>
                         <div className="star">
-                            <div className="box1">
-                            </div>
-                            <div className="box1">
-                            </div>
-                            <div className="box1">
-                            </div>
-                            <div className="box1">
-                            </div>
-                            <div className="box1">
-                            </div>
+                            <ReactStars
+                                count={5}
+                                size={16}
+                                color1={'yellow'} />
                         </div>
                     </div>
 
@@ -61,17 +69,14 @@ function Evaluation(
 
 }
 
-
 export default function EvaluationB(props) {
     return (
         <>
             <Evaluation {...props.data} />
-            <Script src="/js/MemberCentre.js" />
-
+            {/* <Script src="/js/MemberCentre.js" /> */}
         </>
     )
 }
-
 export async function getStaticPaths(props) {
     const sq1 = "SELECT * FROM ordertable";
     const data: any = await runSQL(sq1);
@@ -87,8 +92,6 @@ export async function getStaticPaths(props) {
 export async function getStaticProps({ params }) {
     const sq1 = `SELECT orderReceipt, orderReview, orderStar , itemTitle FROM ordertable, item WHERE ordertable.itemId = item.itemId AND orderNumber = "${params.id}"`;
     const data = (await runSQL(sq1))[0];
-
-
     return {
         props: {
             data: { ...data },
