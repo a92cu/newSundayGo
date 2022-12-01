@@ -10,6 +10,7 @@ import Router from "next/router";
 import { useEffect, useState } from "react";
 import ReactCalendar from "react-calendar";
 import { props } from "ramda";
+import { Console } from "console";
 
 function Calendar({ price, itemId }) {
   const [value, onChange] = useState(new Date());
@@ -172,17 +173,20 @@ function Carousel({ imgList }) {
     </div>
   );
 }
-function Review(){
-
+function Receipt(orderList){
+  console.log(orderList);
   return(<div>
     <h3>評價:</h3>
-    <span>陳小姐</span>
-    <span>2022/11/22</span>
-    <span>5顆星</span>
+    <p>訂單編號:{orderList.orderList[0].orderReceipt}</p>
+    <p>會員帳號:{orderList.orderList[0].userId}</p>
+    <p>消費日期:{orderList.orderList[0].orderDate}</p>
+    <p>星等:{orderList.orderList[0].orderStar}</p>
+    <p>評語:{orderList.orderList[0].orderReview}</p>
   </div>)
 }
 //ItemPage
 export default function ItemPage(props) {
+  const [orderList, setOrderList] = useState(props.orderList);
   useEffect(() => {
     const Flickity = require("flickity");
     new Flickity(".main-carousel");
@@ -219,7 +223,7 @@ export default function ItemPage(props) {
           </div>
           <div>
             <h3>
-              銷售日期:&nbsp;<span>{props.itemPeriod}</span>
+              銷售日期:&nbsp;<span>{props.itemStartDate}-{props.itemEndDate}</span>
             </h3>
           </div>
           <div>
@@ -254,9 +258,9 @@ export default function ItemPage(props) {
             </h3>
           </div>
         </div>
-        <Review />
+        <Receipt orderList={orderList} />
       </div>
-      <button
+      {/* <button
         onClick={() => {
           fetch("http://localhost:3000/api/item/1", {
             method: "PUT",
@@ -272,7 +276,7 @@ export default function ItemPage(props) {
         }}
       >
         {"Test"}
-      </button>
+      </button> */}
       <br />
       <Footer />
     </>
@@ -293,15 +297,25 @@ export async function getStaticPaths(props) {
     fallback: false,
   };
 }
+
+
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
   const sq1 = `SELECT * FROM item WHERE itemId = "${params.id}"`;
   const sq3 = `SELECT * FROM itemimg WHERE itemId = "${params.id}"`;
+  const sq2 = `SELECT * FROM ordertable WHERE itemId = "${params.id}"`
   // any是沒有定義的意思
   const imgList: any = [];
 
   const data = (await runSQL(sq1))[0];
-  const imgListRaw: any = await runSQL(sq3);
+  const imgListRaw: any = await runSQL(sq3);  
+  const orderList: any = [];
+  const orderListRaw: any = (await runSQL(sq2));
+  orderListRaw.forEach((ordertable: any) => {
+    ordertable.orderDate = format(ordertable.orderDate, "yyyy-MM-dd");
+    orderList.push({ ...ordertable });
+  });
+
   //forEach是在轉格式,原本出來是database物件
   imgListRaw.forEach((item: any) => {
     item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
@@ -316,6 +330,7 @@ export async function getStaticProps({ params }) {
     props: {
       ...data,
       imgList,
+      orderList,
     },
   };
 }
