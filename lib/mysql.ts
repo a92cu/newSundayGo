@@ -12,20 +12,12 @@ export const runSQL = (query) =>
   });
 
 const connection = mysql.createConnection({
-<<<<<<< HEAD
   host:'localhost',
-=======
-  host:'127.0.0.1',
->>>>>>> de26114f035741fe673c67a7596b8bcb96b005b1
   user: "root",
   password: "", //預設phpmyadmin密碼是空值
   database: "sundaygodata",
-  multipleStatements: true,
-<<<<<<< HEAD
-});
-=======
-  port:3306,
-});
+  multipleStatements: true});
+
 
 
 // for Mac
@@ -48,7 +40,6 @@ const connection = mysql.createConnection({
 //   port:8889,
 //   multipleStatements: true,
 // });
->>>>>>> de26114f035741fe673c67a7596b8bcb96b005b1
 
 
 // for Mac
