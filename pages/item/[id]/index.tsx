@@ -180,16 +180,16 @@ function Receipt(orderList) {
   const star = orderList.orderList[0].orderStar
   return (<div>
     <h3>評價:</h3>
-    <p>訂單編號:{orderList.orderList[0].orderReceipt}</p>
-    <p>會員帳號:{orderList.orderList[0].userId}</p>
-    <p>消費日期:{orderList.orderList[0].orderDate}</p>
-    <p>星等:{orderList.orderList[0].orderStar}<ReactStars
-      
-      style={{ maxWidth: 180 }}
-      value={`${star}`}
-      edit={false}
-       /></p>
-    <p>評語:{orderList.orderList[0].orderReview}</p>
+    <div style={{display:"flex"}}>
+      <span>帳號:{orderList.orderList[0].userId}</span>&nbsp;&nbsp;
+      <span>{orderList.orderList[0].orderDate}</span>&nbsp;&nbsp;
+      <ReactStars
+        style={{ maxWidth: 180 }}
+        value={`${star}`}
+        edit={false}
+      />
+    </div>
+    <span>評語:{orderList.orderList[0].orderReview}</span>
   </div>)
 }
 //ItemPage
