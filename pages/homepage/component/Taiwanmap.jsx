@@ -20,7 +20,7 @@ export const Mapselect = () => {
         })
         //靠近顯示名稱圖片
         $("path").mouseenter(function (e) {
-            // console.log(e);
+            console.log(e);
             // console.log(this); 
             // console.log($(this).attr("data-name"));
             var tagname = $(this).attr("data-name")

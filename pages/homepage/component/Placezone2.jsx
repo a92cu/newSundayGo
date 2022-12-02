@@ -71,7 +71,7 @@ export const Placezone = () => {
                     var replaceCallAll = call.replaceAll('\x00', '');
                     i.itemImgUrl = replaceCallAll;
                 })
-                // console.log(result.data)
+                console.log(result.data)
                 setlist(result.data);
                 //
                 //setlist(result.data))
@@ -312,10 +312,10 @@ export const Placezone = () => {
                                     </div>
                                     {/* <!-- 星星評價 --> */}
                                     <div className="prostar">
-                                        {/* for(var i=1;i<{item.itemTotalStar};i++){ */}
-                                        {/* {homepagelist.map((item)=> */}
+                                       {/* {for(var i=1;i<=${item.itemTotalStar};i++) */}
+                                        
                                         <img src="/images/1.png" alt="" />
-                                        {/* )} */}
+                                        {/* } */}
                                         <img src="/images/1.png" alt="" />
                                         <img src="/images/1.png" alt="" />
                                         <img src="/images/0.png" alt="" />

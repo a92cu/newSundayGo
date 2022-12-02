@@ -11,6 +11,7 @@ import React, { Component } from 'react';
 // import Link from 'next/link';s
 import Mapselect from "./component/Taiwanmap.jsx";
 import Placezone from "./component/Placezone2.jsx";
+import  { useEffect, useState } from 'react';
 
 
 
@@ -39,12 +40,26 @@ function Header() {
     );
 }
 
+// function App() {
+//     const [rating, setRating] = useState(0);
+  
+//     return (
+//       <Rating
+//         style={{ maxWidth: 180 }}
+//         value={rating}
+//         onChange={setRating}
+//         isRequired
+//       />
+//     );
+//   }
 // footer  
 function Footer() {
+    const [rating, setRating] = useState(0);
     return (
         <div className="footer">
             <div className="footerCenter">
                 <div className="footerBody">
+                    
                     <ul>
                         <h4>認識我們</h4>
                         <li><a href="">關於我們</a></li>

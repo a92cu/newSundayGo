@@ -23,8 +23,20 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
       }
       // Get data from your database
       break;
+      // case "POST":
+      // try {
+        
+      //   // 新增商品內容
+      //   const sq1 = `INSERT INTO favorite (${keys},itemId,firmId) VALUES (${values},"${id}","${id}")`;
+      //   console.log(sq1);
+      //   runSQL(sq1);
+      //   res.status(200).json({ message: "ok" });
+      // } catch (error) {
+      //   res.status(500);
+      // }
+      // break;
     default:
-      res.setHeader('Allow', ['GET', 'PUT'])
+      res.setHeader('Allow', ['GET', 'POST'])
       res.status(405).end(`Method ${method} Not Allowed`)
   }
 }

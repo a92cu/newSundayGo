@@ -11,23 +11,36 @@ export const runSQL = (query) =>
     });
   });
 
+const connection = mysql.createConnection({
+  host:'127.0.0.1',
+  user: "root",
+  password: "", //預設phpmyadmin密碼是空值
+  database: "sundaygodata",
+  multipleStatements: true,
+  port:3306,
+});
+
+
+// for Mac
 // const connection = mysql.createConnection({
 //   host:'localhost',
 //   user: "root",
 //   password: "", //預設phpmyadmin密碼是空值
-//   database: "database",
+//   database: "sundaygodata",
+//   port:3306,
 //   multipleStatements: true,
 // });
 
 
 // for Mac
-const connection = mysql.createConnection({
-  host:'localhost',
-  user: "root",
-  password: "", //預設phpmyadmin密碼是空值
-  database: "sundaygodata",
-  multipleStatements: true,
-});
+// const connection = mysql.createConnection({
+//   host:'localhost',
+//   user: "root",
+//   password: "root", //預設phpmyadmin密碼是空值
+//   database: "database",
+//   port:8889,
+//   multipleStatements: true,
+// });
 
 //連線
 connection.connect(function (error) {
