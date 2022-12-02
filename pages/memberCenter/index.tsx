@@ -1,11 +1,9 @@
 import Image from "next/image";
 import { useState } from 'react';
-import Script from "next/script";
 import { runSQL } from "../../lib/mysql";
 import { format } from "date-fns";
 import * as R from "ramda";
-import { useRouter } from 'next/router'
-import { display } from "html2canvas/dist/types/css/property-descriptors/display";
+import Router, { useRouter } from 'next/router'
 import ReactStars from 'react-stars'
 
 function Footer() {
@@ -122,14 +120,47 @@ function Header() {
     </div>
   );
 }
-// 帳號設定
-function MemberAccount({
-  userPassword,
-  userName,
-  useGender,
-  userPhone,
-  userEmail
-}) {
+// 帳號設定修改 OK 性別暫時PASS 
+function MemberAccount(props) {
+  const { accountList } = props;
+  const [userName, setuserName] = useState(props.accountList[0].userName);
+  const [userBirthday, setuserBirthday] = useState(props.accountList[0].userBirthday);
+  const [userPhone, setuserPhone] = useState(props.accountList[0].userPhone);
+  const [userEmail, setuserEmail] = useState(props.accountList[0].userEmail);
+  const [userPassword, setuserPassword] = useState(props.accountList[0].userPassword);
+
+  // const [passwordType, setPasswordType] = useState("password");
+  // const togglePassword = () => {
+  //   if (passwordType === "password") {
+  //     setPasswordType("text")
+  //     return;
+  //   }
+  //   setPasswordType("password")
+  // }
+  // const eye = passwordType
+
+  const saveAccount = () => {
+    // console.log(accountList) // [{...}]
+    // console.log(accountList[0]) // {}
+    // console.log(userBirthday) // 
+    fetch(`http://localhost:3000/api/memberCentre/accountPut`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({
+        userName: userName,
+        userBirthday: userBirthday,
+        userPhone: userPhone,
+        userEmail: userEmail,
+        userPassword: userPassword,
+      }),
+    });
+    // location.reload();
+    // Router.replace('/memberCenter') ;
+    window.location.replace('/memberCenter');
+
+  }
   return (<div id="information" className="tabcontentB">
     <h2>帳號設定 </h2>
     <div className="setBodyB">
@@ -137,12 +168,15 @@ function MemberAccount({
       <br /><br />
       <div className="basic">
         <span>姓名<b>*</b> </span>
-        <input type="text" value={userName} />
+        <input type="text"
+          value={userName}
+          onChange={(e) => setuserName(e.target.value)}
+        />
       </div>
       <div className="basic">
         <span>性別</span>
         <select name="" id="">
-          <option value="man">{useGender}</option>
+          <option value="man">{accountList[0].useGender}</option>
           <option value="girl">女生</option>
           <option value="sec">保密</option>
         </select>
@@ -150,25 +184,45 @@ function MemberAccount({
       <br />
       <div className="basic">
         <span>出生日期</span>
-        <input type="date" />
+        <input
+          type="date"
+          value={userBirthday}
+          onChange={(e) => setuserBirthday(e.target.value)}
+        />
       </div>
       <br />
       <div className="basic">
         <span>電話號碼<b>*</b></span>
-        <input type="tel" value={userPhone} />
+        <input type="tel"
+          value={userPhone}
+          onChange={(e) => setuserPhone(e.target.value)}
+        />
       </div>
       <br />
       <div className="basic">
         <span>連絡信箱<b>*</b></span>
-        <input type="email" value={userEmail} />
+        <input type="email"
+          value={userEmail}
+          onChange={(e) => setuserEmail(e.target.value)}
+        />
       </div>
       <br />
       <div className="basic">
         <span>密碼<b>*</b></span>
-        <input type="password" value={userPassword} />
+        <input type="password"
+          value={userPassword}
+          onChange={(e) => setuserPassword(e.target.value)}
+        />
+        {/* <button onClick={togglePassword} style={{ backgroundColor: "white", borderStyle: "none" }}>
+          <i className="fa fa-eye" aria-hidden="true"></i>
+          <i className="fa fa-eye-slash" aria-hidden="true"></i>
+          <i { {passwordType}  === "password" ? <i className="fa fa-eye"></i> : <i className="fa fa-eye-slash"></i>}></i>
+
+        </button> */}
+
       </div>
       <div className="basicBtn">
-        <button className="informationBtn"> <b>儲存</b> </button>
+        <button className="informationBtn" onClick={() => saveAccount()}> <b>儲存</b> </button>
       </div>
     </div>
   </div>
@@ -265,7 +319,7 @@ function SevenDay() {
   )
 }
 
-//訂單管理
+//訂單管理 OK
 function MemberOrder(orderList, imgList) {
   // const GoEvaluation = () => {
   //   // alert('ok');
@@ -373,14 +427,8 @@ function MemberOrder(orderList, imgList) {
   );
 }
 
-// 收藏頁面
+// 收藏頁面 OK
 function Collect({ itemList, imgList, setItemList }) {
-  // function Star() {
-  //   for (var i = 1; i <= itemList.orderStar; i++)
-  //   {<img src="./images/1.png" alt="" />}
-  //   for (var i = 1; i <= (5 - itemList.orderStar); i++)
-  //   {<img src="./images/0.png" alt="" />}    
-  // }
   const router = useRouter()
   const collectDelete = (favId) => {
     console.log(favId);
@@ -452,6 +500,8 @@ function Collect({ itemList, imgList, setItemList }) {
 
 export default function MemberCentre(props) {
   const [tab, setTab] = useState('information');
+  const [userName, setuserName] = useState(props.accountList[0].userName);
+  const [accountList, setaccountList] = useState(props.accountList);
   const [itemList, setItemList] = useState(props.itemList);
   const [orderList, setOrderList] = useState(props.orderList);
   return <>
@@ -468,7 +518,7 @@ export default function MemberCentre(props) {
               <img src="./images/camera.png" alt="" style={{ width: "25px" }} />
             </button>
           </div>
-          <p>王曉明</p>
+          <p>{userName}</p>
         </div>
         <div className="tabBtnB">
           <button className="tablinks" onClick={() => setTab('information')} id="defaultOpenB">
@@ -495,7 +545,11 @@ export default function MemberCentre(props) {
 
       </div>
 
-      {tab === "information" && <MemberAccount {...props.memberCentre} />}
+      {/* {tab === "information" && <MemberAccount {...props.memberCentre} />} */}
+      {tab === "information" &&
+        <MemberAccount
+          accountList={accountList}
+        />}
       {tab === "discount" && <Discount />}
       {tab === "rebate" && <Rebate />}
       {tab === "sevenDay" && <SevenDay />}
@@ -511,7 +565,6 @@ export default function MemberCentre(props) {
           imgList={props.imgList}
         />}
 
-      {/* <Evaluation orderList={orderList}/> */}
     </div>
     <Footer />
   </>
@@ -521,18 +574,20 @@ export default function MemberCentre(props) {
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
   // 帳號設定抓的資料 (userBirthday有問題)
-  const sq1 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
-  // const sq1 = `SELECT * FROM usertable WHERE userId = "u123456789"`;
+  // const sq1 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
+  const sq1 = `SELECT * FROM usertable WHERE userId = "u123456789"`;
   // 我的收藏資料庫抓的
   const sq2 = `SELECT * FROM favorite , item WHERE favorite.itemId = item.itemId AND userId = 'u123456789';`;
   const sq3 = `SELECT * FROM itemimg`;
   const sq4 = `SELECT item.itemId , userId, orderNumber, orderReceipt,orderReview, orderStar, orderDate, orderQua, orderDeter , itemTitle, itemPrice FROM ordertable, item WHERE ordertable.itemId = item.itemId;`;
   // any是沒有定義的意思
-  const imgList: any = [];
-  const itemList: any = [];
-  const orderList: any = [];
+  const accountList: any = []; // 帳號
+  const imgList: any = [];   // 圖片
+  const itemList: any = [];  // 收藏
+  const orderList: any = []; // 訂單
 
-  const memberCentre = (await runSQL(sq1))[0]; // 帳號設定抓的資料
+  // const memberCentre = (await runSQL(sq1))[0]; // 帳號設定抓的資料  
+  const accountListRaw: any = await runSQL(sq1); // 帳號設定
   const itemListRaw: any = await runSQL(sq2); // 我的收藏
   const imgListRaw: any = await runSQL(sq3); // item的圖片
   const orderListRaw: any = (await runSQL(sq4)); // 訂單管理抓的資料
@@ -551,12 +606,18 @@ export async function getStaticProps({ params }) {
     ordertable.orderDate = format(ordertable.orderDate, "yyyy-MM-dd");
     orderList.push({ ...ordertable });
   });
+  accountListRaw.forEach((usertable: any) => {
+    usertable.userBirthday = format(usertable.userBirthday, "yyyy-MM-dd");
+    usertable.userRegisterDate = format(usertable.userRegisterDate, "yyyy-MM-dd");
+    accountList.push({ ...usertable });
+  });
 
   //把要的資料拿出來
   return {
     props: {
       // 帳號設定抓的資料
-      memberCentre: { ...memberCentre },
+      // memberCentre: { ...memberCentre },
+      accountList,
       imgList,
       itemList,
       orderList,
