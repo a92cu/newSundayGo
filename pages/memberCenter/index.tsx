@@ -2,12 +2,12 @@ import Image from "next/image";
 import { useState } from 'react';
 import Script from "next/script";
 import { runSQL } from "../../lib/mysql";
-import { format } from "date-fns";
+import { format,parseISO} from "date-fns";
 import * as R from "ramda";
 import { useRouter } from 'next/router'
 import { display } from "html2canvas/dist/types/css/property-descriptors/display";
 import ReactStars from 'react-stars'
-
+import axios from "axios";
 function Footer() {
   return (
     <div className="footer">
@@ -243,21 +243,39 @@ function Rebate() {
 
 // 七天簽到
 function SevenDay() {
+  let gotdate;
+  async function checkTime(){
+    let thisDate=format(new Date(),"yyyy-MM-dd");
+    // console.log(thisDate)
+    await axios.get("/api/memberCentre/taketime")
+          .then((res)=>{
+            let datedata=res.data.data[0].userLoginEventTime;
+            console.log(datedata)
+            gotdate=format(parseISO(datedata),"yyyy-MM-dd")
+          })
+    console.log(gotdate)
+    if(thisDate>gotdate){
+      console.log('thiDate farrrrr')
+      axios.put(`/api/memberCentre/taketime`);
+    }else{
+      alert("尚未滿足條件")
+    }
+  }
   return (
     <div id="sevenDay" className="tabcontentB">
       <h2>登入七天簽到活動</h2>
       <br />
       <div className="setBodyB">
         <div className="dayOneSeven">
-          <img className="ImgPick" src="./images/day7/day1.png" alt="" />
-          <img className="ImgPick" src="./images/day7/day2.png" alt="" />
-          <img className="ImgPick" src="./images/day7/day3.png" alt="" />
-          <img className="ImgPick" src="./images/day7/day4.png" alt="" />
+          <img className="ImgPick" src="./images/day7/day1.png" alt="折扣券" onClick={checkTime} />
+          <img className="ImgPick" src="./images/day7/day2.png" alt="折扣券" />
+          <img className="ImgPick" src="./images/day7/day3.png" alt="折扣券" />
+          <img className="ImgPick" src="./images/day7/day4.png" alt="折扣券" />
         </div>
         <div className="dayOneSeven">
-          <img className="ImgPick" src="./images/day7/day5.png" alt="" />
-          <img className="ImgPick" src="./images/day7/day6.png" alt="" />
-          <img className="ImgPick" src="./images/day7/day7.png" alt="" />
+          <img className="ImgPick" src="./images/day7/day5.png" alt="折扣券" />
+          <img className="ImgPick" src="./images/day7/day6.png" alt="折扣券" />
+          <img className="ImgPick" src="./images/day7/day7.png" alt="折扣券" />
         </div>
       </div>
 
