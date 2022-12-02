@@ -175,6 +175,10 @@ function Carousel({ imgList }) {
   );
 }
 function Receipt(orderList) {
+
+  if (orderList.orderList.length === 0) {
+    return (<div>no comments yet</div>)
+  };
   //出來的資料是陣列
   //console.log(orderList);
   const star = orderList.orderList[0].orderStar
