@@ -1,0 +1,6 @@
+export default {
+    database: "sundaygodata",
+    user: "root",
+    pass: "",
+    port: "3306",
+};
