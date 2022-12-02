@@ -6,7 +6,7 @@ form label {
 }
 
 /* 文字輸入框樣式 */
-/* input[type=text], */
+.companyContent input[type=text],
 textarea {
     width: 1000px;
     padding: 12px;
