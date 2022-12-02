@@ -177,7 +177,7 @@ function Carousel({ imgList }) {
 function Receipt(orderList) {
 
   if (orderList.orderList.length === 0) {
-    return (<div>no comments yet</div>)
+    return (<div>尚未有評價</div>)
   };
   //出來的資料是陣列
   //console.log(orderList);
