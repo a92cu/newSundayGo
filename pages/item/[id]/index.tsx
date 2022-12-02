@@ -184,10 +184,11 @@ function Receipt(orderList) {
     <p>會員帳號:{orderList.orderList[0].userId}</p>
     <p>消費日期:{orderList.orderList[0].orderDate}</p>
     <p>星等:{orderList.orderList[0].orderStar}<ReactStars
-      Rating
+      
       style={{ maxWidth: 180 }}
       value={`${star}`}
-      readOnly /></p>
+      edit={false}
+       /></p>
     <p>評語:{orderList.orderList[0].orderReview}</p>
   </div>)
 }
