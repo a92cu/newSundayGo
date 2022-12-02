@@ -9,15 +9,28 @@ import { useRouter } from 'next/router';
 //商品加入最愛連結
 export const Forfood = () => {
     const router = useRouter();
+    // const renderRef=useRef(true)
     var [homepagelist, setlist] = useState([]);
-    // useEffect(() => fetchdata(), []);
+    //點擊隱藏
+    // const [show, setShow] = useState(true);
+    // function clickButton(){
+    //     setShow(false)
+    //   }
+
+   const handleclick = ()=>{
+        document.getElementsByClassName('delbtn').style.display = 'none';
+    }
+
+    // useEffect(() => {fetchdata()}, []);
     useEffect(() => {
+        // if(renderRef.current){
+        //     renderRef.current=false
+        // }
+        // console.log(1,setlist)
         fetchdata();
         // $(function (){
-
-
         // console.log(homepagelist)
-        var acc = $(".accordion");
+        var acc = document.getElementsByClassName("accordion");
         var i;
 
         for (i = 0; i < acc.length; i++) {
@@ -43,8 +56,13 @@ export const Forfood = () => {
                 })
             }
         });
-        $(".delbtn").on('click', function () {
-            // console.log(this)
+// document.getElementsByClassName('delbtn')
+// function myFunction() {
+//     document.getElementsByClassName('delbtn').style.display = 'none'
+// }
+// myFunction()
+        $(".delbtn").click(function () {
+            console.log(this)
             // $(this)(".filterBtn").hide()
             $(this).parent('button').hide()
         });
@@ -56,56 +74,86 @@ export const Forfood = () => {
         //       alert("yes--："+$(":radio:checked").val());
         //     }
         //     // $(".homerightup").append(`<input type="button"  value="${this.citys}" className="filterBtn">`)
-        // //   console.log(this)  
+        //   console.log(this)  
         // })
         //    $('.ckbox').on('click',function(){
         //     alert()
         //    })
-        function cekbox(){
-            var arr=[];
-            $('input[type="checkbox"]').on('click',function(){
+        function cekbox() {
+            var arr = [];
+            $('input[type="checkbox"]').on('click', function () {
 
-              $(this).each(function (i) {
-                arr.push($(this).parent().text()) ;
-                console.log(arr);
+                $(this).each(function (i) {
+                    arr.push($(this).parent().text());
+                    console.log(arr);
+                    $(".homerightup").append(`<input type="button"  value="${arr}" class="filterBtn">`)
 
-            })
+                })
                 // var text = "";
                 // text += $(this).parent().text();
-              
+
             })
         }
         cekbox();
+        // return()=>{
+        //     console.log(4,'ok')
+        //     // setlist(result.data)
+        // }
+        // useeffect結束    
+    }, [])
+    // const handleForm = () => {
+        // $(".delbtn").click(function () {
+        //     // console.log(this)
+        //     // $(this)(".filterBtn").hide()
+        //     $(this).parent('button').hide()
+        // });
 
-       
-        
-    },[])
-    async function fetchdata() {
-        if (homepagelist == "") {
+    // }
 
+    // handleForm();
+    // setlist(result.data)
+    
+    const fetchdata = async () => {
+        console.log(2,setlist)
 
-            return (await fetch("/api/home/food")
-                .then((res) => res.json())
-                .then((result) => {
-                    result.data.forEach((i) => {
-                        var img = Buffer.from(i.itemImgUrl).toString('base64');
-                        var call = Buffer.from(img, 'base64').toString('ascii');
-                        var replaceCallAll = call.replaceAll('\x00', '');
-                        i.itemImgUrl = replaceCallAll;
-                    })
-                    // console.log(result.data)
-                    setlist(result.data);
-                    //
-                    //setlist(result.data))
+        return (await fetch("/api/home/food")
+            .then((res) => res.json())
+            .then((result) => {
+                result.data.forEach((i) => {
+                    var img = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call = Buffer.from(img, 'base64').toString('ascii');
+                    var replaceCallAll = call.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll;
                 })
-            )
-        }
+                // console.log(3, result.data)
+                setlist(result.data);
+                //
+            })
+        );
+        // if (setlist !== "") {
+        //     [...setlist]
+        // }
     }
+    //加入最愛
+    // const newfav = (favId) => {
+    //     console.log(favId);
+       
+    //       console.log('ok');
+    //       const newItemList = R.reject(R.propEq("favId", favId), itemList);
+    //       setItemList(newItemList);
+    //       console.log(newItemList); // {{},{}}
+    //       fetch("/api/home/food", {
+    //         method: "POST",
+    //         body: favId
+    
+    //       });
+    //     }
+    
     //篩選不重覆項目
-    var redata = homepagelist.map(function(item){
+    var redata = homepagelist.map(function (item) {
         return item.itemFilter2;
     });
-    var noredata = redata.filter(function(item, index, array){
+    var noredata = redata.filter(function (item, index, array) {
         return array.indexOf(item) === index;
         // console.log(only);
     });
@@ -114,10 +162,9 @@ export const Forfood = () => {
     // const fetcher = (user, page) =>
     //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
 
-   
+
 
     return (
-        
         <div style={{ width: '1280px', margin: '0 auto' }} >
             {/* <!-- 主要篩選區 --> */}
             <div className="hometop" >
@@ -265,7 +312,8 @@ export const Forfood = () => {
                         < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
                         項行程
                         {noredata.map((i) =>
-                            <button className="filterBtn" >
+                        
+                            <button className="filterBtn" onClick={()=>{this.handleclick()}}>
                                 {i}<span className="delbtn">X</span>
                             </button>
                         )}
@@ -295,9 +343,10 @@ export const Forfood = () => {
                                     {/* <!-- 商品標題 --> */}
                                     <span className="introp">
                                         {/* <!-- 愛心圖案 --> */}
-                                        <a href="./index.html">
+                                        <a href="/memberCenter">
                                             <img className="introimg" src="/images/heart.png"
-                                                style={{ width: '20px', marginLeft: '130px' }} alt="" />
+                                                style={{ width: '20px', marginLeft: '130px' }} alt="" 
+                                                onClick={() => newfav(i.favId)}/>
                                         </a>
                                     </span>
 
@@ -331,17 +380,18 @@ export const Forfood = () => {
                                     </div>
                                     {/* <!-- 星星評價 --> */}
                                     <div className="prostar">
-                                        {homepagelist.map((item, idx) => {
-                                            for (var i = 1; i <= { idx }; i++) {
-                                                // {item.itemTotalStar}
+                                        {homepagelist.map((item) => {
+                                            //  (` ${ item.itemTotalStar }`<=5 ) 
+                                            for (var i = 1; i <= 5; i++) {
                                                 {/* // (item==5?"":item.itemTotalStar) */ }
-                                                <img src="/images/1.png" alt="" />
+                                                <img src="/images/0.png" alt="" />
+
                                             }
                                         })}
-                                        <img src="/images/1.png" alt="" />
+                                        {/* <img src="/images/1.png" alt="" />
                                         <img src="/images/1.png" alt="" />
                                         <img src="/images/0.png" alt="" />
-                                        <img src="/images/0.png" alt="" />
+                                        <img src="/images/0.png" alt="" /> */}
 
                                         <div className="homepri">
                                             <p>TWD {item.itemPrice}</p>
