@@ -122,7 +122,7 @@ export default function UpdateItemPage(props) {
           </div>
         ))}
       </div>
-      <div className="content">
+      <div className="companyContent">
         <div className="container">
           <form action="javascript:void(0)">
             <label>商品標題:</label>
