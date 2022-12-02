@@ -4,6 +4,7 @@ import Product from "./CartItem_item.jsx"
 
 export var CartItem = () => {
     let itemarray = [];
+    let [stopState,setstopState]=useState(false);
     const [counts,setcounts]=useState(0);
     const [shoppingcar, setshoppingcar] = useState([]);
 
@@ -25,11 +26,21 @@ export var CartItem = () => {
             getshopitem(shopcar[key].itemId, shopcar[key].date, shopcar[key].count);
         }
         setshoppingcar(itemarray);
-        console.log(itemarray,123456);
-    },[])
+        // console.log(itemarray,123456);
+        
+
+        // 全選框 -- test1
+        let allCheck=document.getElementById('checkAll');
+        allCheck.addEventListener('change',()=>{  
+            let listCheck=document.querySelectorAll('.liCheck');
+        })
+
+
+        // 停止迴圈
+        setstopState(true)
+    },[stopState])
 
     function getshopitem(id, date, count) {
-        if(counts<5){
         fetch("/api/cart/ShopItem", { next: { revalidate: 10 } })
             .then((response) => response.json())
             .then((dataresult) => {
@@ -65,10 +76,9 @@ export var CartItem = () => {
                 }
             }
             )
-        }
     }
     
-    // 做全選框
+    // 做全選框 -- test2
     let takeChange=(e)=>{
         console.log(e) // 0
         console.log(isChecked[e]);
@@ -85,7 +95,42 @@ export var CartItem = () => {
             e.target.checked=allWant
         }
     }
-
+    // 將商品丟進local storage 前往結帳頁面
+    function gotopay(){
+        if(totalCash==0){
+            alert("請選擇商品")
+        }else{
+            var a=document.querySelectorAll('.liCheck')
+            a.forEach(element => {
+                    let Id=parseInt(element.value);
+                    let date=element.parentElement.nextSibling.nextSibling.children[0].innerHTML;
+                    let count=parseInt(element.parentElement.nextSibling.nextSibling.nextSibling.nextSibling.children[1].innerHTML);
+                    let price=parseInt(element.parentElement.nextSibling.nextSibling.nextSibling.children[0].innerHTML);
+                if(element.checked){
+                    console.log(element.value) // itemId
+                    console.log(element.parentElement.nextSibling.nextSibling.nextSibling.nextSibling.children[1].innerHTML) // count
+                    console.log(element.parentElement.nextSibling.nextSibling.children[0].innerHTML) // date
+                    console.log(element.parentElement.nextSibling.nextSibling.nextSibling.children[0].innerHTML);// 價錢
+                    setshopcaritem(Id,date,count,price);
+                }
+            })
+            // window.location="/////" //前往結帳頁面
+        }
+        function setshopcaritem(itemId,date,count,price){
+            window.localStorage.setItem(
+                "sureshopcar",
+                JSON.stringify({
+                ...JSON.parse(window.localStorage.getItem("sureshopcar")),
+                [itemId]: {
+                    itemId,
+                    date,
+                    count:count,
+                    price:price,
+                },
+                })
+        )}
+    }
+    
     return (
         <>
             <div id="car"></div>
@@ -127,7 +172,7 @@ export var CartItem = () => {
             {shoppingcar.map((i,key) =>
                 <Product
                 id={i.id}
-                keys={key}
+                key={key}
                 date={i.date}
                 count={i.count}
                 itemTitle={i.itemTitle}
@@ -147,10 +192,10 @@ export var CartItem = () => {
                     </div>
                     <div>
                         <span>回饋金</span>
-                        <span id="gold">{totalCash*0.2}</span>
+                        <span id="gold">{Math.floor(totalCash*0.02)}</span>
                     </div>
                 </div>
-                <a href="#" onClick={()=>gotopay()}>前往結帳</a>
+                <a href="#" onClick={gotopay}>前往結帳</a>
             </div>
             <div className="continueBtn">
                 <a href="/#">繼續購物

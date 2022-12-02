@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import Script from "next/script";
 
 const Product = ({ 
-    id, 
-    keys, 
+    id,
     date,
     count,
     check,
@@ -47,14 +46,16 @@ const Product = ({
             onCalculate(-itemPrice);
         }
     };
-    
+    let deleteMe=(e)=>{
+        e.target.parentElement.parentElement.remove()
+    }
 
     return (
         <>
-            <div className="carHeader carBody" >
+            <div className="carHeader carBody">
                 <div className="carChecked">
                     {/* <!-- 個別核取方塊 --> */}
-                    <input type="checkbox" name="subItem" className="liCheck" onChange={gotChange} value={keys} />
+                    <input type="checkbox" name="subItem" className="liCheck" onChange={gotChange} value={id} />
                 </div>
                 <div className="carDetail">
                     <a href={`/item/${id}`}><img src={itemImgUrl} /></a>
@@ -75,10 +76,9 @@ const Product = ({
                     <span className="itemTotal">{quantity*itemPrice}</span>
                 </div>
                 <div className="operate">
-                    <i id="deleteOut" className="fa fa-trash-o fa-2x" aria-hidden="true" onClick={() => deleteMe()}></i>
+                    <i id="deleteOut" className="fa fa-trash-o fa-2x" aria-hidden="true" onClick={deleteMe}></i>
                 </div>
             </div>
-            
         </>
     )
 };
