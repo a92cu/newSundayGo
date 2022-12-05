@@ -49,7 +49,7 @@ function MemberOrder({ itemList, imgList, setItemList }) {
                       </p>
                       <p>
                         上架時間 <br />
-                        <span>{i.itemPeriod}</span>
+                        <span>{i.itemStartDate}~{i.itemEndDate}</span>
                       </p>
                     </td>
                     <td>

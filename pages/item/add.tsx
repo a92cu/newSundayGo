@@ -16,6 +16,8 @@ export default function UpdateItemPage(props) {
   const [itemNote, setItemNote] = useState(props.itemNote);
   const [itemStartDate, setItemStartDate] = useState(props.itemStartDate);
   const [itemEndDate, setItemEndDate] = useState(props.itemEndDate);
+  const [itemSales, setItemSales] = useState(props.itemSales);
+  const [itemInvent, setItemInvent] = useState(props.itemInvent);
 
   const getUrl = (index, originUrl) => {
     if (index === 0) return image1Url === null ? originUrl : image1Url;
@@ -85,8 +87,8 @@ export default function UpdateItemPage(props) {
           itemStartDate,
           itemEndDate,
           itemListedDate: itemStartDate,
-          itemSales: 0,
-          itemInvent: 0,
+          itemSales,
+          itemInvent,
           itemTotalStar: 0,
           itemFilter1: "",
           itemFilter2,
@@ -144,6 +146,20 @@ export default function UpdateItemPage(props) {
               type="number"
               value={itemPrice}
               onChange={(e) => setItemPrice(e.target.value)}
+            />
+            <br />
+            <label>銷售數量:</label>
+            <input
+              type="text"
+              value={itemSales}
+              onChange={(e) => setItemSales(e.target.value)}
+            />
+            <br />
+            <label>庫存數量:</label>
+            <input
+              type="text"
+              value={itemInvent}
+              onChange={(e) => setItemInvent(e.target.value)}
             />
             <br />
             <label>商品說明:</label>
