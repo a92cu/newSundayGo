@@ -175,7 +175,7 @@ function Carousel({ imgList }) {
   );
 }
 function Receipt(orderList) {
-
+///把沒有評價的擋住先跳出這個,後面沒評價的品項才不會壞掉
   if (orderList.orderList.length === 0) {
     return (<div><h3>評價:</h3><span>尚未有評價</span></div>)
   };

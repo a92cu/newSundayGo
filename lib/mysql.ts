@@ -42,7 +42,6 @@ const connection = mysql.createConnection({
 //   port:8889,
 //   multipleStatements: true,
 // });
->>>>>>> de26114f035741fe673c67a7596b8bcb96b005b1
 
 
 // for Mac
