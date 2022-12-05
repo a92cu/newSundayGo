@@ -23,18 +23,29 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
       }
       // Get data from your database
       break;
-      // case "POST":
-      // try {
-        
-      //   // 新增商品內容
-      //   const sq1 = `INSERT INTO favorite (${keys},itemId,firmId) VALUES (${values},"${id}","${id}")`;
-      //   console.log(sq1);
-      //   runSQL(sq1);
-      //   res.status(200).json({ message: "ok" });
-      // } catch (error) {
-      //   res.status(500);
-      // }
-      // break;
+      case "POST":
+      try {
+        const keys = Object.keys(req.body).join(",");
+        const values = Object.values(req.body)
+            .map((i) => (typeof i === "string" ? `"${i}"` : i))
+            .join(",");
+            let query = "";
+            for (let j = 0; j < keys.length; j++) {
+                query =
+                    query + keys[j] + "=" + values[j] + (j === keys.length - 1 ? "" : ",");
+            }  
+            
+        // 新增商品內容
+        // const sq1 = `INSERT INTO item (${keys},userId,userPassword) VALUES (${values},"${id}","${id}")`;
+        const sq1 = `INSERT INTO favorite ${query} where itemId = "${id}"`;
+
+        console.log(sq1);
+        runSQL(sq1);
+        res.status(200).json({ message: "ok" });
+    } catch (error) {
+        res.status(500);
+    }
+    break;
     default:
       res.setHeader('Allow', ['GET', 'POST'])
       res.status(405).end(`Method ${method} Not Allowed`)

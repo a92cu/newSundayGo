@@ -465,7 +465,7 @@ function Collect({ itemList, imgList, setItemList }) {
   return (
     <div id="collect" className="tabcontentB">
       <div className="setBodyB">
-        <h2>我的收藏</h2>
+        <h2>我的收藏</h2> 
         {itemList.map((i) => {
           // console.log(itemList); // [{},{}]
           // console.log(imgList); //[{}{}]

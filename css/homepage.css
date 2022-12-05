@@ -229,11 +229,9 @@
 }
 
 /* 商品星星 */
-.prostar>img {
-    width: 20px;
-    text-align: end;
-    margin-top: 15px;
-    
+
+.prostar .collectstar{
+   width:100px;
 }
 
 /* .prostar img:hover {

@@ -2,6 +2,7 @@ import $ from 'jquery';
 import React, { useEffect, useState } from 'react';
 // import { runSQL } from "/../../lib/mysql";
 import { setSeconds } from "date-fns";
+import ReactStars from 'react-stars';
 
 
 
@@ -47,7 +48,7 @@ export const Traffic = () => {
             // $(this)(".filterBtn").hide()
             $(this).parent('button').hide()
         });
-    },[])
+    }, [])
     async function fetchdata() {
 
         return (await fetch("/api/home/traffic")
@@ -78,7 +79,7 @@ export const Traffic = () => {
     // const fetcher = (user, page) =>
     //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
 
-    
+
     return (
         <div style={{ width: '1280px', margin: '0 auto' }} >
             {/* <!-- 主要篩選區 --> */}
@@ -293,14 +294,14 @@ export const Traffic = () => {
                                     </div>
                                     {/* <!-- 星星評價 --> */}
                                     <div className="prostar">
-                                        {/* for(var i=1;i<{item.itemTotalStar};i++){ */}
-                                        {/* {homepagelist.map((item)=> */}
-                                        <img src="/images/1.png" alt="" />
-                                        {/* )} */}
-                                        <img src="/images/1.png" alt="" />
-                                        <img src="/images/1.png" alt="" />
-                                        <img src="/images/0.png" alt="" />
-                                        <img src="/images/0.png" alt="" />
+                                        <div className="collectstar">
+                                            <ReactStars
+                                                Rating
+                                                value={item.itemTotalStar}
+                                                edit={false} />
+
+                                            <div>({item.itemTotalStar})</div>
+                                        </div>
 
                                         <div className="homepri">
                                             <p>TWD {item.itemPrice}</p>
@@ -326,13 +327,13 @@ export const Traffic = () => {
                 {/* <!-- 頁籤 --> */}
                 < ul className="pagination" >
 
-                    <li><a href="#">1</a></li>
-                    <li><a className="pagetag" href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">6</a></li>
-                    <li><a href="#">7</a></li>
+                        {/* <li><a href="#">1</a></li>
+                        <li><a className="pagetag" href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">6</a></li>
+                        <li><a href="#">7</a></li> */}
 
                 </ul >
 

@@ -3,21 +3,23 @@ import React, { useEffect, useState } from 'react';
 // import { runSQL } from "/../../lib/mysql";
 import { setSeconds } from "date-fns";
 import { useRouter } from 'next/router';
+import ReactStars from 'react-stars';
 
 
 
 //商品加入最愛連結
-export const Forfood = () => {
+export const Forfood = (porps) => {
     const router = useRouter();
     // const renderRef=useRef(true)
     var [homepagelist, setlist] = useState([]);
+    const [imgId, setimgId] = useState([porps.imgId]);
     //點擊隱藏
     // const [show, setShow] = useState(true);
     // function clickButton(){
     //     setShow(false)
     //   }
 
-   const handleclick = ()=>{
+    const handleclick = () => {
         document.getElementsByClassName('delbtn').style.display = 'none';
     }
 
@@ -28,6 +30,8 @@ export const Forfood = () => {
         // }
         // console.log(1,setlist)
         fetchdata();
+        //加入最愛
+        // favIdsend();
         // $(function (){
         // console.log(homepagelist)
         var acc = document.getElementsByClassName("accordion");
@@ -56,11 +60,11 @@ export const Forfood = () => {
                 })
             }
         });
-// document.getElementsByClassName('delbtn')
-// function myFunction() {
-//     document.getElementsByClassName('delbtn').style.display = 'none'
-// }
-// myFunction()
+        // document.getElementsByClassName('delbtn')
+        // function myFunction() {
+        //     document.getElementsByClassName('delbtn').style.display = 'none'
+        // }
+        // myFunction()
         $(".delbtn").click(function () {
             console.log(this)
             // $(this)(".filterBtn").hide()
@@ -102,19 +106,19 @@ export const Forfood = () => {
         // useeffect結束    
     }, [])
     // const handleForm = () => {
-        // $(".delbtn").click(function () {
-        //     // console.log(this)
-        //     // $(this)(".filterBtn").hide()
-        //     $(this).parent('button').hide()
-        // });
+    // $(".delbtn").click(function () {
+    //     // console.log(this)
+    //     // $(this)(".filterBtn").hide()
+    //     $(this).parent('button').hide()
+    // });
 
     // }
 
     // handleForm();
     // setlist(result.data)
-    
+
     const fetchdata = async () => {
-        console.log(2,setlist)
+        console.log(2, setlist)
 
         return (await fetch("/api/home/food")
             .then((res) => res.json())
@@ -134,10 +138,36 @@ export const Forfood = () => {
         //     [...setlist]
         // }
     }
+
+    const favIdsend = async (imgId) => {
+        console.log(4, imgId)
+
+        return (await fetch("/api/home/food"),{
+            method: "post",
+            // body:imgId
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json;charset=utf-8",
+            },
+            // body: JSON.stringify({
+            //     orderReview: orderReview,
+            // }),
+            
+        })
+        .then(res => res.json())
+
+            .then(data => {
+                /*接到request data後要做的事情*/
+                console.log("使用者資料",data.data[0].imgId);
+             
+            })
+       }
+    //POST結束
+
     //加入最愛
     // const newfav = (favId) => {
     //     console.log(favId);
-       
+
     //       console.log('ok');
     //       const newItemList = R.reject(R.propEq("favId", favId), itemList);
     //       setItemList(newItemList);
@@ -145,10 +175,10 @@ export const Forfood = () => {
     //       fetch("/api/home/food", {
     //         method: "POST",
     //         body: favId
-    
+
     //       });
     //     }
-    
+
     //篩選不重覆項目
     var redata = homepagelist.map(function (item) {
         return item.itemFilter2;
@@ -307,13 +337,14 @@ export const Forfood = () => {
                 {/* <!-- 右側顯示區 --> */}
                 < div className="homeright" >
                     {/* <!-- 顯示篩選 --> */}
+
                     < div className="homerightup" >
                         共篩選出
                         < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
                         項行程
                         {noredata.map((i) =>
-                        
-                            <button className="filterBtn" onClick={()=>{this.handleclick()}}>
+
+                            <button className="filterBtn" onClick={() => { this.handleclick() }}>
                                 {i}<span className="delbtn">X</span>
                             </button>
                         )}
@@ -329,7 +360,8 @@ export const Forfood = () => {
                     </div >
                     <div id="content" className="content">
                         {/* <!-- 商品顯示主體 --> */}
-                        {homepagelist.map((item, index) =>
+                        {homepagelist.map((item) =>
+                            // const star = (item.itemTotalStar)
                             <div className="homeProduct" onClick={() => router.push(`/item/${item.itemId}`)}>
                                 {/* <!-- 圖片框 --> */}
                                 <div className="picPlace">
@@ -343,11 +375,11 @@ export const Forfood = () => {
                                     {/* <!-- 商品標題 --> */}
                                     <span className="introp">
                                         {/* <!-- 愛心圖案 --> */}
-                                        <a href="/memberCenter">
+                                        {/* <a href="/memberCenter"> */}
                                             <img className="introimg" src="/images/heart.png"
-                                                style={{ width: '20px', marginLeft: '130px' }} alt="" 
-                                                onClick={() => newfav(i.favId)}/>
-                                        </a>
+                                                style={{ width: '20px', marginLeft: '130px' }} alt=""
+                                                onClick={() => favIdsend()} />
+                                        {/* </a> */}
                                     </span>
 
                                     {/* 商品標題 */}
@@ -380,14 +412,17 @@ export const Forfood = () => {
                                     </div>
                                     {/* <!-- 星星評價 --> */}
                                     <div className="prostar">
-                                        {homepagelist.map((item) => {
-                                            //  (` ${ item.itemTotalStar }`<=5 ) 
-                                            for (var i = 1; i <= 5; i++) {
-                                                {/* // (item==5?"":item.itemTotalStar) */ }
-                                                <img src="/images/0.png" alt="" />
 
-                                            }
-                                        })}
+                                        <div className="collectstar">
+                                            <ReactStars
+                                                Rating
+                                                value={item.itemTotalStar}
+                                                edit={false} />
+
+                                            <div className="collectstarnum">({item.itemTotalStar})</div>
+                                        </div>
+
+
                                         {/* <img src="/images/1.png" alt="" />
                                         <img src="/images/1.png" alt="" />
                                         <img src="/images/0.png" alt="" />
@@ -398,14 +433,7 @@ export const Forfood = () => {
                                         </div>
                                     </div>
 
-                                    {/* <!-- 星星圖樣 --> */}
-                                    {/* <div className="star" style="background-color: red;">
-                                  <svg className="homestar" height="210" width="550">
-                                      <polygon points="100,10 40,198 190,78 10,78 160,198"
-                                          style="fill:#FAEF8B;stroke-width:5;fill-rule:nonzero;" />
-                                      Sorry, your browser does not support inline SVG.
-                                  </svg>
-                              </div>  */}
+
                                 </div>
 
                             </div>
@@ -413,23 +441,26 @@ export const Forfood = () => {
                         {/* map結尾 */}
                     </div>
                 </div >
-
                 {/* <!-- 頁籤 --> */}
+                {/* 消失會讓footer跑版 */}
                 < ul className="pagination" >
 
-                    <li><a href="#">1</a></li>
+                    {/* <li><a href="#">1</a></li>
                     <li><a className="pagetag" href="#">2</a></li>
                     <li><a href="#">3</a></li>
                     <li><a href="#">4</a></li>
                     <li><a href="#">5</a></li>
                     <li><a href="#">6</a></li>
-                    <li><a href="#">7</a></li>
+                    <li><a href="#">7</a></li> */}
 
                 </ul >
+
+
 
             </div >
         </div >
     )
+
     // })
 }
 export default Forfood;

@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 export const Listdemo = () => {
     useEffect(() => {
+        console.log('ok')
         var acc = $(".cartaccordion"); 
         var i;
 
@@ -45,10 +46,10 @@ export const Listdemo = () => {
                             </button>
                             <div className="cartpanel">
                                 <div className="orderleft">
-                                    <p>名字</p>
+                                    <span>名字</span>
                                     <input type="text" name="userName" id="CartuserName" required />
                                     <p>地區</p>
-                                    <input type="text" />
+                                    <input type="text" name="area" required/>
                                     <p>電子信箱</p>
                                     <input type="email" name="usermail" required />
                                 </div>
@@ -140,9 +141,10 @@ export const Listdemo = () => {
                                             <img src="https://cdn.kkday.com/pc-web/assets/img/payment/ic_jcb.svg" alt="" />
                                         </label>
                                         <br />
-                                        <div className="toggle">
+                                        <div className="cartoggle">
                                             信用卡號碼
                                             <input type="text" pattern="[0-9]{12}" placeholder="0000 0000 0000" required />
+                                            <br />
                                             有效期限
                                             <input type="text" name="" placeholder="MM/YY" required />
                                             背面末3碼

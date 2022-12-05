@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 // import { runSQL } from "/../../lib/mysql";
 import { setSeconds } from "date-fns";
 import { useRouter } from 'next/router';
-
+import ReactStars from 'react-stars';
 
 
 
@@ -16,11 +16,11 @@ export const Lodging = () => {
 
     useEffect(() => {
         // if(homepagelist==""){
-        fetchdata() ;
+        fetchdata();
         var acc = $(".accordion");
         var i;
         for (i = 0; i < acc.length; i++) {
-            
+
             acc[i].addEventListener("click", function () {
                 this.classList.toggle("active");
                 var panel = this.nextElementSibling;
@@ -31,7 +31,7 @@ export const Lodging = () => {
                 }
             });
         }
-    
+
         $(".allcheck").click(function () {
             if (this.checked) {
                 $("input[name='citys']").each(function () {
@@ -49,7 +49,7 @@ export const Lodging = () => {
             $(this).parent('button').hide()
         });
 
-    },[])
+    }, [])
     async function fetchdata() {
 
         return (await fetch("/api/home/lodging")
@@ -84,8 +84,8 @@ export const Lodging = () => {
 
 
     // console.log(homepagelist)
-   
-    
+
+
     // }
 
     return (
@@ -302,15 +302,14 @@ export const Lodging = () => {
                                     </div>
                                     {/* <!-- 星星評價 --> */}
                                     <div className="prostar">
-                                        {/* for(var i=1;i<{item.itemTotalStar};i++){ */}
-                                        {/* {homepagelist.map((item)=> */}
-                                        <img src="/images/1.png" alt="" />
-                                        {/* )} */}
-                                        <img src="/images/1.png" alt="" />
-                                        <img src="/images/1.png" alt="" />
-                                        <img src="/images/0.png" alt="" />
-                                        <img src="/images/0.png" alt="" />
+                                        <div className="collectstar">
+                                            <ReactStars
+                                                Rating
+                                                value={item.itemTotalStar}
+                                                edit={false} />
 
+                                            <div>({item.itemTotalStar})</div>
+                                        </div>
                                         <div className="homepri">
                                             <p>TWD {item.itemPrice}</p>
                                         </div>
@@ -332,16 +331,17 @@ export const Lodging = () => {
                     </div>
                 </div >
 
-                {/* <!-- 頁籤 --> */}
+                {/* <!-- 頁籤 --> */}                
+                {/* 消失會讓footer跑版 */}
                 < ul className="pagination" >
-
+{/* 
                     <li><a href="#">1</a></li>
                     <li><a className="pagetag" href="#">2</a></li>
                     <li><a href="#">3</a></li>
                     <li><a href="#">4</a></li>
                     <li><a href="#">5</a></li>
                     <li><a href="#">6</a></li>
-                    <li><a href="#">7</a></li>
+                    <li><a href="#">7</a></li> */}
 
                 </ul >
 
