@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { runSQL } from "../../lib/mysql";
 import { format, parseISO } from "date-fns";
 import * as R from "ramda";
 import Router, { useRouter } from 'next/router'
 import ReactStars from 'react-stars'
 import axios from "axios";
+
 function Footer() {
   return (
     <div className="footer">
@@ -233,63 +234,72 @@ function MemberAccount(props) {
   </div>
   );
 }
-// 折扣券
-function Discount() {
-  return (<div id="discount" className="tabcontentB">
+// 折扣券 OK 但可能有bug(要在測試)
+function Discount(props) {
+  // console.log(props.discountList);
+  const theDate=format(new Date(),"yyyy-MM-dd");
+  console.log(Math.abs(Date.parse(props.discountList[0].couponStartTime)-Date.parse(theDate))/ (1000 * 60 * 60 * 24))
+  return (
+  <div id="discount" className="tabcontentB">
     <h2>折扣券</h2>
     <div className="setBodyB">
       <div className="discountBtn" style={{ width: "100%" }}>
         <div id="discountUse" className="discountBody">
-          <div className="discountDiv">
-            <span>95折</span> <br />
-            <span>訂單金額須滿100元</span> <br />
-            <span>有效期限: 剩餘20天12hr</span> <br />
-          </div>
-          <div className="discountDivUsed">
-            <span>95折</span> <br />
-            <span>訂單金額須滿100元</span> <br />
-            <span>有效期限: 剩餘20天12hr</span> <br />
-          </div>
-
-
+          {props.discountList.map((ele:any,idx:number)=>{
+              return(
+                <div className={(ele.couponUse>0? "discountDivUsed":"discountDiv")}key={idx}>
+                  <span>{ele.couponName}</span> <br />
+                  <span>訂單金額須滿100元</span> <br />
+                  <span>有效期限: 剩餘{Math.abs(Date.parse(ele.couponStartTime)-Date.parse(theDate))/ (1000 * 60 * 60 * 24)}天</span> <br />
+                </div>
+              )
+          })}
         </div>
-
       </div>
     </div>
   </div>
   );
 }
 
-// 回饋金
-function Rebate() {
+// 回饋金 OK 可以正常運作
+function Rebate(props) {
+  console.log(props.orderListRebate)
+  let allRebate=[];
+  props.orderListRebate.forEach((e,i)=>{
+  if(props.orderListRebate[i].userId=="u123456789"){
+    let itemTitle=props.orderListRebate[i].itemTitle;
+    let orderDate=props.orderListRebate[i].orderDate;
+    let orderRebate=props.orderListRebate[i].orderRebate;
+    allRebate.push({itemTitle,orderDate,orderRebate})
+    }
+  })
+  // 計算回饋金加總
+  let total=0;
+  allRebate.forEach((e)=>{
+    total+=e.orderRebate;
+  })
   return (
     <div id="rebate" className="tabcontentB">
       <h2 className="rebateH2">回饋金</h2>
       <div style={{ textAlign: "center" }}>
-        <img src="./images/p.png" style={{ width: "30px", verticalAlign: "middle" }} />&emsp;123
+        <img src="./images/p.png" style={{ width: "30px", verticalAlign: "middle" }} />&emsp;{total}
         <br />
-        <span className="poindDayline">有效期限:最近一筆訂單時間+1Y</span>
+        <br />
       </div>
       <div className="setBodyB">
         <div className="rebateBtn" style={{ width: "100%" }}>
           <div id="rebateUse" className="rebateBody">
             <table className="rebateGetTable">
               <tbody>
-                {/* 獲取點數 */}
-                <tr className="rebateGetTr">
-                  <td>桃園青埔|Xpark 都會型水生公園門票</td>
-                  <td>2022-10-25</td>
-                  <td><img src="./images/p.png" style={{ width: "20px", verticalAlign: "middle" }} /> &ensp;3
-                  </td>
-                </tr>
-                {/* 使用點數 */}
-                <tr className="rebateUsedTr">
-                  <td>桃園青埔|Xpark 都會型水生公園門票</td>
-                  <td>2022-10-25</td>
-                  <td><img src="./images/p.png" style={{ width: "20px", verticalAlign: "middle" }} /> &ensp;-3
-                  </td>
-                </tr>
-
+                {allRebate.map((e,i)=>{
+                  return(
+                  <tr className={(e.orderRebate>0)?"rebateGetTr":"rebateUsedTr"} key={i}>
+                    <td>{e.itemTitle}</td>
+                    <td>{e.orderDate}</td>
+                    <td><img src="./images/p.png" style={{ width: "20px", verticalAlign: "middle" }} /> &ensp;{e.orderRebate}
+                    </td>
+                  </tr>
+               )})}
               </tbody>
             </table>
           </div>
@@ -300,25 +310,30 @@ function Rebate() {
   )
 }
 
-// 七天簽到
+// 七天簽到 OK 有bug尚未解決(當天註冊的會員會點到兩張)
 function SevenDay() {
+  let gotdate:Date;
+  async function checkTime(e){
+    let thisDate=new Date()
+    let thisDate_ts=thisDate.getTime()
   let gotdate;
   async function checkTime() {
     let thisDate = format(new Date(), "yyyy-MM-dd");
     // console.log(thisDate)
     await axios.get("/api/memberCentre/taketime")
-      .then((res) => {
-        let datedata = res.data.data[0].userLoginEventTime;
-        console.log(datedata)
-        gotdate = format(parseISO(datedata), "yyyy-MM-dd")
-      })
+          .then((res)=>{
+            let datedata=res.data.data[0].userLoginEventTime;
+            console.log(datedata)
+            gotdate=format(parseISO(datedata),"yyyy-MM-dd")
+          })
     console.log(gotdate)
-    if (thisDate > gotdate) {
+    if(thisDate>gotdate){
       console.log('thiDate farrrrr')
       axios.put(`/api/memberCentre/taketime`);
-    } else {
+    }else{
       alert("尚未滿足條件")
     }
+    e.target.style.filter="brightness(50%)"
   }
   return (
     <div id="sevenDay" className="tabcontentB">
@@ -326,7 +341,7 @@ function SevenDay() {
       <br />
       <div className="setBodyB">
         <div className="dayOneSeven">
-          <img className="ImgPick" src="./images/day7/day1.png" alt="折扣券" onClick={checkTime} />
+          <img className="ImgPick" src="./images/day7/day1.png" alt="折扣券" onClick={checkTime}/>
           <img className="ImgPick" src="./images/day7/day2.png" alt="折扣券" />
           <img className="ImgPick" src="./images/day7/day3.png" alt="折扣券" />
           <img className="ImgPick" src="./images/day7/day4.png" alt="折扣券" />
@@ -527,6 +542,7 @@ export default function MemberCentre(props) {
   const [accountList, setaccountList] = useState(props.accountList);
   const [itemList, setItemList] = useState(props.itemList);
   const [orderList, setOrderList] = useState(props.orderList);
+  const [discountList,setDiscountList]=useState(props.discountList)
   return <>
     <Header />
     <div className="MemberCentre">
@@ -573,8 +589,14 @@ export default function MemberCentre(props) {
         <MemberAccount
           accountList={accountList}
         />}
-      {tab === "discount" && <Discount />}
-      {tab === "rebate" && <Rebate />}
+      {tab === "discount" && 
+        <Discount orderList
+        discountList={discountList}
+        />}
+      {tab === "rebate" && 
+      <Rebate 
+        orderListRebate={orderList}
+        />}
       {tab === "sevenDay" && <SevenDay />}
       {tab === "memberOrder" &&
         <MemberOrder
@@ -602,18 +624,21 @@ export async function getStaticProps({ params }) {
   // 我的收藏資料庫抓的
   const sq2 = `SELECT * FROM favorite , item WHERE favorite.itemId = item.itemId AND userId = 'u123456789';`;
   const sq3 = `SELECT * FROM itemimg`;
-  const sq4 = `SELECT item.itemId , userId, orderNumber, orderReceipt,orderReview, orderStar, orderDate, orderQua, orderDeter , itemTitle, itemPrice FROM ordertable, item WHERE ordertable.itemId = item.itemId;`;
+  const sq4 = `SELECT item.itemId , userId, orderNumber, orderReceipt,orderReview, orderStar, orderDate, orderQua, orderRebate , orderDeter , itemTitle, itemPrice FROM ordertable LEFT JOIN item ON ordertable.itemId=item.itemId;`;
+  const sq5 = `SELECT  * FROM discountcoupon WHERE userId = "u123456789"`;
   // any是沒有定義的意思
   const accountList: any = []; // 帳號
   const imgList: any = [];   // 圖片
   const itemList: any = [];  // 收藏
   const orderList: any = []; // 訂單
+  const discountList: any =[]; // 折扣券
 
   // const memberCentre = (await runSQL(sq1))[0]; // 帳號設定抓的資料  
   const accountListRaw: any = await runSQL(sq1); // 帳號設定
   const itemListRaw: any = await runSQL(sq2); // 我的收藏
   const imgListRaw: any = await runSQL(sq3); // item的圖片
-  const orderListRaw: any = (await runSQL(sq4)); // 訂單管理抓的資料
+  const orderListRaw: any = await runSQL(sq4); // 訂單管理抓的資料
+  const discountListRaw: any= await runSQL(sq5); // 折扣券資料
   // forEach是在轉格式,原本出來是database物件
   imgListRaw.forEach((item: any) => {
     item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
@@ -632,9 +657,13 @@ export async function getStaticProps({ params }) {
   accountListRaw.forEach((usertable: any) => {
     usertable.userBirthday = format(usertable.userBirthday, "yyyy-MM-dd");
     usertable.userRegisterDate = format(usertable.userRegisterDate, "yyyy-MM-dd");
+    usertable.userLoginEventTime=format(usertable.userLoginEventTime,	"yyyy-MM-dd");
     accountList.push({ ...usertable });
   });
-
+  discountListRaw.forEach((discounttable: any) => {
+    discounttable.couponStartTime = format(discounttable.couponStartTime,"yyyy-MM-dd");
+    discountList.push({...discounttable})
+  });
   //把要的資料拿出來
   return {
     props: {
@@ -644,6 +673,7 @@ export async function getStaticProps({ params }) {
       imgList,
       itemList,
       orderList,
+      discountList,
     },
   };
 }
