@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState } from 'react';
 import { runSQL } from "../../lib/mysql";
-import { format,parseISO} from "date-fns";
+import { format, parseISO } from "date-fns";
 import * as R from "ramda";
 import Router, { useRouter } from 'next/router'
 import ReactStars from 'react-stars'
@@ -129,15 +129,14 @@ function MemberAccount(props) {
   const [userEmail, setuserEmail] = useState(props.accountList[0].userEmail);
   const [userPassword, setuserPassword] = useState(props.accountList[0].userPassword);
 
-  // const [passwordType, setPasswordType] = useState("password");
-  // const togglePassword = () => {
-  //   if (passwordType === "password") {
-  //     setPasswordType("text")
-  //     return;
-  //   }
-  //   setPasswordType("password")
-  // }
-  // const eye = passwordType
+  const showPassword = () => {
+    var x = document.getElementById("showPasswordInput");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
 
   const saveAccount = () => {
     // console.log(accountList) // [{...}]
@@ -209,16 +208,22 @@ function MemberAccount(props) {
       <br />
       <div className="basic">
         <span>密碼<b>*</b></span>
-        <input type="password"
+        &emsp;&emsp;&emsp;&emsp;&emsp;
+        <input
+          id="showPasswordInput"
+          type="password"
           value={userPassword}
           onChange={(e) => setuserPassword(e.target.value)}
         />
-        {/* <button onClick={togglePassword} style={{ backgroundColor: "white", borderStyle: "none" }}>
-          <i className="fa fa-eye" aria-hidden="true"></i>
-          <i className="fa fa-eye-slash" aria-hidden="true"></i>
-          <i { {passwordType}  === "password" ? <i className="fa fa-eye"></i> : <i className="fa fa-eye-slash"></i>}></i>
+        <input
+          style={{ 
+            width: "15px" ,
+            verticalAlign: "Middle",
+            outline:"none"
+          }}
+          type="checkbox"
+          onClick={() => showPassword()} />顯示密碼
 
-        </button> */}
 
       </div>
       <div className="basicBtn">
@@ -298,20 +303,20 @@ function Rebate() {
 // 七天簽到
 function SevenDay() {
   let gotdate;
-  async function checkTime(){
-    let thisDate=format(new Date(),"yyyy-MM-dd");
+  async function checkTime() {
+    let thisDate = format(new Date(), "yyyy-MM-dd");
     // console.log(thisDate)
     await axios.get("/api/memberCentre/taketime")
-          .then((res)=>{
-            let datedata=res.data.data[0].userLoginEventTime;
-            console.log(datedata)
-            gotdate=format(parseISO(datedata),"yyyy-MM-dd")
-          })
+      .then((res) => {
+        let datedata = res.data.data[0].userLoginEventTime;
+        console.log(datedata)
+        gotdate = format(parseISO(datedata), "yyyy-MM-dd")
+      })
     console.log(gotdate)
-    if(thisDate>gotdate){
+    if (thisDate > gotdate) {
       console.log('thiDate farrrrr')
       axios.put(`/api/memberCentre/taketime`);
-    }else{
+    } else {
       alert("尚未滿足條件")
     }
   }
@@ -465,7 +470,7 @@ function Collect({ itemList, imgList, setItemList }) {
   return (
     <div id="collect" className="tabcontentB">
       <div className="setBodyB">
-        <h2>我的收藏</h2> 
+        <h2>我的收藏</h2>
         {itemList.map((i) => {
           // console.log(itemList); // [{},{}]
           // console.log(imgList); //[{}{}]
