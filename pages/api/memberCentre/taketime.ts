@@ -24,8 +24,8 @@ export default async function userHandler(
     case "PUT":
     try {
       // 刪除商品內容
-      const sq2 = `UPDATE usertable SET userLoginEventTime="${req.body.date}" WHERE userId="u123456789"`;
-      const sq3 = `INSERT INTO discountcoupon ( userId, coupon , couponName, couponStartTime,couponUse ) VALUES ("u123456789", 0.9 ,"九折","${req.body.discountdate}",0)`;
+      const sq2 = `UPDATE usertable SET userLoginEventTime="${req.body.timeData}" WHERE userId="u123456789"`;
+      const sq3 = `INSERT INTO discountcoupon ( userId, coupon , couponName, couponStartTime,couponUse ) VALUES ("u123456789", 0.95 ,"九五折","${req.body.discountdate}",0)`;
       const data= await runSQL(sq2);
       const data2=await runSQL(sq3);
       // console.log(req)

@@ -318,30 +318,28 @@ function Rebate(props) {
   )
 }
 
-// 七天簽到 OK 有bug尚未解決(當天註冊的會員會點到兩張)
+// 七天簽到 OK (目前只能作用第一張折扣券，而且必須到隔天才能作用)
 function SevenDay() {
-  let gotdate: Date;
-  async function checkTime(e) {
-    let thisDate = new Date()
-    let thisDate_ts = thisDate.getTime()
-    let gotdate;
-    async function checkTime() {
-      let thisDate = format(new Date(), "yyyy-MM-dd");
-      // console.log(thisDate)
-      await axios.get("/api/memberCentre/taketime")
-        .then((res) => {
-          let datedata = res.data.data[0].userLoginEventTime;
-          console.log(datedata)
-          gotdate = format(parseISO(datedata), "yyyy-MM-dd")
-        })
-      console.log(gotdate)
-      if (thisDate > gotdate) {
-        console.log('thiDate farrrrr')
-        axios.put(`/api/memberCentre/taketime`);
-      } else {
-        alert("尚未滿足條件")
-      }
-      e.target.style.filter = "brightness(50%)"
+  let gotdate;
+  let thisDate =new Date();
+  let thisDate_ts = +new Date();
+  let futureDate=new Date();
+  futureDate.setTime(thisDate_ts + 7 * 1000 * 60 * 60 * 24);
+  async function checkTime(e){
+    await axios.get("/api/memberCentre/taketime")
+          .then((res)=>{
+            let datedata=res.data.data[0].userLoginEventTime;
+            // console.log(datedata)
+            gotdate=new Date(datedata);
+          })
+    if(thisDate.getFullYear()>=gotdate.getFullYear() && thisDate.getMonth()>=gotdate.getMonth() && thisDate.getDate()>gotdate.getDate()){
+      alert('您已領取折扣券')
+      axios.put(`/api/memberCentre/taketime`,
+      {timeData:format(thisDate,"yyyy-MM-dd"),
+       discountdate:format(futureDate,"yyyy-MM-dd")
+      });
+    }else{
+      alert("請待明日再來領折扣券")
     }
     return (
       <div id="sevenDay" className="tabcontentB">
@@ -362,8 +360,8 @@ function SevenDay() {
         </div>
 
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 //訂單管理 OK
