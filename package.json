@@ -9,7 +9,11 @@
     "@types/jest": "^29.2.3",
     "@types/ramda": "^0.28.20",
     "axios": "^1.2.0",
+<<<<<<< Updated upstream
     "chakra-ui-simple-autocomplete": "^2.2.0",
+=======
+    "cookie": "^0.5.0",
+>>>>>>> Stashed changes
     "cross-env": "^7.0.3",
     "date-fns": "^2.29.3",
     "flickity": "^2.3.0",
@@ -27,6 +31,7 @@
     "react": "^18.2.0",
     "react-autocomplete-hint": "^2.0.0",
     "react-calendar": "^4.0.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-owl-carousel": "^2.3.3",
     "react-stars": "^2.2.5",

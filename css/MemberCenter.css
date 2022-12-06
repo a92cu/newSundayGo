@@ -107,13 +107,14 @@
 }
 
 /* 分頁按鈕選中的顏色 */
-.tabBtnB button.active {
-    /* background-color: #ccc; */
+
+.tabBtnB button:focus {
     color: #F29F04;
     border-left: 4px #F29F04 solid;
     
 }
-.tabBtnB>button.active img{
+
+.tabBtnB>button:focus img{
     filter: grayscale(0%);
 }
 
