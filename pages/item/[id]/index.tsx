@@ -12,6 +12,8 @@ import ReactCalendar from "react-calendar";
 import { props } from "ramda";
 import { Console } from "console";
 import ReactStars from 'react-stars';
+import React from "react";
+
 
 function Calendar({ price, itemId }) {
   const [value, onChange] = useState(new Date());
@@ -175,7 +177,7 @@ function Carousel({ imgList }) {
   );
 }
 function Receipt(orderList) {
-///把沒有評價的擋住先跳出這個,後面沒評價的品項才不會壞掉
+  ///把沒有評價的擋住先跳出這個,後面沒評價的品項才不會壞掉
   if (orderList.orderList.length === 0) {
     return (<div><h3>評價:</h3><span>尚未有評價</span></div>)
   };
@@ -184,7 +186,7 @@ function Receipt(orderList) {
   const star = orderList.orderList[0].orderStar
   return (<div>
     <h3>評價:</h3>
-    <div style={{display:"flex"}}>
+    <div style={{ display: "flex" }}>
       <span>帳號:{orderList.orderList[0].userId}</span>&nbsp;&nbsp;
       <span>{orderList.orderList[0].orderDate}</span>&nbsp;&nbsp;
       <ReactStars
