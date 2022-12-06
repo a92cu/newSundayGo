@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { runSQL } from "../../lib/mysql";
 import { format, parseISO } from "date-fns";
 import * as R from "ramda";
@@ -130,14 +130,19 @@ function MemberAccount(props) {
   const [userEmail, setuserEmail] = useState(props.accountList[0].userEmail);
   const [userPassword, setuserPassword] = useState(props.accountList[0].userPassword);
 
-  const showPassword = () => {
-    var x = document.getElementById("showPasswordInput");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
+  const [passwordType, setPasswordType] = useState("password");
+    const [passwordInput, setPasswordInput] = useState("");
+    // const handlePasswordChange =(evnt)=>{
+    //     setPasswordInput(evnt.target.value);
+    // }
+    const togglePassword =()=>{
+      if(passwordType==="password")
+      {
+       setPasswordType("text")
+       return;
+      }
+      setPasswordType("password")
     }
-  }
 
   const saveAccount = () => {
     // console.log(accountList) // [{...}]
@@ -211,11 +216,13 @@ function MemberAccount(props) {
         <span>密碼<b>*</b></span>
         &emsp;&emsp;&emsp;&emsp;&emsp;
         <input
-          id="showPasswordInput"
-          type="password"
-          value={userPassword}
+          type={passwordType}
           onChange={(e) => setuserPassword(e.target.value)}
-        />
+          // onChange={handlePasswordChange}
+          value={userPassword}
+          name="password"
+          // className="form-control"
+          placeholder="Password" />
         <input
           style={{ 
             width: "15px" ,
@@ -223,7 +230,7 @@ function MemberAccount(props) {
             outline:"none"
           }}
           type="checkbox"
-          onClick={() => showPassword()} />顯示密碼
+          onClick={() => togglePassword()} />顯示密碼
 
 
       </div>
@@ -237,46 +244,46 @@ function MemberAccount(props) {
 // 折扣券 OK 但可能有bug(要在測試)
 function Discount(props) {
   // console.log(props.discountList);
-  const theDate=format(new Date(),"yyyy-MM-dd");
-  console.log(Math.abs(Date.parse(props.discountList[0].couponStartTime)-Date.parse(theDate))/ (1000 * 60 * 60 * 24))
+  const theDate = format(new Date(), "yyyy-MM-dd");
+  console.log(Math.abs(Date.parse(props.discountList[0].couponStartTime) - Date.parse(theDate)) / (1000 * 60 * 60 * 24))
   return (
-  <div id="discount" className="tabcontentB">
-    <h2>折扣券</h2>
-    <div className="setBodyB">
-      <div className="discountBtn" style={{ width: "100%" }}>
-        <div id="discountUse" className="discountBody">
-          {props.discountList.map((ele:any,idx:number)=>{
-              return(
-                <div className={(ele.couponUse>0? "discountDivUsed":"discountDiv")}key={idx}>
+    <div id="discount" className="tabcontentB">
+      <h2>折扣券</h2>
+      <div className="setBodyB">
+        <div className="discountBtn" style={{ width: "100%" }}>
+          <div id="discountUse" className="discountBody">
+            {props.discountList.map((ele: any, idx: number) => {
+              return (
+                <div className={(ele.couponUse > 0 ? "discountDivUsed" : "discountDiv")} key={idx}>
                   <span>{ele.couponName}</span> <br />
                   <span>訂單金額須滿100元</span> <br />
-                  <span>有效期限: 剩餘{Math.abs(Date.parse(ele.couponStartTime)-Date.parse(theDate))/ (1000 * 60 * 60 * 24)}天</span> <br />
+                  <span>有效期限: 剩餘{Math.abs(Date.parse(ele.couponStartTime) - Date.parse(theDate)) / (1000 * 60 * 60 * 24)}天</span> <br />
                 </div>
               )
-          })}
+            })}
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 }
 
 // 回饋金 OK 可以正常運作
 function Rebate(props) {
   console.log(props.orderListRebate)
-  let allRebate=[];
-  props.orderListRebate.forEach((e,i)=>{
-  if(props.orderListRebate[i].userId=="u123456789"){
-    let itemTitle=props.orderListRebate[i].itemTitle;
-    let orderDate=props.orderListRebate[i].orderDate;
-    let orderRebate=props.orderListRebate[i].orderRebate;
-    allRebate.push({itemTitle,orderDate,orderRebate})
+  let allRebate = [];
+  props.orderListRebate.forEach((e, i) => {
+    if (props.orderListRebate[i].userId == "u123456789") {
+      let itemTitle = props.orderListRebate[i].itemTitle;
+      let orderDate = props.orderListRebate[i].orderDate;
+      let orderRebate = props.orderListRebate[i].orderRebate;
+      allRebate.push({ itemTitle, orderDate, orderRebate })
     }
   })
   // 計算回饋金加總
-  let total=0;
-  allRebate.forEach((e)=>{
-    total+=e.orderRebate;
+  let total = 0;
+  allRebate.forEach((e) => {
+    total += e.orderRebate;
   })
   return (
     <div id="rebate" className="tabcontentB">
@@ -291,15 +298,16 @@ function Rebate(props) {
           <div id="rebateUse" className="rebateBody">
             <table className="rebateGetTable">
               <tbody>
-                {allRebate.map((e,i)=>{
-                  return(
-                  <tr className={(e.orderRebate>0)?"rebateGetTr":"rebateUsedTr"} key={i}>
-                    <td>{e.itemTitle}</td>
-                    <td>{e.orderDate}</td>
-                    <td><img src="./images/p.png" style={{ width: "20px", verticalAlign: "middle" }} /> &ensp;{e.orderRebate}
-                    </td>
-                  </tr>
-               )})}
+                {allRebate.map((e, i) => {
+                  return (
+                    <tr className={(e.orderRebate > 0) ? "rebateGetTr" : "rebateUsedTr"} key={i}>
+                      <td>{e.itemTitle}</td>
+                      <td>{e.orderDate}</td>
+                      <td><img src="./images/p.png" style={{ width: "20px", verticalAlign: "middle" }} /> &ensp;{e.orderRebate}
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>
@@ -312,59 +320,54 @@ function Rebate(props) {
 
 // 七天簽到 OK 有bug尚未解決(當天註冊的會員會點到兩張)
 function SevenDay() {
-  let gotdate:Date;
-  async function checkTime(e){
-    let thisDate=new Date()
-    let thisDate_ts=thisDate.getTime()
-  let gotdate;
-  async function checkTime() {
-    let thisDate = format(new Date(), "yyyy-MM-dd");
-    // console.log(thisDate)
-    await axios.get("/api/memberCentre/taketime")
-          .then((res)=>{
-            let datedata=res.data.data[0].userLoginEventTime;
-            console.log(datedata)
-            gotdate=format(parseISO(datedata),"yyyy-MM-dd")
-          })
-    console.log(gotdate)
-    if(thisDate>gotdate){
-      console.log('thiDate farrrrr')
-      axios.put(`/api/memberCentre/taketime`);
-    }else{
-      alert("尚未滿足條件")
+  let gotdate: Date;
+  async function checkTime(e) {
+    let thisDate = new Date()
+    let thisDate_ts = thisDate.getTime()
+    let gotdate;
+    async function checkTime() {
+      let thisDate = format(new Date(), "yyyy-MM-dd");
+      // console.log(thisDate)
+      await axios.get("/api/memberCentre/taketime")
+        .then((res) => {
+          let datedata = res.data.data[0].userLoginEventTime;
+          console.log(datedata)
+          gotdate = format(parseISO(datedata), "yyyy-MM-dd")
+        })
+      console.log(gotdate)
+      if (thisDate > gotdate) {
+        console.log('thiDate farrrrr')
+        axios.put(`/api/memberCentre/taketime`);
+      } else {
+        alert("尚未滿足條件")
+      }
+      e.target.style.filter = "brightness(50%)"
     }
-    e.target.style.filter="brightness(50%)"
-  }
-  return (
-    <div id="sevenDay" className="tabcontentB">
-      <h2>登入七天簽到活動</h2>
-      <br />
-      <div className="setBodyB">
-        <div className="dayOneSeven">
-          <img className="ImgPick" src="./images/day7/day1.png" alt="折扣券" onClick={checkTime}/>
-          <img className="ImgPick" src="./images/day7/day2.png" alt="折扣券" />
-          <img className="ImgPick" src="./images/day7/day3.png" alt="折扣券" />
-          <img className="ImgPick" src="./images/day7/day4.png" alt="折扣券" />
+    return (
+      <div id="sevenDay" className="tabcontentB">
+        <h2>登入七天簽到活動</h2>
+        <br />
+        <div className="setBodyB">
+          <div className="dayOneSeven">
+            <img className="ImgPick" src="./images/day7/day1.png" alt="折扣券" onClick={checkTime} />
+            <img className="ImgPick" src="./images/day7/day2.png" alt="折扣券" />
+            <img className="ImgPick" src="./images/day7/day3.png" alt="折扣券" />
+            <img className="ImgPick" src="./images/day7/day4.png" alt="折扣券" />
+          </div>
+          <div className="dayOneSeven">
+            <img className="ImgPick" src="./images/day7/day5.png" alt="折扣券" />
+            <img className="ImgPick" src="./images/day7/day6.png" alt="折扣券" />
+            <img className="ImgPick" src="./images/day7/day7.png" alt="折扣券" />
+          </div>
         </div>
-        <div className="dayOneSeven">
-          <img className="ImgPick" src="./images/day7/day5.png" alt="折扣券" />
-          <img className="ImgPick" src="./images/day7/day6.png" alt="折扣券" />
-          <img className="ImgPick" src="./images/day7/day7.png" alt="折扣券" />
-        </div>
-      </div>
 
-    </div>
-  )
+      </div>
+    )
+  }
 }
 
 //訂單管理 OK
 function MemberOrder(orderList, imgList) {
-  // const GoEvaluation = () => {
-  //   // alert('ok');
-  //   document.getElementById('id01').style.display = "block";
-  //   // console.log(orderList);//[{orderList} {imgList}]
-  //   // console.log(orderList.orderList);//[{}{}]
-  // }
   const router = useRouter()
   return (
     <div id="memberOrder" className="tabcontentB">
@@ -377,7 +380,7 @@ function MemberOrder(orderList, imgList) {
               // console.log(i); //{}
               if (i.orderDeter === 1) {
                 return (
-                  <div className="OrderReadyDiv" key={i.itemId}>
+                  <div className="OrderReadyDiv" key={i.orderNumber}>
                     <div className="OrderReadyImg">
                       <img src={
                         orderList.imgList?.find(
@@ -402,7 +405,7 @@ function MemberOrder(orderList, imgList) {
               {/* 已出發 */ }
               if (i.orderDeter === 2 && i.orderStar === 0) {
                 return (
-                  <div id="memberOrderGo" className="memberOrderBody" key={i.itemId}>
+                  <div id="memberOrderGo" className="memberOrderBody" key={i.orderNumber}>
                     <div className="OrderReadyDiv">
                       <div className="OrderReadyImg">
                         <img src={
@@ -430,7 +433,7 @@ function MemberOrder(orderList, imgList) {
               }
               if (i.orderDeter === 2 && i.orderStar > 0) {
                 return (
-                  <div id="memberOrderGo" className="memberOrderBody" key={i.itemId}>
+                  <div id="memberOrderGo" className="memberOrderBody" key={i.orderNumber}>
                     <div className="OrderReadyDiv">
                       <div className="OrderReadyImg">
                         <img src={
@@ -542,7 +545,7 @@ export default function MemberCentre(props) {
   const [accountList, setaccountList] = useState(props.accountList);
   const [itemList, setItemList] = useState(props.itemList);
   const [orderList, setOrderList] = useState(props.orderList);
-  const [discountList,setDiscountList]=useState(props.discountList)
+  const [discountList, setDiscountList] = useState(props.discountList)
   return <>
     <Header />
     <div className="MemberCentre">
@@ -589,13 +592,13 @@ export default function MemberCentre(props) {
         <MemberAccount
           accountList={accountList}
         />}
-      {tab === "discount" && 
+      {tab === "discount" &&
         <Discount orderList
-        discountList={discountList}
+          discountList={discountList}
         />}
-      {tab === "rebate" && 
-      <Rebate 
-        orderListRebate={orderList}
+      {tab === "rebate" &&
+        <Rebate
+          orderListRebate={orderList}
         />}
       {tab === "sevenDay" && <SevenDay />}
       {tab === "memberOrder" &&
@@ -631,14 +634,14 @@ export async function getStaticProps({ params }) {
   const imgList: any = [];   // 圖片
   const itemList: any = [];  // 收藏
   const orderList: any = []; // 訂單
-  const discountList: any =[]; // 折扣券
+  const discountList: any = []; // 折扣券
 
   // const memberCentre = (await runSQL(sq1))[0]; // 帳號設定抓的資料  
   const accountListRaw: any = await runSQL(sq1); // 帳號設定
   const itemListRaw: any = await runSQL(sq2); // 我的收藏
   const imgListRaw: any = await runSQL(sq3); // item的圖片
   const orderListRaw: any = await runSQL(sq4); // 訂單管理抓的資料
-  const discountListRaw: any= await runSQL(sq5); // 折扣券資料
+  const discountListRaw: any = await runSQL(sq5); // 折扣券資料
   // forEach是在轉格式,原本出來是database物件
   imgListRaw.forEach((item: any) => {
     item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
@@ -657,12 +660,12 @@ export async function getStaticProps({ params }) {
   accountListRaw.forEach((usertable: any) => {
     usertable.userBirthday = format(usertable.userBirthday, "yyyy-MM-dd");
     usertable.userRegisterDate = format(usertable.userRegisterDate, "yyyy-MM-dd");
-    usertable.userLoginEventTime=format(usertable.userLoginEventTime,	"yyyy-MM-dd");
+    usertable.userLoginEventTime = format(usertable.userLoginEventTime, "yyyy-MM-dd");
     accountList.push({ ...usertable });
   });
   discountListRaw.forEach((discounttable: any) => {
-    discounttable.couponStartTime = format(discounttable.couponStartTime,"yyyy-MM-dd");
-    discountList.push({...discounttable})
+    discounttable.couponStartTime = format(discounttable.couponStartTime, "yyyy-MM-dd");
+    discountList.push({ ...discounttable })
   });
   //把要的資料拿出來
   return {
