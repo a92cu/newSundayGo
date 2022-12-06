@@ -23,7 +23,7 @@ export default async function userHandler(
                         query + keys[j] + "=" + values[j] + (j === keys.length - 1 ? "" : ",");
                 }
                 // const sq1 = `UPDATE usertable SET ${query} where usertable = "${id}"`;
-                const sq1 = `UPDATE usertable SET ${query} where firmId = "firm001"`;
+                const sq1 = `UPDATE firm SET ${query} where firmId = "firm001"`;
                 runSQL(sq1);
                 res.status(200).json({ message: "ok" });
             } catch (error) {
