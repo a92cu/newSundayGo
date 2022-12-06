@@ -4,175 +4,244 @@ import Image from "next/image";
 import Script from "next/script";
 //lib裡的指令重複使用
 import { runSQL } from "../../lib/mysql";
-//整理日期格式
-import { format } from "date-fns";
-import { useState } from "react";
-import { none } from "ramda";
+import { useEffect, useState } from 'react'
 import Router from "next/router";
-import useFile from "../../hook/useFile";
+import { useCookies } from "react-cookie"
 
 
 
-
-// function Footer() {
-//     return (
-//         <div className="footer">
-//             <div className="footerCenter">
-//                 <div className="footerBody">
-//                     <ul>
-//                         <h4>認識我們</h4>
-//                         <li>
-//                             <a href="">關於我們</a>
-//                         </li>
-//                         <li>
-//                             <a href="">使用者條款</a>
-//                         </li>
-//                         <li>
-//                             <a href="">隱私權保護政策</a>
-//                         </li>
-//                         <li>
-//                             <a href="">常見問題與幫助</a>
-//                         </li>
-//                     </ul>
-//                 </div>
-//                 <div className="footerBody">
-//                     <ul>
-//                         <h4>給旅行者們</h4>
-//                         <li>
-//                             <a href="">三大保證</a>
-//                         </li>
-//                         <li>
-//                             <a href="">合作夥伴</a>
-//                         </li>
-//                         <li>
-//                             <a href="">回饋金介紹</a>
-//                         </li>
-//                         <li>
-//                             <a href="">賺取額外獎勵</a>
-//                         </li>
-//                     </ul>
-//                 </div>
-//                 <div className="footerBody">
-//                     <ul>
-//                         <h4>給合作夥伴</h4>
-//                         <li>
-//                             <a href="">成為供應商</a>
-//                         </li>
-//                         <li>
-//                             <a href="">供應商登入</a>
-//                         </li>
-//                         <li>
-//                             <a href="">同業合作</a>
-//                         </li>
-//                         <li>
-//                             <a href="">聯盟行銷</a>
-//                         </li>
-//                     </ul>
-//                 </div>
-//                 <div className="footerBody">
-//                     <div className="footerImg">
-//                         <h4>付款方式</h4>
-//                         <Image
-//                             width={20}
-//                             height={20}
-//                             src="/images/MasterCard.png"
-//                             alt="MasterCard"
-//                         />
-//                         <Image width={20} height={20} src="/images/JCB.jpg" alt="JCB" />
-//                         <Image width={20} height={20} src="/images/visa.png" alt="visa" />
-//                         <Image
-//                             width={20}
-//                             height={20}
-//                             src="/images/googlepay.jpg"
-//                             alt="googlepay"
-//                         />
-//                         <Image
-//                             width={20}
-//                             height={20}
-//                             src="/images/apple-pay.png"
-//                             alt="apple"
-//                         />
-//                     </div>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// }
 function Header() {
-    return (
-        <div className="header">
-            <img
-                src="/images/群組 1.png"
-                alt=""
-                // width={20} height={20}
-                style={{
-                    width: 90,
-                    top: -8,
-                    position: "relative"
-                }}
-            />
-            <div className="header-right">
-                <a href="#">美食</a>
-                <a href="#">景點</a>
-                <a href="#">活動</a>
-                <a href="#">住宿</a>
-                <a href="#">交通</a>
-                <a href="#">
-                    <img
-                        src="/images/cart.png"
-                        alt=""
-                        width={20} height={20} />
-                </a>
-                <a href="#divOne" className="loginbutton">
-                    登入|註冊
-                </a>
+const [cookie, setCookie] = useCookies(["user"])
+
+    if (Object.keys(cookie).length===0) {
+        return (
+            <div className="header">
+                <img
+                    src="/images/群組 1.png"
+                    alt=""
+                    // width={20} height={20}
+                    style={{
+                        width: 90,
+                        top: -8,
+                        position: "relative"
+                    }}
+                />
+                <div className="header-right">
+                    <a href="#">美食</a>
+                    <a href="#">景點</a>
+                    <a href="#">活動</a>
+                    <a href="#">住宿</a>
+                    <a href="#">交通</a>
+                    <a href="#">
+                        <img
+                            src="/images/cart.png"
+                            alt=""
+                            width={20} height={20} />
+                    </a>
+                    <a href="#divOne" className="loginbutton">
+                        登入|註冊
+                    </a>
+                </div>
+                <form className="example" action="">
+                    <input type="text" placeholder="Search.." name="search" />
+                    <button type="submit">
+                        <i className="fa fa-search"></i>
+                    </button>
+                </form>
             </div>
-            <form className="example" action="">
-                <input type="text" placeholder="Search.." name="search" />
-                <button type="submit">
-                    <i className="fa fa-search"></i>
-                </button>
-            </form>
-        </div>
-    );
+        )
+    } else {
+        return (
+            <div className="header">
+                <img
+                    src="/images/群組 1.png"
+                    alt=""
+                    // width={20} height={20}
+                    style={{
+                        width: 90,
+                        top: -8,
+                        position: "relative"
+                    }}
+                />
+                <div className="header-right">
+                    <a href="#">美食</a>
+                    <a href="#">景點</a>
+                    <a href="#">活動</a>
+                    <a href="#">住宿</a>
+                    <a href="#">交通</a>
+                    <a href="#">
+                        <img
+                            src="/images/cart.png"
+                            alt=""
+                            width={20} height={20} />
+                    </a>
+                    <a href="#divOne" className="loginbutton">
+                        登出
+                    </a>
+                </div>
+                <form className="example" action="">
+                    <input type="text" placeholder="Search.." name="search" />
+                    <button type="submit">
+                        <i className="fa fa-search"></i>
+                    </button>
+                </form>
+            </div>
+        );
+    }
+    
+    
 }
 
-
 function Login(props) {
-
-
 
     // //  hook寫法
     // const [userId, setuserId] = useState(props.userId);
     // const [userPassword, setuserPassword] = useState(props.userPassword);
     const [userId, setuserId] = useState("");
     const [userPassword, setuserPassword] = useState("");
+    const [cookie, setCookie] = useCookies(["user"])
 
+    // 送出註冊資料
+    // 目前需加入判斷是否已存在此帳號 但因server有回應 所以.catch 不會執行
     const regMember = () => {
-        if (window.confirm("請確認是否要註冊帳號") === true) {
+        fetch(`http://localhost:3000/api/login/${props.userId}`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userId,
+                userPassword,
+            }),
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log("資料庫使用者帳號", res);
+                alert("註冊成功");
+            })
 
-            fetch(`http://localhost:3000/api/login/${props.userId}`, {
-                method: "POST",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    userId,
-                    userPassword,
-                }),
-            });
+            .catch(e => {
+                console.log('錯誤:', e);
+                alert("錯誤");
+            })
 
-            //註冊後跳轉到設定頁面
-            setTimeout(() => {
-                Router.replace("/login");
-            }, 100);
-        }
+        // 註冊後跳轉到設定頁面
+        // setTimeout(() => {
+        //     Router.replace("/memberCenter");
+        // }, 100);
+
     };
+
+    
+
+    //登入及註冊的切換 */
+    
+    function openPage(pageName) {
+        var i, loginTabContent;
+        loginTabContent = document.getElementsByClassName("loginTabContent");
+        for (i = 0; i < loginTabContent.length; i++) {
+            loginTabContent[i].style.display = "none";
+        }
+        document.getElementById(pageName).style.display = "block";
+        
+        // elmnt.style.backgroundColor = color;
+    }
+    //最先開啟顯示的頁面
+    if (typeof window !== 'undefined') {
+    document.getElementById("defaultOpen").click();}
+
+    //最上層 會員 廠商的切換
+        const TwoPage=(pageName) =>{
+            console.log(pageName)
+            var i, loginTabContent;
+
+            loginTabContent = document.getElementsByClassName("Twotabcontent");
+
+            for (i = 0; i < loginTabContent.length; i++) {
+                loginTabContent[i].style.display = "none";
+            }
+            document.getElementById(pageName).style.display = "block";
+            
+            //  elmnt.style.backgroundColor = color;
+        }
+
+        // TwoPage最先開啟顯示的頁面
+        if (typeof window !== 'undefined') {
+        document.getElementById("TwodefaultOpen").click();}
+
+
+        ////廠商 登入註冊 的切換
+        const ThreePage=(pageName)=> {
+
+            var i, loginTabContent;
+            loginTabContent = document.getElementsByClassName("Threetabcontent");
+            console.log(loginTabContent);
+            for (i = 0; i < loginTabContent.length; i++) {
+                loginTabContent[i].style.display = "none";
+                console.log(loginTabContent[i].style.display);
+            }
+            document.getElementById(pageName).style.display = "block";
+            // elmnt.style.backgroundColor = color;
+        }
+    //     //ThreePage最先開啟顯示的頁面
+    if (typeof window !== 'undefined') {
+        document.getElementById("ThreedefaultOpen").click();
+    }
+
+        //忘記密碼的切換
+       const ForgetPage=(pageName)=> {
+            //將member以下的所有資訊隱藏
+        
+          document.getElementById("member").style.opacity = "0";
+            
+            //顯示廠商頁面的html
+            document.getElementById("company").innerHTML = "<h3>廠商忘記密碼請聯繫總公司!!</h3>";
+            var i, loginTabContent, tablinks;
+            loginTabContent = document.getElementsByClassName("ForgetTabcontent");
+            for (i = 0; i < loginTabContent.length; i++) {
+                loginTabContent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("ForgetTablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+            }
+            document.getElementById(pageName).style.display = "block";
+            // elmnt.style.backgroundColor = color;
+        }
+
+        //忘記密碼輸入成功的切換
+        const ForgetPageTwo=(pageName) =>{
+            //將forget以下的所有資訊隱藏
+            document.getElementById("forget").style.opacity = "0";
+            //顯示忘記密碼輸入完成的資料
+            document.getElementById("apple").innerHTML = `
+            <div style="display: flex; justify-content: center; align-items: center; 
+            border: solid 1px orange; height: 300px; background-color: aliceblue;">
+            <img src="/img/icons/checked.png" alt="">
+            <h3>臨時密碼已發送至信箱<br>請至信箱內收取密碼並重新登入</h3>
+            </div>`;
+            var i, loginTabContent, tablinks;
+            loginTabContent = document.getElementsByClassName("ForgetTabcontentTwo");
+            for (i = 0; i < loginTabContent.length; i++) {
+                loginTabContent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("ForgetTablinkTwo");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+            }
+            document.getElementById(pageName).style.display = "block";
+            // elmnt.style.backgroundColor = color;
+        }
+
+
+
+
+
 
     //登入判斷
     const handleSubmit = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         fetch(`http://localhost:3000/api/login/${userId}`, {
             method: "GET",
             headers: {
@@ -185,7 +254,7 @@ function Login(props) {
             .then(data => {
                 /*接到request data後要做的事情*/
                 // console.log("輸入帳號",userId);
-                console.log("資料庫使用者帳號", data);
+                // console.log("資料庫使用者帳號", data);
 
                 // console.log("使用者密碼", data.data[0].userPassword);
                 // console.log(data.data.length);
@@ -195,19 +264,39 @@ function Login(props) {
                     || data.data[0].userId != `${userId}`
                     || data.data[0].userPassword != `${userPassword}`
                 ) {
+                    console.log(Object.keys(cookie).length===0);
+
                     alert("帳號或密碼輸入錯誤");
+
+
                 } else {
                     alert("登入成功");
 
-                    //跳轉到會員頁
-                    // setTimeout(() => {
-                    //     Router.replace("/memberCenter");
-                    // }, 100);
+                    //設定cookie
+                    setCookie("user", JSON.stringify(data), {
+                        path: "/",
+                        maxAge: 36000, // cookeie 10小時後過期
+                        sameSite: true,
+                    })
+
+                    console.log(cookie);
+                    //存於cookie的值
+                    console.log(cookie.user.data[0].userId);
+
+                    // cookie判斷是否存在
+                    if (Object.keys(cookie).length!==0) {
+                        console.log("cookie已存");
+                    }
+                    //跳轉到會員頁  
+                    setTimeout(() => {
+                        Router.replace("/memberCenter");
+                    }, 100);
                 }
             })
+
             .catch(e => {
                 /*發生錯誤時要做的事情*/
-                alert("帳號或密碼輸入錯誤");
+                // alert("帳號或密碼輸入錯誤2");
                 console.log(e);
             })
     }
@@ -223,7 +312,7 @@ function Login(props) {
 
 
     return (
-
+        
         <div className="login">
             <div className="loginoverlay" id="divOne">
                 {/* <!-- pop up中層 --> */}
@@ -231,27 +320,22 @@ function Login(props) {
                     {/* <!-- pop up的 X按鈕 --> */}
                     <a href="" className="close">&times;</a>
                     {/* <!-- pop up 內層 --> */}
+
                     <div className="logincontent">
                         {/* <!-- 這裡是最外層辨識的藍色框框 包住全部的大媽媽-->
-                <!-- style="border:solid 3px ; color: blue;  width: 1000px; height: 1000px;" --> */}
-
-
                         {/* <!-- 這一層是綠色框框  有廠商跟會員的內容 +  廠商跟會員的切換按鈕  -->
                     <!-- style="border:solid 3px ; color: green; width: 400px; height: 600px;" className="greenLine" --> */}
                         <div>
-                            <button className="Twotablink" onClick={() => TwoPage("member", "white")}
+                            <button className="Twotablink" onClick={() => TwoPage("member")}
                                 id="TwodefaultOpen">會員
                             </button>
 
-                            <button className="Twotablink" onClick={() => TwoPage("company", "white")}>
+                            <button className="Twotablink" onClick={() => TwoPage("company")}>
                                 廠商
                             </button>
 
                             {/* <!-- 這一層包住  廠商跟會員  的 登入及註冊 以及所有內容+按鈕  的中媽媽框  --> */}
                             <div >
-                                {/* /* <!-- <div id="forgetInfo" className="ForgetTabcontent" style="display: none;"> *
-                                    <p>忘記密碼資訊</p>
-                                      </div> --> */}
                                 <div id="forget" className="ForgetTabcontent"
                                     style={{
                                         display: "none",
@@ -280,9 +364,9 @@ function Login(props) {
                                                 <input type="text" placeholder="請輸入帳號" /><br />
                                                 <label htmlFor="">請輸入有效信箱</label><br />
                                                 <input type="email" placeholder="請輸入E-mail" /><br />
-                                                <label htmlFor="">請輸入驗證碼</label><br />
+                                                {/* <label htmlFor="">請輸入驗證碼</label><br />
                                                 <input type="text" /><br />
-                                                <canvas id="c1" ></canvas>
+                                                <canvas id="c1" ></canvas> */}
                                                 <a href="javascript:void(0)" onClick={() => location.reload()}>返回</a>
                                                 {/* <!-- 忘記密碼輸入成功的頁面 -->
                                             <!-- 包住忘記密碼的框style="border: solid 1px blueviolet;" --> */}
@@ -307,17 +391,17 @@ function Login(props) {
 
                                         {/* <!-- 這一層包住了 "會員"的登入註冊 + 切換的按鈕 --> */}
                                         <div >
-                                            <button className="tablink" onClick={() => openPage("login", "orange")}
+                                            <button className="tablink" onClick={() => openPage("login")}
                                                 id="defaultOpen">登入</button>
                                             <button className="tablink"
-                                                onClick={() => openPage("register", "orange")}>註冊</button>
+                                                onClick={() => openPage("register")}>註冊</button>
 
                                             {/* <!-- 這裡放會員登入 --> */}
                                             <div id="login" className="loginTabContent">
                                                 <br />
                                                 <div>
                                                     <form action="" onSubmit={handleSubmit}>
-                                                        <label htmlFor="">帳號</label>
+                                                        <label htmlFor="">會員登入帳號</label>
                                                         <input
                                                             id=""
                                                             value={userId}
@@ -325,7 +409,7 @@ function Login(props) {
                                                             placeholder="請輸入帳號"
                                                             onChange={(e) => setuserId(e.target.value)} />
                                                         <br />
-                                                        <label htmlFor="">密碼</label>
+                                                        <label htmlFor="">會員登入密碼</label>
                                                         <input
                                                             value={userPassword}
                                                             type="password"
@@ -359,18 +443,18 @@ function Login(props) {
                                                 </div>
                                             </div>
                                             {/* <!-- 這裡放會員註冊 --> */}
-                                            <div id="register" className="loginTabContent">
+                                            <div id="register" className="loginTabContent" style={{ display: "none" }}>
                                                 <br />
                                                 <div>
                                                     <form action="javascript:void(0)">
-                                                        <label htmlFor="">帳號</label>
+                                                        <label htmlFor="">會員註冊帳號</label>
                                                         <input
                                                             type="text"
                                                             value={userId}
                                                             onChange={(e) => setuserId(e.target.value)}
                                                             placeholder="請輸入帳號" />
                                                         <br />
-                                                        <label htmlFor="">密碼</label>
+                                                        <label htmlFor="">會員註冊密碼</label>
                                                         <input
                                                             type="password"
                                                             value={userPassword}
@@ -392,7 +476,7 @@ function Login(props) {
                                                         <Image width={20} height={20} src="/images/google.png" alt="" />
                                                         <Image width={20} height={20} src="/images/line.png" alt="" />
                                                     </div>
-                                                    <p>註冊即同意會員約定事項暨隱私權保護政策</p>
+                                                    <p>註冊即同意會員約定事項</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -404,15 +488,15 @@ function Login(props) {
 
                                     {/* <!-- 這一層放 紅色框用來辨識 "廠商"的登入註冊 + 切換的按鈕  的小小媽媽框-->
                                 <!-- style="border:solid 3px ; color: red; display: flex; width: 300px; height: 400px;" className="redLine" --> */}
-                                    <div>
+                                    
 
                                         {/* <!-- 這一層放 廠商的登入註冊 + 切換的按鈕  的小小媽媽框--> */}
-                                        <div>
+                                        <div  >
                                             <button className="Threetablink"
-                                                onClick={() => ThreePage("companylogin", "orange")}
+                                                onClick={() => ThreePage("companylogin")}
                                                 id="ThreedefaultOpen">登入</button>
                                             <button className="Threetablink"
-                                                onClick={() => ThreePage("companyregister", "orange")}>註冊</button>
+                                                onClick={() => ThreePage("companyregister")}>註冊</button>
 
                                             {/* <!-- 廠商的登入 --> */}
                                             <div id="companylogin" className="Threetabcontent">
@@ -441,7 +525,7 @@ function Login(props) {
                                             <div id="companyregister" className="Threetabcontent">
                                                 <br />
                                                 <div>
-                                                    <form action="">
+                                                    <form action="" >
                                                         <label htmlFor="">廠商註冊帳號</label>
                                                         <input type="text" placeholder="請輸入帳號" /><br />
                                                         <label htmlFor="">廠商註冊密碼</label>
@@ -457,12 +541,11 @@ function Login(props) {
                                                         <Image width={20} height={20} src="/images/google.png" alt="" />
                                                         <Image width={20} height={20} src="/images/line.png" alt="" />
                                                     </div>
-                                                    <p>註冊即同意會員約定事項暨隱私權保護政策</p>
+                                                    <p>註冊即同意會員約定事項</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -476,64 +559,12 @@ function Login(props) {
 
 
 
-export default function LoginPage(props) {
-    const [tab, setTab] = useState("Login");
-    const [itemList, setItemList] = useState(props.itemList);
-
-
-
+export default function LoginPage() {
     return (
         <>
             <Header />
             <Login />
-            {/* <Footer />  */}
-            {/* <div className="companyName">
-        <span>{props.firmName}</span> &nbsp;<span>您好！</span>
-      </div> */}
-
-
-            {/* 測試翔哥tab做法 */}
-            {/* <div className="MemberCentre">
-                <div className="tab">
-                    <div className="tabBtn">
-                        <button
-                            className="tablinks"
-                            onClick={() => setTab("Login2")}
-                            id="defaultOpen"
-                        >
-                            <span>
-                                <img
-                                    src="./images/flower.png"
-                                    style={{ width: 30, verticalAlign: "middle" }}
-                                />
-                                &nbsp;會員登入
-                            </span>
-                        </button>
-                        <button className="tablinks" onClick={() => setTab("memberOrder")}>
-                            <span>
-                                <img
-                                    src="./images/flower.png"
-                                    style={{ width: 30, verticalAlign: "middle" }}
-                                />
-                                &nbsp; 訂單管理
-                            </span>
-                        </button>
-                    </div>
-                </div>
-
-
-                {tab === "Login2" && <Login2 {...props.company} />}
-                {tab === "memberOrder" && (
-                    <MemberOrder
-                        setItemList={setItemList}
-                        itemList={itemList}
-                        imgList={props.imgList}
-                    />
-                )}
-            </div> */}
-
-
-            <Script src="/js/loginPage.js" />
+            {/* <Script src="/js/loginPage.js" /> */}
         </>
 
     );

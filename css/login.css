@@ -177,7 +177,7 @@ textarea {
 /* 會員登入及註冊的內容 */
 .loginTabContent {
     color: black;
-    display: none;
+    /* display: none; */
     width: 300px;
     height: 450px;
     display: flex;
@@ -250,7 +250,7 @@ textarea {
     display: none;
     width: 300px;
     height: 450px;
-    display: flex;
+    /* display: flex; */
     text-align: center;
 }
 
@@ -280,7 +280,7 @@ textarea {
     display: none;
     width: 300px;
     height: 450px;
-    display: flex;
+    /* display: flex; */
     text-align: center;
 }
 
