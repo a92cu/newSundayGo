@@ -71,70 +71,124 @@ function MemberOrder({ itemList, imgList, setItemList }) {
     </div>
   );
 }
-function Account({
-  firmName,
-  taxId,
-  firmHeadName,
-  firmPhone,
-  firmLocation,
-  firmEmail,
-  firmPassword,
-}) {
-  return (
-    <div id="information" className="tabcontentQ">
-      <h2>帳號設定 </h2>
-      <div className="setBody">
-        <span style={{ color: "#8C5C02" }}>
-          {" "}
-          <b>基本資料</b>{" "}
-        </span>
-        <br />
-        <br />
-        <div className="basic">
-          <span>公司名稱</span>
-          <input type="text" value={firmName} />
-        </div>
-        <div className="basic">
-          <span>統一編號</span>
-          <input type="text" value={taxId} />
-        </div>
-        <div className="basic">
-          <span>負責人</span>
-          <input type="text" value={firmHeadName} />
-        </div>
-        <div className="basic">
-          <span>
-            公司聯絡號碼<b>*</b>
-          </span>
-          <input type="tel" value={firmPhone} />
-        </div>
-        <div className="basic">
-          <span>
-            公司所在地<b>*</b>
-          </span>
-          <input type="text" value={firmLocation} />
-        </div>
-        <div className="basic">
-          <span>
-            公司E-mail<b>*</b>
-          </span>
-          <input type="email" value={firmEmail} />
-        </div>
-        <div className="basic">
-          <span>
-            密碼<b>*</b>
-          </span>
-          <input type="password" value={firmPassword} />
-        </div>
+function Account(props) {
+  
+  const [firmName, setFirmName] = useState(props.firmName);
+  const [taxId, setTaxId] = useState(props.taxId);
+  const [firmHeadName, setFirmHeadName] = useState(props.firmHeadName);
+  const [firmPhone, setFirmPhone] = useState(props.firmPhone);
+  const [firmLocation, setFirmLocation] = useState(props.firmLocation);
+  const [firmEmail, setFirmEmail] = useState(props.firmEmail);
+  const [firmPassword, setFirmPassword] = useState(props.firmPassword);
+
+  const [passwordType, setPasswordType] = useState("password");
+  // const handlePasswordChange =(evnt)=>{
+  //     setPasswordInput(evnt.target.value);
+  // }
+  const togglePassword = () => {
+    if (passwordType === "password") {
+      setPasswordType("text")
+      return;
+    }
+    setPasswordType("password")
+  }
+
+  const saveAccount = () => {
+   //console.log(company) // [{...}]
+  // console.log(accountList[0]) // {}
+    // console.log(userBirthday) // 
+    fetch(`http://localhost:3000/api/company/account`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({
+        firmName: firmName,
+        taxId: taxId,
+        firmHeadName: firmHeadName,
+        firmPhone: firmPhone,
+        firmLocation: firmLocation,
+        firmEmail: firmEmail,
+        firmPassword: firmPassword,
+      }),
+    });
+
+    window.location.replace('/company');
+
+  }
+   return (<div id="information" className="tabcontentQ">
+    <h2>帳號設定 </h2>
+    <div className="setBody">
+    <span style={{ color: "#8C5C02" }}> <b>基本資料</b> </span>
+      <br /><br />
+      <div className="basic">
+        <span>公司名稱<b>*</b> </span>
+        <input type="text"
+          value={firmName}
+          onChange={(e) => setFirmName(e.target.value)}
+          />
       </div>
-      <div className="basicBtn">
-        <button className="informationBtn">
-          {" "}
-          <b>儲存</b>{" "}
-        </button>
+      <div className="basic">
+      <span>統一編號<b>*</b> </span>
+        <input type="text"
+          value={taxId}
+          onChange={(e) => setTaxId(e.target.value)}
+          />
+      </div>
+      <div className="basic">
+      <span>負責人<b>*</b> </span>
+        <input type="text"
+          value={firmHeadName}
+          onChange={(e) => setFirmHeadName(e.target.value)}
+          />
+      </div>
+      <div className="basic">
+      <span>公司電話<b>*</b> </span>
+        <input type="text"
+          value={firmPhone}
+          onChange={(e) => setFirmPhone(e.target.value)}
+          />
+      </div>
+      <div className="basic">
+      <span>公司地址<b>*</b> </span>
+        <input type="text"
+          value={firmLocation}
+          onChange={(e) => setFirmLocation(e.target.value)}
+          />
+      </div>
+      <div className="basic">
+      <span>公司Email<b>*</b> </span>
+        <input type="email"
+          value={firmEmail}
+          onChange={(e) => setFirmEmail(e.target.value)}
+          />
+      </div>
+      <div className="basic">
+      <span>密碼<b>*</b></span>
+        &emsp;&emsp;&emsp;&emsp;&emsp;
+        <input
+          type={passwordType}
+          onChange={(e) => setFirmPassword(e.target.value)}
+          // // onChange={handlePasswordChange}
+          value={firmPassword}
+          name="password"
+          className="form-control"
+          placeholder="Password" />
+        <input
+          style={{
+            width: "15px",
+            verticalAlign: "Middle",
+            outline: "none"
+          }}
+          type="checkbox"
+          onClick={() => togglePassword()} />顯示密碼
       </div>
     </div>
-  );
+    <div className="basicBtn">
+      <button className="informationBtn" onClick={() => saveAccount()}> <b>儲存</b> </button>
+    </div>
+  </div>
+  ); 
 }
 export default function Company(props) {
   const [tab, setTab] = useState("account");
