@@ -131,18 +131,17 @@ function MemberAccount(props) {
   const [userPassword, setuserPassword] = useState(props.accountList[0].userPassword);
 
   const [passwordType, setPasswordType] = useState("password");
-    const [passwordInput, setPasswordInput] = useState("");
-    // const handlePasswordChange =(evnt)=>{
-    //     setPasswordInput(evnt.target.value);
-    // }
-    const togglePassword =()=>{
-      if(passwordType==="password")
-      {
-       setPasswordType("text")
-       return;
-      }
-      setPasswordType("password")
+  const [passwordInput, setPasswordInput] = useState("");
+  // const handlePasswordChange =(evnt)=>{
+  //     setPasswordInput(evnt.target.value);
+  // }
+  const togglePassword = () => {
+    if (passwordType === "password") {
+      setPasswordType("text")
+      return;
     }
+    setPasswordType("password")
+  }
 
   const saveAccount = () => {
     // console.log(accountList) // [{...}]
@@ -224,10 +223,10 @@ function MemberAccount(props) {
           // className="form-control"
           placeholder="Password" />
         <input
-          style={{ 
-            width: "15px" ,
+          style={{
+            width: "15px",
             verticalAlign: "Middle",
-            outline:"none"
+            outline: "none"
           }}
           type="checkbox"
           onClick={() => togglePassword()} />顯示密碼
@@ -241,7 +240,7 @@ function MemberAccount(props) {
   </div>
   );
 }
-// 折扣券 OK 但可能有bug(要在測試)
+// 折扣券 OK 
 function Discount(props) {
   // console.log(props.discountList);
   const theDate = format(new Date(), "yyyy-MM-dd");
@@ -320,45 +319,70 @@ function Rebate(props) {
 
 // 七天簽到 OK (目前只能作用第一張折扣券，而且必須到隔天才能作用)
 function SevenDay() {
+  const [checkCount, setCheckCount] = useState(0);
   let gotdate;
-  let thisDate =new Date();
+  let thisDate = new Date()
   let thisDate_ts = +new Date();
-  let futureDate=new Date();
-  futureDate.setTime(thisDate_ts + 7 * 1000 * 60 * 60 * 24);
-  async function checkTime(e){
+  let fetureDate = new Date();
+  fetureDate.setTime(thisDate_ts + 7 * 1000 * 60 * 60 * 24);
+  // console.log(thisDate)
+  async function checkTime(e) {
+    let count = e.target.id.substr(-1); // 1 
     await axios.get("/api/memberCentre/taketime")
-          .then((res)=>{
-            let datedata=res.data.data[0].userLoginEventTime;
-            // console.log(datedata)
-            gotdate=new Date(datedata);
-          })
-    if(thisDate.getFullYear()>=gotdate.getFullYear() && thisDate.getMonth()>=gotdate.getMonth() && thisDate.getDate()>gotdate.getDate()){
-      alert('您已領取折扣券')
-      axios.put(`/api/memberCentre/taketime`,
-      {timeData:format(thisDate,"yyyy-MM-dd"),
-       discountdate:format(futureDate,"yyyy-MM-dd")
+      .then((res) => {
+        let datedata = res.data.data[0].userLoginEventTime;
+        gotdate = new Date(datedata)
+        if (!res.data.data[0].userLoginEventCount) {
+          setCheckCount(0)
+        } else {
+          setCheckCount(res.data.data[0].userLoginEventCount)
+        }
+      })
+    // 每個折價券做判斷
+    if (checkCount !== 0) {
+      if (checkCount >= count) {
+        if (thisDate.getFullYear() >= gotdate.getFullYear() && thisDate.getMonth() >= gotdate.getMonth()) {
+          if (thisDate.getDate() > gotdate.getDate()) {
+            console.log(thisDate, gotdate)
+            alert('您已領取折扣券')
+            axios.put(`/api/memberCentre/taketime`, {
+                timeData: format(thisDate,"yyyy-MM-dd"),
+                discountdate: format(fetureDate,"yyyy-MM-dd"),
+                count: checkCount + 1,
+            });
+          } else {
+            alert("尚未滿足條件")
+          }
+        } else {
+          alert("尚未滿足條件")
+        }
+      } else {
+        alert("尚未滿足條件")
+      }
+    } else {
+      await axios.put(`/api/memberCentre/taketime`, {
+        count: checkCount + 1,
       });
-    }else{
-      alert("請待明日再來領折扣券")
+      alert("尚未滿足條件")
     }
-    return (
-      <div id="sevenDay" className="tabcontentB">
-        <h2>登入七天簽到活動</h2>
-        <br />
-        <div className="setBodyB">
-          <div className="dayOneSeven">
-            <img className="ImgPick" src="./images/day7/day1.png" alt="折扣券" onClick={checkTime} />
-            <img className="ImgPick" src="./images/day7/day2.png" alt="折扣券" />
-            <img className="ImgPick" src="./images/day7/day3.png" alt="折扣券" />
-            <img className="ImgPick" src="./images/day7/day4.png" alt="折扣券" />
-          </div>
-          <div className="dayOneSeven">
-            <img className="ImgPick" src="./images/day7/day5.png" alt="折扣券" />
-            <img className="ImgPick" src="./images/day7/day6.png" alt="折扣券" />
-            <img className="ImgPick" src="./images/day7/day7.png" alt="折扣券" />
-          </div>
+    e.target.style.filter = "brightness(50%)"
+  }
+  return (
+    <div id="sevenDay" className="tabcontentB">
+      <h2>登入七天簽到活動</h2>
+      <br />
+      <div className="setBodyB">
+        <div className="dayOneSeven">
+          <img className="ImgPick" src="./images/day7/day1.png" alt="折扣券" onClick={checkTime} id="SevenDay1" />
+          <img className="ImgPick" src="./images/day7/day2.png" alt="折扣券" onClick={checkTime} id="SevenDay2" />
+          <img className="ImgPick" src="./images/day7/day3.png" alt="折扣券" onClick={checkTime} id="SevenDay3" />
+          <img className="ImgPick" src="./images/day7/day4.png" alt="折扣券" onClick={checkTime} id="SevenDay4" />
         </div>
-
+        <div className="dayOneSeven">
+          <img className="ImgPick" src="./images/day7/day5.png" alt="折扣券" onClick={checkTime} id="SevenDay5" />
+          <img className="ImgPick" src="./images/day7/day6.png" alt="折扣券" onClick={checkTime} id="SevenDay6" />
+          <img className="ImgPick" src="./images/day7/day7.png" alt="折扣券" onClick={checkTime} id="SevenDay7" />
+        </div>
       </div>
     </div>
   )
