@@ -6,6 +6,8 @@ import * as R from "ramda";
 import Router, { useRouter } from 'next/router'
 import ReactStars from 'react-stars'
 import axios from "axios";
+import Script from "next/script";
+import useFile from "../../hook/useFile";
 
 function Footer() {
   return (
@@ -131,10 +133,7 @@ function MemberAccount(props) {
   const [userPassword, setuserPassword] = useState(props.accountList[0].userPassword);
 
   const [passwordType, setPasswordType] = useState("password");
-  const [passwordInput, setPasswordInput] = useState("");
-  // const handlePasswordChange =(evnt)=>{
-  //     setPasswordInput(evnt.target.value);
-  // }
+
   const togglePassword = () => {
     if (passwordType === "password") {
       setPasswordType("text")
@@ -515,7 +514,8 @@ function Collect({ itemList, imgList, setItemList }) {
           // console.log(itemList); // [{},{}]
           // console.log(imgList); //[{}{}]
           // console.log(i); // {}
-          const star = (i.itemTotalStar)
+          const star = JSON.parse(i.itemTotalStar)
+          // console.log(typeof star)
           return (
             // onClick={() => router.push(`/item/${i.itemId}`)}
             <div className="collectDiv" key={i.favId}>
@@ -536,7 +536,7 @@ function Collect({ itemList, imgList, setItemList }) {
                     <div className="collectstar">
                       <ReactStars
                         Rating
-                        value={`${star}`}
+                        value={JSON.parse(`${star}`)}
                         edit={false} />
                       <div>({i.itemTotalStar})</div>
                     </div>
@@ -557,51 +557,77 @@ function Collect({ itemList, imgList, setItemList }) {
   )
 }
 
-
-
-
-
 export default function MemberCentre(props) {
   const [tab, setTab] = useState('information');
   const [userName, setuserName] = useState(props.accountList[0].userName);
+  const [userAvatar, setuserAvatar] = useState(props.accountList[0].userAvatar); // 變更頭像
   const [accountList, setaccountList] = useState(props.accountList);
   const [itemList, setItemList] = useState(props.itemList);
   const [orderList, setOrderList] = useState(props.orderList);
-  const [discountList, setDiscountList] = useState(props.discountList)
+  const [discountList, setDiscountList] = useState(props.discountList);
+  // const { userAvatar, changeHandler } = useFile();
+
+  const getUrl = (index, originUrl) => {
+    if (index === 0) return userAvatar === null ? originUrl : userAvatar;
+  };
+  const changeHandler = (blob, callback) => {
+    console.log('ok?')
+    console.log(blob) //FileList {0: File, length: 1}      
+
+    // fetch(`http://localhost:3000/api/itemimg/${imgList[0].imgId}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     itemImgUrl: image1Url,
+    //     userAvatarUrl: userAvatar,
+    //   }),
+    // });
+
+  }
+
   return <>
+
     <Header />
     <div className="MemberCentre">
       <div className="tabb">
+
         <div className="MemberImg">
-          <img id="MemberImgId" src="./images/cat.jpg" alt="" />
+          <img id="MemberImgId" src={userAvatar} alt="" />
           <div>
-            {/* onChange={upload()} */}
-            <input id="chengImgBtn" type="file" style={{ display: "none" }} />
-            {/* onClick={this.chengImgBtn} */}
-            <button type="button" id="cameraBtn">
+            <input id="chengImgBtn"
+              type="file"
+              style={{ display: "none" }}
+              // onChange={(e) => changeHandler()}
+            />
+
+            <button type="button" id="cameraBtn" >
               <img src="./images/camera.png" alt="" style={{ width: "25px" }} />
             </button>
           </div>
           <p>{userName}</p>
         </div>
+
         <div className="tabBtnB">
-          <button className="tablinks" onClick={() => setTab('information')} id="defaultOpenB">
+          <button className="tablinksB defaultOpenB" onClick={() => setTab('information')} id="defaultOpenB" >
             <span><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle" }} />&emsp;帳號設定</span>
           </button>
-          <button className="tablinks" onClick={() => setTab('discount')}>
+          <button className="tablinksB" onClick={() => setTab('discount')}>
             <span><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle " }} />&emsp; 折扣券</span>
           </button>
-          <button className="tablinks" onClick={() => setTab('rebate')}>
+          <button className="tablinksB" onClick={() => setTab('rebate')}>
             <span><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle " }} />&emsp; 回饋金</span>
           </button>
-          <button className="tablinks" onClick={() => setTab('sevenDay')}>
+          <button className="tablinksB" onClick={() => setTab('sevenDay')}>
             <span><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle " }} />&emsp;
               登入七天簽到活動</span>
           </button>
-          <button className="tablinks" onClick={() => setTab('memberOrder')}>
+          <button className="tablinksB" onClick={() => setTab('memberOrder')}>
             <span><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle " }} />&emsp; 訂單管理</span>
           </button>
-          <button className="tablinks" onClick={() => setTab('collect')}>
+          <button className="tablinksB" onClick={() => setTab('collect')}>
             <span><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle " }} />&emsp; 我的收藏</span>
           </button>
 
@@ -636,6 +662,7 @@ export default function MemberCentre(props) {
         />}
 
     </div>
+    <Script src="/js/MemberCentre.js" />
     <Footer />
   </>
 }
