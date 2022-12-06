@@ -92,6 +92,7 @@ const [cookie, setCookie] = useCookies(["user"])
     
 }
 
+
 function Login(props) {
 
     // //  hook寫法
@@ -99,6 +100,8 @@ function Login(props) {
     // const [userPassword, setuserPassword] = useState(props.userPassword);
     const [userId, setuserId] = useState("");
     const [userPassword, setuserPassword] = useState("");
+
+
     const [cookie, setCookie] = useCookies(["user"])
 
     // 送出註冊資料
@@ -113,6 +116,7 @@ function Login(props) {
             body: JSON.stringify({
                 userId,
                 userPassword,
+                
             }),
         })
             .then(res => res.json())
@@ -137,7 +141,7 @@ function Login(props) {
 
     //登入及註冊的切換 */
     
-    function openPage(pageName) {
+    const openPage=(pageName)=> {
         var i, loginTabContent;
         loginTabContent = document.getElementsByClassName("loginTabContent");
         for (i = 0; i < loginTabContent.length; i++) {
@@ -153,7 +157,8 @@ function Login(props) {
 
     //最上層 會員 廠商的切換
         const TwoPage=(pageName) =>{
-            console.log(pageName)
+           
+            console.log(pageName);
             var i, loginTabContent;
 
             loginTabContent = document.getElementsByClassName("Twotabcontent");
@@ -400,23 +405,26 @@ function Login(props) {
                                             <div id="login" className="loginTabContent">
                                                 <br />
                                                 <div>
-                                                    <form action="" onSubmit={handleSubmit}>
+                                                    <form action="" >
                                                         <label htmlFor="">會員登入帳號</label>
                                                         <input
                                                             id=""
                                                             value={userId}
                                                             type="text"
                                                             placeholder="請輸入帳號"
-                                                            onChange={(e) => setuserId(e.target.value)} />
+                                                            onChange={(e) => setuserId(e.target.value)} 
+                                                            />
                                                         <br />
                                                         <label htmlFor="">會員登入密碼</label>
                                                         <input
                                                             value={userPassword}
                                                             type="password"
                                                             placeholder="請輸入密碼"
-                                                            onChange={(e) => setuserPassword(e.target.value)} />
+                                                            onChange={(e) => setuserPassword(e.target.value)} 
+                                                            />
                                                         <br />
-                                                        <input type="submit" value="確認" />
+                                                        <input type="submit" value="確認"   onClick={(e) => handleSubmit(e)}/>
+                                                        
 
                                                     </form>
                                                     <br />
@@ -446,7 +454,7 @@ function Login(props) {
                                             <div id="register" className="loginTabContent" style={{ display: "none" }}>
                                                 <br />
                                                 <div>
-                                                    <form action="javascript:void(0)">
+                                                    <form action="">
                                                         <label htmlFor="">會員註冊帳號</label>
                                                         <input
                                                             type="text"
