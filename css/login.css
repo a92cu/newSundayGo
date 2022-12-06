@@ -1,300 +1,66 @@
-/* 以下是pop up windown的css */
-/* body {
-    background: #e7e7e7;
-    height: 100vh;
-} */
-
-/* h3 {
+.LoginApp {
     text-align: center;
-    color: #413b3b;
-    font-weight: 900;
-    text-transform: uppercase;
-    font-size: 80px;
-} */
-
-/* h5 {
-    text-align: center;
-    color: #82807f;
-    margin: 80px auto;
-    font-size: 20px;
-    width: 50%;
-    line-height: 1.7;
-} */
-
-.loginbox {
-    text-align: center;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-image: linear-gradient(153deg, rgba(249,248,62,0.9626051104035365) 0%, rgba(69,212,99,1) 44%);
 }
 
-/* .loginbutton {
-    font-size: 1em;
-    padding: 15px 15px;
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease-out;
-    background: #403e3d;
-    border-radius: 50px;
-} */
-
-.loginoverlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgb(0, 0, 0, 0.8);
-    transition: opacity 500ms;
-    visibility: hidden;
-    opacity: 0;
+.auth-form-container,
+.login-form,
+.register-form {
+    display: flex;
+    flex-direction: column;
 }
 
-.loginoverlay:target {
-    visibility: visible;
-    opacity: 1;
+@media screen and (min-width: 600px) {
+    .auth-form-container {
+        padding: 5rem;
+        border: 1px solid white;
+        border-radius: 10px;
+        margin: 0.5rem;
+    }
 }
 
-.loginwrapper {
-    margin: 70px auto;
+.login-form label {
+    text-align: left;
+    padding: 0.25rem 0;
+}
+
+.login-form input {
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+}
+
+.register-form label {
+    text-align: left;
+    padding: 0.25rem 0;
+}
+
+.register-form input {
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+}
+
+
+
+.sub-btn {
+    border: none;
+    background-color: white;
     padding: 20px;
-    background: #e7e7e7;
-    border-radius: 5px;
-    width: 350px;
-    height: 550px;
-    position: relative;
-    transition: all 5s ease-in-out;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #7439db;
 }
 
-.loginwrapper h2 {
-    margin-top: 0;
-    color: #333;
-}
-
-.loginwrapper .close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    transition: all 200ms;
-    font-size: 30px;
-    font-weight: bold;
-    text-decoration: none;
-    color: #333;
-}
-
-.loginwrapper .content {
-    max-height: 30%;
-    overflow: auto;
-}
-
-/* 以上是pop up windown的css */
-
-
-/* form 的設定 design */
-.logincontainer {
-    border-radius: 5px;
-    background-color: #e7e7e7;
-    padding: 20px 0;
-}
-
-/* 輸入表格label的樣式 */
-/* form label{
-    text-transform: uppercase;
-    font-weight: 500;
-    letter-spacing: 3px;
-} */
-
-/* 輸入框的樣式 */
-
-.logincontent input[type=text],
-textarea {
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-top: 6px;
-    margin-bottom: 16px;
-    width: fit-content;
-}
-
-
-.logincontent input[type=password],
-textarea {
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-top: 6px;
-    margin-bottom: 16px;
-}
-
-.logincontent input[type=email],
-textarea {
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-top: 6px;
-    margin-bottom: 16px;
-    /* width: 100%; */
-    /* box-sizing: border-box; */
-    /* resize: vertical; */
-}
-
-/* 輸入框  確認  按鈕 的 樣式 */
-.logincontent input[type=submit] {
-    background-color: orange;
-    padding: 5px;
-    margin: 20px auto;
-    border: none;
-    letter-spacing: 3px;
-    position: relative;
-    width: 200px;
-    font-size: 20px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.logincontent input[type=submit]:hover {
-    background-color: #F2B704;
-}
-
-/* 會員登入及註冊的按鈕*/
-.tablink {
-    background-color: white;
-    color: black;
-    border: none;
-    /* outline: none; */
-    /* cursor: pointer; */
-    padding: 10px 10px;
-    font-size: 20px;
-    width: 100px;
-    border-radius: 5px;
-}
-
-/* 會員登入及註冊的按鈕hover */
-.tablink:hover {
-    background-color: #F2B704;
-}
-
-/* 會員登入及註冊的內容 */
-.loginTabContent {
-    color: black;
-    /* display: none; */
-    width: 300px;
-    height: 450px;
-    display: flex;
-    text-align: center;
-}
-
-#login {
-    /* 會員登入的框線 */
-    border: 1px solid #F2B704;
-    border-radius: 5px;
-}
-
-#companylogin {
-    /* 會員登入的框線 */
-    border: 1px solid #F2B704;
-    border-radius: 5px;
-}
-
-#register {
-    /* 廠商註冊的框線 */
-    border: 1px solid #F2B704;
-    border-radius: 5px;
-}
-
-#companyregister {
-    /* 廠商註冊的框線 */
-    border: 1px solid #F2B704;
-    border-radius: 5px;
-}
-
-/* 確認按鈕的設計 */
-/* .containerBtn>button {
-    position: relative;
-    background-color: orange;
-    width: 200px;
-    font-size: 20px;
-    border-radius: 5px;
-} */
-
-/* 其他登入的icon */
-.iconStyle>img {
-    padding: 10px;
-}
-
-/* 以下是Two會員系列 */
-
-/* 會員跟廠商  登入跟註冊 的切換按鈕 */
-.Twotablink {
+.link-btn {
     background: none;
-    color: #8C5C02;
-    padding: 10px 10px;
-    font-size: 20px;
-    width: 150px;
-    border-top-style: none;
-    border-right-style: none;
-    border-left-style: none;
-    border-bottom: solid 5px;
-    margin-bottom: 10px;
-
-}
-
-/* 會員廠商的登入跟註冊 hover顏色 */
-.Twotablink:hover {
-    color: orange;
-}
-
-/* 會員廠商的 登入 註冊 的表格內容 */
-.Twotabcontent {
-    color: black;
-    display: none;
-    width: 300px;
-    height: 450px;
-    /* display: flex; */
-    text-align: center;
-}
-
-
-
-/* 以下是Three廠商系列 */
-
-/* 廠商的 登入 註冊 切換的按鈕 */
-.Threetablink {
-    background-color: white;
-    color: black;
-    border: none;
-    padding: 10px 10px;
-    font-size: 20px;
-    width: 100px;
-    border-radius: 5px;
-}
-
-/* 廠商的 登入 註冊 切換的按鈕的hover */
-.Threetablink:hover {
-    background-color: #F2B704;
-}
-
-/* 廠商登入註冊的表格內容 */
-.Threetabcontent {
-    color: black;
-    display: none;
-    width: 300px;
-    height: 450px;
-    /* display: flex; */
-    text-align: center;
-}
-
-.ForgetTablinkTwo {
-    background-color: orange;
-    padding: 5px;
-    margin: 20px auto;
-    border: none;
-    letter-spacing: 3px;
-    position: relative;
-    width: 200px;
-    font-size: 20px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    color: white;
+    text-decoration: underline;
 }
