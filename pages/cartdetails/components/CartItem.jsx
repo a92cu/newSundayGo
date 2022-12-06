@@ -1,5 +1,5 @@
 import { useEffect, useState} from "react";
-import Script from "next/script";
+
 import Product from "./CartItem_item.jsx"
 
 export var CartItem = () => {
