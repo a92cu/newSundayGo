@@ -23,8 +23,7 @@ export default async function userHandler(
     break;
     case "PUT":
     try {
-      // 刪除商品內容
-        if(req.body.timeData){
+      if(req.body.timeData){
           console.log("yes Im run all")
           const sq2 = `UPDATE usertable SET userLoginEventTime="${req.body.timeData}",userLoginEventCount=${req.body.count} WHERE userId="u123456789"`;
           const sq3 = `INSERT INTO discountcoupon ( userId, coupon , couponName, couponEndTime,couponUse ) VALUES ("u123456789", 0.95 ,"九五折","${req.body.discountdate}",0)`;
