@@ -10,7 +10,6 @@ function Product({
     itemImgUrl,
     onCalculate,
     onDoAllClick}){
-    const [ wanted , setwanted ]=useState(false)
     const [ quantity, setQuantity] = useState(0);  //  quantity 預設值= 0
     // 當input 被點到會觸發...
     let gotChange=(e)=>{
@@ -19,9 +18,10 @@ function Product({
             onCalculate(quantity*itemPrice);
         }else{
             onDoAllClick(e.target.checked)
-            onCalculate(-quantity*itemPrice);
+            if(-quantity*itemPrice>=0){
+                onCalculate(-quantity*itemPrice);
+            }
         }
-        setwanted(e.target.checked)
     }
     ;
     useEffect(()=>{
@@ -33,18 +33,21 @@ function Product({
     ,[])
     
     const increment = (e) => {
-        console.log(e.target.parentElement.parentElement.parentElement.childElement)
+        let inputCheck=e.target.parentElement.parentElement.parentElement.firstChild.firstChild.checked
         setQuantity(quantity + 1);   // 可以想成 quantity = quantity + 1
-        if(wanted){
+        if(inputCheck){
             onCalculate(itemPrice);
         }
     };
-    const decrement = () => {
+    const decrement = (e) => {
+        let inputCheck=e.target.parentElement.parentElement.parentElement.firstChild.firstChild.checked
         if ( quantity > 0 ){
               setQuantity(quantity - 1);    // quantity = quantity - 1
         }
-        if(wanted){
-            onCalculate(-itemPrice);
+        if(inputCheck){
+            if(quantity*itemPrice>=0){
+                onCalculate(-itemPrice);
+            }
         }
     };
     let deleteMe=(e)=>{
