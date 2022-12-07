@@ -9,13 +9,11 @@ export var CartItem = () => {
     const [shoppingcar, setshoppingcar] = useState([]);
 
     const [ totalCash, setTotalCash ] = useState(0);  // totalCash預設值為0
-    const [ allWant, setAllWant ]=useState(false);
 
     const calculate = (price) => {
-        setTotalCash( totalCash + price);   // totalCash =  totalCash + price
-    }
-    const doAllClick = (Want) =>{
-        setAllWant(Want);
+        if(totalCash>=0){
+            setTotalCash( totalCash + price);   // totalCash =  totalCash + price
+        }
     }
     useEffect(() => {
         const shopcar = JSON.parse(window.localStorage.getItem('shopcar')) || [];
@@ -160,7 +158,6 @@ export var CartItem = () => {
                 itemPrice={i.itemPrice}
                 itemImgUrl={i.itemImgUrl}
                 onCalculate={calculate}
-                onDoAllClick={doAllClick}
                  />
                 )}
             </div>
