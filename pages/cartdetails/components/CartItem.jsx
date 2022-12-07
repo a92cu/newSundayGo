@@ -4,7 +4,9 @@ import Product from "./CartItem_item.jsx"
 
 export var CartItem = () => {
     let itemarray = [];
+    // 停止輪迴
     let [stopState,setstopState]=useState(false);
+    // 讓getshopitem()可以動作
     const [counts,setcounts]=useState(0);
     const [shoppingcar, setshoppingcar] = useState([]);
 
@@ -12,7 +14,7 @@ export var CartItem = () => {
 
     const calculate = (price) => {
         if(totalCash>=0){
-            setTotalCash( totalCash + price);   // totalCash =  totalCash + price
+            setTotalCash( totalCash + price );   // totalCash =  totalCash + price
         }
     }
     useEffect(() => {
@@ -66,13 +68,24 @@ export var CartItem = () => {
             )
     }
     
-    // 做全選框 -- TEST
-    const [allChecked,setAllChecked]=useState(false)
-    const handleOnChange=(e)=>{
-        setAllChecked(e.target.checked)
-        console.log(e.target.checked)
-    }
+    // // 做全選框 -- TEST -- 可以作用，但無法觸發input裡的onChange
+    // const [allChecked,setAllChecked]=useState(false)
+    // const handleOnChange=(e)=>{
+    //     setAllChecked(e.target.checked)
+    //     let a=document.querySelectorAll("input[class='liCheck']")
+    //     a.forEach(element => {
+    //         console.log(element);
+    //         element.checked=e.target.checked
+    //     });
+    // }
     
+    // 做全選框 -- TEST2
+    const [allChecked,setAllChecked]=useState(false)
+    function handleOnChange (e){
+        console.log(e)
+        setAllChecked(e.target.checked)
+    }
+
     // 將商品丟進local storage 前往結帳頁面
     function gotopay(){
         if(totalCash==0){

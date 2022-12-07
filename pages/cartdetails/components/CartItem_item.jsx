@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef} from "react";
 
 function Product({
     id,
@@ -12,21 +12,18 @@ function Product({
     const [quantity, setQuantity] = useState(0);  //  quantity 預設值= 0
     // 當input 被點到會觸發...
     let gotChange = (e) => {
-        if (e.target.checked) {
-            onCalculate(quantity * itemPrice);
-        } else {
-            onCalculate(-quantity * itemPrice);
+        if(quantity!==0){
+            if (e.target.checked) {
+                onCalculate(quantity * itemPrice);
+            } else {
+                onCalculate(-quantity * itemPrice);
+            }
         }
     }
-        ;
     useEffect(() => {
         setQuantity(parseInt(count));
-        if (check) {
-            console.log(document.getElementsByClassName("liCheck"))
-        }
-    }
-        , [])
-
+    },[])
+   
     const increment = (e) => {
         let inputCheck = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.checked
         setQuantity(quantity + 1);   // 可以想成 quantity = quantity + 1
@@ -52,6 +49,27 @@ function Product({
     let deleteMe = (e) => {
         e.target.parentElement.parentElement.remove()
     }
+
+    // const [_, refresh] = useState()
+
+    // const inputEl=useRef();
+    // if(check){
+    //     console.log(inputEl.current.checked);
+    //     inputEl.current.checked=check;
+    // }else{
+    //     inputEl.current.checked=check;
+    // }
+    // let allChangeInput = (e) => {
+    //     console.log(e)
+    //     if(quantity!==0){
+    //         if (e.checked) {
+    //             onCalculate(quantity * itemPrice);
+    //         } else {
+    //             onCalculate(-quantity * itemPrice);
+    //         }
+    //     }
+    // }
+    
     return (
         <>
             <div className="carHeader carBody">
