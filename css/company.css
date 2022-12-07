@@ -187,7 +187,7 @@ select {
 
 }
 
-.OrderReadyImgQ>img {
+.OrderReadyImgQ>a>img {
     width: 200px;
     height: 160px;
     border-radius: 20px;

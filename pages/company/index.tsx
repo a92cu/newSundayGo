@@ -28,14 +28,14 @@ function MemberOrder({ itemList, imgList, setItemList }) {
                 return (
                   <tr>
                     <td>
-                      <div className="OrderReadyImgQ">
-                        <img
+                      <div className="OrderReadyImgQ" >
+                        <a href={`/item/${i.itemId}`}><img
                           src={
                             imgList?.find(
                               (j) => j.itemId === i.itemId && j.itemLead == 1
                             )?.itemImgUrl ?? ''
                           }
-                        />
+                        /></a>
                       </div>
                     </td>
                     <td>{i.itemName}</td>
