@@ -154,7 +154,8 @@ export const Placezone = (dateList) => {
         });
     }, [])
     async function fetchdata() {
-
+ 
+        
         return (await fetch("/api/home/homepage")
             .then((res) => res.json())
             .then((result) => {
