@@ -119,13 +119,8 @@ function Header() {
         <a href="#">
           <img src="./images/cart.png" style={{ width: 25 }} />
         </a>
-<<<<<<< Updated upstream
-        <a href="#divOne" className="loginbutton">
-          登出
-=======
         <a href="http://localhost:3000/login" className="loginbutton">
           登入|註冊
->>>>>>> Stashed changes
         </a>
       </div>
       <form className="example" action="">
