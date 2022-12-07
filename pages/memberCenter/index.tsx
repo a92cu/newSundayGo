@@ -717,7 +717,7 @@ export async function getStaticProps({ params }) {
     accountList.push({ ...usertable });
   });
   discountListRaw.forEach((discounttable: any) => {
-    discounttable.couponStartTime = format(discounttable.couponStartTime, "yyyy-MM-dd");
+    discounttable.couponEndTime = format(discounttable.couponEndTime, "yyyy-MM-dd");
     discountList.push({ ...discounttable })
   });
   //把要的資料拿出來
