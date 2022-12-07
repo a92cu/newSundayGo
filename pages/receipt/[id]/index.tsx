@@ -30,7 +30,7 @@ function ReceiptPage(orderList) {
         pageMargins: [0, 20, 0, 0]
       };
 
-      pdfMake.createPdf(docDefinition).download('name.pdf');
+      pdfMake.createPdf(docDefinition).download('receipt.pdf');
     });
   }
   return (
