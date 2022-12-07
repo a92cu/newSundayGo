@@ -340,21 +340,25 @@ function SevenDay() {
     // 每個折價券做判斷
     if (checkCount !== 0) {
       if (checkCount >= count) {
-        if (thisDate.getFullYear() >= gotdate.getFullYear() && thisDate.getMonth() >= gotdate.getMonth()) {
-          if (thisDate.getDate() > gotdate.getDate()) {
-            console.log(thisDate, gotdate)
-            alert('您已領取折扣券')
-            axios.put(`/api/memberCentre/taketime`, {
-                timeData: format(thisDate,"yyyy-MM-dd"),
-                discountdate: format(fetureDate,"yyyy-MM-dd"),
-                count: checkCount + 1,
-            });
-          } else {
-            alert("尚未滿足條件")
+        if(checkCount>7){
+            if (thisDate.getFullYear() >= gotdate.getFullYear() && thisDate.getMonth() >= gotdate.getMonth()) {
+              if (thisDate.getDate() > gotdate.getDate()) {
+                console.log(thisDate, gotdate)
+                alert('您已領取折扣券')
+                axios.put(`/api/memberCentre/taketime`, {
+                    timeData: format(thisDate,"yyyy-MM-dd"),
+                    discountdate: format(fetureDate,"yyyy-MM-dd"),
+                    count: checkCount + 1,
+                });
+              } else {
+                alert("尚未滿足條件")
+              }
+            } else {
+              alert("尚未滿足條件")
+            }
+          }else{
+            alert("您已領取所有折價券，感謝您參與")
           }
-        } else {
-          alert("尚未滿足條件")
-        }
       } else {
         alert("尚未滿足條件")
       }

@@ -27,7 +27,7 @@ export default async function userHandler(
         if(req.body.timeData){
           console.log("yes Im run all")
           const sq2 = `UPDATE usertable SET userLoginEventTime="${req.body.timeData}",userLoginEventCount=${req.body.count} WHERE userId="u123456789"`;
-          const sq3 = `INSERT INTO discountcoupon ( userId, coupon , couponName, couponStartTime,couponUse ) VALUES ("u123456789", 0.95 ,"九五折","${req.body.discountdate}",0)`;
+          const sq3 = `INSERT INTO discountcoupon ( userId, coupon , couponName, couponEndTime,couponUse ) VALUES ("u123456789", 0.95 ,"九五折","${req.body.discountdate}",0)`;
           const data= await runSQL(sq2);
           const data2=await runSQL(sq3);
           res.status(200).json({data,data2});
