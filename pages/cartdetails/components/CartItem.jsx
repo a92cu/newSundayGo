@@ -19,23 +19,14 @@ export var CartItem = () => {
     }
     useEffect(() => {
         const shopcar = JSON.parse(window.localStorage.getItem('shopcar')) || [];
-        // console.log(0,shopcar);
+        // console.log(shopcar);
 
         for (const key in shopcar) {
-            console.log('running')
             getshopitem(shopcar[key].itemId, shopcar[key].date, shopcar[key].count);
         }
         setshoppingcar(itemarray);
-        // console.log(itemarray,123456);
+        // console.log(itemarray);
         
-
-        // 全選框 -- test1
-        let allCheck=document.getElementById('checkAll');
-        allCheck.addEventListener('change',()=>{  
-            let listCheck=document.querySelectorAll('.liCheck');
-        })
-
-
         // 停止迴圈
         setstopState(true)
     },[stopState])
@@ -45,11 +36,11 @@ export var CartItem = () => {
             .then((response) => response.json())
             .then((dataresult) => {
                 let dataAll = dataresult.data
-                // 找到itemId=id的陣列
+                // 找到itemId=id的陣列，並將位置傳出
                 var dataint = dataAll.map(x => x.itemId).indexOf(parseInt(id))
                 // console.log(dataAll[dataint])
 
-                // 將圖片轉碼
+                // 將該位置的圖片轉碼
                 dataAll[dataint].itemImgUrl = getImgUrl(dataAll[dataint].itemImgUrl);
                 // console.log(dataAll[dataint].itemImgUrl)
     
@@ -63,10 +54,9 @@ export var CartItem = () => {
                     itemImgUrl: dataAll[dataint].itemImgUrl,
                 });
                 
-                // 執行setshoppingcar
-                console.log(234,shoppingcar);
                 // // 因為畫面會無限迴圈,所以設定setcounts讓畫面只更新一次
                 setcounts(c=>c+1)
+
                 // 幫圖片轉碼
                 function getImgUrl(itemImg) {
                     var img = Buffer.from(itemImg).toString('base64');
@@ -78,23 +68,13 @@ export var CartItem = () => {
             )
     }
     
-    // 做全選框 -- test2
-    let takeChange=(e)=>{
-        console.log(e) // 0
-        console.log(isChecked[e]);
-    }
-    let [isChecked, setIsChecked] = useState(
-        new Array(itemarray.length).fill(false)
-    );
-
+    // 做全選框 -- TEST
+    const [allChecked,setAllChecked]=useState(false)
     const handleOnChange=(e)=>{
-        setIsChecked(!isChecked);
-        if(e.target.checked){
-            console.log('yes')
-            setAllWant(e.target.checked);
-            e.target.checked=allWant
-        }
+        setAllChecked(e.target.checked)
+        console.log(e.target.checked)
     }
+    
     // 將商品丟進local storage 前往結帳頁面
     function gotopay(){
         if(totalCash==0){
@@ -175,12 +155,12 @@ export var CartItem = () => {
                 key={key}
                 date={i.date}
                 count={i.count}
+                check={allChecked}
                 itemTitle={i.itemTitle}
                 itemPrice={i.itemPrice}
                 itemImgUrl={i.itemImgUrl}
                 onCalculate={calculate}
                 onDoAllClick={doAllClick}
-                giveChange={takeChange}
                  />
                 )}
             </div>

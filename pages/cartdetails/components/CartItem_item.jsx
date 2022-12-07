@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import Script from "next/script";
 
-const Product = ({ 
+function Product({ 
     id,
     date,
     count,
@@ -9,9 +8,8 @@ const Product = ({
     itemTitle,
     itemPrice,
     itemImgUrl,
-    giveChange,
     onCalculate,
-    onDoAllClick}) => {
+    onDoAllClick}){
     const [ wanted , setwanted ]=useState(false)
     const [ quantity, setQuantity] = useState(0);  //  quantity 預設值= 0
     // 當input 被點到會觸發...
@@ -24,15 +22,18 @@ const Product = ({
             onCalculate(-quantity*itemPrice);
         }
         setwanted(e.target.checked)
-        giveChange(e.target.value)
     }
     ;
     useEffect(()=>{
-        setQuantity(parseInt(count));    
+        setQuantity(parseInt(count));
+        if(check){
+            console.log(document.getElementsByClassName("liCheck")) 
+        }
     }
     ,[])
-
-    const increment = () => {
+    
+    const increment = (e) => {
+        console.log(e.target.parentElement.parentElement.parentElement.childElement)
         setQuantity(quantity + 1);   // 可以想成 quantity = quantity + 1
         if(wanted){
             onCalculate(itemPrice);
@@ -49,13 +50,12 @@ const Product = ({
     let deleteMe=(e)=>{
         e.target.parentElement.parentElement.remove()
     }
-
     return (
         <>
             <div className="carHeader carBody">
                 <div className="carChecked">
                     {/* <!-- 個別核取方塊 --> */}
-                    <input type="checkbox" name="subItem" className="liCheck" onChange={gotChange} value={id} />
+                    <input type="checkbox" name="subItem" className="liCheck" onChange={gotChange} value={id}/>
                 </div>
                 <div className="carDetail">
                     <a href={`/item/${id}`}><img src={itemImgUrl} /></a>
