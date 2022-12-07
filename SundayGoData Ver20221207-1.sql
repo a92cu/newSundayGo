@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-11-24 17:49:28
--- 伺服器版本： 10.4.25-MariaDB
--- PHP 版本： 8.1.10
+-- 產生時間： 2022-12-07 05:07:04
+-- 伺服器版本： 10.4.27-MariaDB
+-- PHP 版本： 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,19 +28,21 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `discountcoupon` (
-  `couponId` varchar(10) COLLATE utf16_unicode_ci NOT NULL,
-  `userId` varchar(30) COLLATE utf16_unicode_ci NOT NULL,
-  `coupon` varchar(6) COLLATE utf16_unicode_ci NOT NULL,
-  `couponName` varchar(60) COLLATE utf16_unicode_ci NOT NULL
+  `couponId` int(10) NOT NULL,
+  `userId` varchar(30) NOT NULL,
+  `coupon` varchar(6) NOT NULL,
+  `couponName` varchar(60) NOT NULL,
+  `couponEndTime` date NOT NULL,
+  `couponUse` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
 
 --
 -- 傾印資料表的資料 `discountcoupon`
 --
 
-INSERT INTO `discountcoupon` (`couponId`, `userId`, `coupon`, `couponName`) VALUES
-('1', 'u123456789', '100', '折價100元'),
-('2', 'u123456789', '0.9', '打9折');
+INSERT INTO `discountcoupon` (`couponId`, `userId`, `coupon`, `couponName`, `couponEndTime`, `couponUse`) VALUES
+(1, 'u123456789', '0.9', '九折', '2022-12-28', 0),
+(2, 'u123456789', '0.9', '九折', '2022-12-05', 1);
 
 -- --------------------------------------------------------
 
@@ -49,8 +51,8 @@ INSERT INTO `discountcoupon` (`couponId`, `userId`, `coupon`, `couponName`) VALU
 --
 
 CREATE TABLE `favorite` (
-  `favId` varchar(200) NOT NULL,
-  `userId` varchar(30) COLLATE utf16_unicode_ci NOT NULL,
+  `favId` int(5) NOT NULL,
+  `userId` varchar(30) NOT NULL,
   `itemId` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
 
@@ -59,10 +61,10 @@ CREATE TABLE `favorite` (
 --
 
 INSERT INTO `favorite` (`favId`, `userId`, `itemId`) VALUES
-(1, 'u123456789', 10),
-(2, 'u123456789', 11),
-(3, 'u123456789', 15),
-(4, 'u123456789', 20);
+(1, 'u123456789', '10'),
+(2, 'u123456789', '11'),
+(3, 'u123456789', '15'),
+(4, 'u123456789', '20');
 
 -- --------------------------------------------------------
 
@@ -71,14 +73,14 @@ INSERT INTO `favorite` (`favId`, `userId`, `itemId`) VALUES
 --
 
 CREATE TABLE `firm` (
-  `firmId` varchar(200) COLLATE utf16_unicode_ci NOT NULL,
-  `firmPassword` varchar(30) COLLATE utf16_unicode_ci NOT NULL,
-  `firmName` varchar(150) COLLATE utf16_unicode_ci NOT NULL,
-  `taxId` int(8) NOT NULL,
-  `firmHeadName` varchar(150) COLLATE utf16_unicode_ci NOT NULL,
-  `firmPhone` int(10) NOT NULL,
-  `firmLocation` varchar(100) COLLATE utf16_unicode_ci NOT NULL,
-  `firmEmail` varchar(50) COLLATE utf16_unicode_ci NOT NULL
+  `firmId` varchar(200) NOT NULL,
+  `firmPassword` varchar(30) NOT NULL,
+  `firmName` varchar(150) DEFAULT NULL,
+  `taxId` int(8) DEFAULT NULL,
+  `firmHeadName` varchar(150) DEFAULT NULL,
+  `firmPhone` varchar(10) DEFAULT NULL,
+  `firmLocation` varchar(100) DEFAULT NULL,
+  `firmEmail` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
 
 --
@@ -86,12 +88,12 @@ CREATE TABLE `firm` (
 --
 
 INSERT INTO `firm` (`firmId`, `firmPassword`, `firmName`, `taxId`, `firmHeadName`, `firmPhone`, `firmLocation`, `firmEmail`) VALUES
-('firm001', 'f000000', '台忠旅行社', 12345678, '王台中', 912345678, ' 新北市汐止區新台五路一段95號16樓之12號', 'f123456@mail.com'),
-('firm002', 'f222222', '台南旅行社', 22222222, '王台南', 922222222, '嘉義市東區興美三街28號', 'f222222@mail.com'),
-('firm003', 'k000000', '台北旅行社', 12345679, '王台北', 912345698, '高雄市大寮區永仁街33號', 'f21112@mail.com'),
-('firm004', 'k1111111', '台新旅行社', 12345698, '王台新', 965498721, '彰化縣彰化市彰秀路8號', 'f236522@mail.com'),
-('firm005', 'c1111111', '高雄旅行社', 12345678, '王高雄', 985423156, ' 苗栗縣苗栗市橫車路21號', 'k54689@mail.com'),
-('firm006', 'p1111111', '台中旅行社', 12345678, '王台中', 996521784, '宜蘭縣五結鄉錦草一路7號', 'f22659@mail.com');
+('firm001', 'f000000', '台忠旅行社', 12345678, '王台中', '0912345678', ' 新北市汐止區新台五路一段95號16樓之12號', 'f123456@mail.com'),
+('firm002', 'f222222', '台南旅行社', 22222222, '王台南', '0922222222', '嘉義市東區興美三街28號', 'f222222@mail.com'),
+('firm003', 'k000000', '台北旅行社', 12345679, '王台北', '0912345698', '高雄市大寮區永仁街33號', 'f21112@mail.com'),
+('firm004', 'k1111111', '台新旅行社', 12345698, '王台新', '0965498721', '彰化縣彰化市彰秀路8號', 'f236522@mail.com'),
+('firm005', 'c1111111', '高雄旅行社', 12345678, '王高雄', '0985423156', ' 苗栗縣苗栗市橫車路21號', 'k54689@mail.com'),
+('firm006', 'p1111111', '台中旅行社', 12345678, '王台中', '0996521784', '宜蘭縣五結鄉錦草一路7號', 'f22659@mail.com');
 
 -- --------------------------------------------------------
 
@@ -100,26 +102,26 @@ INSERT INTO `firm` (`firmId`, `firmPassword`, `firmName`, `taxId`, `firmHeadName
 --
 
 CREATE TABLE `item` (
-  `itemId` varchar(200) NOT NULL,
-  `firmId` varchar(200) COLLATE utf16_unicode_ci NOT NULL,
-  `itemTitle` varchar(150) COLLATE utf16_unicode_ci NOT NULL,
+  `itemId` int(10) NOT NULL,
+  `firmId` varchar(200) NOT NULL,
+  `itemTitle` varchar(150) NOT NULL,
   `itemPrice` int(5) NOT NULL,
-  `itemName` varchar(60) COLLATE utf16_unicode_ci NOT NULL,
-  `itemInfo` varchar(9000) COLLATE utf16_unicode_ci NOT NULL,
-  `itemAddr` varchar(90) COLLATE utf16_unicode_ci NOT NULL,
-  `itemLocation` varchar(150) COLLATE utf16_unicode_ci NOT NULL,
+  `itemName` varchar(60) NOT NULL,
+  `itemInfo` varchar(9000) NOT NULL,
+  `itemAddr` varchar(90) NOT NULL,
+  `itemLocation` varchar(150) NOT NULL,
   `itemListedDate` date NOT NULL,
   `itemStartDate` date NOT NULL,
   `itemEndDate` date NOT NULL,
   `itemSales` int(5) NOT NULL,
   `itemInvent` int(5) NOT NULL,
-  `itemNote` varchar(4800) COLLATE utf16_unicode_ci NOT NULL,
-  `itemTraffic` varchar(1500) COLLATE utf16_unicode_ci NOT NULL,
-  `itemTotalStar` int(3) NOT NULL,
-  `itemFilter1` varchar(9) COLLATE utf16_unicode_ci NOT NULL,
-  `itemFilter2` varchar(9) COLLATE utf16_unicode_ci NOT NULL,
-  `itemFilter3` varchar(9) COLLATE utf16_unicode_ci NOT NULL,
-  `itemFilter4` varchar(9) COLLATE utf16_unicode_ci NOT NULL
+  `itemNote` varchar(4800) NOT NULL,
+  `itemTraffic` varchar(1500) NOT NULL,
+  `itemTotalStar` int(3) DEFAULT 0,
+  `itemFilter1` varchar(9) NOT NULL,
+  `itemFilter2` varchar(9) NOT NULL,
+  `itemFilter3` varchar(9) NOT NULL,
+  `itemFilter4` varchar(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
 
 --
@@ -127,7 +129,7 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`itemId`, `firmId`, `itemTitle`, `itemPrice`, `itemName`, `itemInfo`, `itemAddr`, `itemLocation`, `itemListedDate`, `itemStartDate`, `itemEndDate`, `itemSales`, `itemInvent`, `itemNote`, `itemTraffic`, `itemTotalStar`, `itemFilter1`, `itemFilter2`, `itemFilter3`, `itemFilter4`) VALUES
-(1, 'firm001', ' 新竹尖石溫泉標準湯屋住宿券 ', 880, '新竹尖石溫泉標準湯屋住宿券', '－ 使用說明－\n    兌換方式：\n    - 湯屋券不接受預約，請於現場依序入場使用；為免久候，建議使用前可電話詢問現場狀況\n    - 住宿券使用時須提前 3 天撥打飯店電話預約並告知憑證上的核銷碼及體驗券內容\n    飯店名稱：石上湯屋渡假村\n    飯店電話：(03) 584-2605\n    飯店地址：新竹縣尖石鄉嘉樂村七鄰45號\n－ 方案介紹 －\n    石上湯屋渡假村｜平日雙人標準湯屋淡季 90 分鐘／旺季 60 分鐘泡湯券\n    - 本券恕不接受預約，為避免久候，建議於平日使用\n    - 本券可雙人泡湯淡季平日使用標準湯屋 90 分鐘， 旺季平日使用標準湯屋 60 分鐘\n    - 本券淡旺季假日 (週六、日、國定假日、連續假日及前夕) 需於現場加價 NT$800 方可使用 60 分鐘， 特殊假日恕不適用\n    - 淡季為 4 - 10 月、旺季為 11 - 3 月，平日為週一至週五，假日為週六至週日及國定假日，特殊假日（12/31 跨年、1/1 元旦、農曆春節期間）\n    - 如需加人 100 公分以下需加收 NT$100/人、100 公分以上需加收 NT$300/人。加時每 30 鐘需加收 NT$700\n    石上湯屋渡假村｜平日雙人標準湯屋淡季 90 分鐘／旺季 60 分鐘泡湯券＋2 客風味套餐\n    - 本券恕不接受預約，為避免久候，建議於平日使用\n    - 本券可雙人泡湯淡季平日使用標準湯屋 90 分鐘， 旺季平日使用標準湯屋 60 分鐘\n    - 本券淡旺季假日 (週六、日、國定假日、連續假日及前夕) 需於現場加價 NT$800 方可使用 60 分鐘， 特殊假日恕不適用\n    - 淡季為 4 - 10 月、旺季為 11 - 3 月，平日為週一至週五，假日為週六至週日及國定假日，特殊假日（12/31 跨年、1/1 元旦、農曆春節期間）\n    - 如需加人 100 公分以下需加收 NT$100/人、100 公分以上需加收 NT$300/人。加時每 30 鐘需加收 NT$700\n    石上湯屋渡假村｜平日標準湯屋一泊一食住宿券\n    - 請務必提前 3 天電話預訂並告知使用本券及內容，預約專線：(03) 584-2605\n    - 本券可雙人住宿石上湯屋標準湯屋一晚 (恕不指定房型) ，含 2 客早餐\n    - 本券限平日 (4 - 10 月週日至週五；11 - 3月週一至週四) 使用\n    - 本券假日 (週六及連續假日) 需加價 N$1,800、旺日 (11月~3月週五及週日) 需加價 NT$800，特殊假日（12/31 跨年、1/1 元旦、農曆春節期間）恕不適用\n    - 平旺假日定義如有異動，依現場公告為主，恕不另行通知\n    - 本券淡季(每年4 - 10 月) 入住時間 17:00、退房時間隔日 12:00，本券旺季 (每年11 - 3月) 入住時間 19:00、退房時間隔日 12:00\n    - 如需加人服務：身高未滿 110 公分或未滿 6 歲免費入住含備品及早餐、身高超過 110 公分或年滿 6 歲 (含)以上需加收$1200元／人 (含加床、備品及早餐)，每房最多加 2 人\n    石上湯屋渡假村｜平日標準湯屋一泊二食住宿券\n    - 請務必提前 3 天電話預訂並告知使用本券及內容，預約專線：(03) 584-2605\n    - 本券可雙人住宿石上湯屋標準湯屋一晚 (恕不指定房型) ，含 2 客早餐及 2 客風味套餐\n    - 本券限平日 (4 - 10 月週日至週五；11 - 3月週一至週四) 使用\n    - 本券假日 (週六及連續假日) 需加價 N$1,800、旺日 (11月~3月週五及週日) 需加價 NT$800，特殊假日（12/31 跨年、1/1 元旦、農曆春節期間）恕不適用\n    - 平旺假日定義如有異動，依現場公告為主，恕不另行通知\n    - 本券淡季(每年4 - 10 月) 入住時間 17:00、退房時間隔日 12:00，本券旺季 (每年11 - 3月) 入住時間 19:00、退房時間隔日 12:00\n    - 如需加人服務：身高未滿 110 公分或未滿 6 歲免費入住含備品及早餐、身高超過 110 公分或年滿 6 歲 (含)以上需加收$1200元／人 (含加床、備品及早餐)，每房最多加 2 人', '新竹尖石溫泉', '新竹縣尖石鄉七鄰45號313號 ', '2022-11-01', '2022-11-01', '2023-02-28', 99, 999, '本平台商品服務禮券載明之票面價值不等同於本平台售價。\n\n    訂購幾組就會在憑證上獲得幾組核銷確認碼，一組電子憑證限兌換一次，一經兌換即不可重覆使用，務必妥善保存，若因電子憑證遣失或造成被第三方兌換，所造成損失，需由消費者承擔，恕不補發。\n\n    湯屋券不接受預約，請於現場依序入場使用；為免久候，建議使用前可電話詢問現場狀況。\n\n    住宿券務必於使用 3 日前預訂並告知使用本券及內容，若未依規定提前預約，飯店有權不接受兌換。\n\n    泡湯券遇淡旺季假日 (週六、日、國定假日、連續假日及前夕) 需於現場加價 NT$800 方可使用 60 分鐘， 特殊假日（12/31 跨年、1/1 元旦、農曆春節期間）恕不適用。平旺假日定義如有異動，依飯店現場公告為主，建議使用前事先致電詢問。\n\n    泡湯券如需加人 100 公分以下需加收 NT$100/人、100 公分以上需加收 NT$300/人。加時每 30 鐘需加收 NT$700。\n\n    住宿券遇假日 (週六及連續假日) 需加價 N$1,800、旺日 (11月~3月週五及週日) 需加價 NT$800，特殊假日（12/31 跨年、1/1 元旦、農曆春節期間）恕不適用。平旺假日定義如有異動，依飯店現場公告為主，建議訂房前事先致電詢問。\n\n    住宿券如需加人服務：身高未滿 110 公分或未滿 6 歲免費入住含備品及早餐、身高超過 110 公分或年滿 6 歲 (含)以上需加收$1200元／人 (含加床、備品及早餐)，每房最多加 2 人。\n\n    未滿 6 歲免費兒童請攜帶健保卡或戶口名簿等相關證明文件以利辨識，如入住時無法出示則須依飯店現場規定補足差額。\n\n    平旺假日定義如有異動，依飯店現場公告為主，恕不另行通知。\n\n    為維護住宿清潔及品質，本飯店禁止攜帶寵物及炊具入住。\n\n    未持券者依店家現場收費標準辦理。\n\n    本券恕無法與其他優惠及專案合併使用。\n\n    票券優惠期間 (自開票日算起 1 年內) 同信託期間，逾期需依現場規定補價差使用。 ', '', 5, '北區', '新竹市', '住宿', '民宿'),
+(1, 'firm001', '新竹尖石溫泉標準湯屋住宿券 ', 880, '新竹尖石溫泉標準湯屋住宿券', '－ 使用說明－\n    兌換方式：\n    - 湯屋券不接受預約，請於現場依序入場使用；為免久候，建議使用前可電話詢問現場狀況\n    - 住宿券使用時須提前 3 天撥打飯店電話預約並告知憑證上的核銷碼及體驗券內容\n    飯店名稱：石上湯屋渡假村\n    飯店電話：(03) 584-2605\n    飯店地址：新竹縣尖石鄉嘉樂村七鄰45號\n－ 方案介紹 －\n    石上湯屋渡假村｜平日雙人標準湯屋淡季 90 分鐘／旺季 60 分鐘泡湯券\n    - 本券恕不接受預約，為避免久候，建議於平日使用\n    - 本券可雙人泡湯淡季平日使用標準湯屋 90 分鐘， 旺季平日使用標準湯屋 60 分鐘\n    - 本券淡旺季假日 (週六、日、國定假日、連續假日及前夕) 需於現場加價 NT$800 方可使用 60 分鐘， 特殊假日恕不適用\n    - 淡季為 4 - 10 月、旺季為 11 - 3 月，平日為週一至週五，假日為週六至週日及國定假日，特殊假日（12/31 跨年、1/1 元旦、農曆春節期間）\n    - 如需加人 100 公分以下需加收 NT$100/人、100 公分以上需加收 NT$300/人。加時每 30 鐘需加收 NT$700\n    石上湯屋渡假村｜平日雙人標準湯屋淡季 90 分鐘／旺季 60 分鐘泡湯券＋2 客風味套餐\n    - 本券恕不接受預約，為避免久候，建議於平日使用\n    - 本券可雙人泡湯淡季平日使用標準湯屋 90 分鐘， 旺季平日使用標準湯屋 60 分鐘\n    - 本券淡旺季假日 (週六、日、國定假日、連續假日及前夕) 需於現場加價 NT$800 方可使用 60 分鐘， 特殊假日恕不適用\n    - 淡季為 4 - 10 月、旺季為 11 - 3 月，平日為週一至週五，假日為週六至週日及國定假日，特殊假日（12/31 跨年、1/1 元旦、農曆春節期間）\n    - 如需加人 100 公分以下需加收 NT$100/人、100 公分以上需加收 NT$300/人。加時每 30 鐘需加收 NT$700\n    石上湯屋渡假村｜平日標準湯屋一泊一食住宿券\n    - 請務必提前 3 天電話預訂並告知使用本券及內容，預約專線：(03) 584-2605\n    - 本券可雙人住宿石上湯屋標準湯屋一晚 (恕不指定房型) ，含 2 客早餐\n    - 本券限平日 (4 - 10 月週日至週五；11 - 3月週一至週四) 使用\n    - 本券假日 (週六及連續假日) 需加價 N$1,800、旺日 (11月~3月週五及週日) 需加價 NT$800，特殊假日（12/31 跨年、1/1 元旦、農曆春節期間）恕不適用\n    - 平旺假日定義如有異動，依現場公告為主，恕不另行通知\n    - 本券淡季(每年4 - 10 月) 入住時間 17:00、退房時間隔日 12:00，本券旺季 (每年11 - 3月) 入住時間 19:00、退房時間隔日 12:00\n    - 如需加人服務：身高未滿 110 公分或未滿 6 歲免費入住含備品及早餐、身高超過 110 公分或年滿 6 歲 (含)以上需加收$1200元／人 (含加床、備品及早餐)，每房最多加 2 人\n    石上湯屋渡假村｜平日標準湯屋一泊二食住宿券\n    - 請務必提前 3 天電話預訂並告知使用本券及內容，預約專線：(03) 584-2605\n    - 本券可雙人住宿石上湯屋標準湯屋一晚 (恕不指定房型) ，含 2 客早餐及 2 客風味套餐\n    - 本券限平日 (4 - 10 月週日至週五；11 - 3月週一至週四) 使用\n    - 本券假日 (週六及連續假日) 需加價 N$1,800、旺日 (11月~3月週五及週日) 需加價 NT$800，特殊假日（12/31 跨年、1/1 元旦、農曆春節期間）恕不適用\n    - 平旺假日定義如有異動，依現場公告為主，恕不另行通知\n    - 本券淡季(每年4 - 10 月) 入住時間 17:00、退房時間隔日 12:00，本券旺季 (每年11 - 3月) 入住時間 19:00、退房時間隔日 12:00\n    - 如需加人服務：身高未滿 110 公分或未滿 6 歲免費入住含備品及早餐、身高超過 110 公分或年滿 6 歲 (含)以上需加收$1200元／人 (含加床、備品及早餐)，每房最多加 2 人', '新竹尖石溫泉', '新竹縣尖石鄉七鄰45號313號 ', '2022-11-01', '2022-11-01', '2023-02-28', 99, 999, '本平台商品服務禮券載明之票面價值不等同於本平台售價。\n\n    訂購幾組就會在憑證上獲得幾組核銷確認碼，一組電子憑證限兌換一次，一經兌換即不可重覆使用，務必妥善保存，若因電子憑證遣失或造成被第三方兌換，所造成損失，需由消費者承擔，恕不補發。\n\n    湯屋券不接受預約，請於現場依序入場使用；為免久候，建議使用前可電話詢問現場狀況。\n\n    住宿券務必於使用 3 日前預訂並告知使用本券及內容，若未依規定提前預約，飯店有權不接受兌換。\n\n    泡湯券遇淡旺季假日 (週六、日、國定假日、連續假日及前夕) 需於現場加價 NT$800 方可使用 60 分鐘， 特殊假日（12/31 跨年、1/1 元旦、農曆春節期間）恕不適用。平旺假日定義如有異動，依飯店現場公告為主，建議使用前事先致電詢問。\n\n    泡湯券如需加人 100 公分以下需加收 NT$100/人、100 公分以上需加收 NT$300/人。加時每 30 鐘需加收 NT$700。\n\n    住宿券遇假日 (週六及連續假日) 需加價 N$1,800、旺日 (11月~3月週五及週日) 需加價 NT$800，特殊假日（12/31 跨年、1/1 元旦、農曆春節期間）恕不適用。平旺假日定義如有異動，依飯店現場公告為主，建議訂房前事先致電詢問。\n\n    住宿券如需加人服務：身高未滿 110 公分或未滿 6 歲免費入住含備品及早餐、身高超過 110 公分或年滿 6 歲 (含)以上需加收$1200元／人 (含加床、備品及早餐)，每房最多加 2 人。\n\n    未滿 6 歲免費兒童請攜帶健保卡或戶口名簿等相關證明文件以利辨識，如入住時無法出示則須依飯店現場規定補足差額。\n\n    平旺假日定義如有異動，依飯店現場公告為主，恕不另行通知。\n\n    為維護住宿清潔及品質，本飯店禁止攜帶寵物及炊具入住。\n\n    未持券者依店家現場收費標準辦理。\n\n    本券恕無法與其他優惠及專案合併使用。\n\n    票券優惠期間 (自開票日算起 1 年內) 同信託期間，逾期需依現場規定補價差使用。 ', '自行開車(北二高北上)： 竹林交流道下，往竹東方向行駛120縣道經橫山接台3線，至69km處右轉120縣道東行由內灣老街至尖石約3公里處，至尖石橋右轉直行即可到達。\r\n高鐵： 新竹六家高鐵站下車，轉六家台鐵火車至竹中站換內灣支線小火車至內灣線下車。', 5, '北區', '新竹市', '住宿', '民宿'),
 (2, 'firm001', '六福村主題遊樂園四人套票', 660, '六福村主題遊樂園四人套票', ' － 2022 墓碑鎮活動介紹 －\n◆《美食饗宴 x 暗夜氛圍 幻化成詛咒》\n恐怖全都浮現在你眼前！ 印地安巫師悄然現身，低喃咒語，身上圖騰彷若顯靈般若隱若現，日復一日夜復一夜的孤寂與怨恨，印地安巫師召喚著萬惡陰魂 一場腥風血雨，即將肆虐墓碑鎮\n    活動地點：惡靈餐廳（美國大西部牛排館採預訂制）\n    活動時間：\n    - 假日午餐：12:30 場次 11:00 可入席用餐\n    - 假日晚餐：17:30 場次 16:00 可入席用餐 \n◆《魂斷墓碑鎮》百鬼喪屍大遊行\n一只詭異、神秘的娃娃 Renee，獨自出現在墓碑鎮， 受到印地安巫師和惡鬼們的欺負，然而 Renee淒厲的哭喊竟召喚出傳說中的地獄大惡龍， 令印地安巫師震驚不已。 他於是決定和Renee結盟，一起肆虐墓碑鎮\n    活動地點：惡靈大道（美國大西部主街道）\n    活動時間：14:00；逢周二停演；天候不佳取消演出\n◆《萬厄鬼門開》厄夜驚悚大遊行\n印地安巫師覬覦 Renee 的力量，希望將地獄大惡龍據為己有。 他設下圈套，試圖引誘 Renee 上鉤，反而卻令自己慘死在龍焰之下\n    活動地點：惡靈大道（美國大西部主街道）\n    活動時間：9/24-11/20【假日】19:00；天候不佳取消演出\n◆《惡鈴詭屋》The Hunted House\n膽小鬼勿入!!! 墓碑鎮限定鬼屋，黑暗中藏匿著多少惡鬼.. 月光血色，邪氣逼人，一踏入，就無躲藏之處，你逃得出去嗎?\n    開放時間依現場公告；逢周一停演，需消費入場\n◆《厄夜魅影》\n天幕低垂，厄夜染上黑色，葉縫透著若有似無的殘影… 萬厄陰魂瞬息而過，暫時停止呼吸，否則夜夜夢魘，在黑暗中將你給吞噬…\n    活動地點：惡靈大道 \n    活動時間：9/24-11/20【假日】17:30；天候不佳取消演出\n◆《萌鬼出任務》不給糖就搗蛋！\n換上最萌裝扮，跟著鬼王一起完成討糖任務！\n    活動地點：亡靈馬車\n    活動時間：【假日】11:00、15:00；天候不佳取消演出\n－ 園區介紹 －\n    營業時間：可參考六福村官網公告 \n    六福村主題樂園\n    由「 美國大西部 」、「 南太平洋 」、「 阿拉伯皇宮 」以及「 非洲部落 」等四大異國主題村所建構成，加上 2012 年推出「六福水樂園」，高達75公頃的廣闊遊樂場域，除了擁有 30 項以上廣受年輕人喜愛的驚險刺激遊樂設施以及適合親子同遊的野生動物園外，還有定時演出的音樂水舞秀、媲美迪士尼的大型花車遊行等各項精彩歌舞表演，期望能帶給消費者更多身心靈上的感動與滿足。\n－ 六福村主題樂園推薦設施 －\n    笑傲飛鷹\n    亞洲第一座 U 型滑軌懸吊式螺旋雲霄飛車，以瞬間最高時速 122 公里、360 度螺旋沖天、90 度垂直俯衝急速下降，刺激程度絕對讓您永生難忘，吸引知名韓國綜藝節目 Running Man 來台拍攝指定。\n    大怒神\n    從 17 層樓高瞬間降至地面的急速自由落體，在置高點欣賞美景同時體驗地心引力的威力。\n    蒸氣火車\n    除了豐富的動物資源外，更有全臺灣首屈一指、斥資 3 億台幣打造的『 英式復古蒸汽火車 』，提供遊客一覽野生動物王國獨特開放式面貌。 \n－ 防疫相關措施公告 －\n    全場域皆須配戴口罩\n    園區設施建議事先使用「Lineup」APP 預約，避免排隊久候\n    - Lineup APP 下載連結\n    - Lineup APP 預約 教學影片\n－  其它推薦商品 －\n＊鄰近六福村樂園的生態度假旅館：新竹｜關西六福莊生態度假旅館住宿\n＊往返六福村接駁服務：六福村墓碑鎮直達特快車｜台北車站號召勇者出發｜1人成行\n＊住宿加贈六福村門票：\n- 新竹｜新竹老爺酒店｜雙人房住宿｜贈送六福村萬聖節門票\n- 新竹福華大飯店｜雙人住宿含早餐｜贈送六福村萬聖節門票\n- 【限時快閃】桃園渴望會館｜住宿贈送六福村萬聖節門票\n- 桃園｜石門水庫福華渡假飯店｜住宿加贈六福村萬聖節門票\n2022.09.09 ~ 2022.11.20 六福村墓碑鎮 ｜《血夜厄無盡》百年詛咒 活屍再起！ 「美食饗宴 x 暗夜氛圍 幻化成詛咒」，恐怖全都浮現在你眼前！ 印地安巫師悄然現身，低喃咒語，身上圖騰彷若顯靈般若隱若現， 日復一日夜復一夜的孤寂與怨恨，印地安巫師召喚著萬惡陰魂 一場腥風血雨，即將肆虐墓碑鎮\n9/24-11/20【假日】美國大西部延長開園時間，絕不能錯過《萬厄鬼門開》厄夜驚悚大遊行\nKKday 獨家惡靈餐廳保留位，美食饗宴 x 暗夜氛圍 幻化成詛咒 恐怖全都浮現在你眼前！\n墓碑鎮｜恐怖特效投影駭人再現，惡靈餐廳頂級驚悚秀（2021 舊照參考）\n墓碑鎮｜惡魔山\n造訪六福村阿拉伯皇宮，感受不一樣的異國風情\n園內共分為四大異國風情主題村，園區內有定時演出的音樂水舞秀＆大型遊行等精彩表演。\n主要設施為中央的開放式大型噴泉，從地面上的噴水孔噴出水柱，是大小朋友都喜愛的園內設施。\n台首屈一指「英式復古蒸氣火車」，瀏覽非洲部落獨特開放式風貌。\n從火山口三層樓高的急流處瞬間俯衝而下，體驗剎那間驚險與剌激的感覺！', '六福村主題遊樂園', '新竹縣關西鎮仁安里拱子溝60號 ', '2022-11-01', '2022-11-01', '2023-02-28', 99, 999, '不建議患有下列疾病或其他不宜受到過度刺激的旅客參加此項目\n\n    高血壓、心臟病、懼高症、氣喘、癲癇、懷孕婦女\n\n    幼童未滿 3 歲或身高未滿 100 公分以下者，且有家長陪伴之幼兒可免費入園。年滿 3 歲 ( 100 公分 )至未滿 6 歲 ( 120 公分 )幼童，可於現場購買幼童票。孕婦、身障者或滿 60 歲以上長者 ( 需出示相關證件 ) 可於現場購買博愛票。\n\n    若發現年紀年與票種不符合，需依照現場公告之價格補差價。開票後若現場出示不符合預訂票種之身分證明導致無法換票，請自行負責，恕不接受退票。\n\n    票券一經兌換須於當日入園，逾期失效。入園前工作人員將在旅客手臂上蓋章，以便進出樂園。\n\n    營業時間、季節性活動及設施維修保養公告請參考官網。 ', '', 4, '北區', '新竹市', '活動', '室外活動'),
 (3, 'firm001', '新竹老爺酒店餐券', 600, '新竹老爺酒店餐券', '◆ 請事先撥打飯店電話訂位並告知持有此券，訂位成功再購買餐券；結帳時請出示票券\n 飯店名稱：新竹老爺酒店｜Le café 咖啡廳\n    飯店地址：新竹市東區光復路一段 227 號\n    飯店電話：(03) 563 - 1285 分機 352\n    用餐時間：\n    - 午餐：11:30 - 14:00\n    - 下午茶：14:30 - 16:30\n    - 晚餐（僅週五、週六供應）：17:30 - 20:00', '新竹老爺酒店', '新竹市東區光復路一段227號', '2022-11-01', '2022-11-01', '2023-02-28', 99, 999, ' 票券無使用期限，但優惠效期為購買日起 8 個月，逾優惠期限後持券消費者可以本券面額折抵飯店現場餐飲消費。\n\n    使用票券前須事先致電新竹老爺酒店｜Le café 咖啡廳 (03) 563 - 1285 分機 352 訂位，使用憑證上的合作店家確認號，就能於現場核銷使用，訂購幾組就會在憑證上獲得幾組核銷確認碼。\n\n    如遇特殊節日，需依票面金額補足與現場定價差價（含服務費）後方可使用，特殊節日定義為：國慶日 10/8-10/10、聖誕節 12/24 - 12/25、跨年 12/31、元旦 1/1、農曆新年期間、西洋情人節、和平紀念日、清明婦幼節、勞動節、母親節期間、端午節等特殊節日、特殊美食節或特殊促銷活動，詳依飯店公告為準。\n\n    票券為折扣後之優惠價使用，恕不得與其他優惠活動合併使用。\n\n    退貨之禮券需依票面金額收取 3% 手續費。 ', '', 4, '北區', '新竹市', '美食', '餐廳'),
 (4, 'firm001', '酒糟牛全牛火鍋饗宴 良金牧場 ', 1680, '酒糟牛全牛火鍋餐券', '－ 行程資訊 －\n  營業時間：10:30-20:00\n    體驗場次：11:00 / 13:00 / 15:30 / 17:30\n    體驗地點：良金牧場-工廠總店\n    體驗地址：金門縣金湖鎮漁村160號\n    行程長度：2 小時\n－店家介紹－\n    良金牧場 -金門專業飼牛人\n    良金牧場設立於民國79年，創立契機為解決金門高粱酒廠過剩酒糟所造成海洋環境汙染而投入飼養金門黃牛。 民國92年成立『良金食品加工廠』通過ISO22000及HACCP食品安全驗證，堅持在地做ㄟ尚青，專研各部位料理特性，投入牛肉加工研發，結合最佳料理法及創新靈感，融合金門在地物產，製作多元多樣的在地特色好物。 民國99年經中央畜產會認證為『全台第三家中央畜產會認證履歷牧場』，多年豐厚養殖經驗，深入專研牛隻飼養專業，精進落實全國最高等級安全衛生 良金牛隻以百分之百純粹高粱酒糟搭配牧場自種牧草圈養穀飼，營養豐富，品質穩定，形成均勻油花，肉質Q彈滑嫩、風味鮮美甘甜，為推廣金門牛肉，良金更首創『鮮涮牛肉麵』創新吃法，講求『新鮮、原味、健康』，憑藉牧場餐桌一條龍優勢，期盼每一位貴賓都能嚐到實實在在金門限定酒糟牛滋味，推出以來，短時間內躍為『金門必吃美食』。 良金堅持深耕在地、專業飼牛、認真研發，透過食品發揚金門。', '良金牧場', '金門縣金湖鎮漁村160號 ', '2022-11-01', '2022-11-01', '2023-02-28', 99, 999, '全牛火鍋饗宴為 2 位起訂，若須額外增加單人，低消為 $480 / 位，身高 120 公分以下之兒童，低消為 $200 /位\n    為維持食材的新鮮度與品質，續不提供外帶及打包服務\n    因店內空間有限，為保留預訂人數舒適座位，訂購時請選擇入座場次\n    若旅客有嬰幼兒需準備兒童座椅，請於預訂時備註告知，以利安排座位\n    預約時段保留座位 10 分鐘，逾期後自動失效 ・用餐時間 120 分鐘，以訂位時間起計時，如遲到則會縮短用餐時間\n    不吃牛肉的貴客也能到店單點享用《金門傳統好滋味--阿嬤海鮮麵》(不包含在套餐裡，需另單點)', '', 4, '離島', '金門縣', '美食', '餐廳'),
@@ -209,10 +211,10 @@ INSERT INTO `item` (`itemId`, `firmId`, `itemTitle`, `itemPrice`, `itemName`, `i
 --
 
 CREATE TABLE `itemimg` (
-  `imgId` varchar(200) NOT NULL,
-  `itemId` varchar(200) NOT NULL,
-  `itemImgUrl` LONGBLOB NOT NULL,
-  `imgLead` varchar(1) COLLATE utf16_unicode_ci NOT NULL
+  `imgId` int(100) NOT NULL,
+  `itemId` int(218) NOT NULL,
+  `itemImgUrl` longblob NOT NULL,
+  `imgLead` varchar(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
 
 --
@@ -220,223 +222,223 @@ CREATE TABLE `itemimg` (
 --
 
 INSERT INTO `itemimg` (`imgId`, `itemId`, `itemImgUrl`, `imgLead`) VALUES
-(1, 1, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_125748/20220103071938_8TSLy/png', '1'),
-(2, 1, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_125748/20220103072034_52N0o/jpg', '2'),
-(3, 1, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_125748/20220103072034_52N0o/jpg', '3'),
-(4, 2, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_6370/20220825082844_0RZJ4/jpg', '1'),
-(5, 2, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_6370/20221013063654_JempZ/jpg', '2'),
-(6, 2, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_6370/20220122023741_mzHTa/jpg', '3'),
-(7, 3, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23741/20210205021022_6S7c8/jpg', '1'),
-(8, 3, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23741/20211203134029_0gkus/jpg', '2'),
-(9, 3, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23741/20211203134028_bt2PH/jpg', '3'),
-(10, 4, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102318/20200921061603_9zWLY/png', '1'),
-(11, 4, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102318/20200921061945_zlMJv/jpg', '2'),
-(12, 4, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102318/20200921061614_9VUZM/jpg', '3'),
-(13, 5, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_19847/20180830072340_7hUi5/jpg', '1'),
-(14, 5, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_19847/20180830072509_JQuGQ/jpg', '2'),
-(15, 5, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_19847/20180830051228_vWnwW/jpg', '3'),
-(16, 6, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102949/20210218021904_lgIoD/jpg', '1'),
-(17, 6, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102949/20210218021903_swE3j/jpg', '2'),
-(18, 6, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102949/20200826084553_Bz3d7/jpg', '3'),
-(19, 7, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_124246/20211118075747_OYw1Q/jpg', '1'),
-(20, 7, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_124246/20211123072113_kQzaj/jpg', '2'),
-(21, 7, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_124246/20211123072128_f0dFw/jpg', '3'),
-(22, 8, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23286/20200720062659_kaNjA/jpg', '1'),
-(23, 8, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23286/20210331100518_roEY7/jpg', '2'),
-(24, 8, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23286/20210331100518_roEY7/jpg', '3'),
-(25, 9, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116425/20210309034856_8EDSu/jpg', '1'),
-(26, 9, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116425/20210309034854_j2yp4/png', '2'),
-(27, 9, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116425/20210309034854_oWQnR/jpg', '3'),
-(28, 10, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_118919/20210419072801_cxacU/png', '1'),
-(29, 10, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_118919/20210419072720_Aaj7G/png', '2'),
-(30, 10, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_118919/20210419072800_fjDqY/png', '3'),
-(31, 11, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116949/20210407135033_a5Mtp/jpg', '1'),
-(32, 11, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116949/20210407135348_Fm8cw/png', '2'),
-(33, 11, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116949/20210325073313_Ipsoa/png', '3'),
-(34, 12, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_123118/20210923082907_q5z4b/jpg', '1'),
-(35, 12, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_123118/20210923082929_niD6O/jpg', '2'),
-(36, 12, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_123118/20210923082934_POcNA/jpg', '3'),
-(37, 13, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23638/20201030043907_e27eK/jpg', '1'),
-(38, 13, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23638/20201030043906_CRiUo/jpg', '2'),
-(39, 13, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23638/20201030043905_3W4w2/jpg', '3'),
-(40, 14, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23643/20190502095524_zqzyz/jpg', '1'),
-(41, 14, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23643/20190502095510_SOT4g/jpg', '2'),
-(42, 14, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23643/20190502095510_SOT4g/jpg', '3'),
-(43, 15, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_105727/20210407071718_4hS9P/jpg', '1'),
-(44, 15, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_105727/20201120060013_lAlBb/jpg', '2'),
-(45, 15, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_105727/20210407071717_YSs98/jpg', '3'),
-(46, 16, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102467/20200923092342_se7jx/jpg', '1'),
-(47, 16, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102467/20200812061353_N297w/jpg', '2'),
-(48, 16, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102467/20200812061310_5Ry2A/jpg', '3'),
-(49, 17, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_122019/20210812102656_bwTBF/jpg', '1'),
-(50, 17, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_122019/20210812082455_8fNHl/jpg', '2'),
-(51, 17, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_122019/20210812081247_x0LdY/jpg', '3'),
-(52, 18, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_113778/20220406095820_VPpaO/jpg', '1'),
-(53, 18, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_113778/20211001102545_X0nkq/jpg', '2'),
-(54, 18, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_113778/20211001102548_ZDUFw/jpg', '3'),
-(55, 19, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100467/20200526023453_uxMdW/png', '1'),
-(56, 19, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100467/20200526023456_ebs2f/png', '2'),
-(57, 19, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100467/20200526023453_uxMdW/png', '3'),
-(58, 20, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_31476/20201118034424_gLf27/jpg', '1'),
-(59, 20, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_31476/20201118034426_owpzw/jpg', '2'),
-(60, 20, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_31476/20201028033806_HbAEu/jpg', '3'),
-(61, 21, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_104627/20201028040608_48ryk/jpg', '1'),
-(62, 21, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_104627/20201028040608_Qov9M/jpg', '2'),
-(63, 21, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_104627/20201028040609_QMcaX/jpg', '3'),
-(64, 22, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_123265/20220103075250_0CFTW/jpg', '1'),
-(65, 22, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_123265/20220103075249_nHoRi/jpg', '2'),
-(66, 22, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_123265/20220103075248_e0u5v/jpg', '3'),
-(67, 23, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116861/20210323034401_GRUV0/jpg', '1'),
-(68, 23, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116861/20210323034402_B4do1/jpg', '2'),
-(69, 23, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116861/20210323034403_coLsV/jpg', '3'),
-(70, 24, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102247/20221102075909_jblDd/png', '1'),
-(71, 24, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102247/20200806040919_6CbYw/jpg', '2'),
-(72, 24, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102247/20200806041027_0WfNG/jpg', '3'),
-(73, 25, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_9468/20190225091057_q1e4v/jpg', '1'),
-(74, 25, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_9468/20221103062335_9pFtj/jpg', '2'),
-(75, 25, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_9468/20221028053422_yEXSC/jpg', '3'),
-(76, 26, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_129507/20220517052323_5Gdi3/jpg', '1'),
-(77, 26, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_129507/20220517035625_zJFUv/png', '2'),
-(78, 26, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_129507/20220517035621_nxz28/png', '3'),
-(79, 27, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_13338/20171108080341_Zx2xp/jpg', '1'),
-(80, 27, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_13338/20171108075854_KMars/jpg', '2'),
-(81, 27, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_13338/20171108075925_dp1u8/jpg', '3'),
-(82, 28, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_134707/20221020082521_ZJGNt/jpg', '1'),
-(83, 28, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_134707/20221020082522_S1mB3/jpg', '2'),
-(84, 28, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_134707/20221020082645_Nd3pS/jpg', '3'),
-(85, 29, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_129556/20220518035137_8YVjv/jpg', '1'),
-(86, 29, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_129556/20220518034042_nmHlr/jpg', '2'),
-(87, 29, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_129556/20220518035135_YvTTh/jpg', '3'),
-(88, 30, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100527/20200529074002_SNYYK/jpg', '1'),
-(89, 30, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100527/20200527080901_ruHOp/jpg', '2'),
-(90, 30, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100527/20200527080926_MQUB6/jpg', '3'),
-(91, 31, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100025/20210423113719_FLdJK/jpg', '1'),
-(92, 31, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100025/20200708081055_RUf53/jpg', '2'),
-(93, 31, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100025/20210423113712_1WRll/jpg', '3'),
-(94, 32, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_128591/20220425042434_xs9Oj/jpg', '1'),
-(95, 32, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_128591/20220429061710_EH6gR/jpg', '2'),
-(96, 32, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_128591/20220429061709_szgGK/jpg', '3'),
-(97, 33, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_21264/20210217074116_3XOtH/jpg', '1'),
-(98, 33, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_21264/20211229103310_I8ITH/jpg', '2'),
-(99, 33, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_21264/20190117100343_ZJmnT/jpg', '3'),
-(100, 34, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_128192/20220416123223_KrCpD/jpg', '1'),
-(101, 34, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_128192/20220416123224_6Z7hx/jpg', '2'),
-(102, 34, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_128192/20220416123219_glp9w/jpg', '3'),
-(103, 35, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23729/20220111015504_KybkW/jpg', '1'),
-(104, 35, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23729/20220111015732_smtzm/jpg', '2'),
-(105, 35, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23729/20220111015502_ZRVPL/jpg', '3'),
-(106, 36, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_121622/20210810073425_hLVS7/jpg', '1'),
-(107, 36, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_121622/20210810073422_9ySlY/jpg', '2'),
-(108, 36, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_121622/20210810073427_QWIZW/jpg', '3'),
-(109, 37, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_28828/20220118032217_LJVbr/jpg', '1'),
-(110, 37, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_28828/20220118032219_BmsSQ/jpg', '2'),
-(111, 37, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_28828/20220118032222_fbTA7/jpg', '3'),
-(112, 38, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116636/20210316080728_p9fEI/jpg', '1'),
-(113, 38, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116636/20220921111345_cqkKv/jpg', '2'),
-(114, 38, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116636/20220921111350_YtObE/jpg', '3'),
-(115, 39, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_101875/20200724065807_jT7L6/jpg', '1'),
-(116, 39, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_101875/20200724065906_fxcgD/png', '2'),
-(117, 39, 'https://cc.tvbs.com.tw/img/program/upload/2022/01/25/20220125142913-64354b2c.jpg', '3'),
-(118, 40, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_127119/20220429083811_AeERq/png', '1'),
-(119, 40, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_127119/20220222054622_Ey37C/png', '2'),
-(120, 40, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_127119/20220222054950_WnnDJ/png', '3'),
-(121, 41, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_8189/20161021032150_fLYWu/jpg', '1'),
-(122, 41, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_8189/20220502102707_30sqm/jpg', '2'),
-(123, 41, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_8189/20160524044109_cj1hO/png', '3'),
-(124, 42, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100554/20200528092356_cxC9b/jpg', '1'),
-(125, 42, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100554/20200528092358_7JQoW/jpg', '2'),
-(126, 42, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100554/20200528092354_8B5Wy/jpg', '3'),
-(127, 43, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_118196/20210409055043_fjwM2/jpg', '1'),
-(128, 43, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_118196/20210409055043_eGyBx/jpg', '2'),
-(129, 43, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_118196/20210409063018_rgqV0/jpg', '3'),
-(130, 44, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_135269/20221102031227_0MhOT/jpg', '1'),
-(131, 44, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_135269/20221102031228_zR446/jpg', '2'),
-(132, 44, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_135269/20221102031230_Y5R2z/jpg', '3'),
-(133, 45, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100557/20200528103309_j2ywg/jpg', '1'),
-(134, 45, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100557/20200528103642_ZSaHz/png', '2'),
-(135, 45, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_100557/20200528103339_VfEmu/jpg', '3'),
-(136, 46, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_129447/20220517145024_qRO0k/jpg', '1'),
-(137, 46, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_129447/20220517145036_veiQp/jpg', '2'),
-(138, 46, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_129447/20220517145029_Mj2mG/jpg', '3'),
-(139, 47, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_128176/20220401054425_MIMYe/jpg', '1'),
-(140, 47, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_128176/20220401054423_gBl4d/jpg', '2'),
-(141, 47, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_128176/20220401055231_x5XrO/jpg', '3'),
-(142, 48, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_122460/20210820044401_CRylD/jpg', '1'),
-(143, 48, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_122460/20210820044359_i0bVu/jpg', '2'),
-(144, 48, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_122460/20210820044403_5lpKM/jpg', '3'),
-(145, 49, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_101861/20200724030239_hmkn4/jpg', '1'),
-(146, 49, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_101861/20200724030244_UEpZr/jpg', '2'),
-(147, 49, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_101861/20200724030246_uKudi/jpg', '3'),
-(148, 50, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_34005/20191120093944_aDyRw/jpg', '1'),
-(149, 50, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_34005/20191120093954_eaRxE/jpg', '2'),
-(150, 50, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_34005/20191120093957_3Zjnb/jpg', '3'),
-(151, 51, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_128162/20220330061146_BJ3PW/jpg', '1'),
-(152, 51, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_128162/20220330061146_esDzA/png', '2'),
-(153, 51, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_128162/20220330061146_J9XHw/png', '3'),
-(154, 52, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_122762/20210903101144_yqzkr/jpg', '1'),
-(155, 52, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_122762/20210928090417_SGpju/jpg', '2'),
-(156, 52, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_122762/20210903055820_pDQXI/png', '3'),
-(157, 53, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_119292/20221017034824_ZKcOW/jpg', '1'),
-(158, 53, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_119292/20210504053117_yQZd9/jpg', '2'),
-(159, 53, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_119292/20210504052719_PWKUc/jpg', '3'),
-(160, 54, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_131511/20220725063723_vmLbM/jpg', '1'),
-(161, 54, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_131511/20220725063720_CdJOp/jpg', '2'),
-(162, 54, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_131511/20220725063910_AjBxt/jpg', '3'),
-(163, 55, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116315/20210903082804_1G5Pj/jpg', '1'),
-(164, 55, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116315/20210903101509_i3lCk/jpg', '2'),
-(165, 55, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116315/20210903082800_jO4d2/jpg', '3'),
-(166, 56, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_114053/20201208082138_GFT3c/jpg', '1'),
-(167, 56, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_114053/20201208082135_KAM5r/png', '2'),
-(168, 56, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_114053/20201208082136_LwbIo/jpg', '3'),
-(169, 57, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102722/20201103041138_PQCLN/jpg', '1'),
-(170, 57, '\"https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102722/20201103041137_z1W21/jpg', '2'),
-(171, 57, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102722/20201103041140_JS38R/jpg', '3'),
-(172, 58, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_101587/20220609112551_Q7Xog/jpg', '1'),
-(173, 58, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_101587/20220609112551_Aql2J/jpg', '2'),
-(174, 58, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_101587/20220609112552_nUDQf/jpg', '3'),
-(175, 59, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_32341/20191016112122_NDArl/jpg', '1'),
-(176, 59, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_32341/20211225110240_FbFuX/jpg', '2'),
-(177, 59, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_32341/20191017170307_XGUwQ/jpg', '3'),
-(178, 60, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_103382/20200910064319_lfRyf/jpg', '1'),
-(179, 60, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_103382/20200910064323_PYF9c/jpg', '2'),
-(180, 60, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_103382/20200910064320_UVSJ3/jpg', '3'),
-(181, 61, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_126349/20220125032349_B0sxM/jpg', '1'),
-(182, 61, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_126349/20220125032318_Dgk4v/jpg', '2'),
-(183, 61, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_126349/20220125032318_GdndD/jpg', '3'),
-(184, 62, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102359/20200810024507_wrlwT/png', '1'),
-(185, 62, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102359/20200810024510_ZHS9g/png', '2'),
-(186, 62, 'https://misshuan.tw/wp-content/uploads/20200507172000_13.jpg', '3'),
-(187, 63, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_114010/20201207081646_mMRPr/jpg', '1'),
-(188, 63, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_114010/20201207081650_DB69p/jpg', '2'),
-(189, 63, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_114010/20201207081658_PuWHt/jpg', '3'),
-(190, 64, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_131137/20220713015036_G8zqo/jpg', '1'),
-(191, 64, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_131137/20220713015038_sz2lA/jpg', '2'),
-(192, 64, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_131137/20220713020852_OOJQg/jpg', '3'),
-(193, 65, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_30368/20190926041640_mi1oi/jpg', '1'),
-(194, 65, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_30368/20190906083316_s5GkD/jpg', '2'),
-(195, 65, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_30368/20190906083506_9k8RU/jp', '3'),
-(196, 66, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102051/20200804080441_joc9R/png', '1'),
-(197, 66, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102051/20200804022856_uUhST/jpg', '2'),
-(198, 66, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_102051/20200804022935_nYL5Z/jpg', '3'),
-(199, 67, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_28087/20190902035539_101vg/jpg', '1'),
-(200, 67, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_28087/20190902035602_26fh5/jpg', '2'),
-(201, 67, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_28087/20190902035620_OhK7s/jpg', '3'),
-(202, 68, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_127033/20220331090947_9u3NN/jpg', '1'),
-(203, 68, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_127033/20220218105917_62UZs/png', '2'),
-(204, 68, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_127033/20220331083946_H5UR1/jpg', '3'),
-(205, 69, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23472/20190425045559_H101R/jpg', '1'),
-(206, 69, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23472/20190425045405_hN7Sx/jpg', '2'),
-(207, 69, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_23472/20190507083720_AJvbW/jpg', '3'),
-(208, 70, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_126847/20220222092656_gD1WY/png', '1'),
-(209, 70, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_124037/20211110063628_iBj3i/png', '2'),
-(210, 70, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_124037/20211110063627_KpPb9/png', '3'),
-(211, 71, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_124037/20211110063617_6U3ua/png', '1'),
-(212, 72, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_127060/20220223011314_eVk6p/jpg', '1'),
-(213, 72, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_127060/20220223011427_4pAaK/jpg', '2'),
-(214, 72, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_127060/20220223011315_HyOQI/jpg', '3'),
-(215, 73, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_123973/20211109063113_iizfB/jpg', '1'),
-(216, 73, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_123973/20211109063133_Bv3T9/jpg', '2'),
-(217, 73, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_123973/20211109063134_klNGr/jpg', '3');
+(1, 1, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132353734382f32303232303130333037313933385f3854534c792f706e67, '1'),
+(2, 1, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f775f393630253243635f666974253243715f3535253243745f776562702f73312e6b6b6461792e636f6d2f70726f647563745f3132353734382f32303232303130333037313934315f77347756592f706e67, '2'),
+(3, 1, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132353734382f32303232303130333037323033345f35324e306f2f6a7067, '3'),
+(4, 2, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f363337302f32303232303832353038323834345f30525a4a342f6a7067, '1'),
+(5, 2, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f363337302f32303232313031333036333635345f4a656d705a2f6a7067, '2'),
+(6, 2, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f363337302f32303232303132323032333734315f6d7a4854612f6a7067, '3'),
+(7, 3, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333734312f32303231303230353032313032325f36533763382f6a7067, '1'),
+(8, 3, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333734312f32303231313230333133343032395f30676b75732f6a7067, '2'),
+(9, 3, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333734312f32303231313230333133343032385f62743250482f6a7067, '3'),
+(10, 4, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323331382f32303230303932313036313630335f397a574c592f706e67, '1'),
+(11, 4, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323331382f32303230303932313036313934355f7a6c4d4a762f6a7067, '2'),
+(12, 4, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323331382f32303230303932313036313631345f3956555a4d2f6a7067, '3'),
+(13, 5, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f31393834372f32303138303833303037323334305f37685569352f6a7067, '1'),
+(14, 5, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f31393834372f32303138303833303037323530395f4a517547512f6a7067, '2'),
+(15, 5, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f31393834372f32303138303833303035313232385f76576e77572f6a7067, '3'),
+(16, 6, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323934392f32303231303231383032313930345f6c67496f442f6a7067, '1'),
+(17, 6, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323934392f32303231303231383032313930335f737745336a2f6a7067, '2'),
+(18, 6, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323934392f32303230303832363038343535335f427a3364372f6a7067, '3'),
+(19, 7, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132343234362f32303231313131383037353734375f4f597731512f6a7067, '1'),
+(20, 7, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132343234362f32303231313132333037323131335f6b517a616a2f6a7067, '2'),
+(21, 7, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132343234362f32303231313132333037323132385f66306446772f6a7067, '3'),
+(22, 8, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333238362f32303230303732303036323635395f6b614e6a412f6a7067, '1'),
+(23, 8, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333238362f32303231303333313130303531385f726f4559372f6a7067, '2'),
+(24, 8, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333238362f32303231303333313130303531385f726f4559372f6a7067, '3'),
+(25, 9, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363432352f32303231303330393033343835365f38454453752f6a7067, '1'),
+(26, 9, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363432352f32303231303330393033343835345f6a327970342f706e67, '2'),
+(27, 9, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363432352f32303231303330393033343835345f6f57516e522f6a7067, '3'),
+(28, 10, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131383931392f32303231303431393037323830315f63786163552f706e67, '1'),
+(29, 10, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131383931392f32303231303431393037323732305f41616a37472f706e67, '2'),
+(30, 10, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131383931392f32303231303431393037323830305f666a4471592f706e67, '3'),
+(31, 11, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363934392f32303231303430373133353033335f61354d74702f6a7067, '1'),
+(32, 11, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363934392f32303231303430373133353334385f466d3863772f706e67, '2'),
+(33, 11, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363934392f32303231303332353037333331335f4970736f612f706e67, '3'),
+(34, 12, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132333131382f32303231303932333038323930375f71357a34622f6a7067, '1'),
+(35, 12, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132333131382f32303231303932333038323932395f6e6944364f2f6a7067, '2'),
+(36, 12, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132333131382f32303231303932333038323933345f504f634e412f6a7067, '3'),
+(37, 13, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333633382f32303230313033303034333930375f653237654b2f6a7067, '1'),
+(38, 13, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333633382f32303230313033303034333930365f435269556f2f6a7067, '2'),
+(39, 13, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333633382f32303230313033303034333930355f33573477322f6a7067, '3'),
+(40, 14, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333634332f32303139303530323039353532345f7a717a797a2f6a7067, '1'),
+(41, 14, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333634332f32303139303530323039353531305f534f5434672f6a7067, '2'),
+(42, 14, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333634332f32303139303530323039353531305f534f5434672f6a7067, '3'),
+(43, 15, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130353732372f32303231303430373037313731385f34685339502f6a7067, '1'),
+(44, 15, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130353732372f32303230313132303036303031335f6c416c42622f6a7067, '2'),
+(45, 15, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130353732372f32303231303430373037313731375f59537339382f6a7067, '3'),
+(46, 16, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323436372f32303230303932333039323334325f7365376a782f6a7067, '1'),
+(47, 16, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323436372f32303230303831323036313335335f4e323937772f6a7067, '2'),
+(48, 16, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323436372f32303230303831323036313331305f35527932412f6a7067, '3'),
+(49, 17, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132323031392f32303231303831323130323635365f62775442462f6a7067, '1'),
+(50, 17, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132323031392f32303231303831323038323435355f38664e486c2f6a7067, '2'),
+(51, 17, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132323031392f32303231303831323038313234375f78304c64592f6a7067, '3'),
+(52, 18, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131333737382f32303232303430363039353832305f565070614f2f6a7067, '1'),
+(53, 18, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131333737382f32303231313030313130323534355f58306e6b712f6a7067, '2'),
+(54, 18, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131333737382f32303231313030313130323534385f5a445546772f6a7067, '3'),
+(55, 19, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303436372f32303230303532363032333435335f75784d64572f706e67, '1'),
+(56, 19, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303436372f32303230303532363032333435365f65627332662f706e67, '2'),
+(57, 19, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303436372f32303230303532363032333435335f75784d64572f706e67, '3'),
+(58, 20, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f33313437362f32303230313131383033343432345f674c6632372f6a7067, '1'),
+(59, 20, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f33313437362f32303230313131383033343432365f6f77707a772f6a7067, '2'),
+(60, 20, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f33313437362f32303230313032383033333830365f48624145752f6a7067, '3'),
+(61, 21, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130343632372f32303230313032383034303630385f343872796b2f6a7067, '1'),
+(62, 21, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130343632372f32303230313032383034303630385f516f76394d2f6a7067, '2'),
+(63, 21, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130343632372f32303230313032383034303630395f514d6361582f6a7067, '3'),
+(64, 22, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132333236352f32303232303130333037353235305f30434654572f6a7067, '1'),
+(65, 22, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132333236352f32303232303130333037353234395f6e486f52692f6a7067, '2'),
+(66, 22, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132333236352f32303232303130333037353234385f65307535762f6a7067, '3'),
+(67, 23, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363836312f32303231303332333033343430315f47525556302f6a7067, '1'),
+(68, 23, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363836312f32303231303332333033343430325f4234646f312f6a7067, '2'),
+(69, 23, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363836312f32303231303332333033343430335f636f4c73562f6a7067, '3'),
+(70, 24, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323234372f32303232313130323037353930395f6a626c44642f706e67, '1'),
+(71, 24, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323234372f32303230303830363034303931395f36436259772f6a7067, '2'),
+(72, 24, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323234372f32303230303830363034313032375f3057664e472f6a7067, '3'),
+(73, 25, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f393436382f32303139303232353039313035375f71316534762f6a7067, '1'),
+(74, 25, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f393436382f32303232313130333036323333355f397046746a2f6a7067, '2'),
+(75, 25, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f393436382f32303232313032383035333432325f79455853432f6a7067, '3'),
+(76, 26, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132393530372f32303232303531373035323332335f35476469332f6a7067, '1'),
+(77, 26, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132393530372f32303232303531373033353632355f7a4a4655762f706e67, '2'),
+(78, 26, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132393530372f32303232303531373033353632315f6e787a32382f706e67, '3'),
+(79, 27, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f31333333382f32303137313130383038303334315f5a783278702f6a7067, '1'),
+(80, 27, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f31333333382f32303137313130383037353835345f4b4d6172732f6a7067, '2'),
+(81, 27, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f31333333382f32303137313130383037353932355f64703175382f6a7067, '3'),
+(82, 28, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3133343730372f32303232313032303038323532315f5a4a474e742f6a7067, '1'),
+(83, 28, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3133343730372f32303232313032303038323532325f53316d42332f6a7067, '2'),
+(84, 28, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3133343730372f32303232313032303038323634355f4e643370532f6a7067, '3'),
+(85, 29, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132393535362f32303232303531383033353133375f3859566a762f6a7067, '1'),
+(86, 29, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132393535362f32303232303531383033343034325f6e6d486c722f6a7067, '2'),
+(87, 29, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132393535362f32303232303531383033353133355f59765454682f6a7067, '3'),
+(88, 30, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303532372f32303230303532393037343030325f534e59594b2f6a7067, '1'),
+(89, 30, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303532372f32303230303532373038303930315f7275484f702f6a7067, '2'),
+(90, 30, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303532372f32303230303532373038303932365f4d515542362f6a7067, '3'),
+(91, 31, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303032352f32303231303432333131333731395f464c644a4b2f6a7067, '1'),
+(92, 31, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303032352f32303230303730383038313035355f52556635332f6a7067, '2'),
+(93, 31, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303032352f32303231303432333131333731325f3157526c6c2f6a7067, '3'),
+(94, 32, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132383539312f32303232303432353034323433345f7873394f6a2f6a7067, '1'),
+(95, 32, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132383539312f32303232303432393036313731305f45483667522f6a7067, '2'),
+(96, 32, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132383539312f32303232303432393036313730395f737a67474b2f6a7067, '3'),
+(97, 33, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32313236342f32303231303231373037343131365f33584f74482f6a7067, '1'),
+(98, 33, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32313236342f32303231313232393130333331305f49384954482f6a7067, '2'),
+(99, 33, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32313236342f32303139303131373130303334335f5a4a6d6e542f6a7067, '3'),
+(100, 34, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132383139322f32303232303431363132333232335f4b724370442f6a7067, '1'),
+(101, 34, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132383139322f32303232303431363132333232345f365a3768782f6a7067, '2'),
+(102, 34, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132383139322f32303232303431363132333231395f676c7039772f6a7067, '3'),
+(103, 35, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333732392f32303232303131313031353530345f4b79626b572f6a7067, '1'),
+(104, 35, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333732392f32303232303131313031353733325f736d747a6d2f6a7067, '2'),
+(105, 35, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333732392f32303232303131313031353530325f5a5256504c2f6a7067, '3'),
+(106, 36, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132313632322f32303231303831303037333432355f684c5653372f6a7067, '1'),
+(107, 36, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132313632322f32303231303831303037333432325f3979536c592f6a7067, '2'),
+(108, 36, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132313632322f32303231303831303037333432375f5157495a572f6a7067, '3'),
+(109, 37, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32383832382f32303232303131383033323231375f4c4a5662722f6a7067, '1'),
+(110, 37, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32383832382f32303232303131383033323231395f426d7353512f6a7067, '2'),
+(111, 37, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32383832382f32303232303131383033323232325f66625441372f6a7067, '3'),
+(112, 38, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363633362f32303231303331363038303732385f70396645492f6a7067, '1'),
+(113, 38, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363633362f32303232303932313131313334355f63716b4b762f6a7067, '2'),
+(114, 38, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363633362f32303232303932313131313335305f59744f62452f6a7067, '3'),
+(115, 39, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130313837352f32303230303732343036353830375f6a54374c362f6a7067, '1'),
+(116, 39, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130313837352f32303230303732343036353930365f66786367442f706e67, '2'),
+(117, 39, 0x68747470733a2f2f63632e747662732e636f6d2e74772f696d672f70726f6772616d2f75706c6f61642f323032322f30312f32352f32303232303132353134323931332d36343335346232632e6a7067, '3'),
+(118, 40, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132373131392f32303232303432393038333831315f41654552712f706e67, '1'),
+(119, 40, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132373131392f32303232303232323035343632325f45793337432f706e67, '2'),
+(120, 40, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132373131392f32303232303232323035343935305f576e6e444a2f706e67, '3'),
+(121, 41, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f383138392f32303136313032313033323135305f664c5957752f6a7067, '1'),
+(122, 41, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f383138392f32303232303530323130323730375f333073716d2f6a7067, '2'),
+(123, 41, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f383138392f32303136303532343034343130395f636a31684f2f706e67, '3'),
+(124, 42, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303535342f32303230303532383039323335365f63784339622f6a7067, '1'),
+(125, 42, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303535342f32303230303532383039323335385f374a516f572f6a7067, '2'),
+(126, 42, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303535342f32303230303532383039323335345f38423557792f6a7067, '3'),
+(127, 43, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131383139362f32303231303430393035353034335f666a774d322f6a7067, '1'),
+(128, 43, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131383139362f32303231303430393035353034335f65477942782f6a7067, '2'),
+(129, 43, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131383139362f32303231303430393036333031385f72677156302f6a7067, '3'),
+(130, 44, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3133353236392f32303232313130323033313232375f304d684f542f6a7067, '1'),
+(131, 44, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3133353236392f32303232313130323033313232385f7a523434362f6a7067, '2'),
+(132, 44, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3133353236392f32303232313130323033313233305f593552327a2f6a7067, '3'),
+(133, 45, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303535372f32303230303532383130333330395f6a327977672f6a7067, '1'),
+(134, 45, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303535372f32303230303532383130333634325f5a5361487a2f706e67, '2'),
+(135, 45, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130303535372f32303230303532383130333333395f5666456d752f6a7067, '3'),
+(136, 46, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132393434372f32303232303531373134353032345f71524f306b2f6a7067, '1'),
+(137, 46, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132393434372f32303232303531373134353033365f76656951702f6a7067, '2'),
+(138, 46, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132393434372f32303232303531373134353032395f4d6a326d472f6a7067, '3'),
+(139, 47, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132383137362f32303232303430313035343432355f4d494d59652f6a7067, '1'),
+(140, 47, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132383137362f32303232303430313035343432335f67426c34642f6a7067, '2'),
+(141, 47, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132383137362f32303232303430313035353233315f783558724f2f6a7067, '3'),
+(142, 48, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132323436302f32303231303832303034343430315f4352796c442f6a7067, '1'),
+(143, 48, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132323436302f32303231303832303034343335395f69306256752f6a7067, '2'),
+(144, 48, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132323436302f32303231303832303034343430335f356c704b4d2f6a7067, '3'),
+(145, 49, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130313836312f32303230303732343033303233395f686d6b6e342f6a7067, '1'),
+(146, 49, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130313836312f32303230303732343033303234345f5545705a722f6a7067, '2'),
+(147, 49, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130313836312f32303230303732343033303234365f754b7564692f6a7067, '3'),
+(148, 50, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f33343030352f32303139313132303039333934345f61447952772f6a7067, '1'),
+(149, 50, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f33343030352f32303139313132303039333935345f65615278452f6a7067, '2'),
+(150, 50, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f33343030352f32303139313132303039333935375f335a6a6e622f6a7067, '3'),
+(151, 51, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132383136322f32303232303333303036313134365f424a3350572f6a7067, '1'),
+(152, 51, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132383136322f32303232303333303036313134365f6573447a412f706e67, '2'),
+(153, 51, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132383136322f32303232303333303036313134365f4a395848772f706e67, '3'),
+(154, 52, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132323736322f32303231303930333130313134345f79717a6b722f6a7067, '1'),
+(155, 52, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132323736322f32303231303932383039303431375f5347706a752f6a7067, '2'),
+(156, 52, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132323736322f32303231303930333035353832305f70445158492f706e67, '3'),
+(157, 53, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131393239322f32303232313031373033343832345f5a4b634f572f6a7067, '1'),
+(158, 53, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131393239322f32303231303530343035333131375f79515a64392f6a7067, '2'),
+(159, 53, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131393239322f32303231303530343035323731395f50574b55632f6a7067, '3'),
+(160, 54, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3133313531312f32303232303732353036333732335f766d4c624d2f6a7067, '1'),
+(161, 54, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3133313531312f32303232303732353036333732305f43644a4f702f6a7067, '2'),
+(162, 54, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3133313531312f32303232303732353036333931305f416a4278742f6a7067, '3'),
+(163, 55, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363331352f32303231303930333038323830345f314735506a2f6a7067, '1'),
+(164, 55, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363331352f32303231303930333130313530395f69336c436b2f6a7067, '2'),
+(165, 55, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131363331352f32303231303930333038323830305f6a4f3464322f6a7067, '3'),
+(166, 56, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131343035332f32303230313230383038323133385f47465433632f6a7067, '1'),
+(167, 56, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131343035332f32303230313230383038323133355f4b414d35722f706e67, '2'),
+(168, 56, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131343035332f32303230313230383038323133365f4c7762496f2f6a7067, '3'),
+(169, 57, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323732322f32303230313130333034313133385f5051434c4e2f6a7067, '1'),
+(170, 57, 0x2268747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323732322f32303230313130333034313133375f7a315732312f6a7067, '2'),
+(171, 57, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323732322f32303230313130333034313134305f4a533338522f6a7067, '3'),
+(172, 58, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130313538372f32303232303630393131323535315f5137586f672f6a7067, '1'),
+(173, 58, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130313538372f32303232303630393131323535315f41716c324a2f6a7067, '2'),
+(174, 58, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130313538372f32303232303630393131323535325f6e554451662f6a7067, '3'),
+(175, 59, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f33323334312f32303139313031363131323132325f4e4441726c2f6a7067, '1'),
+(176, 59, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f33323334312f32303231313232353131303234305f46624675582f6a7067, '2'),
+(177, 59, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f33323334312f32303139313031373137303330375f58475577512f6a7067, '3'),
+(178, 60, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130333338322f32303230303931303036343331395f6c665279662f6a7067, '1'),
+(179, 60, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130333338322f32303230303931303036343332335f50594639632f6a7067, '2'),
+(180, 60, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130333338322f32303230303931303036343332305f5556534a332f6a7067, '3'),
+(181, 61, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132363334392f32303232303132353033323334395f423073784d2f6a7067, '1'),
+(182, 61, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132363334392f32303232303132353033323331385f44676b34762f6a7067, '2'),
+(183, 61, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132363334392f32303232303132353033323331385f47646e64442f6a7067, '3'),
+(184, 62, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323335392f32303230303831303032343530375f77726c77542f706e67, '1'),
+(185, 62, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323335392f32303230303831303032343531305f5a485339672f706e67, '2'),
+(186, 62, 0x68747470733a2f2f6d6973736875616e2e74772f77702d636f6e74656e742f75706c6f6164732f32303230303530373137323030305f31332e6a7067, '3'),
+(187, 63, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131343031302f32303230313230373038313634365f6d4d5250722f6a7067, '1'),
+(188, 63, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131343031302f32303230313230373038313635305f44423639702f6a7067, '2'),
+(189, 63, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3131343031302f32303230313230373038313635385f50755748742f6a7067, '3'),
+(190, 64, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3133313133372f32303232303731333031353033365f47387a716f2f6a7067, '1'),
+(191, 64, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3133313133372f32303232303731333031353033385f737a326c412f6a7067, '2'),
+(192, 64, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3133313133372f32303232303731333032303835325f4f4f4a51672f6a7067, '3'),
+(193, 65, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f33303336382f32303139303932363034313634305f6d69316f692f6a7067, '1'),
+(194, 65, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f33303336382f32303139303930363038333331365f7335476b442f6a7067, '2'),
+(195, 65, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f33303336382f32303139303930363038333530365f396b3852552f6a70, '3'),
+(196, 66, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323035312f32303230303830343038303434315f6a6f6339522f706e67, '1'),
+(197, 66, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323035312f32303230303830343032323835365f75556853542f6a7067, '2'),
+(198, 66, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3130323035312f32303230303830343032323933355f6e594c355a2f6a7067, '3'),
+(199, 67, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32383038372f32303139303930323033353533395f31303176672f6a7067, '1'),
+(200, 67, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32383038372f32303139303930323033353630325f32366668352f6a7067, '2'),
+(201, 67, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32383038372f32303139303930323033353632305f4f684b37732f6a7067, '3'),
+(202, 68, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132373033332f32303232303333313039303934375f3975334e4e2f6a7067, '1'),
+(203, 68, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132373033332f32303232303231383130353931375f3632555a732f706e67, '2'),
+(204, 68, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132373033332f32303232303333313038333934365f48355552312f6a7067, '3'),
+(205, 69, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333437322f32303139303432353034353535395f48313031522f6a7067, '1'),
+(206, 69, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333437322f32303139303432353034353430355f684e3753782f6a7067, '2'),
+(207, 69, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f32333437322f32303139303530373038333732305f414a7662572f6a7067, '3'),
+(208, 70, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132363834372f32303232303232323039323635365f67443157592f706e67, '1'),
+(209, 70, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132343033372f32303231313131303036333632385f69426a33692f706e67, '2'),
+(210, 70, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132343033372f32303231313131303036333632375f4b705062392f706e67, '3'),
+(211, 71, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132343033372f32303231313131303036333631375f36553375612f706e67, '1'),
+(212, 72, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132373036302f32303232303232333031313331345f65566b36702f6a7067, '1'),
+(213, 72, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132373036302f32303232303232333031313432375f347041614b2f6a7067, '2'),
+(214, 72, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132373036302f32303232303232333031313331355f48794f51492f6a7067, '3'),
+(215, 73, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132333937332f32303231313130393036333131335f69697a66422f6a7067, '1'),
+(216, 73, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132333937332f32303231313130393036333133335f42763354392f6a7067, '2'),
+(217, 73, 0x68747470733a2f2f696d6167652e6b6b6461792e636f6d2f76322f696d6167652f6765742f685f363530253243635f6669742f73312e6b6b6461792e636f6d2f70726f647563745f3132333937332f32303231313130393036333133345f6b6c4e47722f6a7067, '3');
 
 -- --------------------------------------------------------
 
@@ -445,28 +447,32 @@ INSERT INTO `itemimg` (`imgId`, `itemId`, `itemImgUrl`, `imgLead`) VALUES
 --
 
 CREATE TABLE `ordertable` (
-  `orderNumber` varchar(10) COLLATE utf16_unicode_ci NOT NULL,
-  `userId` varchar(30) COLLATE utf16_unicode_ci NOT NULL,
-  `itemId` varchar(200) COLLATE utf16_unicode_ci NOT NULL,
-  `orderReceipt` varchar(100) COLLATE utf16_unicode_ci NOT NULL,
-  `orderReview` varchar(1500) COLLATE utf16_unicode_ci NOT NULL,
+  `orderNumber` int(10) NOT NULL,
+  `userId` varchar(30) NOT NULL,
+  `itemId` int(20) NOT NULL,
+  `orderReceipt` varchar(100) DEFAULT NULL,
+  `orderReview` varchar(1500) DEFAULT NULL,
   `orderStar` int(3) NOT NULL,
   `orderDate` date NOT NULL,
   `orderQua` int(10) NOT NULL,
-  `orderDeter` int(1) NOT NULL
+  `orderRebate` int(6) NOT NULL,
+  `orderDeter` int(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
 
 --
 -- 傾印資料表的資料 `ordertable`
 --
 
-INSERT INTO `ordertable` (`orderNumber`, `userId`, `itemId`, `orderReceipt`, `orderReview`, `orderStar`, `orderDate`, `orderQua`, `orderDeter`) VALUES
-('1', 'u123456789', '1', 'order00001', '', 0, '2022-10-07', 2, 1),
-('2', 'u223456789', '2', 'order00002', '', 0, '2022-10-03', 2, 1),
-('3', 'u323456789', '3', 'order00003', '讚', 5, '2022-09-29', 2, 2),
-('4', 'u423456789', '4', 'order00004', '值得再回購', 4, '2022-09-25', 2, 2),
-('5', 'u523456789', '5', 'order00005', '', 0, '2022-09-21', 2, 3),
-('6', 'u623456789', '6', 'order00006', '', 0, '2022-09-17', 2, 3);
+INSERT INTO `ordertable` (`orderNumber`, `userId`, `itemId`, `orderReceipt`, `orderReview`, `orderStar`, `orderDate`, `orderQua`, `orderRebate`, `orderDeter`) VALUES
+(1, 'u987654321', 1, 'order00001', 'Very Very Good', 3, '2022-10-07', 2, 17, 2),
+(2, 'u123456789', 2, 'order00002', '', 0, '2022-10-03', 2, -13, 1),
+(3, 'u323456789', 3, 'order00003', '讚', 5, '2022-09-29', 2, -3, 2),
+(4, 'u423456789', 4, 'order00004', '值得再回購', 4, '2022-09-25', 2, -10, 2),
+(5, 'u523456789', 5, 'order00005', '', 0, '2022-09-21', 2, 12, 2),
+(6, 'u623456789', 6, 'order00006', '', 0, '2022-09-17', 2, 15, 2),
+(7, 'u123456789', 2, 'order00009', '棒棒棒', 4, '2022-12-22', 2, 11, 2),
+(8, 'u323456789', 1, 'order00007', '真是太棒了，不僅風景漂亮、環境舒適，非常適合帶小朋友出來', 5, '2022-12-13', 4, -10, 2),
+(9, 'u323456789', 1, 'order000011', '環境宜人，適合開車前往', 4, '2022-12-12', 2, -6, 2);
 
 -- --------------------------------------------------------
 
@@ -475,25 +481,27 @@ INSERT INTO `ordertable` (`orderNumber`, `userId`, `itemId`, `orderReceipt`, `or
 --
 
 CREATE TABLE `usertable` (
-  `userId` varchar(30) COLLATE utf16_unicode_ci NOT NULL,
-  `userPassword` varchar(30) COLLATE utf16_unicode_ci NOT NULL,
-  `userName` varchar(150) COLLATE utf16_unicode_ci NOT NULL,
-  `useGender` varchar(5) COLLATE utf16_unicode_ci NOT NULL,
-  `userBirthday` date NOT NULL,
-  `userPhone` int(10) NOT NULL,
-  `userEmail` varchar(50) COLLATE utf16_unicode_ci NOT NULL,
-  `userPoint` int(10) NOT NULL,
-  `userRegisterDate` date NOT NULL,
-  `userAvatar` varchar(100) COLLATE utf16_unicode_ci NOT NULL
+  `userId` varchar(30) NOT NULL,
+  `userPassword` varchar(30) NOT NULL,
+  `userName` varchar(150) DEFAULT NULL,
+  `userGender` varchar(5) DEFAULT NULL,
+  `userBirthday` date DEFAULT NULL,
+  `userPhone` varchar(10) DEFAULT NULL,
+  `userEmail` varchar(50) DEFAULT NULL,
+  `userPoint` int(10) DEFAULT NULL,
+  `userRegisterDate` date DEFAULT NULL,
+  `userLoginEventTime` date DEFAULT NULL,
+  `userLoginEventCount` int(1) DEFAULT 0,
+  `userAvatar` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
 
 --
 -- 傾印資料表的資料 `usertable`
 --
 
-INSERT INTO `usertable` (`userId`, `userPassword`, `userName`, `useGender`, `userBirthday`, `userPhone`, `userEmail`, `userPoint`, `userRegisterDate`, `userAvatar`) VALUES
-('u123456789', 'u111111111', '王大明', '男', '2000-01-01', 912345678, 'won@mail.com', 999, '2010-01-01', 'https://cdn-icons-png.flaticon.com/512/147/147142.png'),
-('u223456789', 'u111111112', '李小明', '男', '2000-01-06', 912345665, 'lin@mail.com', 999, '2020-05-06', 'https://cdn-icons-png.flaticon.com/512/147/147142.png');
+INSERT INTO `usertable` (`userId`, `userPassword`, `userName`, `userGender`, `userBirthday`, `userPhone`, `userEmail`, `userPoint`, `userRegisterDate`, `userLoginEventTime`, `userLoginEventCount`, `userAvatar`) VALUES
+('u123456789', 'u111111111', '王大明', '男', '2000-01-01', '0912345678', 'won@mail.com', 999, '2011-11-11', '2022-12-05', 0, 'https://cdn-icons-png.flaticon.com/512/147/147142.png'),
+('u223456789', 'u111111112', '李小明', '男', '2000-01-06', '0912345665', 'lin@mail.com', 999, '2020-05-06', '2022-12-13', 0, 'https://cdn-icons-png.flaticon.com/512/147/147142.png');
 
 --
 -- 已傾印資料表的索引
@@ -546,6 +554,40 @@ ALTER TABLE `ordertable`
 --
 ALTER TABLE `usertable`
   ADD PRIMARY KEY (`userId`);
+
+--
+-- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
+--
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `discountcoupon`
+--
+ALTER TABLE `discountcoupon`
+  MODIFY `couponId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `favorite`
+--
+ALTER TABLE `favorite`
+  MODIFY `favId` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `item`
+--
+ALTER TABLE `item`
+  MODIFY `itemId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `itemimg`
+--
+ALTER TABLE `itemimg`
+  MODIFY `imgId` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=218;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `ordertable`
+--
+ALTER TABLE `ordertable`
+  MODIFY `orderNumber` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
