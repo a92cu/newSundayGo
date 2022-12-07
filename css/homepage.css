@@ -151,8 +151,13 @@
 /* 愛心icon */
 .introimg{
     float: right;
+    z-index: 20;
 }
 .introimg:hover {
+    filter: invert(13%) sepia(69%) saturate(7452%) hue-rotate(343deg) brightness(98%) contrast(108%);
+
+}
+.introimg:active{
     filter: invert(13%) sepia(69%) saturate(7452%) hue-rotate(343deg) brightness(98%) contrast(108%);
 
 }

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { setSeconds } from "date-fns";
 import { useRouter } from 'next/router';
 import ReactStars from 'react-stars';
+import { format } from "date-fns";
 
 
 
@@ -12,6 +13,9 @@ export const Forfood = (porps) => {
     const router = useRouter();
     // const renderRef=useRef(true)
     var [homepagelist, setlist] = useState([]);
+    const [favId, setfavId] = useState("");
+    const [userId, setuserId] = useState("");
+    const [itemId, setitemId] = useState("");
     const [imgId, setimgId] = useState([porps.imgId]);
     //點擊隱藏
     // const [show, setShow] = useState(true);
@@ -19,8 +23,9 @@ export const Forfood = (porps) => {
     //     setShow(false)
     //   }
 
-    const handleclick = () => {
-        document.getElementsByClassName('delbtn').style.display = 'none';
+    const handleclick = (e) => {
+      var wantdel=  document.getElementsByClassName('delbtn');
+      wantdel.style.display ='none';
     }
 
     // useEffect(() => {fetchdata()}, []);
@@ -31,7 +36,7 @@ export const Forfood = (porps) => {
         // console.log(1,setlist)
         fetchdata();
         //加入最愛
-        // favIdsend();
+        favIdsend();
         // $(function (){
         // console.log(homepagelist)
         var acc = document.getElementsByClassName("accordion");
@@ -65,11 +70,11 @@ export const Forfood = (porps) => {
         //     document.getElementsByClassName('delbtn').style.display = 'none'
         // }
         // myFunction()
-        $(".delbtn").click(function () {
-            console.log(this)
-            // $(this)(".filterBtn").hide()
-            $(this).parent('button').hide()
-        });
+        // $(".delbtn").click(function () {
+        //     console.log(this)
+        //     // $(this)(".filterBtn").hide()
+        //     $(this).parent('button').hide()
+        // });
 
         // $("input[type='checkbox']").on('click',function(){
         //     var item = $(":radio:checked"); 
@@ -83,6 +88,13 @@ export const Forfood = (porps) => {
         //    $('.ckbox').on('click',function(){
         //     alert()
         //    })
+        function test(){
+           var app= document.getElementsByClassName('homeProduct');
+           app.addEventListener('click',function(){
+            alert('ok')
+           })
+        }
+
         function cekbox() {
             var arr = [];
             $('input[type="checkbox"]').on('click', function () {
@@ -119,6 +131,7 @@ export const Forfood = (porps) => {
 
     const fetchdata = async () => {
         console.log(2, setlist)
+    
 
         return (await fetch("/api/home/food")
             .then((res) => res.json())
@@ -139,28 +152,30 @@ export const Forfood = (porps) => {
         // }
     }
 
-    const favIdsend = async (imgId) => {
-        console.log(4, imgId)
-
-        return (await fetch("/api/home/food"),{
+    const favIdsend = async (i) => {
+        console.log(4, i)
+        await fetch("/api/home/food",{
             method: "post",
             // body:imgId
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json;charset=utf-8",
             },
-            // body: JSON.stringify({
-            //     orderReview: orderReview,
-            // }),
-            
-        })
-        .then(res => res.json())
-
-            .then(data => {
-                /*接到request data後要做的事情*/
-                console.log("使用者資料",data.data[0].imgId);
-             
+            body: JSON.stringify({
+                favId:6,
+                userId:'u123456789',
+                itemId:10
             })
+        })
+        .then((res) => res.json())
+        .then(console.log('已加入最愛'))
+        
+        console.log(5, favId)       
+            // .then(data => {
+            //     /*接到request data後要做的事情*/
+            //     console.log("使用者資料",data.data[0].imgId);
+             
+            // })
        }
     //POST結束
 
@@ -191,7 +206,23 @@ export const Forfood = (porps) => {
     // console.log(result.data)
     // const fetcher = (user, page) =>
     //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
-
+    //轉換時間
+    const itemList = [];
+    homepagelist.forEach(function(item)  {
+        console.log(1,item.itemListedDate)
+        // item.itemListedDate = item.itemListedDate.replace("Z","UTC");
+        // let  date2= (item.itemListedDate +8*3600*1000);
+        // date2=date2.JSON();
+        // console.log(22,date2)
+        // console.log(2,item.itemListedDate)   
+        // let date = moment(item.itemListedDate).toDate();
+        // item.itemListedDate = format(item.itemListedDate, "yyyy-MM-dd");
+        // item.itemStartDate = format(item.itemStartDate, "yyyy-MM-dd");
+        // item.itemEndDate = format(item.itemEndDate, "yyyy-MM-dd");
+        itemList.push({ ...item });
+        return itemList
+        console.log(itemList)
+      });
 
 
     return (
@@ -344,7 +375,7 @@ export const Forfood = (porps) => {
                         項行程
                         {noredata.map((i) =>
 
-                            <button className="filterBtn" onClick={() => { this.handleclick() }}>
+                            <button className="filterBtn" onClick={() =>  handleclick() }>
                                 {i}<span className="delbtn">X</span>
                             </button>
                         )}
@@ -378,7 +409,7 @@ export const Forfood = (porps) => {
                                         {/* <a href="/memberCenter"> */}
                                             <img className="introimg" src="/images/heart.png"
                                                 style={{ width: '20px', marginLeft: '130px' }} alt=""
-                                                onClick={() => favIdsend()} />
+                                                onClick={(item) =>  favIdsend(item.itemId) } />
                                         {/* </a> */}
                                     </span>
 

@@ -1,11 +1,13 @@
 import Image from "next/image";
 import { useState, useEffect } from 'react';
+import Script from "next/script";
 import { runSQL } from "../../lib/mysql";
-import { format, parseISO } from "date-fns";
+import { format,parseISO} from "date-fns";
 import * as R from "ramda";
-import Router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
+import { display } from "html2canvas/dist/types/css/property-descriptors/display";
 import ReactStars from 'react-stars'
-import axios from "axios";
+
 import Script from "next/script";
 import useFile from "../../hook/useFile";
 import { useCookies } from "react-cookie"
@@ -171,7 +173,6 @@ function Header() {
         </div>
     );
 }
-}
 // 帳號設定修改 OK 性別暫時PASS 
 function MemberAccount(props) {
   const { accountList } = props;
@@ -181,15 +182,15 @@ function MemberAccount(props) {
   const [userEmail, setuserEmail] = useState(props.accountList[0].userEmail);
   const [userPassword, setuserPassword] = useState(props.accountList[0].userPassword);
 
-  const [passwordType, setPasswordType] = useState("password");
-
-  const togglePassword = () => {
-    if (passwordType === "password") {
-      setPasswordType("text")
-      return;
-    }
-    setPasswordType("password")
-  }
+  // const [passwordType, setPasswordType] = useState("password");
+  // const togglePassword = () => {
+  //   if (passwordType === "password") {
+  //     setPasswordType("text")
+  //     return;
+  //   }
+  //   setPasswordType("password")
+  // }
+  // const eye = passwordType
 
   const saveAccount = () => {
     // console.log(accountList) // [{...}]
@@ -220,15 +221,12 @@ function MemberAccount(props) {
       <br /><br />
       <div className="basic">
         <span>姓名<b>*</b> </span>
-        <input type="text"
-          value={userName}
-          onChange={(e) => setuserName(e.target.value)}
-        />
+        <input type="text" value={userName} />
       </div>
       <div className="basic">
         <span>性別</span>
         <select name="" id="">
-          <option value="man">{accountList[0].useGender}</option>
+          <option value="man">{useGender}</option>
           <option value="girl">女生</option>
           <option value="sec">保密</option>
         </select>
@@ -236,53 +234,35 @@ function MemberAccount(props) {
       <br />
       <div className="basic">
         <span>出生日期</span>
-        <input
-          type="date"
-          value={userBirthday}
-          onChange={(e) => setuserBirthday(e.target.value)}
-        />
+        <input type="date" />
       </div>
       <br />
       <div className="basic">
         <span>電話號碼<b>*</b></span>
-        <input type="tel"
-          value={userPhone}
-          onChange={(e) => setuserPhone(e.target.value)}
-        />
+        <input type="tel" value={userPhone} />
       </div>
       <br />
       <div className="basic">
         <span>連絡信箱<b>*</b></span>
-        <input type="email"
-          value={userEmail}
-          onChange={(e) => setuserEmail(e.target.value)}
-        />
+        <input type="email" value={userEmail} />
       </div>
       <br />
       <div className="basic">
         <span>密碼<b>*</b></span>
-        &emsp;&emsp;&emsp;&emsp;&emsp;
-        <input
-          type={passwordType}
-          onChange={(e) => setuserPassword(e.target.value)}
-          // onChange={handlePasswordChange}
+        <input type="password"
           value={userPassword}
-          name="password"
-          // className="form-control"
-          placeholder="Password" />
-        <input
-          style={{
-            width: "15px",
-            verticalAlign: "Middle",
-            outline: "none"
-          }}
-          type="checkbox"
-          onClick={() => togglePassword()} />顯示密碼
+          onChange={(e) => setuserPassword(e.target.value)}
+        />
+        {/* <button onClick={togglePassword} style={{ backgroundColor: "white", borderStyle: "none" }}>
+          <i className="fa fa-eye" aria-hidden="true"></i>
+          <i className="fa fa-eye-slash" aria-hidden="true"></i>
+          <i { {passwordType}  === "password" ? <i className="fa fa-eye"></i> : <i className="fa fa-eye-slash"></i>}></i>
 
+        </button> */}
 
       </div>
       <div className="basicBtn">
-        <button className="informationBtn" onClick={() => saveAccount()}> <b>儲存</b> </button>
+        <button className="informationBtn"> <b>儲存</b> </button>
       </div>
     </div>
   </div>
@@ -367,57 +347,23 @@ function Rebate(props) {
 
 // 七天簽到 OK (目前只能作用第一張折扣券，而且必須到隔天才能作用)
 function SevenDay() {
-  const [checkCount, setCheckCount] = useState(0);
   let gotdate;
-  let thisDate = new Date()
-  let thisDate_ts = +new Date();
-  let fetureDate = new Date();
-  fetureDate.setTime(thisDate_ts + 7 * 1000 * 60 * 60 * 24);
-  // console.log(thisDate)
-  async function checkTime(e) {
-    let count = e.target.id.substr(-1); // 1 
+  async function checkTime(){
+    let thisDate=format(new Date(),"yyyy-MM-dd");
+    // console.log(thisDate)
     await axios.get("/api/memberCentre/taketime")
-      .then((res) => {
-        let datedata = res.data.data[0].userLoginEventTime;
-        gotdate = new Date(datedata)
-        if (!res.data.data[0].userLoginEventCount) {
-          setCheckCount(0)
-        } else {
-          setCheckCount(res.data.data[0].userLoginEventCount)
-        }
-      })
-    // 每個折價券做判斷
-    if (checkCount !== 0) {
-      if (checkCount >= count) {
-        if(checkCount>7){
-            if (thisDate.getFullYear() >= gotdate.getFullYear() && thisDate.getMonth() >= gotdate.getMonth()) {
-              if (thisDate.getDate() > gotdate.getDate()) {
-                console.log(thisDate, gotdate)
-                alert('您已領取折扣券')
-                axios.put(`/api/memberCentre/taketime`, {
-                  timeData: format(thisDate, "yyyy-MM-dd"),
-                  discountdate: format(fetureDate, "yyyy-MM-dd"),
-                  count: checkCount + 1,
-                });
-              } else {
-                alert("尚未滿足條件")
-              }
-            } else {
-              alert("尚未滿足條件")
-            }
-          }else{
-            alert("您已領取所有折價券，感謝您參與")
-          }
-      } else {
-        alert("尚未滿足條件")
-      }
-    } else {
-      await axios.put(`/api/memberCentre/taketime`, {
-        count: checkCount + 1,
-      });
+          .then((res)=>{
+            let datedata=res.data.data[0].userLoginEventTime;
+            console.log(datedata)
+            gotdate=format(parseISO(datedata),"yyyy-MM-dd")
+          })
+    console.log(gotdate)
+    if(thisDate>gotdate){
+      console.log('thiDate farrrrr')
+      axios.put(`/api/memberCentre/taketime`);
+    }else{
       alert("尚未滿足條件")
     }
-    e.target.style.filter = "brightness(50%)"
   }
   return (
     <div id="sevenDay" className="tabcontentB">
@@ -425,22 +371,22 @@ function SevenDay() {
       <br />
       <div className="setBodyB">
         <div className="dayOneSeven">
-          <img className="ImgPick" src="./images/day7/day1.png" alt="折扣券" onClick={checkTime} id="SevenDay1" />
-          <img className="ImgPick" src="./images/day7/day2.png" alt="折扣券" onClick={checkTime} id="SevenDay2" />
-          <img className="ImgPick" src="./images/day7/day3.png" alt="折扣券" onClick={checkTime} id="SevenDay3" />
-          <img className="ImgPick" src="./images/day7/day4.png" alt="折扣券" onClick={checkTime} id="SevenDay4" />
+          <img className="ImgPick" src="./images/day7/day1.png" alt="折扣券" onClick={checkTime} />
+          <img className="ImgPick" src="./images/day7/day2.png" alt="折扣券" />
+          <img className="ImgPick" src="./images/day7/day3.png" alt="折扣券" />
+          <img className="ImgPick" src="./images/day7/day4.png" alt="折扣券" />
         </div>
         <div className="dayOneSeven">
-          <img className="ImgPick" src="./images/day7/day5.png" alt="折扣券" onClick={checkTime} id="SevenDay5" />
-          <img className="ImgPick" src="./images/day7/day6.png" alt="折扣券" onClick={checkTime} id="SevenDay6" />
-          <img className="ImgPick" src="./images/day7/day7.png" alt="折扣券" onClick={checkTime} id="SevenDay7" />
+          <img className="ImgPick" src="./images/day7/day5.png" alt="折扣券" />
+          <img className="ImgPick" src="./images/day7/day6.png" alt="折扣券" />
+          <img className="ImgPick" src="./images/day7/day7.png" alt="折扣券" />
         </div>
       </div>
     </div>
   )
 }
 
-//訂單管理 OK
+//訂單管理
 function MemberOrder(orderList, imgList) {
   const router = useRouter()
   return (
@@ -548,8 +494,14 @@ function MemberOrder(orderList, imgList) {
   );
 }
 
-// 收藏頁面 OK
+// 收藏頁面
 function Collect({ itemList, imgList, setItemList }) {
+  // function Star() {
+  //   for (var i = 1; i <= itemList.orderStar; i++)
+  //   {<img src="./images/1.png" alt="" />}
+  //   for (var i = 1; i <= (5 - itemList.orderStar); i++)
+  //   {<img src="./images/0.png" alt="" />}    
+  // }
   const router = useRouter()
   const collectDelete = (favId) => {
     console.log(favId);
@@ -568,7 +520,7 @@ function Collect({ itemList, imgList, setItemList }) {
   return (
     <div id="collect" className="tabcontentB">
       <div className="setBodyB">
-        <h2>我的收藏</h2>
+        <h2>我的收藏</h2> 
         {itemList.map((i) => {
           // console.log(itemList); // [{},{}]
           // console.log(imgList); //[{}{}]
@@ -621,7 +573,6 @@ function Collect({ itemList, imgList, setItemList }) {
 export default function MemberCentre(props) {
   const [tab, setTab] = useState('information');
   const [userName, setuserName] = useState(props.accountList[0].userName);
-  const [userAvatar, setuserAvatar] = useState(props.accountList[0].userAvatar); // 變更頭像
   const [accountList, setaccountList] = useState(props.accountList);
   const [itemList, setItemList] = useState(props.itemList);
   const [orderList, setOrderList] = useState(props.orderList);
@@ -668,7 +619,7 @@ export default function MemberCentre(props) {
               <img src="./images/camera.png" alt="" style={{ width: "25px" }} />
             </button>
           </div>
-          <p>{userName}</p>
+          <p>王曉明</p>
         </div>
 
         <div className="tabBtnB">
@@ -701,14 +652,8 @@ export default function MemberCentre(props) {
         <MemberAccount
           accountList={accountList}
         />}
-      {tab === "discount" &&
-        <Discount orderList
-          discountList={discountList}
-        />}
-      {tab === "rebate" &&
-        <Rebate
-          orderListRebate={orderList}
-        />}
+      {tab === "discount" && <Discount />}
+      {tab === "rebate" && <Rebate />}
       {tab === "sevenDay" && <SevenDay />}
       {tab === "memberOrder" &&
         <MemberOrder
@@ -722,6 +667,7 @@ export default function MemberCentre(props) {
           imgList={props.imgList}
         />}
 
+      {/* <Evaluation orderList={orderList}/> */}
     </div>
     <Script src="/js/MemberCentre.js" />
     <Footer />
@@ -732,8 +678,8 @@ export default function MemberCentre(props) {
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
   // 帳號設定抓的資料 (userBirthday有問題)
-  // const sq1 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
-  const sq1 = `SELECT * FROM usertable WHERE userId = "u123456789"`;
+  const sq1 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
+  // const sq1 = `SELECT * FROM usertable WHERE userId = "u123456789"`;
   // 我的收藏資料庫抓的
   const sq2 = `SELECT * FROM favorite , item WHERE favorite.itemId = item.itemId AND userId = 'u123456789';`;
   const sq3 = `SELECT * FROM itemimg`;
@@ -744,10 +690,8 @@ export async function getStaticProps({ params }) {
   const imgList: any = [];   // 圖片
   const itemList: any = [];  // 收藏
   const orderList: any = []; // 訂單
-  const discountList: any = []; // 折扣券
 
-  // const memberCentre = (await runSQL(sq1))[0]; // 帳號設定抓的資料  
-  const accountListRaw: any = await runSQL(sq1); // 帳號設定
+  const memberCentre = (await runSQL(sq1))[0]; // 帳號設定抓的資料
   const itemListRaw: any = await runSQL(sq2); // 我的收藏
   const imgListRaw: any = await runSQL(sq3); // item的圖片
   const orderListRaw: any = await runSQL(sq4); // 訂單管理抓的資料
@@ -770,19 +714,14 @@ export async function getStaticProps({ params }) {
   accountListRaw.forEach((usertable: any) => {
     usertable.userBirthday = format(usertable.userBirthday, "yyyy-MM-dd");
     usertable.userRegisterDate = format(usertable.userRegisterDate, "yyyy-MM-dd");
-    usertable.userLoginEventTime = format(usertable.userLoginEventTime, "yyyy-MM-dd");
     accountList.push({ ...usertable });
   });
-  discountListRaw.forEach((discounttable: any) => {
-    discounttable.couponEndTime = format(discounttable.couponEndTime, "yyyy-MM-dd");
-    discountList.push({ ...discounttable })
-  });
+
   //把要的資料拿出來
   return {
     props: {
       // 帳號設定抓的資料
-      // memberCentre: { ...memberCentre },
-      accountList,
+      memberCentre: { ...memberCentre },
       imgList,
       itemList,
       orderList,

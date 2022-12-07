@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Script from "next/script";
 import { runSQL } from "../../lib/mysql";
-import { format } from "date-fns";
+import { format, parseJSON } from "date-fns";
 import * as R from "ramda";
 import { useRouter } from 'next/router'
 import Listdemo from "./component/Listdemo.jsx";
@@ -109,7 +109,11 @@ function Footer() {
     )
 }
 //訂購人
-function Orderman() {
+function Orderman({
+    userName,
+    userPhone,
+    userEmail }
+) {
     return (
         <section className="orderman" >
             <div className="cartsidebar">
@@ -122,7 +126,7 @@ function Orderman() {
                         <div className="orderleft">
                             <span>名字</span>
                             <br />
-                            <input type="text" name="userName" id="CartuserName" required />
+                            <input type="text" name="userName" id="CartuserName" value={userName} required />
                             <div>
                                 <span>地區</span>
                                 <br />
@@ -132,7 +136,7 @@ function Orderman() {
                             <div>
                                 <span>電子信箱</span>
                                 <br />
-                                <input type="email" name="usermail" required />
+                                <input type="email" name="usermail" value={userEmail} required />
                             </div>
 
                         </div>
@@ -146,7 +150,7 @@ function Orderman() {
                             <div>
                                 <span>連絡電話</span>
                                 <br />
-                                <input type="tel" name="userPhone" pattern="[0-9]{10}" id="CartuserPhone" required />
+                                <input type="tel" name="userPhone" pattern="[0-9]{10}" id="CartuserPhone" value={userPhone} required />
                             </div>
                         </div>
 
@@ -159,7 +163,8 @@ function Orderman() {
     )
 }
 //旅客資料
-function Travelman() {
+function Travelman(itemList) {
+    console.log(itemList)
     return (
         <section className="travelman">
             <div className="cartsidebar">
@@ -169,35 +174,32 @@ function Travelman() {
                         <hr />
                     </button>
                     <div className="cartpanel">
-                        <div className="carthomeProduct">
-                            {/* <!-- 圖片框 --> */}
-                            <div className="cartpicPlace">
-                                <img className="cartproPic" src="/images/20220520170357-1298d211.jpg" alt="" />
-                            </div>
-                            {/* <!-- 介紹欄 --> */}
-                            <div className="cartinco">
-
-                                <h3>
-                                    <p>屏東小琉球|高雄 - 東港接駁&小琉球船票接駁套餐&船票機車套餐|一人成行</p>
-
-                                </h3>
-
-                                {/* <!-- 地區標籤 --> */}
-                                <div>
-                                    <div className="carttagplace">
-                                        高雄
+                        {itemList.itemList.map((i) => {
+                            return (
+                                <div className="carthomeProduct">
+                                    {/* <!-- 圖片框 --> */}
+                                    <div className="cartpicPlace">
+                                        <img className="cartproPic" src={i.itemImgUrl} alt="" />
                                     </div>
-                                    <div>
-                                        活動日期 ：2022-11-08
-                                        時間 : 16:00
-                                        人數 : 1人
+                                    {/* <!-- 介紹欄 --> */}
+                                    <div className="cartinco">
+                                        <h3>
+                                            <p>{i.itemTitle}</p>
+                                        </h3>
+                                        {/* <!-- 地區標籤 --> */}
+                                        <div>
+                                            <div className="carttagplace">
+                                                高雄
+                                            </div>
+                                            <div>
+                                                活動日期 ：{i.date}
+                                            </div>
+                                        </div>
                                     </div>
-
                                 </div>
-
-                            </div>
-
-                        </div>
+                            )
+                        })}
+                        {/* 迴圈結束 */}
                         <h4>特殊需求備註</h4>
                         <div>
                             <textarea placeholder="此欄位僅限資料備註，不保證提供"></textarea>
@@ -205,7 +207,6 @@ function Travelman() {
                     </div>
                 </div>
             </div>
-
         </section>
     )
 }
@@ -224,7 +225,7 @@ function Paylist() {
                         <ul>
                             <li className="payway">
                                 <label htmlFor="linepay">
-                                    <input type="radio" id="linepay" name="payway" className="payway"/>
+                                    <input type="radio" id="linepay" name="payway" className="payway" />
                                     <span>LINE Pay</span>
                                     <img src="https://cdn.kkday.com/pc-web/assets/img/payment/ic_linepay_2.svg" alt="" />
                                 </label>
@@ -232,7 +233,7 @@ function Paylist() {
                             <li className="payway">
                                 <label htmlFor="cardeit">
 
-                                    <input type="radio" id="cardeit" name="payway"/>
+                                    <input type="radio" id="cardeit" name="payway" />
                                     <span className="">信用卡/簽帳金融卡</span>
                                     <img src="https://cdn.kkday.com/pc-web/assets/img/payment/ic_visa.svg" alt="" />
                                     <img src="https://cdn.kkday.com/pc-web/assets/img/payment/ic_master.svg" alt="" />
@@ -252,19 +253,19 @@ function Paylist() {
                             </li>
                             <li className="payway">
                                 <label htmlFor="webatm">
-                                    <input type="radio" id="webatm"  name="payway" />
+                                    <input type="radio" id="webatm" name="payway" />
                                     <span>網路ATM</span>
                                 </label>
                             </li>
                             <li className="payway">
-                            <b>
-                            請注意本平台不會向您收取任何平台交易手續費，
-                            但你下單時使用的信用卡或第三方支付平台可能會向您收取相關手續費，
-                            請參考其相關服務政策和規定，並向你所選的交易服務商取得更多資訊。</b>
+                                <b>
+                                    請注意本平台不會向您收取任何平台交易手續費，
+                                    但你下單時使用的信用卡或第三方支付平台可能會向您收取相關手續費，
+                                    請參考其相關服務政策和規定，並向你所選的交易服務商取得更多資訊。</b>
                             </li>
                         </ul>
 
-                        
+
 
 
                     </div>
@@ -274,7 +275,7 @@ function Paylist() {
     )
 }
 //電子發票
-function Billlist() {
+function Billlist({ userEmail }) {
     return (
         <section className="billlist">
             <div className="cartsidebar">
@@ -290,7 +291,7 @@ function Billlist() {
                             <option >開立統編、收據</option>
                         </select>
                         <p>寄送信箱</p>
-                        <input type="email" value={'123@gmail.com'} />
+                        <input type="email" value={userEmail} />
                         {/* <!-- <h6>地址</h6>
                                                                 <input type="text"> --> */}
                     </div>
@@ -300,7 +301,40 @@ function Billlist() {
     )
 }
 //付款明細
-function Billtotal() {
+function Billtotal(itemList) {
+    const [shoplist, setshoplist] = useState([]);
+    const [totalCash, setTotalCash] = useState([]);  // totalCash預設值為0
+
+    const calculate = (price) => {
+        setTotalCash(totalCash + price);   // totalCash =  totalCash + price
+    }
+    useEffect(() => {
+        let shopcar = JSON.parse(localStorage.getItem("sureshopcar"));
+        console.log(1, shopcar);
+        console.log(2, shopcar[1]);
+        // console.log(2, shopcar[1]);
+        let shoplist = [];
+        let dataAll = itemList.itemList
+        var dataint = dataAll.map(x => x.itemId).indexOf();
+        //得到item1的圖片
+        console.log(3, dataAll[dataint].itemImgUrl)
+        // 商品標題
+        console.log(4, dataAll[dataint].itemTitle)
+        //價格
+        console.log(5, shopcar[1].price, shopcar[1].date)
+
+        shoplist.push({
+           
+            itemTitle: dataAll[dataint].itemTitle,
+            itemPrice: dataAll[dataint].itemPrice,
+            itemImgUrl: dataAll[dataint].itemImgUrl,
+        })
+        let new1 =itemList.itemList.slice(73,74)
+        console.log(6, itemList);
+        console.log(8, new1);
+        setshoplist(shoplist)
+        console.log(7, shoplist);
+    }, []);
     return (
         <section className="billtotal">
             <div className="cartsidebar">
@@ -310,38 +344,43 @@ function Billtotal() {
                         <hr />
                     </button>
                     <div className="cartpanel">
-                        <div className="carthomeProduct">
-                            {/* <!-- 圖片框 --> */}
-                            <div className="cartpicPlace">
-                                <img className="cartproPic" src="/images/20220520170357-1298d211.jpg" alt="" />
-                            </div>
-                            {/* <!-- 介紹欄 --> */}
-                            <div className="cartinco">
-
-                                <h3>
-                                    <p>屏東小琉球|高雄 - 東港接駁&小琉球船票接駁套餐&船票機車套餐|一人成行</p>
-
-                                </h3>
-
-                                {/* <!-- 地區標籤 --> */}
-                                <div>
-                                    <div className="carttagplace">
-                                        高雄
-                                    </div>
+                        {itemList.itemList.map((i) =>
+                            <div className="carthomeProduct">
+                                {/* <!-- 圖片框 --> */}
+                                <div className="cartpicPlace">
+                                    <img className="cartproPic" src={i.itemImgUrl} alt="" />
+                                </div>
+                                {/* <!-- 介紹欄 --> */}
+                                <div className="cartinco">
+                                    <h3>
+                                        <p>{i.itemTitle}</p>
+                                    </h3>
+                                    {/* <!-- 地區標籤 --> */}
                                     <div>
-                                        活動日期 ：2022-11-08
-                                        時間 : 16:00
-                                        人數 : 1人
+                                        <div className="carttagplace">
+                                            {i.itemFilter2}
+                                        </div>
+                                        <div>
+                                            活動日期 ：{i.date}
+                                            時間 : 16:00
+                                            人數 : 1人
+                                        </div>
+
+                                        <div>
+                                            商品數量:{i.count}
+                                        </div>
+
                                     </div>
 
                                 </div>
 
                             </div>
-
-                        </div>
-
+                        )}
+                        {/* 商品迴圈結束 */}
                         <span className="carthrline">總金額 TWD</span>
-                        <span className="paybill1">1800</span>
+                        {itemList.itemList.map((i) =>
+                            <span className="paybill1">{i.price}</span>
+                        )}
                         <hr />
                         <span className="carthrline">點數折抵 TWD</span>
                         <span className="billcount">100</span>
@@ -358,6 +397,7 @@ function Billtotal() {
 }
 //結帳區
 function Paybill() {
+
     return (
         <section className="paybill">
             <span>商品合計      TWD</span> <span className="cartprdtit">1700</span>
@@ -365,12 +405,24 @@ function Paybill() {
             <span className="prdtit2">訂單完成後回饋金 TWD</span><span className="prdtit3">17</span>
 
             <input type="submit" value="確認付款" id="billok" />
+            {/* onClick={() => { setNewLocalS() }} */}
         </section>
     )
 
 }
 
-export default function homepage() {
+
+
+
+export default function cartlist(props) {
+    const [userName, setuserName] = useState(props.userName);
+    const [itemList, setItemList] = useState(props.itemList)
+
+    // const setNewLocalS = () => {
+    //     //塞資料進去
+    //     localStorage.setItem("newData", JSON.stringify(newData));
+
+    // }
     return (
         <>
 
@@ -379,12 +431,18 @@ export default function homepage() {
             {/* <Listdemo /> */}
             <main style={{ width: '1280px', margin: '0 auto' }}>
                 <form action="">
-                <Orderman />
-                <Travelman />
-                <Paylist /> 
-                <Billlist />
-                <Billtotal />
-                <Paybill />
+                    <Orderman
+                        {...props.memberCentre} />
+                    <Travelman
+                        itemList={itemList} />
+                    <Paylist />
+                    <Billlist
+                        {...props.memberCentre} />
+                    <Billtotal
+                        itemList={itemList}
+                    // onCalculate={calculate}
+                    />
+                    <Paybill />
                 </form>
             </main>
 
@@ -397,48 +455,29 @@ export default function homepage() {
 
     )
 }
-//頁面產生出來之後從params去找出特定需要的那一頁
-export async function getStaticProps({ params }) {
-    // 帳號設定抓的資料 (userBirthday有問題)
-    const sq1 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
-    // const sq1 = `SELECT * FROM usertable WHERE userId = "u123456789"`;
-    // 我的收藏資料庫抓的
-    const sq2 = `SELECT * FROM favorite , item WHERE favorite.itemId = item.itemId AND userId = 'u123456789';`;
-    const sq3 = `SELECT * FROM itemimg`;
-    const sq4 = `SELECT item.itemId , userId, orderNumber, orderReceipt,orderReview, orderStar, orderDate, orderQua, orderDeter , itemTitle, itemPrice FROM ordertable, item WHERE ordertable.itemId = item.itemId;`;
-    // any是沒有定義的意思
-    const imgList: any = [];
-    const itemList: any = [];
-    const orderList: any = [];
 
-    const memberCentre = (await runSQL(sq1))[0]; // 帳號設定抓的資料
-    const itemListRaw: any = await runSQL(sq2); // 我的收藏
-    const imgListRaw: any = await runSQL(sq3); // item的圖片
-    const orderListRaw: any = (await runSQL(sq4)); // 訂單管理抓的資料
-    // forEach是在轉格式,原本出來是database物件
+export async function getStaticProps({ params }) {
+    // const itemList: any = [];
+    const sq1 = `SELECT  item.itemTitle, item.itemFilter2, itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where itemLead=1;`;
+    const sq2 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
+
+    const itemList: any = [];
+    // itemTitle itemFilter2 itemImgUrl
+    const imgListRaw: any = await runSQL(sq1); // 所有項目
+    const memberCentre = (await runSQL(sq2))[0]; // 帳號設定抓的資料
     imgListRaw.forEach((item: any) => {
         item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
-        imgList.push({ ...item });
-    });
-    itemListRaw.forEach((item: any) => {
-        item.itemListedDate = format(item.itemListedDate, "yyyy-MM-dd");
-        item.itemStartDate = format(item.itemStartDate, "yyyy-MM-dd");
-        item.itemEndDate = format(item.itemEndDate, "yyyy-MM-dd");
         itemList.push({ ...item });
     });
-    orderListRaw.forEach((ordertable: any) => {
-        ordertable.orderDate = format(ordertable.orderDate, "yyyy-MM-dd");
-        orderList.push({ ...ordertable });
-    });
+
 
     //把要的資料拿出來
     return {
         props: {
-            // 帳號設定抓的資料
-            memberCentre: { ...memberCentre },
-            imgList,
+            //所有項目
             itemList,
-            orderList,
+            memberCentre: { ...memberCentre },
         },
     };
+
 }

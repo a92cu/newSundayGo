@@ -94,7 +94,7 @@ export var CartItem = () => {
                     setshopcaritem(Id,date,count,price);
                 }
             })
-            // window.location="/////" //前往結帳頁面
+            window.location="/cartlist" //前往結帳頁面
         }
         function setshopcaritem(itemId,date,count,price){
             window.localStorage.setItem(
@@ -175,7 +175,7 @@ export var CartItem = () => {
                         <span id="gold">{Math.floor(totalCash*0.02)}</span>
                     </div>
                 </div>
-                <a href="#" onClick={gotopay}>前往結帳</a>
+                <a href="#" onClick={gotopay }>前往結帳</a>
             </div>
             <div className="continueBtn">
                 <a href="/#">繼續購物
