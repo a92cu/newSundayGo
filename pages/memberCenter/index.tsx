@@ -8,7 +8,7 @@ import ReactStars from 'react-stars'
 import axios from "axios";
 import Script from "next/script";
 import useFile from "../../hook/useFile";
-import { useCookies } from "react-cookie"
+import { useCookies } from "react-cookie";
 
 
 function Footer() {
@@ -99,13 +99,13 @@ function Header() {
   const [cookie, setCookie] = useCookies(["user"])
 
 
-  //判斷有無cookie 去切換登入登出
+  // 判斷有無cookie 去切換登入登出
   if (Object.keys(cookie).length===0) {
   return (
     <div className="header">
       <img
         src="./images/群組 1.png"
-        alt=""
+        alt="logo"
         style={{ width: 90, top: -8, position: "relative" }}
       />
       <div className="header-right">
@@ -128,7 +128,7 @@ function Header() {
         </button>
       </form>
     </div>
-  ) } else {
+  ) }else{
     return (
         <div className="header">
             <img
@@ -167,6 +167,7 @@ function Header() {
     );
 }
 }
+// }
 // 帳號設定修改 OK 性別暫時PASS 
 function MemberAccount(props) {
   const { accountList } = props;
@@ -287,7 +288,7 @@ function MemberAccount(props) {
 function Discount(props) {
   // console.log(props.discountList);
   const theDate = format(new Date(), "yyyy-MM-dd");
-  console.log(Math.abs(Date.parse(props.discountList[0].couponStartTime) - Date.parse(theDate)) / (1000 * 60 * 60 * 24))
+  // console.log(Math.abs(Date.parse(props.discountList[0].couponEndTime) - Date.parse(theDate)) / (1000 * 60 * 60 * 24))
   return (
     <div id="discount" className="tabcontentB">
       <h2>折扣券</h2>
@@ -299,7 +300,7 @@ function Discount(props) {
                 <div className={(ele.couponUse > 0 ? "discountDivUsed" : "discountDiv")} key={idx}>
                   <span>{ele.couponName}</span> <br />
                   <span>訂單金額須滿100元</span> <br />
-                  <span>有效期限: 剩餘{Math.abs(Date.parse(ele.couponStartTime) - Date.parse(theDate)) / (1000 * 60 * 60 * 24)}天</span> <br />
+                  <span>有效期限: 剩餘{(ele.couponUse < 1)?Math.abs(Date.parse(ele.couponEndTime) - Date.parse(theDate)) / (1000 * 60 * 60 * 24):0}天</span> <br />
                 </div>
               )
             })}
@@ -312,10 +313,10 @@ function Discount(props) {
 
 // 回饋金 OK 可以正常運作
 function Rebate(props) {
-  console.log(props.orderListRebate)
+  // console.log(props.orderListRebate)
   let allRebate = [];
   props.orderListRebate.forEach((e, i) => {
-    if (props.orderListRebate[i].userId == "u123456789") {
+    if (props.orderListRebate[i].userId == props.userId) {
       let itemTitle = props.orderListRebate[i].itemTitle;
       let orderDate = props.orderListRebate[i].orderDate;
       let orderRebate = props.orderListRebate[i].orderRebate;
@@ -384,7 +385,7 @@ function SevenDay() {
     // 每個折價券做判斷
     if (checkCount !== 0) {
       if (checkCount >= count) {
-        if(checkCount>7){
+        if(checkCount<7){
             if (thisDate.getFullYear() >= gotdate.getFullYear() && thisDate.getMonth() >= gotdate.getMonth()) {
               if (thisDate.getDate() > gotdate.getDate()) {
                 console.log(thisDate, gotdate)
