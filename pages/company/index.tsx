@@ -165,7 +165,7 @@ function Account(props) {
       </div>
       <div className="basic">
       <span>密碼<b>*</b></span>
-        &emsp;&emsp;&emsp;&emsp;&emsp;
+        &emsp;&emsp;&emsp;
         <input
           type={passwordType}
           onChange={(e) => setFirmPassword(e.target.value)}
@@ -173,7 +173,7 @@ function Account(props) {
           value={firmPassword}
           name="password"
           className="form-control"
-          placeholder="Password" />
+          placeholder="Password" />&emsp;&emsp;
         <input
           style={{
             width: "15px",
