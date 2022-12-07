@@ -141,7 +141,7 @@ function Header() {
   return (
     <div className="header">
       <img
-        src="./images/群組 1.png"
+        src="../images/群組 1.png"
         alt=""
         style={{ width: 90, top: -8, position: "relative" }}
       />

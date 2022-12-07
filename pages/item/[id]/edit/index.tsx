@@ -169,7 +169,7 @@ export default function UpdateItemPage(props) {
             <label>商品說明:</label>
             <input
               type="text"
-              style={{ height: 200, whiteSpace: "pre-line" }}
+              style={{ height: 100, whiteSpace: "pre-line" }}
               value={itemInfo}
               onChange={(e) => setItemInfo(e.target.value)}
             />
@@ -219,7 +219,7 @@ export default function UpdateItemPage(props) {
             <label>如何抵達:</label>
             <input
               type="text"
-              style={{ height: 200 }}
+              style={{ height: 100 }}
               value={itemTraffic}
               onChange={(e) => setItemTraffic(e.target.value)}
             />
@@ -227,7 +227,7 @@ export default function UpdateItemPage(props) {
             <label>注意事項:</label>
             <input
               type="text"
-              style={{ height: 500 }}
+              style={{ height: 100 }}
               value={itemNote}
               onChange={(e) => setItemNote(e.target.value)}
             />
