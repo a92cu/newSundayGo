@@ -2,24 +2,24 @@ import React, { useState } from "react";
 import Router from "next/router";
 
 export const Register = (props) => {
-    const [userId, setuserId] = useState("");
-    const [userPassword, setuserPassword] = useState("");
+    const [firmId, setfirmId] = useState("");
+    const [firmPassword, setfirmPassword] = useState("");
 
 
     //目前尚未加入判斷是否為已存在帳號
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(userId);
+        console.log(firmId);
 
-        fetch(`http://localhost:3000/api/login/${props.userId}`, {
+        fetch(`http://localhost:3000/api/firmlogin/${props.firmId}`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                userId,
-                userPassword,
+                firmId,
+                firmPassword,
                 
             }),
         })
@@ -42,12 +42,12 @@ export const Register = (props) => {
 
     return (
         <div className="auth-form-container">
-            <h2>註冊會員</h2>
+            <h2>註冊廠商會員</h2>
         <form className="register-form" >
-            <label htmlFor="userId">帳號</label>
-            <input value={userId} onChange={(e) => setuserId(e.target.value)}type="email" placeholder="輸入帳號" id="email" name="email" />
-            <label htmlFor="userPassword">密碼</label>
-            <input value={userPassword} onChange={(e) => setuserPassword(e.target.value)} type="輸入密碼" placeholder="********" id="password" name="password" />
+            <label htmlFor="firmId">帳號</label>
+            <input value={firmId} onChange={(e) => setfirmId(e.target.value)}type="email" placeholder="輸入帳號" id="email" name="email" />
+            <label htmlFor="firmPassword">密碼</label>
+            <input value={firmPassword} onChange={(e) => setfirmPassword(e.target.value)} type="輸入密碼" placeholder="********" id="password" name="password" />
             <button className="sub-btn" type="submit" onClick={handleSubmit}>送出</button>
         </form>
         <button className="link-btn" onClick={() => props.onFormSwitch('login')}>已有帳號？點此登入</button>

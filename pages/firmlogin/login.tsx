@@ -5,15 +5,15 @@ import Router from "next/router";
 
 
 export const Login = (props) => {
-    const [cookie, setCookie] = useCookies(["user"])
-    const [userId, setuserId] = useState("");
-    const [userPassword, setuserPassword] = useState("");
+    const [cookie, setCookie] = useCookies(["firm"])
+    const [firmId, setfirmId] = useState("");
+    const [firmPassword, setfirmPassword] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(userId);
+        console.log(firmId);
 
-        fetch(`http://localhost:3000/api/login/${userId}`, {
+        fetch(`http://localhost:3000/api/firmlogin/${firmId}`, {
             method: "GET",
             headers: {
                 Accept: "application/json",
@@ -24,16 +24,16 @@ export const Login = (props) => {
 
             .then(data => {
                 /*接到request data後要做的事情*/
-                // console.log("輸入帳號",userId);
+                // console.log("輸入帳號",firmId);
                 // console.log("資料庫使用者帳號", data);
 
-                // console.log("使用者密碼", data.data[0].userPassword);
+                // console.log("使用者密碼", data.data[0].firmPassword);
                 // console.log(data.data.length);
 
                 //判斷帳號密碼是否正確
                 if (data.data.length == 0
-                    || data.data[0].userId != `${userId}`
-                    || data.data[0].userPassword != `${userPassword}`
+                    || data.data[0].firmId != `${firmId}`
+                    || data.data[0].firmPassword != `${firmPassword}`
                 ) {
                     console.log(Object.keys(cookie).length===0);
 
@@ -44,7 +44,7 @@ export const Login = (props) => {
                     alert("登入成功");
 
                     //設定cookie
-                    setCookie("user", JSON.stringify(data), {
+                    setCookie("firm", JSON.stringify(data), {
                         path: "/",
                         maxAge: 36000, // cookeie 10小時後過期
                         sameSite: true,
@@ -52,7 +52,7 @@ export const Login = (props) => {
 
                     console.log(cookie);
                     //存於cookie的值
-                    console.log(cookie.user.data[0].userId);
+                    console.log(cookie.firm.data[0].firmId);
 
                     // cookie判斷是否存在
                     if (Object.keys(cookie).length!==0) {
@@ -60,7 +60,7 @@ export const Login = (props) => {
                     }
                     //跳轉到會員頁  
                     setTimeout(() => {
-                        Router.replace("/memberCenter");
+                        Router.replace("/company");
                     }, 100);
                 }
             })
@@ -75,16 +75,16 @@ export const Login = (props) => {
 
     return (
         <div className="auth-form-container">
-            <h2>會員登入</h2>
+            <h2>廠商登入</h2>
             <form className="login-form" >
-                <label htmlFor="userId">帳號</label>
-                <input value={userId} onChange={(e) => setuserId(e.target.value)}type="email" placeholder="輸入帳號" id="email" name="email" />
-                <label htmlFor="userPassword">密碼</label>
-                <input value={userPassword} onChange={(e) => setuserPassword(e.target.value)} type="輸入密碼" placeholder="********" id="password" name="password" />
+                <label htmlFor="firmId">帳號</label>
+                <input value={firmId} onChange={(e) => setfirmId(e.target.value)}type="email" placeholder="輸入帳號" id="email" name="email" />
+                <label htmlFor="firmPassword">密碼</label>
+                <input value={firmPassword} onChange={(e) => setfirmPassword(e.target.value)} type="輸入密碼" placeholder="********" id="password" name="password" />
                 <button className="sub-btn" type="submit" onClick={handleSubmit}>送出</button>
             </form>
             <button    className="link-btn" onClick={() => props.onFormSwitch('register')}>沒有帳號？點此註冊</button>
-            <button className="link-btn" onClick={() => window.location.href="http://localhost:3000/firmlogin"} >廠商登入請按此</button>
+            <button    className="link-btn" ><a href="http://localhost:3000/login" >會員登入請按此</a></button>
 
         </div>
     )

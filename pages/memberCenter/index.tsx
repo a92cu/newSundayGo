@@ -8,6 +8,8 @@ import ReactStars from 'react-stars'
 import axios from "axios";
 import Script from "next/script";
 import useFile from "../../hook/useFile";
+// const [cookie, setCookie] = useCookies(["user"])
+
 
 function Footer() {
   return (
