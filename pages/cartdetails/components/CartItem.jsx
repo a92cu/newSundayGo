@@ -46,9 +46,9 @@ export var CartItem = () => {
             .then((dataresult) => {
                 let dataAll = dataresult.data
                 // 找到itemId=id的陣列
-                var dataint = dataAll.map(x => x.itemId).indexOf(id);
+                var dataint = dataAll.map(x => x.itemId).indexOf(parseInt(id))
                 // console.log(dataAll[dataint])
-    
+
                 // 將圖片轉碼
                 dataAll[dataint].itemImgUrl = getImgUrl(dataAll[dataint].itemImgUrl);
                 // console.log(dataAll[dataint].itemImgUrl)
