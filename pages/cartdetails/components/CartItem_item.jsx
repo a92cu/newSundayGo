@@ -1,60 +1,81 @@
-import { useEffect, useState } from "react";
-import Script from "next/script";
+import { useEffect, useState,useRef} from "react";
 
-const Product = ({ 
-    id, 
-    keys, 
+function Product({
+    id,
     date,
     count,
     check,
     itemTitle,
     itemPrice,
     itemImgUrl,
-    giveChange,
-    onCalculate,
-    onDoAllClick}) => {
-    const [ wanted , setwanted ]=useState(false)
-    const [ quantity, setQuantity] = useState(0);  //  quantity 預設值= 0
+    onCalculate }) {
+    const [quantity, setQuantity] = useState(0);  //  quantity 預設值= 0
     // 當input 被點到會觸發...
-    let gotChange=(e)=>{
-        if(e.target.checked){
-            onDoAllClick(e.target.checked)
-            onCalculate(quantity*itemPrice);
-        }else{
-            onDoAllClick(e.target.checked)
-            onCalculate(-quantity*itemPrice);
+    let gotChange = (e) => {
+        if(quantity!==0){
+            if (e.target.checked) {
+                onCalculate(quantity * itemPrice);
+            } else {
+                onCalculate(-quantity * itemPrice);
+            }
         }
-        setwanted(e.target.checked)
-        giveChange(e.target.value)
     }
-    ;
-    useEffect(()=>{
-        setQuantity(parseInt(count));    
-    }
-    ,[])
-
-    const increment = () => {
+    useEffect(() => {
+        setQuantity(parseInt(count));
+    },[])
+   
+    const increment = (e) => {
+        let inputCheck = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.checked
         setQuantity(quantity + 1);   // 可以想成 quantity = quantity + 1
-        if(wanted){
+        if (inputCheck) {
             onCalculate(itemPrice);
         }
     };
-    const decrement = () => {
-        if ( quantity > 0 ){
-              setQuantity(quantity - 1);    // quantity = quantity - 1
+    const decrement = (e) => {
+        let inputCheck = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.checked
+        if (quantity > 0) {
+            setQuantity(quantity - 1);    // quantity = quantity - 1
         }
-        if(wanted){
-            onCalculate(-itemPrice);
+        if (quantity == 0) {
+            setQuantity(0);
+        }else{
+            if (inputCheck) {
+                if (quantity * itemPrice >= 0) {
+                    onCalculate(-itemPrice);
+                }
+            }
         }
     };
-    
+    let deleteMe = (e) => {
+        e.target.parentElement.parentElement.remove()
+    }
 
+    // const [_, refresh] = useState()
+
+    // const inputEl=useRef();
+    // if(check){
+    //     console.log(inputEl.current.checked);
+    //     inputEl.current.checked=check;
+    // }else{
+    //     inputEl.current.checked=check;
+    // }
+    // let allChangeInput = (e) => {
+    //     console.log(e)
+    //     if(quantity!==0){
+    //         if (e.checked) {
+    //             onCalculate(quantity * itemPrice);
+    //         } else {
+    //             onCalculate(-quantity * itemPrice);
+    //         }
+    //     }
+    // }
+    
     return (
         <>
-            <div className="carHeader carBody" >
+            <div className="carHeader carBody">
                 <div className="carChecked">
                     {/* <!-- 個別核取方塊 --> */}
-                    <input type="checkbox" name="subItem" className="liCheck" onChange={gotChange} value={keys} />
+                    <input type="checkbox" name="subItem" className="liCheck" onChange={gotChange} value={id} />
                 </div>
                 <div className="carDetail">
                     <a href={`/item/${id}`}><img src={itemImgUrl} /></a>
@@ -72,13 +93,12 @@ const Product = ({
                 </div>
                 {/* <!-- 商品個別小計 --> */}
                 <div className="amount">
-                    <span className="itemTotal">{quantity*itemPrice}</span>
+                    <span className="itemTotal">{quantity * itemPrice}</span>
                 </div>
                 <div className="operate">
-                    <i id="deleteOut" className="fa fa-trash-o fa-2x" aria-hidden="true" onClick={() => deleteMe()}></i>
+                    <i id="deleteOut" className="fa fa-trash-o fa-2x" aria-hidden="true" onClick={deleteMe}></i>
                 </div>
             </div>
-            
         </>
     )
 };

@@ -10,13 +10,13 @@ export default function UpdateItemPage(props) {
     firmId,
     itemListedDate,
     itemPeriod,
-    itemSales,
-    itemInvent,
+    //itemInvent,
     itemTotalStar,
     itemFilter1,
     itemFilter3,
     itemFilter4,
     imgList,
+    // itemSales,
   } = props;
   const { image1Url, image2Url, image3Url, changeHandler } = useFile();
   const [itemTitle, setItemTitle] = useState(props.itemTitle);
@@ -30,6 +30,8 @@ export default function UpdateItemPage(props) {
   const [itemNote, setItemNote] = useState(props.itemNote);
   const [itemStartDate, setItemStartDate] = useState(props.itemStartDate);
   const [itemEndDate, setItemEndDate] = useState(props.itemEndDate);
+  const [itemSales, setItemSales] = useState(props.itemSales);
+  const [itemInvent, setItemInvent,] = useState(props.itemInvent);
 
   const getUrl = (index, originUrl) => {
     if (index === 0) return image1Url === null ? originUrl : image1Url;
@@ -93,6 +95,8 @@ export default function UpdateItemPage(props) {
           itemNote,
           itemStartDate,
           itemEndDate,
+          itemSales,
+          itemInvent,
         }),
       });
       Router.replace("/company");
@@ -124,7 +128,7 @@ export default function UpdateItemPage(props) {
           </div>
         ))}
       </div>
-      <div className="content">
+      <div className="companyContent">
         <div className="container">
           <form action="javascript:void(0)">
             <label>商品標題:</label>
@@ -148,10 +152,24 @@ export default function UpdateItemPage(props) {
               onChange={(e) => setItemPrice(e.target.value)}
             />
             <br />
+            <label>銷售數量:</label>
+            <input
+              type="text"
+              value={itemSales}
+              onChange={(e) => setItemSales(e.target.value)}
+            />
+            <br />
+            <label>庫存數量:</label>
+            <input
+              type="text"
+              value={itemInvent}
+              onChange={(e) => setItemInvent(e.target.value)}
+            />
+            <br />
             <label>商品說明:</label>
             <input
               type="text"
-              style={{ height: 200, whiteSpace: "pre-line" }}
+              style={{ height: 100, whiteSpace: "pre-line" }}
               value={itemInfo}
               onChange={(e) => setItemInfo(e.target.value)}
             />
@@ -201,7 +219,7 @@ export default function UpdateItemPage(props) {
             <label>如何抵達:</label>
             <input
               type="text"
-              style={{ height: 200 }}
+              style={{ height: 100 }}
               value={itemTraffic}
               onChange={(e) => setItemTraffic(e.target.value)}
             />
@@ -209,7 +227,7 @@ export default function UpdateItemPage(props) {
             <label>注意事項:</label>
             <input
               type="text"
-              style={{ height: 500 }}
+              style={{ height: 100 }}
               value={itemNote}
               onChange={(e) => setItemNote(e.target.value)}
             />

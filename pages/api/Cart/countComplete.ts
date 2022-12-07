@@ -13,7 +13,7 @@ export default async function userHandler(
     case "GET":
       try {
         // 取得商品內容
-        const sq1 = 'SELECT * FROM `itemimg` Left JOIN `item` ON itemimg.itemId=item.itemId WHERE imgLead=1 ORDER BY item.itemTotalStar DESC LIMIT 10;';
+        const sq1 = `SELECT * FROM ordertable Left JOIN usertable ON ordertable.userId=usertable.userId WHERE ordertable.userId="u123456789" ORDER BY orderDate DESC LIMIT 1;`;
         const data = await runSQL(sq1);
         // console.log(data);
         res.status(200).json({ data });

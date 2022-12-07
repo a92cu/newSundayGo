@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 // import { runSQL } from "/../../lib/mysql";
 import { setSeconds } from "date-fns";
 import { useRouter } from 'next/router';
-
+import ReactStars from 'react-stars';
 
 
 
@@ -49,30 +49,30 @@ export const Sight = () => {
             // $(this)(".filterBtn").hide()
             $(this).parent('button').hide()
         });
-    },[])
+    }, [])
     async function fetchdata() {
 
         return (await fetch("/api/home/sight")
             .then((res) => res.json())
             .then((result) => {
-                result.data.forEach((i)=>{
-                    var img=Buffer.from(i.itemImgUrl).toString('base64');
-                    var call=Buffer.from(img, 'base64').toString('ascii');
-                    var replaceCallAll=call.replaceAll('\x00', '');
-                    i.itemImgUrl=replaceCallAll;
-                    })
-                    // console.log(result.data)
-                    setlist(result.data);
-                    //
-                    //setlist(result.data))
+                result.data.forEach((i) => {
+                    var img = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call = Buffer.from(img, 'base64').toString('ascii');
+                    var replaceCallAll = call.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll;
                 })
+                // console.log(result.data)
+                setlist(result.data);
+                //
+                //setlist(result.data))
+            })
         )
     }
-      //篩選不重覆項目
-      var redata = homepagelist.map(function(item){
+    //篩選不重覆項目
+    var redata = homepagelist.map(function (item) {
         return item.itemFilter2;
     });
-    var noredata = redata.filter(function(item, index, array){
+    var noredata = redata.filter(function (item, index, array) {
         return array.indexOf(item) === index;
         // console.log(only);
     });
@@ -80,7 +80,7 @@ export const Sight = () => {
     // const fetcher = (user, page) =>
     //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
 
-  
+
     return (
         <div style={{ width: '1280px', margin: '0 auto' }} >
             {/* <!-- 主要篩選區 --> */}
@@ -177,12 +177,12 @@ export const Sight = () => {
                                 <input type="checkbox" name="citys" />甜點、飲料
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" checked/>景點
+                                <input type="checkbox" className="allcheck" checked />景點
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" checked/>觀光景點
+                                <input type="checkbox" name="citys" checked />觀光景點
                                 <br />
-                                <input type="checkbox" name="citys" checked/>門票
+                                <input type="checkbox" name="citys" checked />門票
                             </div>
 
                             <button className="accordion">
@@ -228,14 +228,14 @@ export const Sight = () => {
                         共篩選出
                         < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
                         項行程
-                        {homepagelist.map((item)=>
-                        <button className="filterBtn" >
-                            {item.itemFilter2}<span className="delbtn">X</span>
-                        </button>
-                        )} 
-                          {homepagelist.map((item)=>
-                        <button className="filterBtn">
-                            {item.itemFilter4}<span className="delbtn">X</span>
+                        {homepagelist.map((item) =>
+                            <button className="filterBtn" >
+                                {item.itemFilter2}<span className="delbtn">X</span>
+                            </button>
+                        )}
+                        {homepagelist.map((item) =>
+                            <button className="filterBtn">
+                                {item.itemFilter4}<span className="delbtn">X</span>
                             </button>
                         )}
                         <hr />
@@ -295,14 +295,14 @@ export const Sight = () => {
                                     </div>
                                     {/* <!-- 星星評價 --> */}
                                     <div className="prostar">
-                                        {/* for(var i=1;i<{item.itemTotalStar};i++){ */}
-                                        {/* {homepagelist.map((item)=> */}
-                                        <img src="/images/1.png" alt="" />
-                                        {/* )} */}
-                                        <img src="/images/1.png" alt="" />
-                                        <img src="/images/1.png" alt="" />
-                                        <img src="/images/0.png" alt="" />
-                                        <img src="/images/0.png" alt="" />
+                                        <div className="collectstar">
+                                            <ReactStars
+                                                Rating
+                                                value={item.itemTotalStar}
+                                                edit={false} />
+
+                                            <div>({item.itemTotalStar})</div>
+                                        </div>
 
                                         <div className="homepri">
                                             <p>TWD {item.itemPrice}</p>
@@ -326,15 +326,16 @@ export const Sight = () => {
                 </div >
 
                 {/* <!-- 頁籤 --> */}
+                {/* 消失會讓footer跑版 */}
                 < ul className="pagination" >
 
-                    <li><a href="#">1</a></li>
+                    {/* <li><a href="#">1</a></li>
                     <li><a className="pagetag" href="#">2</a></li>
                     <li><a href="#">3</a></li>
                     <li><a href="#">4</a></li>
                     <li><a href="#">5</a></li>
                     <li><a href="#">6</a></li>
-                    <li><a href="#">7</a></li>
+                    <li><a href="#">7</a></li> */}
 
                 </ul >
 

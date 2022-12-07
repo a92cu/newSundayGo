@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 // import { runSQL } from "/../../lib/mysql";
 import { setSeconds } from "date-fns";
 import { useRouter } from 'next/router';
-
+import ReactStars from 'react-stars'
 
 
 
@@ -59,7 +59,7 @@ export const Placezone = () => {
             // $(this)(".filterBtn").hide()
             $(this).parent('button').hide()
         });
-    },[])
+    }, [])
     async function fetchdata() {
 
         return (await fetch("/api/home/homepage")
@@ -71,7 +71,7 @@ export const Placezone = () => {
                     var replaceCallAll = call.replaceAll('\x00', '');
                     i.itemImgUrl = replaceCallAll;
                 })
-                // console.log(result.data)
+                console.log(result.data)
                 setlist(result.data);
                 //
                 //setlist(result.data))
@@ -83,13 +83,13 @@ export const Placezone = () => {
     //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
     //篩選不重覆項目
     var redata = homepagelist.map(function (item) {
-        return item.itemFilter2,item.itemFilter4;
+        return item.itemFilter2, item.itemFilter4;
     });
     var noredata = redata.filter(function (item, index, array) {
         return array.indexOf(item) === index;
         // console.log(only);
     });
-   
+
     return (
         <div style={{ width: '1280px', margin: '0 auto' }} >
             {/* <!-- 主要篩選區 --> */}
@@ -237,12 +237,12 @@ export const Placezone = () => {
                         共篩選出
                         < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
                         項行程
-                         {noredata.map((i)=>
-                        <button className="filterBtn" >
-                            {i}<span className="delbtn">X</span>
-                        </button>
-                         )} 
-                            {/* {homepagelist.map((item)=>
+                        {noredata.map((i) =>
+                            <button className="filterBtn" >
+                                {i}<span className="delbtn">X</span>
+                            </button>
+                        )}
+                        {/* {homepagelist.map((item)=>
                             <button className="filterBtn">
                                 {item.itemFilter2}<span className="delbtn">X</span>
                                 </button>
@@ -312,14 +312,18 @@ export const Placezone = () => {
                                     </div>
                                     {/* <!-- 星星評價 --> */}
                                     <div className="prostar">
-                                        {/* for(var i=1;i<{item.itemTotalStar};i++){ */}
-                                        {/* {homepagelist.map((item)=> */}
-                                        <img src="/images/1.png" alt="" />
-                                        {/* )} */}
-                                        <img src="/images/1.png" alt="" />
+                                        <div className="collectstar">
+                                            <ReactStars
+                                                Rating
+                                                value={item.itemTotalStar}
+                                                edit={false} />
+
+                                            <div>({item.itemTotalStar})</div>
+                                        </div>
+                                        {/* <img src="/images/1.png" alt="" />
                                         <img src="/images/1.png" alt="" />
                                         <img src="/images/0.png" alt="" />
-                                        <img src="/images/0.png" alt="" />
+                                        <img src="/images/0.png" alt="" /> */}
 
                                         <div className="homepri">
                                             <p>TWD {item.itemPrice}</p>
@@ -343,15 +347,16 @@ export const Placezone = () => {
                 </div >
 
                 {/* <!-- 頁籤 --> */}
+                {/* 消失會讓footer跑版 */}
                 < ul className="pagination" >
 
-                    <li><a href="#">1</a></li>
+                    {/* <li><a href="#">1</a></li>
                     <li><a className="pagetag" href="#">2</a></li>
                     <li><a href="#">3</a></li>
                     <li><a href="#">4</a></li>
                     <li><a href="#">5</a></li>
                     <li><a href="#">6</a></li>
-                    <li><a href="#">7</a></li>
+                    <li><a href="#">7</a></li> */}
 
                 </ul >
 

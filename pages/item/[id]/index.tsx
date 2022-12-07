@@ -12,6 +12,8 @@ import ReactCalendar from "react-calendar";
 import { props } from "ramda";
 import { Console } from "console";
 import ReactStars from 'react-stars';
+import React from "react";
+
 
 function Calendar({ price, itemId }) {
   const [value, onChange] = useState(new Date());
@@ -40,7 +42,9 @@ function Calendar({ price, itemId }) {
         <p>
           <button
             className="addToCarBtn"
-            onClick={() => window.addToCar(itemId, format(value, "yyyy-MM-dd"))}
+            onClick={() => {
+              window.addToCar(itemId, format(value, "yyyy-MM-dd"));
+              } }
           >
             加入購物車
           </button>
@@ -137,7 +141,7 @@ function Header() {
   return (
     <div className="header">
       <img
-        src="./images/群組 1.png"
+        src="../images/群組 1.png"
         alt=""
         style={{ width: 90, top: -8, position: "relative" }}
       />
@@ -175,20 +179,25 @@ function Carousel({ imgList }) {
   );
 }
 function Receipt(orderList) {
+  ///把沒有評價的擋住先跳出這個,後面沒評價的品項才不會壞掉
+  if (orderList.orderList.length === 0) {
+    return (<div><h3>評價:</h3><span>尚未有評價</span></div>)
+  };
   //出來的資料是陣列
   //console.log(orderList);
   const star = orderList.orderList[0].orderStar
   return (<div>
     <h3>評價:</h3>
-    <p>訂單編號:{orderList.orderList[0].orderReceipt}</p>
-    <p>會員帳號:{orderList.orderList[0].userId}</p>
-    <p>消費日期:{orderList.orderList[0].orderDate}</p>
-    <p>星等:{orderList.orderList[0].orderStar}<ReactStars
-      Rating
-      style={{ maxWidth: 180 }}
-      value={`${star}`}
-      readOnly /></p>
-    <p>評語:{orderList.orderList[0].orderReview}</p>
+    <div style={{ display: "flex" }}>
+      <span>帳號:{orderList.orderList[0].userId}</span>&nbsp;&nbsp;
+      <span>{orderList.orderList[0].orderDate}</span>&nbsp;&nbsp;
+      <ReactStars
+        style={{ maxWidth: 180 }}
+        value={`${star}`}
+        edit={false}
+      />
+    </div>
+    <span>評語:{orderList.orderList[0].orderReview}</span>
   </div>)
 }
 //ItemPage

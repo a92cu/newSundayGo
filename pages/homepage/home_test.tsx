@@ -358,8 +358,8 @@ export default function homepage({ data }) {
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps() {
     // 帳號設定抓的資料 (userBirthday有問題)
-    const sq1 = `SELECT * FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where itemLead=1;`;
-    const sq2 = 'SELECT itemFilter2 FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where itemLead=1;';
+    const sq1 = `SELECT * FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;`;
+    const sq2 = 'SELECT itemFilter2 FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;';
     // const data = await runSQL(sq1);
     const data = await runSQL(sq1);
     const data1 = await runSQL(sq2);

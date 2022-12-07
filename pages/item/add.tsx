@@ -16,6 +16,8 @@ export default function UpdateItemPage(props) {
   const [itemNote, setItemNote] = useState(props.itemNote);
   const [itemStartDate, setItemStartDate] = useState(props.itemStartDate);
   const [itemEndDate, setItemEndDate] = useState(props.itemEndDate);
+  const [itemSales, setItemSales] = useState(props.itemSales);
+  const [itemInvent, setItemInvent] = useState(props.itemInvent);
 
   const getUrl = (index, originUrl) => {
     if (index === 0) return image1Url === null ? originUrl : image1Url;
@@ -35,7 +37,7 @@ export default function UpdateItemPage(props) {
           body: JSON.stringify({
             itemImgUrl: image1Url,
             itemId,
-            itemLead: "1",
+            imgLead: "1",
           }),
         });
       }
@@ -49,7 +51,7 @@ export default function UpdateItemPage(props) {
           body: JSON.stringify({
             itemImgUrl: image2Url,
             itemId,
-            itemLead: "2",
+            imgLead: "2",
           }),
         });
       }
@@ -63,7 +65,7 @@ export default function UpdateItemPage(props) {
           body: JSON.stringify({
             itemImgUrl: image3Url,
             itemId,
-            itemLead: "3",
+            imgLead: "3",
           }),
         });
       }
@@ -85,8 +87,8 @@ export default function UpdateItemPage(props) {
           itemStartDate,
           itemEndDate,
           itemListedDate: itemStartDate,
-          itemSales: 0,
-          itemInvent: 0,
+          itemSales,
+          itemInvent,
           itemTotalStar: 0,
           itemFilter1: "",
           itemFilter2,
@@ -122,7 +124,7 @@ export default function UpdateItemPage(props) {
           </div>
         ))}
       </div>
-      <div className="content">
+      <div className="companyContent">
         <div className="container">
           <form action="javascript:void(0)">
             <label>商品標題:</label>
@@ -146,10 +148,24 @@ export default function UpdateItemPage(props) {
               onChange={(e) => setItemPrice(e.target.value)}
             />
             <br />
+            <label>銷售數量:</label>
+            <input
+              type="text"
+              value={itemSales}
+              onChange={(e) => setItemSales(e.target.value)}
+            />
+            <br />
+            <label>庫存數量:</label>
+            <input
+              type="text"
+              value={itemInvent}
+              onChange={(e) => setItemInvent(e.target.value)}
+            />
+            <br />
             <label>商品說明:</label>
             <input
               type="text"
-              style={{ height: 200, whiteSpace: "pre-line" }}
+              style={{ height: 100, whiteSpace: "pre-line" }}
               value={itemInfo}
               onChange={(e) => setItemInfo(e.target.value)}
             />
@@ -199,7 +215,7 @@ export default function UpdateItemPage(props) {
             <label>如何抵達:</label>
             <input
               type="text"
-              style={{ height: 200 }}
+              style={{ height: 100 }}
               value={itemTraffic}
               onChange={(e) => setItemTraffic(e.target.value)}
             />
@@ -207,7 +223,7 @@ export default function UpdateItemPage(props) {
             <label>注意事項:</label>
             <input
               type="text"
-              style={{ height: 500 }}
+              style={{ height: 100 }}
               value={itemNote}
               onChange={(e) => setItemNote(e.target.value)}
             />

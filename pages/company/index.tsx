@@ -2,7 +2,124 @@ import { useState } from "react";
 import { runSQL } from "../../lib/mysql";
 import { format } from "date-fns";
 import * as R from "ramda";
+import Image from "next/image";
+import Router from "next/router";
+import React from "react";
 
+function Footer() {
+  return (
+    <div className="footer">
+      <div className="footerCenter">
+        <div className="footerBody">
+          <ul>
+            <h4>認識我們</h4>
+            <li>
+              <a href="">關於我們</a>
+            </li>
+            <li>
+              <a href="">使用者條款</a>
+            </li>
+            <li>
+              <a href="">隱私權保護政策</a>
+            </li>
+            <li>
+              <a href="">常見問題與幫助</a>
+            </li>
+          </ul>
+        </div>
+        <div className="footerBody">
+          <ul>
+            <h4>給旅行者們</h4>
+            <li>
+              <a href="">三大保證</a>
+            </li>
+            <li>
+              <a href="">合作夥伴</a>
+            </li>
+            <li>
+              <a href="">回饋金介紹</a>
+            </li>
+            <li>
+              <a href="">賺取額外獎勵</a>
+            </li>
+          </ul>
+        </div>
+        <div className="footerBody">
+          <ul>
+            <h4>給合作夥伴</h4>
+            <li>
+              <a href="">成為供應商</a>
+            </li>
+            <li>
+              <a href="">供應商登入</a>
+            </li>
+            <li>
+              <a href="">同業合作</a>
+            </li>
+            <li>
+              <a href="">聯盟行銷</a>
+            </li>
+          </ul>
+        </div>
+        <div className="footerBody">
+          <div className="footerImg">
+            <h4>付款方式</h4>
+            <Image
+              width={20}
+              height={20}
+              src="/images/MasterCard.png"
+              alt="MasterCard"
+            />
+            <Image width={20} height={20} src="/images/JCB.jpg" alt="JCB" />
+            <Image width={20} height={20} src="/images/visa.png" alt="visa" />
+            <Image
+              width={20}
+              height={20}
+              src="/images/googlepay.jpg"
+              alt="googlepay"
+            />
+            <Image
+              width={20}
+              height={20}
+              src="/images/apple-pay.png"
+              alt="apple"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+function Header() {
+  return (
+    <div className="header">
+      <img
+        src="../images/群組 1.png"
+        alt=""
+        style={{ width: 90, top: -8, position: "relative" }}
+      />
+      <div className="header-right">
+        <a href="#">美食</a>
+        <a href="#">景點</a>
+        <a href="#">活動</a>
+        <a href="#">住宿</a>
+        <a href="#">交通</a>
+        <a onClick={() => Router.push("/cartdetails")}>
+          <img src="/images/cart.png" style={{ width: 25 }} />
+        </a>
+        <a href="#divOne" className="loginbutton">
+          登入|註冊
+        </a>
+      </div>
+      <form className="example" action="">
+        <input type="text" placeholder="Search.." name="search" />
+        <button type="submit">
+          <i className="fa fa-search"></i>
+        </button>
+      </form>
+    </div>
+  );
+}
 function MemberOrder({ itemList, imgList, setItemList }) {
   const deleteItem = (itemId) => {
     if (window.confirm("請確認你要刪除項目") === true) {
@@ -28,14 +145,14 @@ function MemberOrder({ itemList, imgList, setItemList }) {
                 return (
                   <tr>
                     <td>
-                      <div className="OrderReadyImgQ">
-                        <img
+                      <div className="OrderReadyImgQ" >
+                        <a href={`/item/${i.itemId}`}><img
                           src={
                             imgList?.find(
-                              (j) => j.itemId === i.itemId && j.itemLead == 1
+                              (j) => j.itemId === i.itemId && j.imgLead == 1
                             )?.itemImgUrl ?? ''
                           }
-                        />
+                        /></a>
                       </div>
                     </td>
                     <td>{i.itemName}</td>
@@ -49,7 +166,7 @@ function MemberOrder({ itemList, imgList, setItemList }) {
                       </p>
                       <p>
                         上架時間 <br />
-                        <span>{i.itemPeriod}</span>
+                        <span>{i.itemStartDate}~{i.itemEndDate}</span>
                       </p>
                     </td>
                     <td>
@@ -71,76 +188,131 @@ function MemberOrder({ itemList, imgList, setItemList }) {
     </div>
   );
 }
-function Account({
-  firmName,
-  taxId,
-  firmHeadName,
-  firmPhone,
-  firmLocation,
-  firmEmail,
-  firmPassword,
-}) {
-  return (
-    <div id="information" className="tabcontentQ">
-      <h2>帳號設定 </h2>
-      <div className="setBody">
-        <span style={{ color: "#8C5C02" }}>
-          {" "}
-          <b>基本資料</b>{" "}
-        </span>
-        <br />
-        <br />
-        <div className="basic">
-          <span>公司名稱</span>
-          <input type="text" value={firmName} />
-        </div>
-        <div className="basic">
-          <span>統一編號</span>
-          <input type="text" value={taxId} />
-        </div>
-        <div className="basic">
-          <span>負責人</span>
-          <input type="text" value={firmHeadName} />
-        </div>
-        <div className="basic">
-          <span>
-            公司聯絡號碼<b>*</b>
-          </span>
-          <input type="tel" value={firmPhone} />
-        </div>
-        <div className="basic">
-          <span>
-            公司所在地<b>*</b>
-          </span>
-          <input type="text" value={firmLocation} />
-        </div>
-        <div className="basic">
-          <span>
-            公司E-mail<b>*</b>
-          </span>
-          <input type="email" value={firmEmail} />
-        </div>
-        <div className="basic">
-          <span>
-            密碼<b>*</b>
-          </span>
-          <input type="password" value={firmPassword} />
-        </div>
+function Account(props) {
+  
+  const [firmName, setFirmName] = useState(props.firmName);
+  const [taxId, setTaxId] = useState(props.taxId);
+  const [firmHeadName, setFirmHeadName] = useState(props.firmHeadName);
+  const [firmPhone, setFirmPhone] = useState(props.firmPhone);
+  const [firmLocation, setFirmLocation] = useState(props.firmLocation);
+  const [firmEmail, setFirmEmail] = useState(props.firmEmail);
+  const [firmPassword, setFirmPassword] = useState(props.firmPassword);
+
+  const [passwordType, setPasswordType] = useState("password");
+  // const handlePasswordChange =(evnt)=>{
+  //     setPasswordInput(evnt.target.value);
+  // }
+  const togglePassword = () => {
+    if (passwordType === "password") {
+      setPasswordType("text")
+      return;
+    }
+    setPasswordType("password")
+  }
+
+  const saveAccount = () => {
+   //console.log(company) // [{...}]
+  // console.log(accountList[0]) // {}
+    // console.log(userBirthday) // 
+    fetch(`http://localhost:3000/api/company/account`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({
+        firmName: firmName,
+        taxId: taxId,
+        firmHeadName: firmHeadName,
+        firmPhone: firmPhone,
+        firmLocation: firmLocation,
+        firmEmail: firmEmail,
+        firmPassword: firmPassword,
+      }),
+    });
+
+    window.location.replace('/company');
+
+  }
+   return (<div id="information" className="tabcontentQ">
+    <h2>帳號設定 </h2>
+    <div className="setBody">
+    <span style={{ color: "#8C5C02" }}> <b>基本資料</b> </span>
+      <br /><br />
+      <div className="basic">
+        <span>公司名稱<b>*</b> </span>
+        <input type="text"
+          value={firmName}
+          onChange={(e) => setFirmName(e.target.value)}
+          />
       </div>
-      <div className="basicBtn">
-        <button className="informationBtn">
-          {" "}
-          <b>儲存</b>{" "}
-        </button>
+      <div className="basic">
+      <span>統一編號<b>*</b> </span>
+        <input type="text"
+          value={taxId}
+          onChange={(e) => setTaxId(e.target.value)}
+          />
+      </div>
+      <div className="basic">
+      <span>負責人<b>*</b> </span>
+        <input type="text"
+          value={firmHeadName}
+          onChange={(e) => setFirmHeadName(e.target.value)}
+          />
+      </div>
+      <div className="basic">
+      <span>公司電話<b>*</b> </span>
+        <input type="text"
+          value={firmPhone}
+          onChange={(e) => setFirmPhone(e.target.value)}
+          />
+      </div>
+      <div className="basic">
+      <span>公司地址<b>*</b> </span>
+        <input type="text"
+          value={firmLocation}
+          onChange={(e) => setFirmLocation(e.target.value)}
+          />
+      </div>
+      <div className="basic">
+      <span>公司Email<b>*</b> </span>
+        <input type="email"
+          value={firmEmail}
+          onChange={(e) => setFirmEmail(e.target.value)}
+          />
+      </div>
+      <div className="basic">
+      <span>密碼<b>*</b></span>
+        &emsp;&emsp;&emsp;
+        <input
+          type={passwordType}
+          onChange={(e) => setFirmPassword(e.target.value)}
+          // // onChange={handlePasswordChange}
+          value={firmPassword}
+          name="password"
+          className="form-control"
+          placeholder="Password" />&emsp;&emsp;
+        <input
+          style={{
+            width: "15px",
+            verticalAlign: "Middle",
+            outline: "none"
+          }}
+          type="checkbox"
+          onClick={() => togglePassword()} />顯示密碼
       </div>
     </div>
-  );
+    <div className="basicBtn">
+      <button className="informationBtn" onClick={() => saveAccount()}> <b>儲存</b> </button>
+    </div>
+  </div>
+  ); 
 }
 export default function Company(props) {
   const [tab, setTab] = useState("account");
   const [itemList, setItemList] = useState(props.itemList);
   return (
     <>
+    <Header />
       <div className="companyName">
         <span>{props.firmName}</span> &nbsp;<span>您好！</span>
       </div>
@@ -180,6 +352,7 @@ export default function Company(props) {
           />
         )}
       </div>
+      <Footer />
     </>
   );
 }

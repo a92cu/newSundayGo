@@ -13,7 +13,7 @@ export default async function userHandler(
     case "GET":
       try {
         // 取得商品內容
-        const sq1 = 'SELECT * FROM `itemimg` Left JOIN `item` ON itemimg.itemId=item.itemId WHERE itemLead=1 ;';
+        const sq1 = 'SELECT * FROM `itemimg` Left JOIN `item` ON itemimg.itemId=item.itemId WHERE imgLead=1 ;';
         const data = await runSQL(sq1);
         // console.log(data);
         res.status(200).json({ data });

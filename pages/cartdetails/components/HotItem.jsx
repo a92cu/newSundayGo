@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useRef } from "react";
+import React, {useState,useEffect } from "react";
 import dynamic from "next/dynamic";
 import Axios from "axios";
 // import { runSQL } from "../../../lib/mysql";
@@ -46,12 +46,11 @@ function HotItem() {
     useEffect(()=>{
         function axiosdata(){
                 Axios.get("/api/cart/HotItem").then((dataresult) => {
-                    dataresult.data.data.forEach((i)=>{
+                        dataresult.data.data.forEach((i)=>{
                         let img=Buffer.from(i.itemImgUrl).toString('base64');
                         let call=Buffer.from(img, 'base64').toString('ascii');
                         let replaceCallAll=call.replaceAll('\x00', '');
                         i.itemImgUrl=replaceCallAll;
-                        dataresult.data.data
                     })
                     setHotItemData(dataresult.data.data);
                 })

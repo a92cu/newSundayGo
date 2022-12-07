@@ -75,18 +75,24 @@
 .orderleft input {
     border-radius: 5px;
     border: 2px solid #F29F04;
+    width: 180px;
 
 }
 .orderright input {
     border-radius: 5px;
     border: 2px solid #F29F04;
+    width: 180px;
+}
+.orderleft>span{
+/* float: left; */
+flex-wrap:wrap;
 
 }
 
 .orderleft {
     float: left;
     margin-left: 100px;
-    position: relative;
+    /* position: relative; */
 
 
 }
@@ -94,14 +100,23 @@
 .orderright {
     position: relative;
     /* left: 50%; */
-    left: 500px;
+    /* left: 500px; */
 }
+.orderright>span{
+    /* float: left; */
+    flex-wrap:wrap;
+    
+    }
 
 .orderbtn {
     float: right;
 }
 
-.orderleft p::after {
+.orderleft span::after {
+    content: "*";
+    color: red;
+}
+.orderright span::after {
     content: "*";
     color: red;
 }
@@ -111,6 +126,9 @@
     color: red;
 }
 
+div span~input{
+    padding:  5px 0;
+}
 /* 旅客資料 */
 /* .travelman {
     border: 2px solid #F29F04;
@@ -140,7 +158,13 @@
 /* label:hover {
     cursor: pointer;
 } */
-
+.payway{
+    /* display:grid; */
+    float: left;
+    /* flex-wrap:wrap; */
+    clear: both
+    /* background-color: red; */
+}
 /* 當核許框為勾選時，隱藏.toogle-box區塊 */
 input[type="radio"]:checked div {
     opacity: 0;
@@ -158,6 +182,11 @@ input[type="radio"]:checked div {
     overflow: hidden;
     transition: opacity 1.0s linear;
 }
+/* 信用卡輸入框 */
+.toggle .cardint{
+    width: 70%   ;
+}
+
 
 /* 電子發票 */
 /* .billlist {
@@ -182,7 +211,10 @@ input[type="radio"]:checked div {
     margin-right: 50px;
 }
 .carthrline~hr {
-    width: 90%;
+    width: 55%;
+    margin-left: 500px;
+        /* float: right; */
+
     border: none;
     border-bottom: solid 2px #F29F04
 }
@@ -198,6 +230,17 @@ input[type="radio"]:checked div {
     margin-top: 50px;
     margin-bottom: 50px;
 
+}
+
+.paybill~span{
+    margin: auto auto;
+}
+/* 回饋金 */
+.prdtit2{
+    margin-left: 230px;
+}
+.prdtit3{
+    color: #F29F04;
 }
 /* nth-child(3) */
 /* .paybill+span+span{
@@ -308,6 +351,8 @@ input:active {
     border-radius: 10px;
     height: 180px;
     width: 100%;
+    margin-bottom: 10px;
+
     /* float: right; */
 
 }
@@ -320,42 +365,46 @@ input:active {
     /* object-fit: cover; */
     float: left;
     margin: 5px 5px;
+    /* background-color: red; */
 }
 
-.cartpicPlace>img {
-    object-fit: cover;
+/* .cartpicPlace>img {
+    object-fit: fill;
     border-radius: 5px;
-}
+} */
 
 /* .picPlace>img{
     object-fit: cover;
 
 } */
+/* 商品圖片 */
 .cartproPic {
     object-fit: cover;
     max-height: 100%;
     max-width: 100%;
     /* width: auto; */
     height: auto;
+    border-radius: 5px;
 }
 
 /* 前置符號 */
-.cartaccordion:before {
+/*.cartaccordion:before {
     content: '\003E';
     /* content: '\142F'; */
     /* Unicode 字符*/
 
-    font-weight: bold;
+    /* font-weight: bold;
     float: left;
     margin: 25px 25px;
-}
+} */
 
-.cartactive:before {
+
+/* .cartactive:before {
     /* content: "&#711"; */
-    content: '\142F';
+    /* content: '\142F'; */
     /* content: '\1431'; */
     /* 愛心 */
     /* content: '\2661'; */
-    font-weight: bold;
+    /* font-weight: bold;
     /* Unicode 字符 - 号 */
-}
+/* }   */

@@ -20,7 +20,7 @@ export const Mapselect = () => {
         })
         //靠近顯示名稱圖片
         $("path").mouseenter(function (e) {
-            // console.log(e);
+            console.log(e);
             // console.log(this); 
             // console.log($(this).attr("data-name"));
             var tagname = $(this).attr("data-name")
@@ -30,6 +30,8 @@ export const Mapselect = () => {
             //   console.log(result)    
             $(".forcast").text(result[0].place) 
             $(".forcast").append(`<img src="${result[0].img}">`)
+            // $(".forcast").append(`<img style="width:50px" src="${result[0].img}">`)
+
             // const node = document.createElement("img");
             // const textnode = $(node).attr('src',"/images/apple-pay.png");
             // node.appendChild(textnode);
