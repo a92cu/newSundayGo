@@ -1,13 +1,14 @@
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 import Product from "./CartItem_item.jsx"
 
 export var CartItem = () => {
+    let [far, setfar] = useState(false);
     let itemarray = [];
     // 停止輪迴
     let [stopState,setstopState]=useState(false);
     // 讓getshopitem()可以動作
-    const [counts,setcounts]=useState(0);
+    const [counts, setcounts] = useState(0);
     const [shoppingcar, setshoppingcar] = useState([]);
 
     const [ totalCash, setTotalCash ] = useState(0);  // totalCash預設值為0
@@ -182,7 +183,7 @@ export var CartItem = () => {
                     </div>
                     <div>
                         <span>回饋金</span>
-                        <span id="gold">{Math.floor(totalCash*0.02)}</span>
+                        <span id="gold">{totalCash*0.2}</span>
                     </div>
                 </div>
                 <a href="#" onClick={gotopay }>前往結帳</a>
