@@ -34,7 +34,8 @@ function addToCar(itemId, date) {
         itemId,
       },
     })
-  );
+  )
+  location="http://localhost:3000/cartdetails";
 }
 window.adder = adder;
 window.addToCar = addToCar;

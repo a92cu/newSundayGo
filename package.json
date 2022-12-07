@@ -9,11 +9,8 @@
     "@types/jest": "^29.2.3",
     "@types/ramda": "^0.28.20",
     "axios": "^1.2.0",
-<<<<<<< Updated upstream
     "chakra-ui-simple-autocomplete": "^2.2.0",
-=======
     "cookie": "^0.5.0",
->>>>>>> Stashed changes
     "cross-env": "^7.0.3",
     "date-fns": "^2.29.3",
     "flickity": "^2.3.0",

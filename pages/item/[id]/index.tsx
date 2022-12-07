@@ -42,7 +42,9 @@ function Calendar({ price, itemId }) {
         <p>
           <button
             className="addToCarBtn"
-            onClick={() => window.addToCar(itemId, format(value, "yyyy-MM-dd"))}
+            onClick={() => {
+              window.addToCar(itemId, format(value, "yyyy-MM-dd"));
+              } }
           >
             加入購物車
           </button>
