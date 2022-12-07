@@ -212,14 +212,14 @@ CREATE TABLE `itemimg` (
   `imgId` varchar(200) NOT NULL,
   `itemId` varchar(200) NOT NULL,
   `itemImgUrl` LONGBLOB NOT NULL,
-  `itemLead` varchar(1) COLLATE utf16_unicode_ci NOT NULL
+  `imgLead` varchar(1) COLLATE utf16_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
 
 --
 -- 傾印資料表的資料 `itemimg`
 --
 
-INSERT INTO `itemimg` (`imgId`, `itemId`, `itemImgUrl`, `itemLead`) VALUES
+INSERT INTO `itemimg` (`imgId`, `itemId`, `itemImgUrl`, `imgLead`) VALUES
 (1, 1, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_125748/20220103071938_8TSLy/png', '1'),
 (2, 1, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_125748/20220103072034_52N0o/jpg', '2'),
 (3, 1, 'https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_125748/20220103072034_52N0o/jpg', '3'),

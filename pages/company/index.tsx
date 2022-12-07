@@ -32,7 +32,7 @@ function MemberOrder({ itemList, imgList, setItemList }) {
                         <a href={`/item/${i.itemId}`}><img
                           src={
                             imgList?.find(
-                              (j) => j.itemId === i.itemId && j.itemLead == 1
+                              (j) => j.itemId === i.itemId && j.imgLead == 1
                             )?.itemImgUrl ?? ''
                           }
                         /></a>

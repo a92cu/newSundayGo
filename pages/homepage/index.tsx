@@ -487,10 +487,10 @@ export default function homepage(props) {
 
 export async function getStaticProps({ params }) {
     // const itemList: any = [];
-    const sq1 = `SELECT  item.itemTitle, item.itemFilter2, itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where itemLead=1;`;
-    // const sq1 = 'SELECT * FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where itemLead=1 and itemFilter3 = "美食";';
-    const sq2 = 'SELECT itemFilter2 FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where itemLead=1;';
-    const sq3 = `SELECT  itemListedDate, itemStartDate, itemEndDate FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where itemLead=1 and itemFilter3 = "美食";`;
+    const sq1 = `SELECT  item.itemTitle, item.itemFilter2, itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;`;
+    // const sq1 = 'SELECT * FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and itemFilter3 = "美食";';
+    const sq2 = 'SELECT itemFilter2 FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;';
+    const sq3 = `SELECT  itemListedDate, itemStartDate, itemEndDate FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and itemFilter3 = "美食";`;
     const itemList: any = [];
     const dateList: any = [];
 

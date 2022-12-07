@@ -37,7 +37,7 @@ export default function UpdateItemPage(props) {
           body: JSON.stringify({
             itemImgUrl: image1Url,
             itemId,
-            itemLead: "1",
+            imgLead: "1",
           }),
         });
       }
@@ -51,7 +51,7 @@ export default function UpdateItemPage(props) {
           body: JSON.stringify({
             itemImgUrl: image2Url,
             itemId,
-            itemLead: "2",
+            imgLead: "2",
           }),
         });
       }
@@ -65,7 +65,7 @@ export default function UpdateItemPage(props) {
           body: JSON.stringify({
             itemImgUrl: image3Url,
             itemId,
-            itemLead: "3",
+            imgLead: "3",
           }),
         });
       }

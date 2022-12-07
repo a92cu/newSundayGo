@@ -458,7 +458,7 @@ export default function cartlist(props) {
 
 export async function getStaticProps({ params }) {
     // const itemList: any = [];
-    const sq1 = `SELECT  item.itemTitle, item.itemFilter2, itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where itemLead=1;`;
+    const sq1 = `SELECT  item.itemTitle, item.itemFilter2, itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;`;
     const sq2 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
 
     const itemList: any = [];
