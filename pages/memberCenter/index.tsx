@@ -8,7 +8,7 @@ import ReactStars from 'react-stars'
 import axios from "axios";
 import Script from "next/script";
 import useFile from "../../hook/useFile";
-// const [cookie, setCookie] = useCookies(["user"])
+import { useCookies } from "react-cookie"
 
 
 function Footer() {
@@ -96,6 +96,11 @@ function Footer() {
   );
 }
 function Header() {
+  const [cookie, setCookie] = useCookies(["user"])
+
+
+  //判斷有無cookie 去切換登入登出
+  if (Object.keys(cookie).length===0) {
   return (
     <div className="header">
       <img
@@ -112,8 +117,13 @@ function Header() {
         <a href="#">
           <img src="./images/cart.png" style={{ width: 25 }} />
         </a>
+<<<<<<< Updated upstream
         <a href="#divOne" className="loginbutton">
           登出
+=======
+        <a href="http://localhost:3000/login" className="loginbutton">
+          登入|註冊
+>>>>>>> Stashed changes
         </a>
       </div>
       <form className="example" action="">
@@ -123,7 +133,44 @@ function Header() {
         </button>
       </form>
     </div>
-  );
+  ) } else {
+    return (
+        <div className="header">
+            <img
+                src="/images/群組 1.png"
+                alt=""
+                // width={20} height={20}
+                style={{
+                    width: 90,
+                    top: -8,
+                    position: "relative"
+                }}
+            />
+            <div className="header-right">
+                <a href="#">美食</a>
+                <a href="#">景點</a>
+                <a href="#">活動</a>
+                <a href="#">住宿</a>
+                <a href="#">交通</a>
+                <a href="#">
+                    <img
+                        src="/images/cart.png"
+                        alt=""
+                        width={20} height={20} />
+                </a>
+                <a href="#divOne" className="loginbutton">
+                    登出
+                </a>
+            </div>
+            <form className="example" action="">
+                <input type="text" placeholder="Search.." name="search" />
+                <button type="submit">
+                    <i className="fa fa-search"></i>
+                </button>
+            </form>
+        </div>
+    );
+}
 }
 // 帳號設定修改 OK 性別暫時PASS 
 function MemberAccount(props) {
