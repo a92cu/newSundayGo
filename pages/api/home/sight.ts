@@ -11,8 +11,8 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
   switch (method) {
     case 'GET':
       try {
-        const sq1 = 'SELECT * FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where itemLead=1 and itemFilter3 = "景點";';
-        const sq2 = 'SELECT itemFilter2 FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where itemLead=1;';
+        const sq1 = 'SELECT * FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and itemFilter3 = "景點";';
+        const sq2 = 'SELECT itemFilter2 FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;';
         const data = await runSQL(sq1);
         const data1 = await runSQL(sq2);
         res.status(200).json({ data, data1 })

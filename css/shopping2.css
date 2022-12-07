@@ -351,6 +351,8 @@ input:active {
     border-radius: 10px;
     height: 180px;
     width: 100%;
+    margin-bottom: 10px;
+
     /* float: right; */
 
 }
@@ -363,23 +365,26 @@ input:active {
     /* object-fit: cover; */
     float: left;
     margin: 5px 5px;
+    /* background-color: red; */
 }
 
-.cartpicPlace>img {
-    object-fit: cover;
+/* .cartpicPlace>img {
+    object-fit: fill;
     border-radius: 5px;
-}
+} */
 
 /* .picPlace>img{
     object-fit: cover;
 
 } */
+/* 商品圖片 */
 .cartproPic {
     object-fit: cover;
     max-height: 100%;
     max-width: 100%;
     /* width: auto; */
     height: auto;
+    border-radius: 5px;
 }
 
 /* 前置符號 */

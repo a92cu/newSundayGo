@@ -50,18 +50,18 @@ export const Login = (props) => {
                         sameSite: true,
                     })
 
-                    console.log(cookie);
                     //存於cookie的值
-                    console.log(cookie.firm.data[0].firmId);
+                    // console.log(cookie.firm.data[0].firmId);
 
                     // cookie判斷是否存在
-                    if (Object.keys(cookie).length!==0) {
-                        console.log("cookie已存");
-                    }
-                    //跳轉到會員頁  
+                    // if (Object.keys(cookie).length!==0) {
+                    //     console.log("cookie已存");
+                    // }
+                    
+                    //跳轉到指定頁  
                     setTimeout(() => {
                         Router.replace("/company");
-                    }, 100);
+                    }, 10);
                 }
             })
 
@@ -80,7 +80,7 @@ export const Login = (props) => {
                 <label htmlFor="firmId">帳號</label>
                 <input value={firmId} onChange={(e) => setfirmId(e.target.value)}type="email" placeholder="輸入帳號" id="email" name="email" />
                 <label htmlFor="firmPassword">密碼</label>
-                <input value={firmPassword} onChange={(e) => setfirmPassword(e.target.value)} type="輸入密碼" placeholder="********" id="password" name="password" />
+                <input value={firmPassword} onChange={(e) => setfirmPassword(e.target.value)} type="password" placeholder="********" id="password" name="password" />
                 <button className="sub-btn" type="submit" onClick={handleSubmit}>送出</button>
             </form>
             <button    className="link-btn" onClick={() => props.onFormSwitch('register')}>沒有帳號？點此註冊</button>

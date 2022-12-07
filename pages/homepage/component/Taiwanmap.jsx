@@ -30,6 +30,8 @@ export const Mapselect = () => {
             //   console.log(result)    
             $(".forcast").text(result[0].place) 
             $(".forcast").append(`<img src="${result[0].img}">`)
+            // $(".forcast").append(`<img style="width:50px" src="${result[0].img}">`)
+
             // const node = document.createElement("img");
             // const textnode = $(node).attr('src',"/images/apple-pay.png");
             // node.appendChild(textnode);

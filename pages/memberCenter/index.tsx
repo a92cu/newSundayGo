@@ -8,7 +8,7 @@ import ReactStars from 'react-stars'
 import axios from "axios";
 import Script from "next/script";
 import useFile from "../../hook/useFile";
-// const [cookie, setCookie] = useCookies(["user"])
+import { useCookies } from "react-cookie"
 
 
 function Footer() {
@@ -96,6 +96,11 @@ function Footer() {
   );
 }
 function Header() {
+  const [cookie, setCookie] = useCookies(["user"])
+
+
+  //判斷有無cookie 去切換登入登出
+  if (Object.keys(cookie).length===0) {
   return (
     <div className="header">
       <img
@@ -112,7 +117,7 @@ function Header() {
         <a href="#">
           <img src="./images/cart.png" style={{ width: 25 }} />
         </a>
-        <a href="#divOne" className="loginbutton">
+        <a href="http://localhost:3000/login" className="loginbutton">
           登入|註冊
         </a>
       </div>
@@ -123,7 +128,44 @@ function Header() {
         </button>
       </form>
     </div>
-  );
+  ) } else {
+    return (
+        <div className="header">
+            <img
+                src="/images/群組 1.png"
+                alt=""
+                // width={20} height={20}
+                style={{
+                    width: 90,
+                    top: -8,
+                    position: "relative"
+                }}
+            />
+            <div className="header-right">
+                <a href="#">美食</a>
+                <a href="#">景點</a>
+                <a href="#">活動</a>
+                <a href="#">住宿</a>
+                <a href="#">交通</a>
+                <a href="#">
+                    <img
+                        src="/images/cart.png"
+                        alt=""
+                        width={20} height={20} />
+                </a>
+                <a href="#divOne" className="loginbutton">
+                    登出
+                </a>
+            </div>
+            <form className="example" action="">
+                <input type="text" placeholder="Search.." name="search" />
+                <button type="submit">
+                    <i className="fa fa-search"></i>
+                </button>
+            </form>
+        </div>
+    );
+}
 }
 // 帳號設定修改 OK 性別暫時PASS 
 function MemberAccount(props) {
@@ -348,9 +390,9 @@ function SevenDay() {
                 console.log(thisDate, gotdate)
                 alert('您已領取折扣券')
                 axios.put(`/api/memberCentre/taketime`, {
-                    timeData: format(thisDate,"yyyy-MM-dd"),
-                    discountdate: format(fetureDate,"yyyy-MM-dd"),
-                    count: checkCount + 1,
+                  timeData: format(thisDate, "yyyy-MM-dd"),
+                  discountdate: format(fetureDate, "yyyy-MM-dd"),
+                  count: checkCount + 1,
                 });
               } else {
                 alert("尚未滿足條件")
@@ -409,11 +451,13 @@ function MemberOrder(orderList, imgList) {
                 return (
                   <div className="OrderReadyDiv" key={i.orderNumber}>
                     <div className="OrderReadyImg">
-                      <img src={
-                        orderList.imgList?.find(
-                          (j) => j.itemId === i.itemId && j.itemLead == 1
-                        )?.itemImgUrl ?? ''
-                      } />
+                      <img
+                        onClick={() => router.push(`/item/${i.itemId}`)}
+                        src={
+                          orderList.imgList?.find(
+                            (j) => j.itemId === i.itemId && j.imgLead == 1
+                          )?.itemImgUrl ?? ''
+                        } />
                     </div>
                     <div className="OrderReadyRight">
                       <div className="ORRightName">
@@ -435,11 +479,13 @@ function MemberOrder(orderList, imgList) {
                   <div id="memberOrderGo" className="memberOrderBody" key={i.orderNumber}>
                     <div className="OrderReadyDiv">
                       <div className="OrderReadyImg">
-                        <img src={
-                          orderList.imgList?.find(
-                            (j) => j.itemId === i.itemId && j.itemLead == 1
-                          )?.itemImgUrl ?? ''
-                        } />
+                        <img
+                          onClick={() => router.push(`/item/${i.itemId}`)}
+                          src={
+                            orderList.imgList?.find(
+                              (j) => j.itemId === i.itemId && j.imgLead == 1
+                            )?.itemImgUrl ?? ''
+                          } />
                       </div>
                       <div className="OrderReadyRight">
                         <div className="ORRightName">
@@ -463,11 +509,13 @@ function MemberOrder(orderList, imgList) {
                   <div id="memberOrderGo" className="memberOrderBody" key={i.orderNumber}>
                     <div className="OrderReadyDiv">
                       <div className="OrderReadyImg">
-                        <img src={
-                          orderList.imgList?.find(
-                            (j) => j.itemId === i.itemId && j.itemLead == 1
-                          )?.itemImgUrl ?? ''
-                        } />
+                        <img
+                          onClick={() => router.push(`/item/${i.itemId}`)}
+                          src={
+                            orderList.imgList?.find(
+                              (j) => j.itemId === i.itemId && j.imgLead == 1
+                            )?.itemImgUrl ?? ''
+                          } />
                       </div>
                       <div className="OrderReadyRight">
                         <div className="ORRightName">
@@ -500,7 +548,7 @@ function Collect({ itemList, imgList, setItemList }) {
   const router = useRouter()
   const collectDelete = (favId) => {
     console.log(favId);
-    if (window.confirm("確認要從我的商品移除嗎") === true) {
+    if (window.confirm("確認要從我的珍藏移除嗎") === true) {
       console.log('ok');
       const newItemList = R.reject(R.propEq("favId", favId), itemList);
       setItemList(newItemList);
@@ -526,11 +574,13 @@ function Collect({ itemList, imgList, setItemList }) {
             // onClick={() => router.push(`/item/${i.itemId}`)}
             <div className="collectDiv" key={i.favId}>
               <div className="collectImg">
-                <img src={
-                  imgList?.find(
-                    (j) => j.itemId === i.itemId && j.itemLead == 1
-                  )?.itemImgUrl ?? ''
-                } /></div>
+                <img
+                  onClick={() => router.push(`/item/${i.itemId}`)}
+                  src={
+                    imgList?.find(
+                      (j) => j.itemId === i.itemId && j.imgLead == 1
+                    )?.itemImgUrl ?? ''
+                  } /></div>
               <div className="collectRight">
                 <div className="collectName">
                   <button className="collectHeart collectDelete" onClick={() => collectDelete(i.favId)}><i className="fa fa-heart fa-2x"></i></button>
@@ -606,7 +656,7 @@ export default function MemberCentre(props) {
             <input id="chengImgBtn"
               type="file"
               style={{ display: "none" }}
-              // onChange={(e) => changeHandler()}
+            // onChange={(e) => changeHandler()}
             />
 
             <button type="button" id="cameraBtn" >
@@ -682,7 +732,7 @@ export async function getStaticProps({ params }) {
   // 我的收藏資料庫抓的
   const sq2 = `SELECT * FROM favorite , item WHERE favorite.itemId = item.itemId AND userId = 'u123456789';`;
   const sq3 = `SELECT * FROM itemimg`;
-  const sq4 = `SELECT item.itemId , userId, orderNumber, orderReceipt,orderReview, orderStar, orderDate, orderQua, orderRebate , orderDeter , itemTitle, itemPrice FROM ordertable LEFT JOIN item ON ordertable.itemId=item.itemId;`;
+  const sq4 = `SELECT item.itemId , userId, orderNumber, orderReceipt,orderReview, orderStar, orderDate, orderQua, orderRebate , orderDeter , itemTitle, itemPrice FROM ordertable LEFT JOIN item ON ordertable.itemId=item.itemId where userId = 'u123456789';`;
   const sq5 = `SELECT  * FROM discountcoupon WHERE userId = "u123456789"`;
   // any是沒有定義的意思
   const accountList: any = []; // 帳號
