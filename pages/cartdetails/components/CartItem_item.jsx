@@ -50,32 +50,39 @@ function Product({
         e.target.parentElement.parentElement.remove()
     }
 
-    // const [_, refresh] = useState()
+    // 全選框測試 -
+    let allChangeInput = (e) => {
+        console.log(e)
+        if(quantity!==0){
+            if (e.checked) {
+                onCalculate(quantity * itemPrice);
+            } else {
+                onCalculate(-quantity * itemPrice);
+            }
+        }
+    }
 
-    // const inputEl=useRef();
-    // if(check){
-    //     console.log(inputEl.current.checked);
-    //     inputEl.current.checked=check;
-    // }else{
-    //     inputEl.current.checked=check;
-    // }
-    // let allChangeInput = (e) => {
-    //     console.log(e)
-    //     if(quantity!==0){
-    //         if (e.checked) {
-    //             onCalculate(quantity * itemPrice);
-    //         } else {
-    //             onCalculate(-quantity * itemPrice);
-    //         }
-    //     }
-    // }
     
+    const inputEl=useRef();
+    if(inputEl.current){
+        if(check){
+            console.log(inputEl.current.checked);
+            inputEl.current.checked=check;
+            allChangeInput(inputEl.current);
+        }else{
+            console.log(inputEl.current)
+            inputEl.current.checked=check;
+            allChangeInput(inputEl.current);
+        }
+    }
+    //----
+
     return (
         <>
             <div className="carHeader carBody">
                 <div className="carChecked">
                     {/* <!-- 個別核取方塊 --> */}
-                    <input type="checkbox" name="subItem" className="liCheck" onChange={gotChange} value={id} />
+                    <input ref={inputEl} type="checkbox" name="subItem" className="liCheck" onChange={gotChange} value={id} />
                 </div>
                 <div className="carDetail">
                     <a href={`/item/${id}`}><img src={itemImgUrl} /></a>
