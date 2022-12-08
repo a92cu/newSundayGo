@@ -96,10 +96,19 @@ function Footer() {
   );
 }
 function Header() {
-  const [cookie, setCookie] = useCookies(["user"])
+  const [cookie, setCookie,removeCookie] = useCookies(["user","firm"])
 
 
-  // 判斷有無cookie 去切換登入登出
+   const RemoveCookie=()=>{
+    removeCookie('user');
+    removeCookie('firm');
+
+    setTimeout(() => {
+      Router.replace("/company");
+  }, 10);
+    };
+
+  //判斷有無cookie 去切換登入登出
   if (Object.keys(cookie).length===0) {
   return (
     <div className="header">
@@ -153,7 +162,7 @@ function Header() {
                         alt=""
                         width={20} height={20} />
                 </a>
-                <a href="#divOne" className="loginbutton">
+                <a href="/company" className="loginbutton" onClick={RemoveCookie}>
                     登出
                 </a>
             </div>
