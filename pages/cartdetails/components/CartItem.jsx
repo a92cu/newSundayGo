@@ -1,21 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import Product from "./CartItem_item.jsx"
 
 export var CartItem = () => {
-    let [far, setfar] = useState(false);
     let itemarray = [];
     // 停止輪迴
-    let [stopState,setstopState]=useState(false);
+    let [stopState, setstopState] = useState(false);
     // 讓getshopitem()可以動作
     const [counts, setcounts] = useState(0);
     const [shoppingcar, setshoppingcar] = useState([]);
 
-    const [ totalCash, setTotalCash ] = useState(0);  // totalCash預設值為0
+    const [totalCash, setTotalCash] = useState(0);  // totalCash預設值為0
 
-    const calculate = (price) => {
-        if(totalCash>=0){
-            setTotalCash( totalCash + price );   // totalCash =  totalCash + price
+    // 還是有小biug
+    const calculate = () => {
+        let totalPrice=document.querySelectorAll('.itemTotal')
+        let total=0;
+        totalPrice.forEach((e)=>{
+            console.log(e.parentElement.parentElement.children[0].children[0].checked)
+            if(e.parentElement.parentElement.children[0].children[0].checked){
+                total += parseInt(e.innerHTML)
+            }
+        })
+        if (totalCash >= 0) {
+            setTotalCash(total);   // totalCash =  totalCash + price
+        } else {
+            setTotalCash(0)
         }
     }
     useEffect(() => {
@@ -27,11 +37,12 @@ export var CartItem = () => {
         }
         setshoppingcar(itemarray);
         // console.log(itemarray);
-        
+        calculate()
         // 停止迴圈
         setstopState(true)
-    },[stopState])
+    }, [stopState])
 
+    // 處理撈取的資料
     function getshopitem(id, date, count) {
         fetch("/api/cart/ShopItem", { next: { revalidate: 10 } })
             .then((response) => response.json())
@@ -44,7 +55,7 @@ export var CartItem = () => {
                 // 將該位置的圖片轉碼
                 dataAll[dataint].itemImgUrl = getImgUrl(dataAll[dataint].itemImgUrl);
                 // console.log(dataAll[dataint].itemImgUrl)
-    
+
                 // 將所需資料放進itemarray
                 itemarray.push({
                     id: id,
@@ -54,9 +65,9 @@ export var CartItem = () => {
                     itemPrice: dataAll[dataint].itemPrice,
                     itemImgUrl: dataAll[dataint].itemImgUrl,
                 });
-                
+
                 // // 因為畫面會無限迴圈,所以設定setcounts讓畫面只更新一次
-                setcounts(c=>c+1)
+                setcounts(c => c + 1)
 
                 // 幫圖片轉碼
                 function getImgUrl(itemImg) {
@@ -68,61 +79,82 @@ export var CartItem = () => {
             }
             )
     }
-    
-    // // 做全選框 -- TEST -- 可以作用，但無法觸發input裡的onChange
-    // const [allChecked,setAllChecked]=useState(false)
-    // const handleOnChange=(e)=>{
-    //     setAllChecked(e.target.checked)
-    //     let a=document.querySelectorAll("input[class='liCheck']")
-    //     a.forEach(element => {
-    //         console.log(element);
-    //         element.checked=e.target.checked
-    //     });
-    // }
-    
-    // 做全選框 -- TEST2
-    const [allChecked,setAllChecked]=useState(false)
-    function handleOnChange (e){
-        console.log(e)
-        setAllChecked(e.target.checked)
-    }
 
+    // 做全選框 -- 成功 (用改資料的方式)
+    function handleOnChange(e) {
+        const { value, checked } = e.target;
+        if (value === "on") {
+            let doAllCheck = shoppingcar.map((test) => {
+                return { ...test, isCheck: checked };
+            });
+            setshoppingcar(doAllCheck);
+        } else {
+            let doAllCheck = shoppingcar.map((test) =>
+                test.id === value ? { ...test, isCheck: checked } : test
+            );
+            setshoppingcar(doAllCheck);
+        }
+        calculate();// 計算全部價錢
+    }
+    // 增加按鈕
+    const increment = (e) => {
+        // let value=e.target.parentElement.parentElement.parentElement.children[0].children[0].value; // 商品Id
+        let int=parseInt(e.target.parentElement.parentElement.children[1].innerHTML); // 商品數量
+        int +=1; // 數量+1
+        e.target.parentElement.parentElement.children[1].innerHTML=int; // 將商品數量+1
+        let quaPrice=parseInt(e.target.parentElement.parentElement.parentElement.children[3].children[0].innerHTML); // 單價
+        e.target.parentElement.parentElement.parentElement.children[5].children[0].innerHTML=quaPrice*int // 總價
+        calculate(e,quaPrice*int);// 計算全部價錢
+    };
+    // 減少按鈕
+    const decrement = (e) => {
+        // let value=e.target.parentElement.parentElement.parentElement.children[0].children[0].value; // 商品Id
+        let int=parseInt(e.target.parentElement.parentElement.children[1].innerHTML); // 商品數量
+        let quaPrice=parseInt(e.target.parentElement.parentElement.parentElement.children[3].children[0].innerHTML); // 單價
+        if(int>0){ // 數量=0不再減少
+            int=int-1;
+            e.target.parentElement.parentElement.children[1].innerHTML=int;
+        }
+        e.target.parentElement.parentElement.parentElement.children[5].children[0].innerHTML=quaPrice*int // 總價
+        calculate(e,-quaPrice*int);// 計算全部價錢
+    }
+    
     // 將商品丟進local storage 前往結帳頁面
-    function gotopay(){
-        if(totalCash==0){
+    function gotopay() {
+        if (totalCash == 0) {
             alert("請選擇商品")
-        }else{
-            var a=document.querySelectorAll('.liCheck')
+        } else {
+            var a = document.querySelectorAll('.liCheck')
             a.forEach(element => {
-                    let Id=parseInt(element.value);
-                    let date=element.parentElement.nextSibling.nextSibling.children[0].innerHTML;
-                    let count=parseInt(element.parentElement.nextSibling.nextSibling.nextSibling.nextSibling.children[1].innerHTML);
-                    let price=parseInt(element.parentElement.nextSibling.nextSibling.nextSibling.children[0].innerHTML);
-                if(element.checked){
+                let Id = parseInt(element.value);
+                let date = element.parentElement.nextSibling.nextSibling.children[0].innerHTML;
+                let count = parseInt(element.parentElement.nextSibling.nextSibling.nextSibling.nextSibling.children[1].innerHTML);
+                let price = parseInt(element.parentElement.nextSibling.nextSibling.nextSibling.children[0].innerHTML);
+                if (element.checked) {
                     console.log(element.value) // itemId
                     console.log(element.parentElement.nextSibling.nextSibling.nextSibling.nextSibling.children[1].innerHTML) // count
                     console.log(element.parentElement.nextSibling.nextSibling.children[0].innerHTML) // date
                     console.log(element.parentElement.nextSibling.nextSibling.nextSibling.children[0].innerHTML);// 價錢
-                    setshopcaritem(Id,date,count,price);
+                    setshopcaritem(Id, date, count, price);
                 }
             })
-            window.location="/cartlist" //前往結帳頁面
+            window.location = "/cartlist" //前往結帳頁面
         }
-        function setshopcaritem(itemId,date,count,price){
+        function setshopcaritem(itemId, date, count, price) {
             window.localStorage.setItem(
                 "sureshopcar",
                 JSON.stringify({
-                ...JSON.parse(window.localStorage.getItem("sureshopcar")),
-                [itemId]: {
-                    itemId,
-                    date,
-                    count:count,
-                    price:price,
-                },
+                    ...JSON.parse(window.localStorage.getItem("sureshopcar")),
+                    [itemId]: {
+                        itemId,
+                        date,
+                        count: count,
+                        price: price,
+                    },
                 })
-        )}
+            )
+        }
     }
-    
     return (
         <>
             <div id="car"></div>
@@ -149,30 +181,39 @@ export var CartItem = () => {
                 </ol>
             </div>
             <div className="cartcontainer">
-            <div className="carTitle">&diams;&diams;&diams;購物車清單</div>
-            <div className="carHeader">
-                {/* <!-- 全選核取方塊 --> */}
-                <div className="carChecked"> <input type="checkbox" id="checkAll" onChange={handleOnChange}/> 全選</div>
-                <div className="carDetail">商品圖片</div>
-                <div className="carDetail">商品名稱</div>
-                <div>單價</div>
-                <div className="count">數量</div>
-                <div className="amount">總計</div>
-                <div className="operate">刪除</div>
-            </div>
-            {/* <!-- 商品明細 --> */}
-            {shoppingcar.map((i,key) =>
-                <Product
-                id={i.id}
-                key={key}
-                date={i.date}
-                count={i.count}
-                check={allChecked}
-                itemTitle={i.itemTitle}
-                itemPrice={i.itemPrice}
-                itemImgUrl={i.itemImgUrl}
-                onCalculate={calculate}
-                 />
+                <div className="carTitle">&diams;&diams;&diams;購物車清單</div>
+                <div className="carHeader">
+                    {/* <!-- 全選核取方塊 --> */}
+                    <div className="carChecked">
+                        <input type="checkbox"
+                            id="checkAll"
+                            className="clickAll"
+                            onChange={handleOnChange} 
+                            checked={shoppingcar.filter((test)=> test?.isCheck !== true).length < 1} /> 全選
+                    </div>
+                    <div className="carDetail">商品圖片</div>
+                    <div className="carDetail">商品名稱</div>
+                    <div>單價</div>
+                    <div className="count">數量</div>
+                    <div className="amount">總計</div>
+                    <div className="operate">刪除</div>
+                </div>
+                {/* <!-- 商品明細 --> */}
+                {shoppingcar.map((i, key) =>
+                    <Product
+                        id={i.id}
+                        key={key}
+                        date={i.date}
+                        count={i.count}
+                        check={i?.isCheck || false}
+                        itemTitle={i.itemTitle}
+                        itemPrice={i.itemPrice}
+                        itemImgUrl={i.itemImgUrl}
+                        onCalculate={calculate}
+                        onHandleOnChange={handleOnChange}
+                        doIncrement={increment}
+                        doDecrement={decrement}
+                    />
                 )}
             </div>
             <div className="carTotal">
@@ -183,10 +224,10 @@ export var CartItem = () => {
                     </div>
                     <div>
                         <span>回饋金</span>
-                        <span id="gold">{totalCash*0.2}</span>
+                        <span id="gold">{totalCash * 0.2}</span>
                     </div>
                 </div>
-                <a href="#" onClick={gotopay }>前往結帳</a>
+                <a href="#" onClick={gotopay}>前往結帳</a>
             </div>
             <div className="continueBtn">
                 <a href="/#">繼續購物
