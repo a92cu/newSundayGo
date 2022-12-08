@@ -101,10 +101,10 @@ function Food(dateList) {
     //     setShow(false)
     //   }
 
-    const handleclick = (e) => {
-        var wantdel = document.getElementsByClassName('delbtn');
-        wantdel.style.display = 'none';
-    }
+    // const handleclick = (e) => {
+    //     var wantdel = document.getElementsByClassName('delbtn');
+    //     wantdel.style.display = 'none';
+    // }
 
     // useEffect(() => {fetchdata()}, []);
     useEffect(() => {

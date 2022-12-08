@@ -20,12 +20,13 @@
 
 #progressBar div span {
     z-index: 18;
-    position: absolute;
+    /* position: absolute; */
     display: inline-block;
     background: #F29F04;
     height: 5px;
     /* 第一階段購物車清單改25% 訂購完成改100% */
     width: 50%;
+    margin-bottom: 500px;
 }
 
 /* 第二朵花灰階
@@ -183,7 +184,7 @@ input[type="radio"]:checked div {
     transition: opacity 1.0s linear;
 }
 /* 信用卡輸入框 */
-.toggle .cardint{
+.carttoggle .cardint{
     width: 70%   ;
 }
 
@@ -388,15 +389,15 @@ input:active {
 }
 
 /* 前置符號 */
-/*.cartaccordion:before {
+.cartaccordion:before {
     content: '\003E';
     /* content: '\142F'; */
     /* Unicode 字符*/
 
-    /* font-weight: bold;
+     font-weight: bold;
     float: left;
     margin: 25px 25px;
-} */
+} 
 
 
 /* .cartactive:before {

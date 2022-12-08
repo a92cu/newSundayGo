@@ -7,6 +7,7 @@ import * as R from "ramda";
 import { useRouter } from 'next/router'
 import Listdemo from "./component/Listdemo.jsx";
 
+
 //   header
 function Header() {
     return (
@@ -16,11 +17,11 @@ function Header() {
                     alt=""
                     style={{ width: '90px', top: '-8px', position: 'relative' }} /></a>
             <div className="header-right">
-                <a href="/home/food">美食</a>
-                <a href="/home/place">景點</a>
-                <a href="/home/play">活動</a>
-                <a href="/home/living">住宿</a>
-                <a href="/home/car">交通</a>
+                <a href="/homepage/food">美食</a>
+                <a href="/homepage/sight">景點</a>
+                <a href="/homepage/play">活動</a>
+                <a href="/homepage/lodging">住宿</a>
+                <a href="/homepage/traffic">交通</a>
                 <a href="#"><img src="/images/cart.png" style={{ width: '25px' }} /></a>
                 <a href="#">登入|註冊</a>
             </div>
@@ -38,23 +39,23 @@ function Titlebar() {
         <>
 
             <div id="progressBar">
-                {/* 進度條  */}
+                {/* <!-- 進度條 --> */}
                 <div>
                     <span></span>
                 </div>
-                {/* 花跟字  */}
+                {/* <!-- 花跟字 --> */}
                 <ol className="cartList">
                     <li>
-                        {/* 購物車 */}
-                        <img src="/images/flower.png" />
+                        購物車
+                        <img src="./images/flower.png" />
                     </li>
                     <li>
-                        {/* 填寫資料及付款 */}
-                        <img src="/images/flower.png" />
+                        填寫資料及付款
+                        <img src="./images/flower.png" />
                     </li>
                     <li>
-                        {/* //訂購完成 */}
-                        <img src="/images/flower.png" />
+                        訂購完成
+                        <img src="./images/flower.png" />
                     </li>
                 </ol>
             </div>
@@ -112,7 +113,8 @@ function Footer() {
 function Orderman({
     userName,
     userPhone,
-    userEmail }
+    userEmail,
+    userGender }
 ) {
     return (
         <section className="orderman" >
@@ -127,11 +129,7 @@ function Orderman({
                             <span>名字</span>
                             <br />
                             <input type="text" name="userName" id="CartuserName" value={userName} required />
-                            <div>
-                                <span>地區</span>
-                                <br />
-                                <input type="text" name="area" required />
-                            </div>
+
 
                             <div>
                                 <span>電子信箱</span>
@@ -143,9 +141,9 @@ function Orderman({
 
                         <div className="orderright">
                             <div>
-                                <span>姓氏</span>
+                                <span>性別</span>
                                 <br />
-                                <input type="text" name="username2" required />
+                                <input type="text" name="username2" value={userGender} required />
                             </div>
                             <div>
                                 <span>連絡電話</span>
@@ -153,6 +151,7 @@ function Orderman({
                                 <input type="tel" name="userPhone" pattern="[0-9]{10}" id="CartuserPhone" value={userPhone} required />
                             </div>
                         </div>
+                        <br />
 
 
                         {/* <!-- <input class="orderbtn" type="submit"> --> */}
@@ -164,7 +163,38 @@ function Orderman({
 }
 //旅客資料
 function Travelman(itemList) {
-    console.log(itemList)
+    const [shoplist, setshoplist] = useState([]);
+    useEffect(() => {
+        let shopcar = JSON.parse(localStorage.getItem("sureshopcar"));
+        console.log(1, shopcar);
+        console.log(2, shopcar[1]);
+        // console.log(2, shopcar[1]);
+        let shoplist = [];
+        let dataAll = itemList.itemList
+        var dataint = dataAll.map(x => x.itemId).indexOf();
+        //得到item1的圖片
+        console.log(3, dataAll[dataint].itemImgUrl)
+        console.log(3, dataAll[dataint].itemImgUrl)
+        // 商品標題
+        console.log(4, dataAll[dataint].itemTitle)
+        //價格
+        console.log(5, shopcar[1].price, shopcar[1].date)
+
+        itemList.itemList.push({
+
+            itemTitle: dataAll[dataint].itemTitle,
+            itemPrice: dataAll[dataint].total,
+            itemImgUrl: dataAll[dataint].itemImgUrl,
+        })
+        let new1 = itemList.itemList.slice(73, 74)
+        console.log(6, itemList);
+        console.log(8, new1);
+        setshoplist(shoplist)
+        console.log(7, shoplist);
+        var app = itemList.itemList.splice(0, 73)
+        console.log(app)
+    }, []);
+
     return (
         <section className="travelman">
             <div className="cartsidebar">
@@ -174,31 +204,34 @@ function Travelman(itemList) {
                         <hr />
                     </button>
                     <div className="cartpanel">
-                        {itemList.itemList.map((i) => {
-                            return (
-                                <div className="carthomeProduct">
-                                    {/* <!-- 圖片框 --> */}
-                                    <div className="cartpicPlace">
-                                        <img className="cartproPic" src={i.itemImgUrl} alt="" />
-                                    </div>
-                                    {/* <!-- 介紹欄 --> */}
-                                    <div className="cartinco">
-                                        <h3>
-                                            <p>{i.itemTitle}</p>
-                                        </h3>
-                                        {/* <!-- 地區標籤 --> */}
+                        {itemList.itemList.map((i) => 
+                            <div className="carthomeProduct">
+                                {/* <!-- 圖片框 --> */}
+                                <div className="cartpicPlace">
+                                    <img className="cartproPic" src={i.itemImgUrl} alt="" />
+                                    {/* {i.itemImgUrl} */}
+                                </div>
+                                {/* <!-- 介紹欄 --> */}
+                                <div className="cartinco">
+                                    <h3>
+                                        <p>
+                                            {i.itemTitle}
+                                        </p>
+                                    </h3>
+                                    {/* <!-- 地區標籤 --> */}
+                                    <div>
+                                        <div className="carttagplace">
+                                            新竹市
+                                        </div>
                                         <div>
-                                            <div className="carttagplace">
-                                                高雄
-                                            </div>
-                                            <div>
-                                                活動日期 ：{i.date}
-                                            </div>
+                                            活動日期 ：2022-12-07
+                                            {/* {i.date} */}
                                         </div>
                                     </div>
                                 </div>
-                            )
-                        })}
+                            </div>
+
+                        )}
                         {/* 迴圈結束 */}
                         <h4>特殊需求備註</h4>
                         <div>
@@ -240,11 +273,11 @@ function Paylist() {
                                     <img src="https://cdn.kkday.com/pc-web/assets/img/payment/ic_jcb.svg" alt="" />
                                 </label>
                                 <br />
-                                <div className="toggle">
+                                <div className="carttoggle">
                                     信用卡號碼
                                     <input type="text" className="cardint" pattern="[0-9]{12}" placeholder="0000 0000 0000" required />
                                     <br />
-                                    有效期限
+                                    有效期限 &nbsp; &nbsp;
                                     <input type="text" className="cardint" name="" placeholder="MM/YY" required />
                                     <br />
                                     背面末3碼
@@ -302,39 +335,8 @@ function Billlist({ userEmail }) {
 }
 //付款明細
 function Billtotal(itemList) {
-    const [shoplist, setshoplist] = useState([]);
-    const [totalCash, setTotalCash] = useState([]);  // totalCash預設值為0
+    
 
-    const calculate = (price) => {
-        setTotalCash(totalCash + price);   // totalCash =  totalCash + price
-    }
-    useEffect(() => {
-        let shopcar = JSON.parse(localStorage.getItem("sureshopcar"));
-        console.log(1, shopcar);
-        console.log(2, shopcar[1]);
-        // console.log(2, shopcar[1]);
-        let shoplist = [];
-        let dataAll = itemList.itemList
-        var dataint = dataAll.map(x => x.itemId).indexOf();
-        //得到item1的圖片
-        console.log(3, dataAll[dataint].itemImgUrl)
-        // 商品標題
-        console.log(4, dataAll[dataint].itemTitle)
-        //價格
-        console.log(5, shopcar[1].price, shopcar[1].date)
-
-        shoplist.push({
-           
-            itemTitle: dataAll[dataint].itemTitle,
-            itemPrice: dataAll[dataint].itemPrice,
-            itemImgUrl: dataAll[dataint].itemImgUrl,
-        })
-        let new1 =itemList.itemList.slice(73,74)
-        console.log(6, itemList);
-        console.log(8, new1);
-        setshoplist(shoplist)
-        console.log(7, shoplist);
-    }, []);
     return (
         <section className="billtotal">
             <div className="cartsidebar">
@@ -349,25 +351,33 @@ function Billtotal(itemList) {
                                 {/* <!-- 圖片框 --> */}
                                 <div className="cartpicPlace">
                                     <img className="cartproPic" src={i.itemImgUrl} alt="" />
+                                    {/* {itemList.itemList[73].itemImgUrl}  */}
+                                    {/* itemList.itemList[0].itemImgUrl */}
+                                    {/* {i.itemImgUrl} */}
                                 </div>
                                 {/* <!-- 介紹欄 --> */}
                                 <div className="cartinco">
                                     <h3>
-                                        <p>{i.itemTitle}</p>
+                                        <p>
+                                            {i.itemTitle}
+                                            {/* {itemList.itemList[73].itemTitle} */}
+                                        </p>
                                     </h3>
                                     {/* <!-- 地區標籤 --> */}
                                     <div>
                                         <div className="carttagplace">
-                                            {i.itemFilter2}
+                                            {/* {i.itemFilter2} */}
                                         </div>
                                         <div>
-                                            活動日期 ：{i.date}
-                                            時間 : 16:00
+                                            活動日期 ：2022-12-07
+                                            {i.date}
+                                            <br />
                                             人數 : 1人
                                         </div>
 
                                         <div>
-                                            商品數量:{i.count}
+                                            商品數量:3
+                                            {/* {i.count} */}
                                         </div>
 
                                     </div>
@@ -378,15 +388,15 @@ function Billtotal(itemList) {
                         )}
                         {/* 商品迴圈結束 */}
                         <span className="carthrline">總金額 TWD</span>
-                        {itemList.itemList.map((i) =>
-                            <span className="paybill1">{i.price}</span>
-                        )}
+                        {/* {itemList.itemList.map((i) => */}
+                        <span className="paybill1">2640</span>
+                        {/* )} */}
                         <hr />
                         <span className="carthrline">點數折抵 TWD</span>
                         <span className="billcount">100</span>
                         <hr />
                         <span className="carthrline">支付金額 TWD</span>
-                        <span className="paybill2">1700</span>
+                        <span className="paybill2">2540</span>
                         <hr />
                     </div>
                 </div>
@@ -395,16 +405,79 @@ function Billtotal(itemList) {
         </section>
     )
 }
+// export const CartItem = (itemList) => {
+//     const [shoplist, setshoplist] = useState([]);
+//     useEffect(() => {
+//         let shopcar = JSON.parse(localStorage.getItem("sureshopcar"));
+//         console.log(1, shopcar);
+//         console.log(2, shopcar[1]);
+//         // console.log(2, shopcar[1]);
+//         let shoplist = [];
+//         let dataAll = itemList.itemList
+//         var dataint = dataAll.map(x => x.itemId).indexOf();
+//         //得到item1的圖片
+//         console.log(3, dataAll[dataint].itemImgUrl)
+//         // 商品標題
+//         console.log(4, dataAll[dataint].itemTitle)
+//         //價格
+//         console.log(5, shopcar[1].price, shopcar[1].date)
+
+//         shoplist.push({
+
+//             itemTitle: dataAll[dataint].itemTitle,
+//             itemPrice: dataAll[dataint].itemPrice,
+//             itemImgUrl: dataAll[dataint].itemImgUrl,
+//         })
+//         let new1 =itemList.itemList.slice(73,74)
+//         console.log(6, itemList);
+//         console.log(8, new1);
+//         setshoplist(shoplist)
+//         console.log(7, shoplist);
+//     }, []);
+// }
+
+
+
 //結帳區
 function Paybill() {
+    const favIdsend = async (i) => {
+        console.log(4, i)
+        await fetch("/api/cartlist/cartlist", {
+            method: "post",
+            // body:imgId
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json;charset=utf-8",
+            },
+            body: JSON.stringify({
+                userId: 'u123456789',
+                itemId: 1,
+                orderReceipt: 'order000012',
+                orderDate: '2022-12-12',
+                orderQua: 3
+
+            })
+        })
+            .then((res) => res.json())
+        // .then(alert('已成功付款'))
+        // .then(console.log('已加入最愛'))
+
+        // console.log(5, favId)
+        // .then(data => {
+        //     /*接到request data後要做的事情*/
+        //     console.log("使用者資料",data.data[0].imgId);
+
+        // })
+    }
+    //POST結束
 
     return (
         <section className="paybill">
-            <span>商品合計      TWD</span> <span className="cartprdtit">1700</span>
+            <span>商品合計      </span> <span className="cartprdtit">TWD 2540</span>
             <br /><br />
-            <span className="prdtit2">訂單完成後回饋金 TWD</span><span className="prdtit3">17</span>
+            <span className="prdtit2">訂單完成後回饋金 TWD</span><span className="prdtit3">50</span>
 
-            <input type="submit" value="確認付款" id="billok" />
+            <input type="submit" value="確認付款" id="billok" onClick={() => favIdsend(event)} />
             {/* onClick={() => { setNewLocalS() }} */}
         </section>
     )
@@ -459,7 +532,7 @@ export default function cartlist(props) {
 export async function getStaticProps({ params }) {
     // const itemList: any = [];
     const sq1 = `SELECT  item.itemTitle, item.itemFilter2, itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;`;
-    const sq2 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
+    const sq2 = `SELECT userId, userPassword, userName, userGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
 
     const itemList: any = [];
     // itemTitle itemFilter2 itemImgUrl

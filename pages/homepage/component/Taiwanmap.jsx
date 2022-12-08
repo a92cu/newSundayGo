@@ -28,8 +28,8 @@ export const Mapselect = () => {
                 return obj.tag == tagname;
             });
             //   console.log(result)    
-            $(".forcast").text(result[0].place) 
-            $(".forcast").append(`<img src="${result[0].img}">`)
+            $(".forcast").text(result[0].place)
+            $(".forcast").appends(`<img src="${result[0].img}">`)
             // $(".forcast").append(`<img style="width:50px" src="${result[0].img}">`)
 
             // const node = document.createElement("img");
@@ -295,7 +295,7 @@ export const Mapselect = () => {
                 <div>
 
 
-                    <svg   width="800" height="1200" id="cf503461-00bd-459a-aeb5-062ebc913211" data-name="圖層 1" xmlns="http://www.w3.org/2000/svg"
+                    <svg width="800" height="1200" id="cf503461-00bd-459a-aeb5-062ebc913211" data-name="圖層 1" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 595.28 841.89">
                         {/* viewBox="0 0 595.28 841.89"> */}
                         <defs>viewport</defs>
@@ -312,19 +312,19 @@ export const Mapselect = () => {
                             className="96fdfe13-4732-40bb-9e9c-cdc6e310fcb9" d="M92.75,406.85l1.58-.24L94,407.83l-1.22-1Z" />
                         <path id="f2be3e90-3318-427f-a854-c65a6fa8d146" data-name="path2470"
                             className="96fdfe13-4732-40bb-9e9c-cdc6e310fcb9" d="M63.72,439.41l-.12,1.71,1.46-.61-1.34-1.1Z" />
-                   
+
                         <path id="0c879d5f-d1b8-44ab-8054-414fa434ecd5" data-name="penghu_country"
                             className="96fdfe13-4732-40bb-9e9c-cdc6e310fcb9"
                             d="M61.53,412.7l-.43.79L61,414l.55.61-1,1,.24.73.73.37.55.49.24.55-.61.31-.49,1.46.3.79-.79.24h-.92l-.73.49.24.67,1,.18,1.22,1.59v.91l-.37.73-.67.49-.49.61-.67.49-.67.18-1.22-1.1-.85.3-.61.49-.43.67-1,.92-.43.61.61.37h.92l.43-.55h2.74l.49-.43.61-.3,1.77.3.79.37h.92l.79-.37-.3-.79-.49-.61-.24-.67-.06-.85,1-1-.79-2,2.5-2.26-.24-.61-.67-.49-.12-.79.43-1.46-.37-.79-.43-.55-.18-.73.24-.67.67-.43h1.83l1.59-.43.67-.43.12-.92-.49-.43-.73.67-.73.18-.85-.43L65,410.14l.18-.79-.24-.67-.73.06-.55.49L62.14,412l-.61.67h0Z" />
                         <path id="ac637e03-3275-4541-a525-7037e69241b0" data-name="penghu_country"
                             className="96fdfe13-4732-40bb-9e9c-cdc6e310fcb9"
                             d="M71.65,405.57l-.67.67L71,407l2.07,1.4.43.73.43-.43.61-1.4.61-.43,1.89.06.37.79v.92l.49.55.3.67,1.52,1.59.3.85.61.12.55-.67.12-.91,1.52-.85.92-.12-.06-.79-.85-.79-.37-.55.55-1-1-.06-1.16-2.13-.49-.12-.55.37-1.46-.43-.18-.73-.92-.12-.85.37-.37.73-.92.18-1.58-.18-.73-.37-.18-.43-1,1.71h0Z" />
-  
-                      
+
+
                         <path id="3bb77815-2bc3-4801-b8fc-d6e3a2443162" data-name="penghu_country"
                             className="96fdfe13-4732-40bb-9e9c-cdc6e310fcb9"
                             d="M77.44,422.09l-2,1.71-.79.24h-.92l.43.79v.92l-.18.85-1.22,1-.12.92.67.37,1.65-.73.67-.49,1,.06.61.43.55.61-1.83,2-.92.12-1.83-.31,1,1.16,1.4.61,1.1-.12.79-.49,2.74.06.55.73.3.79-.91,1.46-.12.49.79.55-.06.67-.73.73-.79-.06-.55-.49L78,436.3l-.91.12L76,438.74l-1,1.1.43.73,1.77.18,1-.12,1.22-.43,1-.06,1.1,1.22.79-.18.12-.79.73-.67.06-.85.3-.85-.73-.43-.12-.67.61-.67.43-.79,3-2.38.79-.12L89,431.06l.24-.73.67-.55,4.21-.12,1.28-.61.55.43.18.91.43.79.73.49.85-.18.67-.37h1l.37-.55L98,428.31l-.55-2,.24-.73v-.91l-.37-.79-1.64-1.77-.43-1.4-.49.55-.24,1.71-.85-.12-.43-.85-.55-.61.24-.55.49-.37-1.16-1.1-.79-.31-.55.55-1.16,2.13-.67-.12-.61.18-1,1-.18.73-.49.12-.06-2.74.67-1.46-1,.12-.55.37-3.54.61-.55.43.06.85.49.67v.91l-.37.61-.85.24-.55.67v1.89l-.49.55-.91-.43-.67-.61.12-1.22-1-.12-.12-.85.49-.79.06-.55-.61-.73h0Z" />
-   
+
                         {/* <path id="3a11933f-2e32-4079-bca8-5259168f23fa" data-nb2ame="penghu_country"
                             className="96fdfe13-4732-40bb-9e9c-cdc6e310fcb9"
                             d="M58,465.75l.6,1.29v6l-.26,1.12-1,.43.6.86,3.79.09.26-.6-.43-.95.43-.86,1.12-.34.86.95.86.6,1-.34.6-.69h1.29l.78-.52-.34-1.12-.52-.86-1.12.43-1.38,1.55-3.1-1.81-.34-.95v-2.59l-.69.17-1.29-.09L58,465.75h0Z" /> */}
@@ -432,7 +432,7 @@ export const Mapselect = () => {
                                 d="M161.7,209.95l-.85,1.46,1.22.73,1.22-.85-.85-1-.73-.37Z" />
                         </g>
                         <g id="13520621-f1ed-4c7b-8b5d-1a169d9bf935" data-name="g4313">
-                           
+
                             <path id="cbfdad05-a89f-40ed-902b-cdd90c10f2fe" data-name="matsu"
                                 className="bc4bd339-f614-4405-a1f2-7f894051d5a3"
                                 d="M45.79,102l-.27,3,.54,3.26-.54,1.9,4.34.54,3.26-.81,4.34-3.53-1.9-2.44-2.17,1.9-3,.54-1.63-2.17-3-2.17Z" />
@@ -446,19 +446,35 @@ export const Mapselect = () => {
                                 d="M62.35,77.29l-1.63,3.26,1.16.49,1.28-1-.81-2.71Z" />
                             <path id="3dc2b0c9-caa5-41e4-a9fd-9ba7b2a05d51" data-name="path2683"
                                 className="bc4bd339-f614-4405-a1f2-7f894051d5a3" d="M66.42,84.62l-1.9,1.9L67.23,86l-.82-1.36Z" />
-     
+
                             <path id="41139c2e-8a21-41a3-8f99-e78e1cdfc573" data-name="path2687"
                                 className="bc4bd339-f614-4405-a1f2-7f894051d5a3"
                                 d="M176.9,53.81l-1.63,1.43.14.47,2.85.2-.14-.81-1.22-1.29Z" />
                         </g>
                     </svg>
-                    <div className="forcast picPlace244"  v-if="now_area" style={{ float: 'left', margin: '100px auto',backgroundColor:'red' }}>
+                    {/* <div className="forcast picPlace244" v-if="now_area" style={{ float: 'left;clear:both', margin: '100px auto', }}>
                         <img src="" alt="" />
                         <img src="" alt="" />
+
+                    </div> */}
+                    <div className="homecard">
+                        <img className='mapimg' src="/images/test_3.jpg" alt="Avatar" style={{ width: '100%' }} />
+                        <div class="homecontainer">
+                            <h4><b>屏東縣</b></h4>
+                            <p>鹿境梅花鹿生態園區門票</p>
+                        </div>
                     </div>
-                    <div className="forcast picPlace244" v-if="now_area" style={{ float: 'right', margin: '100px auto' }}>
-                        <img src="" alt="" />
+                    <div className="homecard2">
+                        <img className='mapimg' src="/images/test_4.jpg" alt="Avatar" style={{ width: '100%' }} />
+                        <div class="homecontainer">
+                            <h4><b>屏東縣</b></h4>
+                            <p>屏東海生館門票</p>
+                        </div>
                     </div>
+                    {/* <div className="forcast picPlace244" v-if="now_area" style={{ float: 'right', margin: '100px auto' }}>
+                        <img src="" alt="" />
+                    </div> */}
+                    {/* //測試2 */}
                     {/* <div className="forcast" v-if="now_area" style={{ float: 'left', margin: '100px auto' }}>
                         <img src="" alt="" />
                     </div>
