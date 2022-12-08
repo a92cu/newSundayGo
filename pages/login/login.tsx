@@ -5,9 +5,16 @@ import Router from "next/router";
 
 
 export const Login = (props) => {
-    const [cookie, setCookie] = useCookies(["user"])
+    const [cookie, setCookie,removeCookie] = useCookies(["user","firm"])
     const [userId, setuserId] = useState("");
     const [userPassword, setuserPassword] = useState("");
+
+
+    // // 刪除 cookie 登出
+    // const RemoveCookie=()=>{
+    // removeCookie('user');
+    // removeCookie('firm');
+    // };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -84,7 +91,8 @@ export const Login = (props) => {
             </form>
             <button    className="link-btn" onClick={() => props.onFormSwitch('register')}>沒有帳號？點此註冊</button>
             <button className="link-btn" onClick={() => window.location.href="http://localhost:3000/firmlogin"} >廠商登入請按此</button>
-
         </div>
     )
 }
+
+export default Login;
