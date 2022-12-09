@@ -1,6 +1,7 @@
 //嵌入img
 import Image from "next/image";
 //引入NEXT內建的script
+import axios from "axios";
 import Script from "next/script";
 //lib裡的指令重複使用
 import { runSQL } from "../../lib/mysql";
@@ -11,7 +12,7 @@ import React, { Component } from 'react';
 // import Link from 'next/link';s
 import Mapselect from "./component/Taiwanmap.jsx";
 // import Placezone from "./component/Placezone2.jsx";
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactStars from 'react-stars';
 import { useRouter } from 'next/router';
 import $ from 'jquery';
@@ -44,7 +45,7 @@ function Header() {
 
 // function App() {
 //     const [rating, setRating] = useState(0);
-  
+
 //     return (
 //       <Rating
 //         style={{ maxWidth: 180 }}
@@ -61,7 +62,7 @@ function Footer() {
         <div className="footer">
             <div className="footerCenter">
                 <div className="footerBody">
-                    
+
                     <ul>
                         <h4>認識我們</h4>
                         <li><a href="">關於我們</a></li>
@@ -102,28 +103,27 @@ function Footer() {
     )
 }
 export const Placezone = (dateList) => {
+    var [tryre, settryre] = useState([]);
     const router = useRouter();
+
     var [homepagelist, setlist] = useState([]);
     // useEffect(() => {fetchdata()}, []);
     //生命週期先執行一次,2個參數，1.{裡面放要執行或宣告的動態},2.[]放個空陣列useState狀態有改變才再執行
     useEffect(() => {
         fetchdata();
         // $(function (){
-
+        // trytry();
 
         // console.log(homepagelist)
-        $().ready(function () {
-            $(".homeProduct").on('click', function () {
+        $(function () {
+            $(".retest").on('click', function () {
                 // {homepagelist.map((item, index) =>
-
-                // window.location.href = `/item/${item.itemId}`;
-                // )}
+                // location.reload();
             })
             // console.log("ok")
         });
         var acc = document.getElementsByClassName("accordion");
         var i;
-
         for (i = 0; i < acc.length; i++) {
             acc[i].addEventListener("click", function () {
                 this.classList.toggle("active");
@@ -135,27 +135,34 @@ export const Placezone = (dateList) => {
                 }
             });
         }
-
+        //全選
         $(".allcheck").click(function () {
-            if (this.checked) {
-                $("input[name='citys']").each(function () {
-                    $(this).prop("checked", true)
-                });
-            } else {
-                $("input[name='citys']").each(function () {
-                    $(this).prop("checked", false)
-                })
-            }
-        });
+            $(".checkd1").prop("checked", true)
+        })
+        // $(".allcheck").click(function () {
+        //     if (this.checked) {
+        //         $("input[name='citys']").each(function () {
+        //             $(this).prop("checked", true)
+        //         });
+        //         console.log(this)
+        //     } else {
+        //         $("input[name='citys']").each(function () {
+        //             $(this).prop("checked", false)
+        //         })
+        //     }
+        // });
         $(".delbtn").on('click', function () {
             // console.log(this)
             // $(this)(".filterBtn").hide()
             $(this).parent('button').hide()
         });
+
+
+        var xx =`${dateList.dateList[0].itemStartDate}`;
+        console.log(11,xx)
     }, [])
+
     async function fetchdata() {
- 
-        
         return (await fetch("/api/home/homepage")
             .then((res) => res.json())
             .then((result) => {
@@ -172,6 +179,56 @@ export const Placezone = (dateList) => {
             })
         )
     }
+    //按星星排序
+    const restar =  () => {
+         axios(`/api/sort/star`)
+            .then((result2) => {
+                console.log(33,result2)
+                result2.data.data.forEach((i) => {
+                    var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                    var replaceCallAll2 = call2.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll2;
+                })
+                // console.log(3, result.data)
+                setlist(result2.data.data);
+                //
+            })
+        
+        // if (setlist !== "") {
+        //     [...setlist]
+        // }
+    }
+    //按價格排序
+    const reprice =  () => {
+        axios('/api/sort/price')
+           .then((result2) => {
+               console.log(33,result2)
+               result2.data.data.forEach((i) => {
+                   var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                   var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                   var replaceCallAll2 = call2.replaceAll('\x00', '');
+                   i.itemImgUrl = replaceCallAll2;
+               })
+               // console.log(3, result.data)
+               setlist(result2.data.data);
+           })
+   }
+    //按地區排序
+    const rearea =  () => {
+        axios('/api/sort/area')
+           .then((result2) => {
+               console.log(33,result2)
+               result2.data.data.forEach((i) => {
+                   var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                   var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                   var replaceCallAll2 = call2.replaceAll('\x00', '');
+                   i.itemImgUrl = replaceCallAll2;
+               })
+               // console.log(3, result.data)
+               setlist(result2.data.data);
+           })
+   }
     // console.log(result.data)
     // const fetcher = (user, page) =>
     //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
@@ -204,13 +261,13 @@ export const Placezone = (dateList) => {
                                 <input type="checkbox" className="allcheck" />北部
                             </button>
                             <div className="panel" >
-                                <input type="checkbox" name="citys" />基隆市
+                                <input type="checkbox" name="citys" className="checkd1" />基隆市
                                 <br />
-                                <input type="checkbox" name="citys" />新北市
+                                <input type="checkbox" name="citys" className="checkd1" />新北市
                                 <br />
-                                <input type="checkbox" name="citys" />台北市
+                                <input type="checkbox" name="citys" className="checkd1" />台北市
                                 <br />
-                                <input type="checkbox" name="citys" />桃園市
+                                <input type="checkbox" name="citys" className="checkd1" />桃園市
                             </div>
 
                             <button className="accordion">
@@ -342,7 +399,7 @@ export const Placezone = (dateList) => {
                                 {i}<span className="delbtn">X</span>
                             </button>
                         )}
-                           {noredata2.map((i) =>
+                        {noredata2.map((i) =>
                             <button className="filterBtn" >
                                 {i}<span className="delbtn">X</span>
                             </button>
@@ -361,9 +418,11 @@ export const Placezone = (dateList) => {
                         </button> */}
 
                         <hr />
-                        <span className="homerightup2"> 排序|<a href="">熱門程度</a>|<a href="">用戶評價</a>|<a
-                            href="">&#36;價格由低到高</a></span>
-
+                        <span className="homerightup2"> 排序方式|
+                        <button type="button" className="retest" onClick={() => restar()}>評價</button>|
+                        <button type="button" onClick={() => reprice()}>商品價格</button>|
+                        <button type="button" onClick={() => rearea()}>地區</button>
+                        </span>
                     </div >
                     <div id="content" className="content">
                         {/* <!-- 商品顯示主體 --> */}
@@ -477,8 +536,8 @@ export default function homepage(props) {
         <>
             <Header />
             <Mapselect />
-            <Placezone 
-            dateList={dateList}/>
+            <Placezone
+                dateList={dateList} />
 
             <Footer />
             {/* <Script src="/js/home.js" /> */}

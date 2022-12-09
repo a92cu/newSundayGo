@@ -44,7 +44,7 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
 
         // 新增商品內容
         // const sq1 = `INSERT INTO item (${keys},userId,userPassword) VALUES (${values},"${id}","${id}")`;
-        const sq1 = `INSERT INTO favorite  VALUES (${req.body.favId},'u123456789',${req.body.itemId})`;
+        const sq1 = `INSERT INTO favorite (userId ,itemId ) VALUES ('u123456789',${req.body.itemId})`;
         // const sq1 = `INSERT INTO favorite  VALUES (5,'u123456789',30)`;
         runSQL(sq1);
         res.status(200).json({ message: "ok" });
