@@ -40,6 +40,9 @@ export const Register = (props) => {
         // }, 100);
     }
 
+
+
+
     return (
         <div className="auth-form-container">
             <h2>註冊會員</h2>
@@ -55,5 +58,3 @@ export const Register = (props) => {
     )
 }
 
-
-export default Register;

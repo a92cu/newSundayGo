@@ -195,8 +195,13 @@ function MemberAccount(props) {
     }
     setPasswordType("password")
   }
+  
+  const test1=()=>{
+    console.log(accountList[0].userGender);
+  }
 
   const saveAccount = () => {
+    console.log("儲存OK");
     // console.log(accountList) // [{...}]
     // console.log(accountList[0]) // {}
     // console.log(userBirthday) // 
@@ -211,11 +216,17 @@ function MemberAccount(props) {
         userPhone: userPhone,
         userEmail: userEmail,
         userPassword: userPassword,
-      }),
-    });
+      })
+      
+    })
+    .then(()=>{alert("已修改資料")})
+    .catch(e=>{
+      console.log(e);
+
+    })
     // location.reload();
-    // Router.replace('/memberCenter') ;
-    window.location.replace('/memberCenter');
+    Router.replace('/memberCenter') ;
+    // window.location.replace('/memberCenter');
 
   }
   return (<div id="information" className="tabcontentB">
@@ -233,10 +244,11 @@ function MemberAccount(props) {
       <div className="basic">
         <span>性別</span>
         <select name="" id="">
-          <option value="man">{accountList[0].useGender}</option>
-          <option value="girl">女生</option>
-          <option value="sec">保密</option>
+          <option value="men" selected >{accountList[0].userGender}</option>
+          <option value="girl">女</option>
         </select>
+        {/* <button onClick={test1}>123</button> */}
+
       </div>
       <br />
       <div className="basic">
@@ -659,13 +671,13 @@ export default function MemberCentre(props) {
     <Header />
     <div className="MemberCentre">
       <div className="tabb">
-
+        {/* 頭像 */}
         <div className="MemberImg">
           <img id="MemberImgId" src={userAvatar} alt="" />
           <div>
             <input id="chengImgBtn"
               type="file"
-              style={{ display: "none" }}
+              // style={{ display: "none" }}
             // onChange={(e) => changeHandler()}
             />
 
