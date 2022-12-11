@@ -188,6 +188,7 @@ function MemberAccount(props) {
 
   const [passwordType, setPasswordType] = useState("password");
 
+
   const togglePassword = () => {
     if (passwordType === "password") {
       setPasswordType("text")
@@ -201,6 +202,7 @@ function MemberAccount(props) {
   }
 
   const saveAccount = () => {
+
     console.log("儲存OK");
     // console.log(accountList) // [{...}]
     // console.log(accountList[0]) // {}
@@ -230,6 +232,7 @@ function MemberAccount(props) {
 
   }
   return (<div id="information" className="tabcontentB">
+    
     <h2>帳號設定 </h2>
     <div className="setBodyB">
       <span style={{ color: "#8C5C02" }}> <b>基本資料</b> </span>
@@ -300,6 +303,7 @@ function MemberAccount(props) {
       </div>
       <div className="basicBtn">
         <button className="informationBtn" onClick={() => saveAccount()}> <b>儲存</b> </button>
+        
       </div>
     </div>
   </div>
@@ -644,6 +648,7 @@ export default function MemberCentre(props) {
   const [orderList, setOrderList] = useState(props.orderList);
   const [discountList, setDiscountList] = useState(props.discountList);
   // const { userAvatar, changeHandler } = useFile();
+  
 
   const getUrl = (index, originUrl) => {
     if (index === 0) return userAvatar === null ? originUrl : userAvatar;
@@ -666,8 +671,7 @@ export default function MemberCentre(props) {
 
   }
 
-  return <>
-
+  return <> 
     <Header />
     <div className="MemberCentre">
       <div className="tabb">

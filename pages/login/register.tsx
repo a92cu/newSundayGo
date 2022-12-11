@@ -20,7 +20,6 @@ export const Register = (props) => {
             body: JSON.stringify({
                 userId,
                 userPassword,
-                
             }),
         })
             .then(res => res.json())
