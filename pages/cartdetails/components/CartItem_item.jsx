@@ -8,21 +8,29 @@ function Product({
     itemTitle,
     itemPrice,
     itemImgUrl,
-    doIncrement,
-    doDecrement,
-    onHandleOnChange, }) {
-    const [quantity, setQuantity] = useState(0);  //  quantity 預設值= 0
+    onCalculate,
+    onHandleOnChange}) {
+    const [quantity, setQuantity] = useState(parseInt(count));  //  quantity 預設值= 0
 
-    useEffect(() => {
-        setQuantity(parseInt(count));
-    },[])
-
+    // 增加按鈕
+    let increment = () => {
+        setQuantity((prevState)=>prevState+1);
+        onCalculate()
+    };
+     // 減少按鈕
+    let decrement = () => {
+        if(quantity>0){
+            setQuantity((prevState)=>prevState-1)
+        }
+        onCalculate()
+    }
     let deleteMe = (e) => {
         if(window.confirm("您確定要刪除嗎?")){
-            e.target.parentElement.parentElement.remove()
+            e.target.parentElement.parentElement.remove();
+            window.localStorage.removeItem("sureshopcar")
         }
     }
-
+    
     return (
         <>
             <div className="carHeader carBody">
@@ -40,9 +48,9 @@ function Product({
                 <div>$ <span className="itemPrice">{itemPrice}</span> </div>
                 <div className="count">
                     {/* <!-- 商品個別+- --> */}
-                    <p className="reduce"><input type="button" value="-" onClick={doDecrement} /></p>
+                    <p className="reduce"><input type="button" value="-" onClick={decrement} /></p>
                     <span className="countCar">{quantity}</span>
-                    <p className="add"><input type="button" value="+" onClick={doIncrement} /></p>
+                    <p className="add"><input type="button" value="+" onClick={increment} /></p>
                 </div>
                 {/* <!-- 商品個別小計 --> */}
                 <div className="amount">
