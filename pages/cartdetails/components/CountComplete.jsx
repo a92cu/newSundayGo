@@ -7,7 +7,7 @@ export default function CountComplete() {
         axios.get("/api/cart/countComplete")
             .then((res)=>{
                 console.log(res.data.data);
-                setUserName(res.data.data[0].userId)
+                setUserName(res.data.data[0].userName)
                 setReceipt(res.data.data[0].orderReceipt);
             })
     })
