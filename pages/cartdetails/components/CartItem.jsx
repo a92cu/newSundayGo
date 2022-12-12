@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from "react";
-
+import { useEffect, useState} from "react";
+import axios from "axios";
 import Product from "./CartItem_item.jsx"
 
 export var CartItem = () => {
@@ -43,11 +43,11 @@ export var CartItem = () => {
     }, [stopState])
 
     // 處理撈取的資料
-    function getshopitem(id, date, count) {
-        fetch("/api/cart/ShopItem", { next: { revalidate: 10 } })
-            .then((response) => response.json())
+    async function getshopitem(id, date, count) {
+        await axios.get("/api/cart/ShopItem")
             .then((dataresult) => {
-                let dataAll = dataresult.data
+                let dataAll = dataresult.data.data
+                console.log(dataAll)
                 // 找到itemId=id的陣列，並將位置傳出
                 var dataint = dataAll.map(x => x.itemId).indexOf(parseInt(id))
                 // console.log(dataAll[dataint])
@@ -58,7 +58,7 @@ export var CartItem = () => {
 
                 // 將所需資料放進itemarray
                 itemarray.push({
-                    id: id,
+                    id: `${id}`, // 不知道為甚麼1號變成數字而不是字串
                     date: date,
                     count: count,
                     itemTitle: dataAll[dataint].itemTitle,
