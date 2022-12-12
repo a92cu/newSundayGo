@@ -14,8 +14,13 @@ export default async function userHandler(
       try {
         // 取得商品內容
         const sql = `SELECT * FROM itemimg WHERE imgId = "${id}"`;
-        const data = await runSQL(sql);
-        res.status(200).json({ data });
+        const imgListRaw = (await runSQL(sql)) as any;
+        const imgList = [];
+        imgListRaw.forEach((item: any) => {
+          item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
+          imgList.push({ ...item });
+        });
+        res.status(200).json({ data: imgList });
       } catch (error) {
         res.status(500);
       }
@@ -44,7 +49,11 @@ export default async function userHandler(
         let query = "";
         for (let j = 0; j < keys.length; j++) {
           query =
-            query + keys[j] + "=" + values[j] + (j === keys.length - 1 ? "" : ",");
+            query +
+            keys[j] +
+            "=" +
+            values[j] +
+            (j === keys.length - 1 ? "" : ",");
         }
         const sql = `UPDATE itemimg SET ${query} where imgId = "${id}"`;
         runSQL(sql);
