@@ -133,16 +133,20 @@ function Food(dateList) {
         }
 
         $(".allcheck").click(function () {
-            if (this.checked) {
-                $("input[name='citys']").each(function () {
-                    $(this).prop("checked", true)
-                });
-            } else {
-                $("input[name='citys']").each(function () {
-                    $(this).prop("checked", false)
-                })
-            }
-        });
+            $("input[name='citys']").prop("checked", true)
+        })
+
+        // $(".allcheck").click(function () {
+        //     if (this.checked) {
+        //         $("input[name='citys']").each(function () {
+        //             $(this).prop("checked", true)
+        //         });
+        //     } else {
+        //         $("input[name='citys']").each(function () {
+        //             $(this).prop("checked", false)
+        //         })
+        //     }
+        // });
         // document.getElementsByClassName('delbtn')
         // function myFunction() {
         //     document.getElementsByClassName('delbtn').style.display = 'none'
@@ -211,22 +215,22 @@ function Food(dateList) {
 
     const fetchdata = async () => {
         console.log(2, setlist)
-
-
-        return (await fetch("/api/home/food")
-            .then((res) => res.json())
-            .then((result) => {
-                result.data.forEach((i) => {
-                    var img = Buffer.from(i.itemImgUrl).toString('base64');
-                    var call = Buffer.from(img, 'base64').toString('ascii');
-                    var replaceCallAll = call.replaceAll('\x00', '');
-                    i.itemImgUrl = replaceCallAll;
+        // if (homepagelist == "") 
+            return (await fetch("/api/home/food")
+                .then((res) => res.json())
+                .then((result) => {
+                    result.data.forEach((i) => {
+                        var img = Buffer.from(i.itemImgUrl).toString('base64');
+                        var call = Buffer.from(img, 'base64').toString('ascii');
+                        var replaceCallAll = call.replaceAll('\x00', '');
+                        i.itemImgUrl = replaceCallAll;
+                    })
+                    // console.log(3, result.data)
+                    setlist(result.data);
+                    //
                 })
-                // console.log(3, result.data)
-                setlist(result.data);
-                //
-            })
-        );
+            );
+        
         // if (setlist !== "") {
         //     [...setlist]
         // }
@@ -242,19 +246,17 @@ function Food(dateList) {
                 "Content-Type": "application/json;charset=utf-8",
             },
             body: JSON.stringify({
-                favId: 6,
+                // favId: 7,
                 userId: 'u123456789',
                 itemId: 10
             })
         })
             .then((res) => res.json())
         // .then(console.log('已加入最愛'))
-
         console.log(5, favId)
         // .then(data => {
         //     /*接到request data後要做的事情*/
         //     console.log("使用者資料",data.data[0].imgId);
-
         // })
     }
     //POST結束
@@ -452,16 +454,16 @@ function Food(dateList) {
                             </button>
                         )}
                         {/* {noredata2.map((item) => */}
-                            <button className="filterBtn">
-                                {/* {item.itemFilter3} */}
-                                餐廳
-                                <span className="delbtn">X</span>
-                            </button>
-                            <button className="filterBtn">
-                                {/* {item.itemFilter3} */}
-                                甜點飲品
-                                <span className="delbtn">X</span>
-                            </button>
+                        <button className="filterBtn">
+                            {/* {item.itemFilter3} */}
+                            餐廳
+                            <span className="delbtn">X</span>
+                        </button>
+                        <button className="filterBtn">
+                            {/* {item.itemFilter3} */}
+                            甜點飲品
+                            <span className="delbtn">X</span>
+                        </button>
                         {/* )} */}
                         <hr />
                         <span className="homerightup2"> 排序|<a href="">熱門程度</a>|<a href="">用戶評價</a>|<a
@@ -486,9 +488,9 @@ function Food(dateList) {
                                     <span className="introp">
                                         {/* <!-- 愛心圖案 --> */}
                                         <a href="/memberCenter">
-                                        <img className="introimg" src="/images/heart.png"
-                                            style={{ width: '20px', marginLeft: '130px' }} alt=""
-                                            onClick={() => favIdsend(event)} />
+                                            <img className="introimg" src="/images/heart.png"
+                                                style={{ width: '20px', marginLeft: '130px' }} alt=""
+                                                onClick={() => favIdsend(event)} />
                                         </a>
                                     </span>
 
@@ -599,12 +601,16 @@ export async function getStaticProps({ params }) {
     // const sq1 = 'SELECT * FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and itemFilter3 = "美食";';
     const sq2 = 'SELECT itemFilter2 FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;';
     const sq3 = `SELECT  itemListedDate, itemStartDate, itemEndDate FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and itemFilter3 = "美食";`;
+    const sq4 = `SELECT userId, userPassword, userName, userGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
+
     const itemList: any = [];
     const dateList: any = [];
 
     // itemTitle itemFilter2 itemImgUrl
     const imgListRaw: any = await runSQL(sq1); // 所有項目
     const dateListRaw: any = await runSQL(sq3); // 日期
+    const memberCentre = (await runSQL(sq2))[0]; // 帳號設定抓的資料
+
     imgListRaw.forEach((item: any) => {
         item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
         itemList.push({ ...item });
@@ -622,7 +628,9 @@ export async function getStaticProps({ params }) {
         props: {
             //所有項目
             itemList,
-            dateList
+            dateList,
+            memberCentre: { ...memberCentre },
+
         },
     };
 

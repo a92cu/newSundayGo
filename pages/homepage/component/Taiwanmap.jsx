@@ -1,26 +1,20 @@
 import $ from 'jquery';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 //商品加入最愛連結
-export const Mapselect = () => {
+export const Mapselect = (props) => {
+    var [homepagelist, setlist] = useState([props.homepagelist]);
+
     useEffect(() => {
-
-
-        // $().ready(function () {
-        //     $(".homeProduct").on('click', function () {
-        //         // window.location.href = 'http://www.google.com';
-        //     })
-        //     // console.log("ok")
-        // })
-
+        fetchdata();
         // 點擊放大
-        $("path").on("click", function (e) {
-            // alert("ok")
-            $(this).css('transform', 'scale(2)')
-        })
+        // $("path").on("click", function (e) {
+        //     // alert("ok")
+        //     $(this).css('transform', 'scale(2)')
+        // })
         //靠近顯示名稱圖片
         $("path").mouseenter(function (e) {
-            console.log(e);
+            // console.log(e);
             // console.log(this); 
             // console.log($(this).attr("data-name"));
             var tagname = $(this).attr("data-name")
@@ -29,7 +23,7 @@ export const Mapselect = () => {
             });
             //   console.log(result)    
             $(".forcast").text(result[0].place)
-            $(".forcast").appends(`<img src="${result[0].img}">`)
+            $(".forcast").append(`<img src="${result[0].img}">`)
             // $(".forcast").append(`<img style="width:50px" src="${result[0].img}">`)
 
             // const node = document.createElement("img");
@@ -51,10 +45,32 @@ export const Mapselect = () => {
             // $(".forcast").text(result[0].place)
             // $(".forcast").removeAttr('src', "")
             $(".forcast").children().hide();
-            $(".forcast").text('');
+            $(".forcast").text('');  
             // $(".forcast img" ).attr('src',"")
         })
+        async function fetchdata() {
+            return (await fetch("/api/home/homepageimg")
+                .then((res) => res.json())
+                .then((result) => {
+                    result.data.forEach((i) => {
+                        var img = Buffer.from(i.itemImgUrl).toString('base64');
+                        var call = Buffer.from(img, 'base64').toString('ascii');
+                        var replaceCallAll = call.replaceAll('\x00', '');
+                        i.itemImgUrl = replaceCallAll;
+                    })
+                    // console.log(1,result.data)
+                    // 圖片
+                    console.log(2,result.data[0].itemImgUrl)
+                    setlist(result.data);
+                    //
+                    //setlist(result.data))
+                })
+            )
+        };
 
+        // console.log(3,result.data[0].itemImgUrl)
+
+        
         var place_data = [
             {
                 tag: "taipei_city",
@@ -283,18 +299,15 @@ export const Mapselect = () => {
         //         })
         //     }
         // })
-    });
+    },[]);
     return (
         <main style={{ width: '1280px', margin: '0 auto' }}>
             <div id="app">
-
                 {/* <div className="title_area">
                     {/* <h1>Taiwan<br>Weather Map<br></h1> */}
                 {/* <hr /> */}
                 {/* </div> */}
                 <div>
-
-
                     <svg width="800" height="1200" id="cf503461-00bd-459a-aeb5-062ebc913211" data-name="圖層 1" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 595.28 841.89">
                         {/* viewBox="0 0 595.28 841.89"> */}
@@ -452,18 +465,19 @@ export const Mapselect = () => {
                                 d="M176.9,53.81l-1.63,1.43.14.47,2.85.2-.14-.81-1.22-1.29Z" />
                         </g>
                     </svg>
-                    {/* <div className="forcast picPlace244" v-if="now_area" style={{ float: 'left;clear:both', margin: '100px auto', }}>
+                    <div className="forcast picPlace244" v-if="now_area" style={{ float: 'left;clear:both', margin: '100px auto', }}>
                         <img src="" alt="" />
                         <img src="" alt="" />
-
-                    </div> */}
+                    </div>
+                    {/* {homepagelist.map((item) =>
                     <div className="homecard">
-                        <img className='mapimg' src="/images/test_3.jpg" alt="Avatar" style={{ width: '100%' }} />
+                        <img className='mapimg' src={item.itemImgUrl} alt="Avatar" style={{ width: '100%' }} />
                         <div class="homecontainer">
-                            <h4><b>屏東縣</b></h4>
-                            <p>鹿境梅花鹿生態園區門票</p>
+                            <h4><b>{item.itemFilter2}</b></h4>
+                            <p>{item.itemName}</p>
                         </div>
                     </div>
+                    )} */}
                     <div className="homecard2">
                         <img className='mapimg' src="/images/test_4.jpg" alt="Avatar" style={{ width: '100%' }} />
                         <div class="homecontainer">

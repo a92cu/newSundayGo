@@ -1,5 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { runSQL } from "../../../lib/mysql";
+import { useCookies } from "react-cookie";
+
+
 
 export default async function userHandler(
     req: NextApiRequest,
@@ -25,7 +28,10 @@ export default async function userHandler(
                 // const sq1 = `UPDATE usertable SET ${query} where usertable = "${id}"`;
                 const sq1 = `UPDATE usertable SET ${query} where userId = "u123456789"`;
                 runSQL(sq1);
+
+                
                 res.status(200).json({ message: "ok" });
+                // console.log(cookie.user.data[0].userId)
             } catch (error) {
                 res.status(500);
             }

@@ -51,14 +51,14 @@ export const Login = (props) => {
                     alert("登入成功");
 
                     //設定cookie
-                    setCookie("user", JSON.stringify(data), {
+                    setCookie("user", data, {
                         path: "/",
                         maxAge: 36000, // cookeie 10小時後過期
                         sameSite: true,
                     })
 
-                    //存於cookie的值
-                    // console.log(cookie.user.data[0].userId);
+                    //存於cookie的userId
+                    console.log(cookie.user.data[0].userId);
 
                     // cookie判斷是否存在
                     // if (Object.keys(cookie).length!==0) {
@@ -73,7 +73,6 @@ export const Login = (props) => {
 
             .catch(e => {
                 /*發生錯誤時要做的事情*/
-                // alert("帳號或密碼輸入錯誤2");
                 console.log(e);
             })
 
