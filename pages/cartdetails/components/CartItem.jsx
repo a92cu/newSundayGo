@@ -47,7 +47,6 @@ export var CartItem = () => {
         await axios.get("/api/cart/ShopItem")
             .then((dataresult) => {
                 let dataAll = dataresult.data.data
-                console.log(dataAll)
                 // 找到itemId=id的陣列，並將位置傳出
                 var dataint = dataAll.map(x => x.itemId).indexOf(parseInt(id))
                 // console.log(dataAll[dataint])

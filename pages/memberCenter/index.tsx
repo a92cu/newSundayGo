@@ -126,8 +126,10 @@ function Header() {
         <a href="#">
           <img src="./images/cart.png" style={{ width: 25 }} />
         </a>
+
         <a href="http://localhost:3000/login" className="loginbutton">
           登入|註冊
+
         </a>
       </div>
       <form className="example" action="">
@@ -179,6 +181,7 @@ function Header() {
 // }
 // 帳號設定修改 OK 性別暫時PASS 
 function MemberAccount(props) {
+
   const { accountList } = props;
   const [userName, setuserName] = useState(props.accountList[0].userName);
   const [userBirthday, setuserBirthday] = useState(props.accountList[0].userBirthday);
@@ -338,10 +341,9 @@ function Discount(props) {
 
 // 回饋金 OK 可以正常運作
 function Rebate(props) {
-  // console.log(props.orderListRebate)
   let allRebate = [];
   props.orderListRebate.forEach((e, i) => {
-    if (props.orderListRebate[i].userId == props.userId) {
+    if (props.orderListRebate[i].userId == "u123456789") {
       let itemTitle = props.orderListRebate[i].itemTitle;
       let orderDate = props.orderListRebate[i].orderDate;
       let orderRebate = props.orderListRebate[i].orderRebate;
@@ -752,6 +754,9 @@ export default function MemberCentre(props) {
 
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
+  
+
+
   // 帳號設定抓的資料 (userBirthday有問題)
   // const sq1 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
   const sq1 = `SELECT * FROM usertable WHERE userId = "u123456789"`;
