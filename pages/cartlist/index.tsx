@@ -37,7 +37,6 @@ function Header() {
 function Titlebar() {
     return (
         <>
-
             <div id="progressBar">
                 {/* <!-- 進度條 --> */}
                 <div>
@@ -165,20 +164,20 @@ function Orderman({
 function Travelman(itemList) {
     const [shoplist, setshoplist] = useState([]);
     useEffect(() => {
-        let shopcar = JSON.parse(localStorage.getItem("sureshopcar"));
-        console.log(1, shopcar);
-        console.log(2, shopcar[1]);
+        let shopcar = JSON.parse(localStorage.getItem("sureshopcar"))||[]; // 如果購物車沒有東西就空[]
+        // console.log(1, shopcar);
+        // console.log(2, shopcar[1]);
         // console.log(2, shopcar[1]);
         let shoplist = [];
         let dataAll = itemList.itemList
         var dataint = dataAll.map(x => x.itemId).indexOf();
-        //得到item1的圖片
-        console.log(3, dataAll[dataint].itemImgUrl)
-        console.log(3, dataAll[dataint].itemImgUrl)
-        // 商品標題
-        console.log(4, dataAll[dataint].itemTitle)
-        //價格
-        console.log(5, shopcar[1].price, shopcar[1].date)
+        // //得到item1的圖片
+        // console.log(3, dataAll[dataint].itemImgUrl)
+        // console.log(3, dataAll[dataint].itemImgUrl)
+        // // 商品標題
+        // console.log(4, dataAll[dataint].itemTitle)
+        // //價格
+        // console.log(5, shopcar[1].price, shopcar[1].date)
 
         itemList.itemList.push({
 
