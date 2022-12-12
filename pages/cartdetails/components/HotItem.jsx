@@ -44,8 +44,8 @@ function HotItem() {
     // 因為是非同步進行，所以必須讓useEffect執行兩次
     let [far,setfar]=useState(false);
     useEffect(()=>{
-        function axiosdata(){
-                Axios.get("/api/cart/HotItem").then((dataresult) => {
+        async function axiosdata(){
+                await Axios.get("/api/cart/HotItem").then((dataresult) => {
                         dataresult.data.data.forEach((i)=>{
                         let img=Buffer.from(i.itemImgUrl).toString('base64');
                         let call=Buffer.from(img, 'base64').toString('ascii');
