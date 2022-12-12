@@ -15,7 +15,8 @@ export default async function userHandler(
         // 取得商品內容
         const sq1 = `SELECT * FROM item WHERE itemId = "${id}"`;
         const data = await runSQL(sq1);
-        res.status(200).json({ data });
+        const item = data[0];
+        res.status(200).json({ data: item });
       } catch (error) {
         res.status(500);
       }
@@ -45,7 +46,11 @@ export default async function userHandler(
         let query = "";
         for (let j = 0; j < keys.length; j++) {
           query =
-            query + keys[j] + "=" + values[j] + (j === keys.length - 1 ? "" : ",");
+            query +
+            keys[j] +
+            "=" +
+            values[j] +
+            (j === keys.length - 1 ? "" : ",");
         }
         const sq1 = `UPDATE item SET ${query} where itemId = "${id}"`;
         runSQL(sq1);
