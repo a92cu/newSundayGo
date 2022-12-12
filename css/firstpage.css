@@ -1,23 +1,5 @@
-.homebtn {
-    text-align: center ;
-    position: relative;
-    /* top: 150%;*/
-    left: 45%; 
-    border-radius: 12px;
-    font-size: 18px;
-    padding: 10px 52px;
-    background-color: rgba(255, 255, 255, 0);
-    background-color:transparent;
-    /* box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
-    border: 1px solid #F29F04;
-    /* color:#ffffff; */
 
-}
 
-.homebtn:hover {
-    background-color: #F29F04;
-    color: #ffffff;
-}
 
 /* 硬幣旋轉 */
 /* body {
@@ -146,8 +128,40 @@ main {
 }
 .homebtn a{
     text-decoration:none;
+    color: #8C5C02;
+}
+.homebtn a:hover{
     color: #F29F04;
 }
-a:hover{
+
+
+/* .homebtn:hover {
+    background-color: #F29F04;
     color: #ffffff;
+} */
+.homeimg{
+    width: 20px;
+    /* float: left; */
+    /* margin-right:60px ; */
+    visibility: hidden;
+} 
+
+.homebtn:hover .homeimg{
+    visibility:visible;
+}
+
+.homebtn {
+    text-align: center ;
+    position: relative;
+    /* top: 150%;*/
+    left: 45%; 
+    border-radius: 12px;
+    font-size: 18px;
+    padding: 10px 40px;
+    background-color: rgba(255, 255, 255, 0);
+    background-color:transparent;
+    /* box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+    border: 1px solid #8C5C02;
+    /* color:#ffffff; */
+
 }

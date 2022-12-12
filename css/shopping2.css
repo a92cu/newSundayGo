@@ -199,8 +199,8 @@ input[type="radio"]:checked div {
 } */
 /* 付款明細 */
 .billtotal .carthomeProduct{
-    width: 90%;
-    margin: 0 auto;
+    width: 60%;
+    margin: 20px auto 20px auto;
 }
 
 .carthrline{
@@ -351,8 +351,9 @@ input:active {
     border: #F29F04 solid 2px;
     border-radius: 10px;
     height: 180px;
-    width: 100%;
-    margin-bottom: 10px;
+    width: 50%;
+    margin-bottom: 20px;
+    margin-left: 300px;
 
     /* float: right; */
 
@@ -389,15 +390,15 @@ input:active {
 }
 
 /* 前置符號 */
-.cartaccordion:before {
-    content: '\003E';
+/* .cartaccordion:before {
+    content: '\003E'; */
     /* content: '\142F'; */
     /* Unicode 字符*/
 
-     font-weight: bold;
+     /* font-weight: bold;
     float: left;
     margin: 25px 25px;
-} 
+}  */
 
 
 /* .cartactive:before {
@@ -409,3 +410,11 @@ input:active {
     /* font-weight: bold;
     /* Unicode 字符 - 号 */
 /* }   */
+.cartaccordion::before{
+    background: url("/public/images/flower.png");
+}
+.shopimg{
+    width: 40px;
+    display: inline;
+    background-color: aquamarine;
+}

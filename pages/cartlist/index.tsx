@@ -121,7 +121,8 @@ function Orderman({
             <div className="cartsidebar">
                 <div className="cartsidebar__inner">
                     <button className="cartaccordion ">
-                        <h3>訂購人資料</h3>
+                    
+                        <h3><img className="shopimg" src="./images/flower.png" /> 訂購人資料</h3>
                         <hr />
                     </button>
                     <div className="cartpanel">
@@ -307,32 +308,32 @@ function Paylist() {
         </section>
     )
 }
-//電子發票
-function Billlist({ userEmail }) {
-    return (
-        <section className="billlist">
-            <div className="cartsidebar">
-                <div className="cartsidebar__inner">
-                    <button className="cartaccordion">
-                        <h3>電子發票</h3>
-                        <hr />
-                    </button>
-                    <div className="cartpanel">
-                        <p>電子收據寄送方式</p>
-                        <select name="" id="" style={{ width: '200px' }}>
-                            <option >寄送至信箱</option>
-                            <option >開立統編、收據</option>
-                        </select>
-                        <p>寄送信箱</p>
-                        <input type="email" value={userEmail} />
-                        {/* <!-- <h6>地址</h6>
-                                                                <input type="text"> --> */}
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
-}
+//電子發票(未使用)
+// function Billlist({ userEmail }) {
+//     return (
+//         <section className="billlist">
+//             <div className="cartsidebar">
+//                 <div className="cartsidebar__inner">
+//                     <button className="cartaccordion">
+//                         <h3>電子發票</h3>
+//                         <hr />
+//                     </button>
+//                     <div className="cartpanel">
+//                         <p>電子收據寄送方式</p>
+//                         <select name="" id="" style={{ width: '200px' }}>
+//                             <option >寄送至信箱</option>
+//                             <option >開立統編、收據</option>
+//                         </select>
+//                         <p>寄送信箱</p>
+//                         <input type="email" value={userEmail} />
+//                         {/* <!-- <h6>地址</h6>
+//                                                                 <input type="text"> --> */}
+//                     </div>
+//                 </div>
+//             </div>
+//         </section>
+//     )
+// }
 //付款明細
 function Billtotal(itemList) {
     
@@ -509,8 +510,8 @@ export default function cartlist(props) {
                     <Travelman
                         itemList={itemList} />
                     <Paylist />
-                    <Billlist
-                        {...props.memberCentre} />
+                    {/* <Billlist
+                        {...props.memberCentre} /> */}
                     <Billtotal
                         itemList={itemList}
                     // onCalculate={calculate}

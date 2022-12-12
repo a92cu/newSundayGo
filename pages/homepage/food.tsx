@@ -14,6 +14,7 @@ import React, { useEffect, useState } from 'react';
 import ReactStars from 'react-stars';
 import { useRouter } from 'next/router';
 import $ from 'jquery';
+import axios from "axios";
 
 
 //   header
@@ -152,11 +153,11 @@ function Food(dateList) {
         //     document.getElementsByClassName('delbtn').style.display = 'none'
         // }
         // myFunction()
-        // $(".delbtn").click(function () {
-        //     console.log(this)
-        //     // $(this)(".filterBtn").hide()
-        //     $(this).parent('button').hide()
-        // });
+        $(".delbtn").click(function () {
+            console.log(this)
+            // $(this)(".filterBtn").hide()
+            $(this).parent('button').hide()
+        });
 
         // $("input[type='checkbox']").on('click',function(){
         //     var item = $(":radio:checked"); 
@@ -216,26 +217,24 @@ function Food(dateList) {
     const fetchdata = async () => {
         console.log(2, setlist)
         // if (homepagelist == "") 
-            return (await fetch("/api/home/food")
-                .then((res) => res.json())
+           await axios("/api/home/food")
+              
                 .then((result) => {
-                    result.data.forEach((i) => {
+                    result.data.data.forEach((i) => {
                         var img = Buffer.from(i.itemImgUrl).toString('base64');
                         var call = Buffer.from(img, 'base64').toString('ascii');
                         var replaceCallAll = call.replaceAll('\x00', '');
                         i.itemImgUrl = replaceCallAll;
                     })
                     // console.log(3, result.data)
-                    setlist(result.data);
-                    //
-                })
-            );
-        
+                    setlist(result.data.data);
+                });
         // if (setlist !== "") {
         //     [...setlist]
         // }
     }
 
+    //傳送資料庫資料
     const favIdsend = async (i) => {
         console.log(4, i)
         await fetch("/api/home/food", {
@@ -260,6 +259,56 @@ function Food(dateList) {
         // })
     }
     //POST結束
+
+    const restar =  () => {
+        axios(`/api/sort/star`)
+           .then((result2) => {
+               console.log(33,result2)
+               result2.data.data.forEach((i) => {
+                   var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                   var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                   var replaceCallAll2 = call2.replaceAll('\x00', '');
+                   i.itemImgUrl = replaceCallAll2;
+               })
+               // console.log(3, result.data)
+               setlist(result2.data.data);
+               //
+           })
+       
+       // if (setlist !== "") {
+       //     [...setlist]
+       // }
+   }
+   //按價格排序
+   const reprice =  () => {
+       axios('/api/sort/price')
+          .then((result2) => {
+              console.log(33,result2)
+              result2.data.data.forEach((i) => {
+                  var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                  var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                  var replaceCallAll2 = call2.replaceAll('\x00', '');
+                  i.itemImgUrl = replaceCallAll2;
+              })
+              // console.log(3, result.data)
+              setlist(result2.data.data);
+          })
+  }
+   //按地區排序
+   const rearea =  () => {
+       axios('/api/sort/area')
+          .then((result2) => {
+              console.log(33,result2)
+              result2.data.data.forEach((i) => {
+                  var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                  var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                  var replaceCallAll2 = call2.replaceAll('\x00', '');
+                  i.itemImgUrl = replaceCallAll2;
+              })
+              // console.log(3, result.data)
+              setlist(result2.data.data);
+          })
+  }
 
     //加入最愛
     // const newfav = (favId) => {
@@ -466,9 +515,11 @@ function Food(dateList) {
                         </button>
                         {/* )} */}
                         <hr />
-                        <span className="homerightup2"> 排序|<a href="">熱門程度</a>|<a href="">用戶評價</a>|<a
-                            href="">&#36;價格由低到高</a></span>
-
+                        <span className="homerightup2"> 排序方式|
+                        <button type="button" className="sortBtn" onClick={() => restar()}>評價</button>|
+                        <button type="button" className="sortBtn" onClick={() => reprice()}>商品價格</button>|
+                        <button type="button" className="sortBtn" onClick={() => rearea()}>地區</button>
+                        </span>
                     </div >
                     <div id="content" className="content">
                         {/* <!-- 商品顯示主體 --> */}
