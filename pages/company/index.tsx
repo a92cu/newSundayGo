@@ -310,11 +310,12 @@ function Account(props) {
 export default function Company(props) {
   const [tab, setTab] = useState("account");
   const [itemList, setItemList] = useState(props.itemList);
+  const [firmName, setFirmName] = useState(props.company.firmName);
   return (
     <>
     <Header />
       <div className="companyName">
-        <span>{props.firmName}</span> &nbsp;<span>您好！</span>
+        <span>{firmName}</span> &nbsp;<span>您好！</span>
       </div>
       <div className="MemberCentre">
         <div className="tab">
@@ -359,7 +360,7 @@ export default function Company(props) {
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
   const sq1 = `SELECT * FROM firm WHERE firmId = "firm001"`;
-  const sq2 = `SELECT * FROM item LEFT JOIN itemimg ON item.itemId=itemimg.itemId WHERE imgLead=1 `;
+  const sq2 = `SELECT * FROM item LEFT JOIN itemimg ON item.itemId=itemimg.itemId WHERE imgLead=1 ORDER BY itemListedDate DESC;`;
   const sq3 = `SELECT * FROM itemimg`;
   // any是沒有定義的意思
   const imgList: any = [];
