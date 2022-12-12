@@ -12,7 +12,7 @@ export var CartItem = () => {
 
     const [totalCash, setTotalCash] = useState(0);  // totalCash預設值為0
 
-    // 還是有小biug
+    // 還是有小bug
     const calculate = () => {
         let totalPrice=document.querySelectorAll('.itemTotal')
         let total=0;
@@ -95,29 +95,7 @@ export var CartItem = () => {
         }
         calculate();// 計算全部價錢
     }
-    // 增加按鈕
-    const increment = (e) => {
-        // let value=e.target.parentElement.parentElement.parentElement.children[0].children[0].value; // 商品Id
-        let int=parseInt(e.target.parentElement.parentElement.children[1].innerHTML); // 商品數量
-        int +=1; // 數量+1
-        e.target.parentElement.parentElement.children[1].innerHTML=int; // 將商品數量+1
-        let quaPrice=parseInt(e.target.parentElement.parentElement.parentElement.children[3].children[0].innerHTML); // 單價
-        e.target.parentElement.parentElement.parentElement.children[5].children[0].innerHTML=quaPrice*int // 總價
-        calculate(e,quaPrice*int);// 計算全部價錢
-    };
-    // 減少按鈕
-    const decrement = (e) => {
-        // let value=e.target.parentElement.parentElement.parentElement.children[0].children[0].value; // 商品Id
-        let int=parseInt(e.target.parentElement.parentElement.children[1].innerHTML); // 商品數量
-        let quaPrice=parseInt(e.target.parentElement.parentElement.parentElement.children[3].children[0].innerHTML); // 單價
-        if(int>0){ // 數量=0不再減少
-            int=int-1;
-            e.target.parentElement.parentElement.children[1].innerHTML=int;
-        }
-        e.target.parentElement.parentElement.parentElement.children[5].children[0].innerHTML=quaPrice*int // 總價
-        calculate(e,-quaPrice*int);// 計算全部價錢
-    }
-    
+
     // 將商品丟進local storage 前往結帳頁面
     function gotopay() {
         if (totalCash == 0) {
@@ -137,7 +115,7 @@ export var CartItem = () => {
                     setshopcaritem(Id, date, count, price);
                 }
             })
-            window.location = "/cartlist" //前往結帳頁面
+            // window.location = "/cartlist" //前往結帳頁面
         }
         function setshopcaritem(itemId, date, count, price) {
             window.localStorage.setItem(
@@ -210,8 +188,6 @@ export var CartItem = () => {
                         itemImgUrl={i.itemImgUrl}
                         onCalculate={calculate}
                         onHandleOnChange={handleOnChange}
-                        doIncrement={increment}
-                        doDecrement={decrement}
                     />
                 )}
             </div>
