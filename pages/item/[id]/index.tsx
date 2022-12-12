@@ -9,8 +9,6 @@ import { format } from "date-fns";
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import ReactCalendar from "react-calendar";
-import { any, props } from "ramda";
-import { Console } from "console";
 import ReactStars from "react-stars";
 import React from "react";
 
