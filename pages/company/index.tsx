@@ -359,7 +359,7 @@ export default function Company(props) {
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
   const sq1 = `SELECT * FROM firm WHERE firmId = "firm001"`;
-  const sq2 = `SELECT * FROM item`;
+  const sq2 = `SELECT * FROM item LEFT JOIN itemimg ON item.itemId=itemimg.itemId WHERE imgLead=1 `;
   const sq3 = `SELECT * FROM itemimg`;
   // any是沒有定義的意思
   const imgList: any = [];
@@ -377,6 +377,7 @@ export async function getStaticProps({ params }) {
     item.itemListedDate = format(item.itemListedDate, "yyyy-MM-dd");
     item.itemStartDate = format(item.itemStartDate, "yyyy-MM-dd");
     item.itemEndDate = format(item.itemEndDate, "yyyy-MM-dd");
+    item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
     itemList.push({ ...item });
   });
   //把要的資料拿出來
