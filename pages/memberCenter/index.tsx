@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import { runSQL } from "../../lib/mysql";
 import { format, parseISO } from "date-fns";
 import * as R from "ramda";
@@ -8,7 +8,6 @@ import ReactStars from 'react-stars'
 import axios from "axios";
 import Script from "next/script";
 import { useCookies } from "react-cookie";
-
 
 function Footer() {
   return (
@@ -97,7 +96,6 @@ function Footer() {
 function Header() {
   const [cookie, setCookie,removeCookie] = useCookies(["user","firm"])
 
-
    const RemoveCookie=()=>{
     removeCookie('user');
     removeCookie('firm');
@@ -175,7 +173,7 @@ function Header() {
     );
 }
 }
-// }
+
 // 帳號設定修改 OK 性別暫時PASS 
 function MemberAccount(props) {
   const { accountList } = props;
@@ -384,60 +382,72 @@ function Rebate(props) {
   )
 }
 
-// 七天簽到 OK (目前只能作用第一張折扣券，而且必須到隔天才能作用)
+// 七天簽到 OK (目前折扣是寫死的)
 function SevenDay() {
-  const [checkCount, setCheckCount] = useState(0);
+  let checkCount=0;
+  let registDate;
   let gotdate;
-  let thisDate = new Date()
-  let thisDate_ts = +new Date();
+  let thisDate = new Date() // 拿到會員當下時間
+  let thisDate_ts = +new Date(); 
   let fetureDate = new Date();
-  fetureDate.setTime(thisDate_ts + 7 * 1000 * 60 * 60 * 24);
+  fetureDate.setTime(thisDate_ts + 7 * 1000 * 60 * 60 * 24); 
   // console.log(thisDate)
   async function checkTime(e) {
-    let count = e.target.id.substr(-1); // 1 
+    let count = parseInt(e.target.id.substr(-1)); // 1 
     await axios.get("/api/memberCentre/taketime")
       .then((res) => {
         let datedata = res.data.data[0].userLoginEventTime;
-        gotdate = new Date(datedata)
-        if (!res.data.data[0].userLoginEventCount) {
-          setCheckCount(0)
-        } else {
-          setCheckCount(res.data.data[0].userLoginEventCount)
-        }
+        gotdate = new Date(datedata) // 拿到會員上次登入時間
+        let registDateData=res.data.data[0].userRegisterDate;
+        registDate=new Date(registDateData) // 拿到會員註冊時間
+        checkCount=res.data.data[0].userLoginEventCount; // 拿到會員活動次數
       })
+    console.log(checkCount,count)
+    console.log(checkCount-count)
     // 每個折價券做判斷
-    if (checkCount !== 0) {
-      if (checkCount >= count) {
-        if(checkCount<7){
-            if (thisDate.getFullYear() >= gotdate.getFullYear() && thisDate.getMonth() >= gotdate.getMonth()) {
-              if (thisDate.getDate() > gotdate.getDate()) {
-                console.log(thisDate, gotdate)
-                alert('您已領取折扣券')
-                axios.put(`/api/memberCentre/taketime`, {
-                  timeData: format(thisDate, "yyyy-MM-dd"),
-                  discountdate: format(fetureDate, "yyyy-MM-dd"),
-                  count: checkCount + 1,
-                });
-              } else {
-                alert("尚未滿足條件")
-              }
-            } else {
-              alert("尚未滿足條件")
-            }
-          }else{
-            alert("您已領取所有折價券，感謝您參與")
+    if(thisDate.getFullYear() >= gotdate.getFullYear() && thisDate.getMonth() >= gotdate.getMonth()){
+      if (thisDate.getDate() - gotdate.getDate() > 0){
+        if(registDate.getDate() == gotdate.getDate() && (checkCount - count==0)){
+          alert('您已領取折扣券');
+            axios.put(`/api/memberCentre/taketime`, {
+              timeData: format(thisDate, "yyyy-MM-dd"),
+              discountdate: format(fetureDate, "yyyy-MM-dd"),
+              count: checkCount + 1,
+            });
+        }else{
+          switch (checkCount - count) {
+            case 0:
+              alert("您今日已領取折價券，請明日再來");
+              break;
+            case 1:case 2:case 3:case 4:case 5: case 6:
+              alert('您已領取折扣券');
+              axios.put(`/api/memberCentre/taketime`, {
+                timeData: format(thisDate, "yyyy-MM-dd"),
+                discountdate: format(fetureDate, "yyyy-MM-dd"),
+                count: checkCount + 1,
+              });
+              break;
+            default:
+              alert("您尚未滿足條件")
+              break;
           }
-      } else {
-        alert("尚未滿足條件")
       }
-    } else {
-      await axios.put(`/api/memberCentre/taketime`, {
-        count: checkCount + 1,
-      });
-      alert("尚未滿足條件")
+    }else{
+      if(registDate.getMonth()==gotdate.getMonth() && registDate.getDate()==gotdate.getDate()){
+        alert("您今日尚不能領取折價券，請明日再來");
+        if(checkCount==0){
+          axios.put(`/api/memberCentre/taketime`, {
+            timeData: format(thisDate, "yyyy-MM-dd"),
+            count: checkCount + 1,
+          });
+        }
+      }else{
+        alert("您今日已領取折價券，請明日再來");
+      }
     }
-    e.target.style.filter = "brightness(50%)"
   }
+  e.target.style.filter = "brightness(50%)"
+}
   return (
     <div id="sevenDay" className="tabcontentB">
       <h2>登入七天簽到活動</h2>
@@ -668,7 +678,7 @@ export default function MemberCentre(props) {
     // });
 
   }
-
+  
   return <> 
     <Header />
     <div className="MemberCentre">
@@ -691,7 +701,7 @@ export default function MemberCentre(props) {
         </div>
 
         <div className="tabBtnB">
-          <button className="tablinksB defaultOpenB" onClick={() => setTab('information')} id="defaultOpenB" >
+          <button className="tablinksB defaultOpenB" onClick={() => setTab('information')} id="defaultOpenB">
             <span><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle" }} />&emsp;帳號設定</span>
           </button>
           <button className="tablinksB" onClick={() => setTab('discount')}>
@@ -745,11 +755,11 @@ export default function MemberCentre(props) {
     <Script src="/js/MemberCentre.js" />
     <Footer />
   </>
-}
-
+} 
 
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
+  
   // 帳號設定抓的資料 (userBirthday有問題)
   // const sq1 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
   const sq1 = `SELECT * FROM usertable WHERE userId = "u123456789"`;
