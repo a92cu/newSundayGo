@@ -146,14 +146,16 @@ function MemberOrder({ itemList, imgList, setItemList }) {
                 return (
                   <tr>
                     <td>
-                      <div className="OrderReadyImgQ" >
-                        <a href={`/item/${i.itemId}`}><img
-                          src={
-                            imgList?.find(
-                              (j) => j.itemId === i.itemId && j.imgLead == 1
-                            )?.itemImgUrl ?? ''
-                          }
-                        /></a>
+                      <div className="OrderReadyImgQ">
+                        <a href={`/item/${i.itemId}`}>
+                          <img
+                            src={
+                              imgList?.find(
+                                (j) => j.itemId === i.itemId && j.imgLead == 1
+                              )?.itemImgUrl ?? ""
+                            }
+                          />
+                        </a>
                       </div>
                     </td>
                     <td>{i.itemName}</td>
@@ -167,7 +169,9 @@ function MemberOrder({ itemList, imgList, setItemList }) {
                       </p>
                       <p>
                         上架時間 <br />
-                        <span>{i.itemStartDate}~{i.itemEndDate}</span>
+                        <span>
+                          {i.itemStartDate}~{i.itemEndDate}
+                        </span>
                       </p>
                     </td>
                     <td>
@@ -175,8 +179,10 @@ function MemberOrder({ itemList, imgList, setItemList }) {
                         <a href={`/item/${i.itemId}/edit`}>編輯</a>
                       </button>{" "}
                       <br />
-                      <button >
-                        <a href="#" onClick={() => deleteItem(i.itemId)}>刪除</a>
+                      <button>
+                        <a href="#" onClick={() => deleteItem(i.itemId)}>
+                          刪除
+                        </a>
                       </button>
                     </td>
                   </tr>
@@ -190,7 +196,6 @@ function MemberOrder({ itemList, imgList, setItemList }) {
   );
 }
 function Account(props) {
-  
   const [firmName, setFirmName] = useState(props.firmName);
   const [taxId, setTaxId] = useState(props.taxId);
   const [firmHeadName, setFirmHeadName] = useState(props.firmHeadName);
@@ -205,16 +210,16 @@ function Account(props) {
   // }
   const togglePassword = () => {
     if (passwordType === "password") {
-      setPasswordType("text")
+      setPasswordType("text");
       return;
     }
-    setPasswordType("password")
-  }
+    setPasswordType("password");
+  };
 
   const saveAccount = () => {
-   //console.log(company) // [{...}]
-  // console.log(accountList[0]) // {}
-    // console.log(userBirthday) // 
+    //console.log(company) // [{...}]
+    // console.log(accountList[0]) // {}
+    // console.log(userBirthday) //
     fetch(`http://localhost:3000/api/company/account`, {
       method: "PUT",
       headers: {
@@ -231,82 +236,113 @@ function Account(props) {
       }),
     });
 
-    window.location.replace('/company');
-
-  }
-   return (<div id="information" className="tabcontentQ">
-    <h2>帳號設定 </h2>
-    <div className="setBody">
-    <span style={{ color: "#8C5C02" }}> <b>基本資料</b> </span>
-      <br /><br />
-      <div className="basic">
-        <span>公司名稱<b>*</b> </span>
-        <input type="text"
-          value={firmName}
-          onChange={(e) => setFirmName(e.target.value)}
+    window.location.replace("/company");
+  };
+  return (
+    <div id="information" className="tabcontentQ">
+      <h2>帳號設定 </h2>
+      <div className="setBody">
+        <span style={{ color: "#8C5C02" }}>
+          {" "}
+          <b>基本資料</b>{" "}
+        </span>
+        <br />
+        <br />
+        <div className="basic">
+          <span>
+            公司名稱<b>*</b>{" "}
+          </span>
+          <input
+            type="text"
+            value={firmName}
+            onChange={(e) => setFirmName(e.target.value)}
           />
-      </div>
-      <div className="basic">
-      <span>統一編號<b>*</b> </span>
-        <input type="text"
-          value={taxId}
-          onChange={(e) => setTaxId(e.target.value)}
+        </div>
+        <div className="basic">
+          <span>
+            統一編號<b>*</b>{" "}
+          </span>
+          <input
+            type="text"
+            value={taxId}
+            onChange={(e) => setTaxId(e.target.value)}
           />
-      </div>
-      <div className="basic">
-      <span>負責人<b>*</b> </span>
-        <input type="text"
-          value={firmHeadName}
-          onChange={(e) => setFirmHeadName(e.target.value)}
+        </div>
+        <div className="basic">
+          <span>
+            負責人<b>*</b>{" "}
+          </span>
+          <input
+            type="text"
+            value={firmHeadName}
+            onChange={(e) => setFirmHeadName(e.target.value)}
           />
-      </div>
-      <div className="basic">
-      <span>公司電話<b>*</b> </span>
-        <input type="text"
-          value={firmPhone}
-          onChange={(e) => setFirmPhone(e.target.value)}
+        </div>
+        <div className="basic">
+          <span>
+            公司電話<b>*</b>{" "}
+          </span>
+          <input
+            type="text"
+            value={firmPhone}
+            onChange={(e) => setFirmPhone(e.target.value)}
           />
-      </div>
-      <div className="basic">
-      <span>公司地址<b>*</b> </span>
-        <input type="text"
-          value={firmLocation}
-          onChange={(e) => setFirmLocation(e.target.value)}
+        </div>
+        <div className="basic">
+          <span>
+            公司地址<b>*</b>{" "}
+          </span>
+          <input
+            type="text"
+            value={firmLocation}
+            onChange={(e) => setFirmLocation(e.target.value)}
           />
-      </div>
-      <div className="basic">
-      <span>公司Email<b>*</b> </span>
-        <input type="email"
-          value={firmEmail}
-          onChange={(e) => setFirmEmail(e.target.value)}
+        </div>
+        <div className="basic">
+          <span>
+            公司Email<b>*</b>{" "}
+          </span>
+          <input
+            type="email"
+            value={firmEmail}
+            onChange={(e) => setFirmEmail(e.target.value)}
           />
+        </div>
+        <div className="basic">
+          <span>
+            密碼<b>*</b>
+          </span>
+          &emsp;&emsp;&emsp;
+          <input
+            type={passwordType}
+            onChange={(e) => setFirmPassword(e.target.value)}
+            // // onChange={handlePasswordChange}
+            value={firmPassword}
+            name="password"
+            className="form-control"
+            placeholder="Password"
+          />
+          &emsp;&emsp;
+          <input
+            style={{
+              width: "15px",
+              verticalAlign: "Middle",
+              outline: "none",
+            }}
+            type="checkbox"
+            onClick={() => togglePassword()}
+          />
+          顯示密碼
+        </div>
       </div>
-      <div className="basic">
-      <span>密碼<b>*</b></span>
-        &emsp;&emsp;&emsp;
-        <input
-          type={passwordType}
-          onChange={(e) => setFirmPassword(e.target.value)}
-          // // onChange={handlePasswordChange}
-          value={firmPassword}
-          name="password"
-          className="form-control"
-          placeholder="Password" />&emsp;&emsp;
-        <input
-          style={{
-            width: "15px",
-            verticalAlign: "Middle",
-            outline: "none"
-          }}
-          type="checkbox"
-          onClick={() => togglePassword()} />顯示密碼
+      <div className="basicBtn">
+        <button className="informationBtn" onClick={() => saveAccount()}>
+          {" "}
+          <b>儲存</b>{" "}
+        </button>
       </div>
     </div>
-    <div className="basicBtn">
-      <button className="informationBtn" onClick={() => saveAccount()}> <b>儲存</b> </button>
-    </div>
-  </div>
-  ); 
+  );
 }
 export default function Company(props) {
   const [tab, setTab] = useState("account");
@@ -314,7 +350,7 @@ export default function Company(props) {
   const [firmName, setFirmName] = useState(props.company.firmName);
   return (
     <>
-    <Header />
+      <Header />
       <div className="companyName">
         <span>{firmName}</span> &nbsp;<span>您好！</span>
       </div>
@@ -322,9 +358,10 @@ export default function Company(props) {
         <div className="tab">
           <div className="tabBtn">
             <button
-              className="tablinks"
+              className={`tablinks ${
+                tab === "account" ? "tab_btn_selected" : ""
+              }`}
               onClick={() => setTab("account")}
-              id="defaultOpen"
             >
               <span>
                 <img
@@ -334,7 +371,12 @@ export default function Company(props) {
                 &nbsp;帳號設定
               </span>
             </button>
-            <button className="tablinks" onClick={() => setTab("memberOrder")}>
+            <button
+              className={`tablinks ${
+                tab === "memberOrder" ? "tab_btn_selected" : ""
+              }`}
+              onClick={() => setTab("memberOrder")}
+            >
               <span>
                 <img
                   src="./images/flower.png"
@@ -354,7 +396,6 @@ export default function Company(props) {
           />
         )}
       </div>
-      <Script src="/js/company.js" />
       <Footer />
     </>
   );
