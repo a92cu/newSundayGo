@@ -499,50 +499,61 @@ select {
     height: 100%;
     overflow: auto;
     /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
+    /* background-color: rgba(0, 0, 0, 0.4); */
     padding-top: 60px;
     margin: auto;
 }
 
 /* 燈箱內容 */
 .modal-content {
-    background-color: #fefefe;
+    /* background-color: red; */
     margin: auto;
-    border: 1px solid #888;
-    width: 300px;
-    height: 280px;
-    font-size: 14px;
+    border: 1px solid #F29F04;
+    width: 1280px;
+    height: 600px;
+    font-size: 18px;
     padding: 5px 0 5px 10px;
-    text-align: center;
+    text-align: center;    
+    border-radius: 20px;
+}
+.modalImg {
+    /* background-color: red; */
+    width: 350px;
+    height: 180px;
+    border-radius: 20px;
+    /* display: block; */
+    object-fit: cover;
+    object-position: center;
+
 }
 
 /* X位置 */
-.close {
+/* .close { */
     /* position: absolute; */
     /* right: 25px; */
-    float: right;
+    /* float: right;
     top: 0;
     color: #000;
     font-size: 20px;
     font-weight: bold;
-    padding: 0 5px;
-}
+    padding: 0 5px; */
+/* } */
 
 /* X hover */
-.close:hover,
+/* .close:hover,
 .close:focus {
     color: red;
     cursor: pointer;
-}
+} */
 
 /* Add Zoom Animation */
-.animate {
+/* .animate {
     -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s
-}
+} */
 
 
-@keyframes animatezoom {
+/* @keyframes animatezoom {
     from {
         transform: scale(0)
     }
@@ -550,18 +561,18 @@ select {
     to {
         transform: scale(1)
     }
-}
+} */
 
 /* 前往評價裡的星星 */
 .star {
-    width: 80px;
+    width: 100px;
     height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    float: right;
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: space-between; */
+    /* float: right; */
     /* border: 1px solid pink; */
-    /* margin: 10px auto; */
+    /* margin:  auto; */
     /* background-color:lightblue ; */
 }
 
@@ -578,7 +589,7 @@ select {
 }
 .evaluationText {
     /* background-color: #888; */
-    width: 75%;
+    width: 280px;
     height: 30px;
     /* float: left; */
     margin: 0 auto;
@@ -588,7 +599,8 @@ select {
     background-color: rgb(255, 255, 0,0.3);
     border-radius: 5px;
     border: 1px solid rgb(198, 197, 197);
-    width: 60px;
+    width: 100px;
+    height: 30px;
     color: #8C5C02;
 }
 
