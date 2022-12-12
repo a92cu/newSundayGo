@@ -413,7 +413,7 @@ export const Mapselect = () => {
                 {/* <hr /> */}
                 {/* </div> */}
                 <div className="homecard">
-                <img className='mapimg1' src="" alt="Avatar" />
+                <img className='mapimg1' src="./images/flower.png" alt="" />
                 <div class="homecontainer item1">
                     <h4><b></b></h4>
                 </div>
@@ -427,7 +427,7 @@ export const Mapselect = () => {
             </div>
 
             <div className="homecard3" style={{ width: '300px', }}>
-                <img className='mapimg3' src="" alt="Avatar" />
+                <img className='mapimg3' src="./images/flower.png" alt="" />
                 <div class="homecontainer item3">
                     <h4><b></b></h4>
                 </div>
@@ -441,7 +441,7 @@ export const Mapselect = () => {
             </div>
 
             <div className="homecard2">
-                <img className='mapimg2' src="" alt="Avatar" />
+                <img className='mapimg2' src="./images/flower.png" alt="" />
                 <div class="homecontainer item2">
                     <h4><b></b></h4>
                 </div>
