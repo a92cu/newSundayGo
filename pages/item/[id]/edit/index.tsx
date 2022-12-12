@@ -1,37 +1,26 @@
 import { format } from "date-fns";
 import { runSQL } from "../../../../lib/mysql";
 import Router from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useFile from "../../../../hook/useFile";
 
 export default function UpdateItemPage(props) {
-  const {
-    itemId,
-    firmId,
-    itemListedDate,
-    itemPeriod,
-    //itemInvent,
-    itemTotalStar,
-    itemFilter1,
-    itemFilter3,
-    itemFilter4,
-    imgList,
-    // itemSales,
-  } = props;
+
   const { image1Url, image2Url, image3Url, changeHandler } = useFile();
-  const [itemTitle, setItemTitle] = useState(props.itemTitle);
-  const [itemPrice, setItemPrice] = useState(props.itemPrice);
-  const [itemFilter2, setItemFilter2] = useState(props.itemFilter2);
-  const [itemLocation, setItemLocation] = useState(props.itemLocation);
-  const [itemInfo, setItemInfo] = useState(props.itemInfo);
-  const [itemName, setItemName] = useState(props.itemName);
-  const [itemAddr, setItemAddr] = useState(props.itemAddr);
-  const [itemTraffic, setItemTraffic] = useState(props.itemTraffic);
-  const [itemNote, setItemNote] = useState(props.itemNote);
-  const [itemStartDate, setItemStartDate] = useState(props.itemStartDate);
-  const [itemEndDate, setItemEndDate] = useState(props.itemEndDate);
-  const [itemSales, setItemSales] = useState(props.itemSales);
-  const [itemInvent, setItemInvent,] = useState(props.itemInvent);
+  const [imgList, setImgList] = useState([]);
+  const [itemTitle, setItemTitle] = useState('');
+  const [itemPrice, setItemPrice] = useState(0);
+  const [itemFilter2, setItemFilter2] = useState('');
+  const [itemLocation, setItemLocation] = useState('');
+  const [itemInfo, setItemInfo] = useState('');
+  const [itemName, setItemName] = useState('');
+  const [itemAddr, setItemAddr] = useState('');
+  const [itemTraffic, setItemTraffic] = useState('');
+  const [itemNote, setItemNote] = useState('');
+  const [itemStartDate, setItemStartDate] = useState('');
+  const [itemEndDate, setItemEndDate] = useState('');
+  const [itemSales, setItemSales] = useState(0);
+  const [itemInvent, setItemInvent,] = useState('');
 
   const getUrl = (index, originUrl) => {
     if (index === 0) return image1Url === null ? originUrl : image1Url;
@@ -76,7 +65,7 @@ export default function UpdateItemPage(props) {
           }),
         });
       }
-      fetch(`http://localhost:3000/api/item/${props.itemId}`, {
+      fetch(`http://localhost:3000/api/item/${props.id}`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -86,7 +75,7 @@ export default function UpdateItemPage(props) {
           itemFilter2,
           itemTitle,
           itemPrice,
-          itemTotalStar,
+          itemTotalStar: 0,
           itemLocation,
           itemInfo,
           itemName,
@@ -102,6 +91,37 @@ export default function UpdateItemPage(props) {
       Router.replace("/company");
     }
   };
+
+  useEffect(() => {
+    const initData = async () => {
+      const id = props.id;
+      const { data: imgListRaw } = await fetch(`/api/itemimg/${id}`).then((i) =>
+        i.json()
+      );
+      const { data: data } = await fetch(`/api/item/${id}`).then((i) =>
+        i.json()
+      );
+      //下面是在轉日期格式
+      data.itemListedDate = format(new Date(data.itemListedDate), "yyyy-MM-dd");
+      data.itemStartDate = format(new Date(data.itemStartDate), "yyyy-MM-dd");
+      data.itemEndDate = format(new Date(data.itemEndDate), "yyyy-MM-dd");
+      setImgList(imgListRaw);
+      setItemTitle(data.itemTitle);
+      setItemPrice(data.itemPrice);
+      setItemFilter2(data.itemFilter2);
+      setItemLocation(data.itemLocation);
+      setItemInfo(data.itemInfo);
+      setItemName(data.itemName);
+      setItemAddr(data.itemAddr);
+      setItemTraffic(data.itemTraffic);
+      setItemNote(data.itemNote);
+      setItemStartDate(data.itemStartDate);
+      setItemEndDate(data.itemEndDate);
+      setItemSales(data.itemSales);
+      setItemInvent(data.itemInvent)
+    }
+    initData();
+  }, [])
   return (
     <div
       style={{
@@ -149,14 +169,14 @@ export default function UpdateItemPage(props) {
             <input
               type="number"
               value={itemPrice}
-              onChange={(e) => setItemPrice(e.target.value)}
+              onChange={(e) => setItemPrice(Number(e.target.value))}
             />
             <br />
             <label>銷售數量:</label>
             <input
               type="text"
               value={itemSales}
-              onChange={(e) => setItemSales(e.target.value)}
+              onChange={(e) => setItemSales(Number(e.target.value))}
             />
             <br />
             <label>庫存數量:</label>
@@ -257,25 +277,9 @@ export async function getStaticPaths(props) {
 }
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
-  const id = params.id;
-  const imgList: any = [];
-  const sq1 = `SELECT * FROM item WHERE itemId = "${params.id}"`;
-  const sq3 = `SELECT * FROM itemimg WHERE itemId = "${params.id}"`;
-  const data = (await runSQL(sq1))[0];
-  const imgListRaw: any = await runSQL(sq3);
-  //forEach是在轉格式,原本出來是database物件
-  imgListRaw.forEach((item: any) => {
-    item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
-    imgList.push({ ...item });
-  });
-  data.itemListedDate = format(data.itemListedDate, "yyyy-MM-dd");
-  data.itemStartDate = format(data.itemStartDate, "yyyy-MM-dd");
-  data.itemEndDate = format(data.itemEndDate, "yyyy-MM-dd");
-
   return {
     props: {
-      ...data,
-      imgList,
+      id: params.id
     },
   };
 }
