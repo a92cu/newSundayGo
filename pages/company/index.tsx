@@ -5,6 +5,7 @@ import * as R from "ramda";
 import Image from "next/image";
 import Router from "next/router";
 import React from "react";
+import Script from "next/script";
 
 function Footer() {
   return (
@@ -108,7 +109,7 @@ function Header() {
           <img src="/images/cart.png" style={{ width: 25 }} />
         </a>
         <a href="#divOne" className="loginbutton">
-          登入|註冊
+          登出
         </a>
       </div>
       <form className="example" action="">
@@ -353,6 +354,7 @@ export default function Company(props) {
           />
         )}
       </div>
+      <Script src="/js/company.js" />
       <Footer />
     </>
   );
