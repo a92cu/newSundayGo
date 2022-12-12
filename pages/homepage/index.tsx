@@ -7,7 +7,6 @@ import Script from "next/script";
 import { runSQL } from "../../lib/mysql";
 //整理日期格式
 import { format } from "date-fns";
-// 帶入react 與 axios 套件
 import React, { Component } from 'react';
 // import Link from 'next/link';s
 import Mapselect from "./component/Taiwanmap.jsx";
@@ -16,6 +15,7 @@ import { useEffect, useState } from 'react';
 import ReactStars from 'react-stars';
 import { useRouter } from 'next/router';
 import $ from 'jquery';
+import { BACKGROUND_CLIP } from "html2canvas/dist/types/css/property-descriptors/background-clip";
 
 
 //   header
@@ -102,7 +102,7 @@ function Footer() {
         </div>
     )
 }
-export const Placezone = (dateList) => {
+export const Placezone = (dateList, itemList2) => {
     var [tryre, settryre] = useState([]);
     const router = useRouter();
 
@@ -157,33 +157,33 @@ export const Placezone = (dateList) => {
             $(this).parent('button').hide()
         });
 
-
-        var xx =`${dateList.dateList[0].itemStartDate}`;
-        console.log(11,xx)
+        console.log(88, itemList2)
+        var xx = [`${dateList.dateList[0].itemStartDate}`, `${itemList2.itemList2}`];
+        console.log(91, xx)
     }, [])
 
     async function fetchdata() {
-        return (await fetch("/api/home/homepage")
-            .then((res) => res.json())
+        await axios("/api/home/homepage")
+
             .then((result) => {
-                result.data.forEach((i) => {
+                result.data.data.forEach((i) => {
                     var img = Buffer.from(i.itemImgUrl).toString('base64');
                     var call = Buffer.from(img, 'base64').toString('ascii');
                     var replaceCallAll = call.replaceAll('\x00', '');
                     i.itemImgUrl = replaceCallAll;
                 })
                 console.log(result.data)
-                setlist(result.data);
+                setlist(result.data.data);
                 //
                 //setlist(result.data))
             })
-        )
+
     }
     //按星星排序
-    const restar =  () => {
-         axios(`/api/sort/star`)
+    const restar = () => {
+        axios(`/api/sort/star`)
             .then((result2) => {
-                console.log(33,result2)
+                console.log(33, result2)
                 result2.data.data.forEach((i) => {
                     var img2 = Buffer.from(i.itemImgUrl).toString('base64');
                     var call2 = Buffer.from(img2, 'base64').toString('ascii');
@@ -194,41 +194,41 @@ export const Placezone = (dateList) => {
                 setlist(result2.data.data);
                 //
             })
-        
+
         // if (setlist !== "") {
         //     [...setlist]
         // }
     }
     //按價格排序
-    const reprice =  () => {
+    const reprice = () => {
         axios('/api/sort/price')
-           .then((result2) => {
-               console.log(33,result2)
-               result2.data.data.forEach((i) => {
-                   var img2 = Buffer.from(i.itemImgUrl).toString('base64');
-                   var call2 = Buffer.from(img2, 'base64').toString('ascii');
-                   var replaceCallAll2 = call2.replaceAll('\x00', '');
-                   i.itemImgUrl = replaceCallAll2;
-               })
-               // console.log(3, result.data)
-               setlist(result2.data.data);
-           })
-   }
+            .then((result2) => {
+                console.log(33, result2)
+                result2.data.data.forEach((i) => {
+                    var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                    var replaceCallAll2 = call2.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll2;
+                })
+                // console.log(3, result.data)
+                setlist(result2.data.data);
+            })
+    }
     //按地區排序
-    const rearea =  () => {
+    const rearea = () => {
         axios('/api/sort/area')
-           .then((result2) => {
-               console.log(33,result2)
-               result2.data.data.forEach((i) => {
-                   var img2 = Buffer.from(i.itemImgUrl).toString('base64');
-                   var call2 = Buffer.from(img2, 'base64').toString('ascii');
-                   var replaceCallAll2 = call2.replaceAll('\x00', '');
-                   i.itemImgUrl = replaceCallAll2;
-               })
-               // console.log(3, result.data)
-               setlist(result2.data.data);
-           })
-   }
+            .then((result2) => {
+                console.log(33, result2)
+                result2.data.data.forEach((i) => {
+                    var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                    var replaceCallAll2 = call2.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll2;
+                })
+                // console.log(3, result.data)
+                setlist(result2.data.data);
+            })
+    }
     // console.log(result.data)
     // const fetcher = (user, page) =>
     //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
@@ -255,6 +255,7 @@ export const Placezone = (dateList) => {
                 <div id="main-content" className="main homeleft" >
                     <div id="sidebar" className="sidebar" >
                         <div className="sidebar__inner" >
+                            <img className="homeimg" src="../../public/images/flower.png" />
                             篩選目的地
                             <br />
                             <button className="accordion">
@@ -418,10 +419,10 @@ export const Placezone = (dateList) => {
                         </button> */}
 
                         <hr />
-                        <span className="homerightup2"> 排序方式|
-                        <button type="button" className="retest" onClick={() => restar()}>評價</button>|
-                        <button type="button" onClick={() => reprice()}>商品價格</button>|
-                        <button type="button" onClick={() => rearea()}>地區</button>
+                        <span className="homerightup2"><b>排序方式</b> |
+                            <button type="button" className="sortBtn" onClick={() => restar()}>評價</button>|
+                            <button type="button" className="sortBtn" onClick={() => reprice()}>商品價格</button>|
+                            <button type="button" className="sortBtn" onClick={() => rearea()}>地區</button>
                         </span>
                     </div >
                     <div id="content" className="content">
@@ -531,13 +532,15 @@ export const Placezone = (dateList) => {
 //homepage 畫面路由
 export default function homepage(props) {
     const [dateList, setdateList] = useState(props.dateList)
+    const [itemList2, setitemList2] = useState(props.itemList2)
 
     return (
         <>
             <Header />
             <Mapselect />
             <Placezone
-                dateList={dateList} />
+                dateList={dateList}
+                itemList2={itemList2} />
 
             <Footer />
             {/* <Script src="/js/home.js" /> */}
@@ -551,15 +554,24 @@ export async function getStaticProps({ params }) {
     // const sq1 = 'SELECT * FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and itemFilter3 = "美食";';
     const sq2 = 'SELECT itemFilter2 FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;';
     const sq3 = `SELECT  itemListedDate, itemStartDate, itemEndDate FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and itemFilter3 = "美食";`;
+    const sq4 = `SELECT item.itemFilter2, item.itemName,item.itemTotalStar,itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId  WHERE itemimg.imgLead=1 ORDER by itemFilter2;`;
+
     const itemList: any = [];
+    const itemList2: any = [];
     const dateList: any = [];
 
     // itemTitle itemFilter2 itemImgUrl
     const imgListRaw: any = await runSQL(sq1); // 所有項目
+    const imgListRaw2: any = await runSQL(sq4); // 地圖圖片
     const dateListRaw: any = await runSQL(sq3); // 日期
+
     imgListRaw.forEach((item: any) => {
         item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
         itemList.push({ ...item });
+    });
+    imgListRaw2.forEach((item: any) => {
+        item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
+        itemList2.push({ ...item });
     });
     dateListRaw.forEach((item: any) => {
         item.itemListedDate = format(item.itemListedDate, "yyyy-MM-dd");
@@ -574,6 +586,7 @@ export async function getStaticProps({ params }) {
         props: {
             //所有項目
             itemList,
+            itemList2,
             dateList
         },
     };

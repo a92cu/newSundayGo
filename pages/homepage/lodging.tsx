@@ -7,6 +7,7 @@ import { runSQL } from "../../lib/mysql";
 //整理日期格式
 import { format } from "date-fns";
 // 帶入react 與 axios 套件
+import axios from "axios";
 import React, { useEffect, useState } from 'react';
 // import Link from 'next/link';s
 // import Mapselect from "./component/Taiwanmap.jsx";
@@ -111,18 +112,21 @@ export const Lodging = (dateList) => {
                 }
             });
         }
-
         $(".allcheck").click(function () {
-            if (this.checked) {
-                $("input[name='citys']").each(function () {
-                    $(this).prop("checked", true)
-                });
-            } else {
-                $("input[name='citys']").each(function () {
-                    $(this).prop("checked", false)
-                })
-            }
-        });
+            $("input[name='citys']").prop("checked", true)
+        })
+
+        // $(".allcheck").click(function () {
+        //     if (this.checked) {
+        //         $("input[name='citys']").each(function () {
+        //             $(this).prop("checked", true)
+        //         });
+        //     } else {
+        //         $("input[name='citys']").each(function () {
+        //             $(this).prop("checked", false)
+        //         })
+        //     }
+        // });
         $(".delbtn").on('click', function () {
             // console.log(this)
             // $(this)(".filterBtn").hide()
@@ -132,21 +136,74 @@ export const Lodging = (dateList) => {
     }, [])
     async function fetchdata() {
 
-        return (await fetch("/api/home/lodging")
-            .then((res) => res.json())
+        // return (await fetch("/api/home/lodging")
+        //     // .then((res) => res.json())
+        //     .then((result) => {
+
+        await axios("/api/home/lodging")
+
             .then((result) => {
-                result.data.forEach((i) => {
+                result.data.data.forEach((i) => {
                     var img = Buffer.from(i.itemImgUrl).toString('base64');
                     var call = Buffer.from(img, 'base64').toString('ascii');
                     var replaceCallAll = call.replaceAll('\x00', '');
                     i.itemImgUrl = replaceCallAll;
                 })
                 console.log(result.data)
-                setlist(result.data);
+                setlist(result.data.data);
                 //
                 //setlist(result.data))
             })
-        )
+
+    }
+    const restar = () => {
+        axios(`/api/sort/star`)
+            .then((result2) => {
+                console.log(33, result2)
+                result2.data.data.forEach((i) => {
+                    var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                    var replaceCallAll2 = call2.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll2;
+                })
+                // console.log(3, result.data)
+                setlist(result2.data.data);
+                //
+            })
+
+        // if (setlist !== "") {
+        //     [...setlist]
+        // }
+    }
+    //按價格排序
+    const reprice = () => {
+        axios('/api/sort/price')
+            .then((result2) => {
+                console.log(33, result2)
+                result2.data.data.forEach((i) => {
+                    var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                    var replaceCallAll2 = call2.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll2;
+                })
+                // console.log(3, result.data)
+                setlist(result2.data.data);
+            })
+    }
+    //按地區排序
+    const rearea = () => {
+        axios('/api/sort/area')
+            .then((result2) => {
+                console.log(33, result2)
+                result2.data.data.forEach((i) => {
+                    var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                    var replaceCallAll2 = call2.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll2;
+                })
+                // console.log(3, result.data)
+                setlist(result2.data.data);
+            })
     }
     //篩選不重覆項目
     var redata = homepagelist.map(function (item) {
@@ -326,9 +383,11 @@ export const Lodging = (dateList) => {
                             </button>
                         )}
                         <hr />
-                        <span className="homerightup2"> 排序|<a href="">熱門程度</a>|<a href="">用戶評價</a>|<a
-                            href="">&#36;價格由低到高</a></span>
-
+                        <span className="homerightup2"><b>排序方式</b> |
+                            <button type="button" className="sortBtn" onClick={() => restar()}>評價</button>|
+                            <button type="button" className="sortBtn" onClick={() => reprice()}>商品價格</button>|
+                            <button type="button" className="sortBtn" onClick={() => rearea()}>地區</button>
+                        </span>
                     </div >
                     <div id="content" className="content">
                         {/* <!-- 商品顯示主體 --> */}
@@ -411,10 +470,10 @@ export const Lodging = (dateList) => {
                     </div>
                 </div >
 
-                {/* <!-- 頁籤 --> */}                
+                {/* <!-- 頁籤 --> */}
                 {/* 消失會讓footer跑版 */}
                 < ul className="pagination" >
-{/* 
+                    {/* 
                     <li><a href="#">1</a></li>
                     <li><a className="pagetag" href="#">2</a></li>
                     <li><a href="#">3</a></li>
@@ -437,8 +496,8 @@ export default function homepage(props) {
         <>
             <Header />
 
-            <Lodging 
-            dateList={dateList}/>
+            <Lodging
+                dateList={dateList} />
 
             <Footer />
             {/* <Script src="/js/home.js" /> */}

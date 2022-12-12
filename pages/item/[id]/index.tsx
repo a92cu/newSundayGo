@@ -9,11 +9,8 @@ import { format } from "date-fns";
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import ReactCalendar from "react-calendar";
-import { props } from "ramda";
-import { Console } from "console";
-import ReactStars from 'react-stars';
+import ReactStars from "react-stars";
 import React from "react";
-
 
 function Calendar({ price, itemId }) {
   const [value, onChange] = useState(new Date());
@@ -44,7 +41,7 @@ function Calendar({ price, itemId }) {
             className="addToCarBtn"
             onClick={() => {
               window.addToCar(itemId, format(value, "yyyy-MM-dd"));
-              } }
+            }}
           >
             加入購物車
           </button>
@@ -181,83 +178,137 @@ function Carousel({ imgList }) {
 function Receipt(orderList) {
   ///把沒有評價的擋住先跳出這個,後面沒評價的品項才不會壞掉
   if (orderList.orderList.length === 0) {
-    return (<div><h3>評價:</h3><span>尚未有評價</span></div>)
-  };
+    return (
+      <div>
+        <h3>評價:</h3>
+        <span>尚未有評價</span>
+      </div>
+    );
+  }
   //出來的資料是陣列
   //console.log(orderList);
-  const star = orderList.orderList[0].orderStar
-  return (<div>
-    <h3>評價:</h3>
-    <div style={{ display: "flex" }}>
-      <span>帳號:{orderList.orderList[0].userId}</span>&nbsp;&nbsp;
-      <span>{orderList.orderList[0].orderDate}</span>&nbsp;&nbsp;
-      <ReactStars
-        style={{ maxWidth: 180 }}
-        value={`${star}`}
-        edit={false}
-      />
+  const star = orderList.orderList[0].orderStar;
+  return (
+    <div>
+      <h3>評價:</h3>
+      <div style={{ display: "flex" }}>
+        <span>帳號:{orderList.orderList[0].userId}</span>&nbsp;&nbsp;
+        <span>{orderList.orderList[0].orderDate}</span>&nbsp;&nbsp;
+        <ReactStars style={{ maxWidth: 180 }} value={`${star}`} edit={false} />
+      </div>
+      <span>評語:{orderList.orderList[0].orderReview}</span>
     </div>
-    <span>評語:{orderList.orderList[0].orderReview}</span>
-  </div>)
+  );
 }
 //ItemPage
 export default function ItemPage(props) {
-  const [orderList, setOrderList] = useState(props.orderList);
+  const [imgList, setImgList] = useState([]);
+  const [orderList, setOrderList] = useState([]);
+  const [item, setItem] = useState<any>({});
+  const [] = useState([]);
   useEffect(() => {
     const Flickity = require("flickity");
     new Flickity(".main-carousel");
+    async function initData() {
+      const id = props.id;
+      const { data: imgListRaw } = await fetch(`/api/itemimg/${id}`).then((i) =>
+        i.json()
+      );
+      const { data: orderListRaw } = await fetch(`/api/ordertable/${id}`).then(
+        (i) => i.json()
+      );
+      const { data: data } = await fetch(`/api/item/${id}`).then((i) =>
+        i.json()
+      );
+      const imgListTemp: any = [];
+      const orderList: any = [];
+      orderListRaw.forEach((ordertable: any) => {
+        ordertable.orderDate = format(
+          new Date(ordertable.orderDate),
+          "yyyy-MM-dd"
+        );
+        orderList.push({ ...ordertable });
+      });
+
+      //下面是在轉日期格式
+      data.itemListedDate = format(new Date(data.itemListedDate), "yyyy-MM-dd");
+      data.itemStartDate = format(new Date(data.itemStartDate), "yyyy-MM-dd");
+      data.itemEndDate = format(new Date(data.itemEndDate), "yyyy-MM-dd");
+      setImgList(imgListRaw);
+      setOrderList(orderList);
+      setItem(data);
+    }
+    initData();
   }, []);
+  const {
+    itemFilter2,
+    itemPrice,
+    itemId,
+    itemTitle,
+    itemInfo,
+    itemName,
+    itemStartDate,
+    itemEndDate,
+    itemNote,
+    itemAddr,
+    itemLocation,
+    itemTraffic,
+  } = item;
+  if (Object.keys(item).length === 0) return null;
   return (
     <>
       <Header />
-      <Carousel imgList={props.imgList} />
+      <Carousel imgList={imgList} />
       <div className="item-container">
         <div>
-          <h1>{props.itemTitle}</h1>
+          <h1>{itemTitle}</h1>
         </div>
         <div>
           <h3>
-            地區:&nbsp;<span>{props.itemFilter2}</span>
+            地區:&nbsp;<span>{itemFilter2}</span>
           </h3>
         </div>
         <div>
           <h3>
-            價錢:&nbsp;<span>{props.itemPrice}</span>元
+            價錢:&nbsp;<span>{itemPrice}</span>元
           </h3>
         </div>
         <div>
           <h3>
             商品說明:&nbsp;
-            <pre style={{ whiteSpace: "pre-line" }}>{props.itemInfo}</pre>
+            <pre style={{ whiteSpace: "pre-line" }}>{itemInfo}</pre>
           </h3>
         </div>
         <div>
           <div>
             <h2>
-              商品名稱:&nbsp;<span>{props.itemName}</span>
+              商品名稱:&nbsp;<span>{itemName}</span>
             </h2>
           </div>
           <div>
             <h3>
-              銷售日期:&nbsp;<span>{props.itemStartDate}-{props.itemEndDate}</span>
+              銷售日期:&nbsp;
+              <span>
+                {itemStartDate}-{itemEndDate}
+              </span>
             </h3>
           </div>
           <div>
             <h2>請選擇日期</h2>
           </div>
-          <Calendar price={props.itemPrice} itemId={props.itemId} />
+          <Calendar price={itemPrice} itemId={itemId} />
         </div>
         <div>
           <h3>
             注意事項:
-            <pre style={{ whiteSpace: "pre-line" }}>{props.itemNote}</pre>
+            <pre style={{ whiteSpace: "pre-line" }}>{itemNote}</pre>
           </h3>
         </div>
         <div style={{ display: "flex" }}>
           <div>
-            <h3>{props.itemAddr}</h3>
+            <h3>{itemAddr}</h3>
             <p>
-              地址:&nbsp;<span>{props.itemLocation}</span>
+              地址:&nbsp;<span>{itemLocation}</span>
             </p>
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623.8845360771206!2d121.22031161483552!3d24.730843984115214!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346802cac6d3e685%3A0x99afbd6ecf270016!2z55-z5LiK5rmv5bGL!5e0!3m2!1szh-TW!2stw!4v1668581828726!5m2!1szh-TW!2stw"
@@ -270,7 +321,7 @@ export default function ItemPage(props) {
           <div>
             <h3 style={{ padding: "0 20px" }}>
               交通資訊:
-              <pre style={{ whiteSpace: "pre-line" }}>{props.itemTraffic}</pre>
+              <pre style={{ whiteSpace: "pre-line" }}>{itemTraffic}</pre>
             </h3>
           </div>
         </div>
@@ -314,40 +365,7 @@ export async function getStaticPaths(props) {
   };
 }
 
-
 //頁面產生出來之後從params去找出特定需要的那一頁
-export async function getStaticProps({ params }) {
-  const sq1 = `SELECT * FROM item WHERE itemId = "${params.id}"`;
-  const sq3 = `SELECT * FROM itemimg WHERE itemId = "${params.id}"`;
-  const sq2 = `SELECT * FROM ordertable WHERE itemId = "${params.id}"`
-  // any是沒有定義的意思
-  const imgList: any = [];
-
-  const data = (await runSQL(sq1))[0];
-  const imgListRaw: any = await runSQL(sq3);
-  const orderList: any = [];
-  const orderListRaw: any = (await runSQL(sq2));
-
-  orderListRaw.forEach((ordertable: any) => {
-    ordertable.orderDate = format(ordertable.orderDate, "yyyy-MM-dd");
-    orderList.push({ ...ordertable });
-  });
-
-  //forEach是在轉格式,原本出來是database物件
-  imgListRaw.forEach((item: any) => {
-    item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
-    imgList.push({ ...item });
-  });
-  //下面是在轉日期格式
-  data.itemListedDate = format(data.itemListedDate, "yyyy-MM-dd");
-  data.itemStartDate = format(data.itemStartDate, "yyyy-MM-dd");
-  data.itemEndDate = format(data.itemEndDate, "yyyy-MM-dd");
-  //把要的資料拿出來
-  return {
-    props: {
-      ...data,
-      imgList,
-      orderList,
-    },
-  };
+export async function getStaticProps(props) {
+  return { props: { id: props.params.id } };
 }

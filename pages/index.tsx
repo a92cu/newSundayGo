@@ -6,6 +6,8 @@ import Image from "next/image";
 import Script from "next/script";
 // import "../public/images/taiwan.mp4";
 // import  withVideos from "/next.config.js";
+import { useRouter } from 'next/router';
+
 
 
 function Header() {
@@ -40,8 +42,8 @@ function Homevideo() {
         <video className="video-player" src={'/public/images/taiwan.mp4'} ></video>
       </div> */}
       <div className="table_image">
-        <video className="video-player" x5-video-player-type="h5" x-webkit-airplay="true" webkit-playsinline="true" loop autoPlay muted  
-        style={{width:'1280px',marginLeft:'100px'}}
+        <video className="video-player" x5-video-player-type="h5" x-webkit-airplay="true" webkit-playsinline="true" loop autoPlay muted
+          style={{ width: '1280px', marginLeft: '100px' }}
         >
           <source src={require('/public/images/taiwan.mp4')} type="video/mp4" />
         </video>
@@ -52,12 +54,18 @@ function Homevideo() {
 }
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <>
       <Header />
       <Homevideo />
 
-      <button className="homebtn" type="button"><a href="./homepage">出發吧&gt;&gt;&gt;</a></button>
+      <button className="homebtn" type="button">
+        <img className="homeimg" src="./images/flower.png" />
+        <a href='/homepage' >出發吧&gt;&gt;&gt;</a>
+        <img className="homeimg" src="./images/flower.png" />
+      </button>
       <Script src="/js/homepage.js" />
     </>
   )
