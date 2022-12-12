@@ -7,7 +7,6 @@ import Router, { useRouter } from 'next/router'
 import ReactStars from 'react-stars'
 import axios from "axios";
 import Script from "next/script";
-import useFile from "../../hook/useFile";
 import { useCookies } from "react-cookie";
 
 
@@ -338,10 +337,9 @@ function Discount(props) {
 
 // 回饋金 OK 可以正常運作
 function Rebate(props) {
-  // console.log(props.orderListRebate)
   let allRebate = [];
   props.orderListRebate.forEach((e, i) => {
-    if (props.orderListRebate[i].userId == props.userId) {
+    if (props.orderListRebate[i].userId == "u123456789") {
       let itemTitle = props.orderListRebate[i].itemTitle;
       let orderDate = props.orderListRebate[i].orderDate;
       let orderRebate = props.orderListRebate[i].orderRebate;
