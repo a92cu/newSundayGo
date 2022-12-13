@@ -16,9 +16,12 @@ import "../css/shopping2.css";
 import Script from "next/script";
 import Head from "next/head";
 
+import { SessionProvider } from "next-auth/react";
+
 export default function App({ Component, pageProps }) {
   return (
-    <>
+  
+    <SessionProvider>
       <Script src="/js/itemCountBtn.js" />
       <Head>
         <link
@@ -31,6 +34,8 @@ export default function App({ Component, pageProps }) {
         ></link>
       </Head>
       <Component {...pageProps} />
-    </>
+      </SessionProvider>
+    
+    
   );
 }

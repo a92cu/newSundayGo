@@ -107,75 +107,80 @@ function Header() {
   };
 
   //判斷有無cookie 去切換登入登出
-  if (Object.keys(cookie).length === 0) {
-    return (
-      <div className="header">
-        <img
-          src="./images/群組 1.png"
-          alt="logo"
-          style={{ width: 90, top: -8, position: "relative" }}
-        />
-        <div className="header-right">
-          <a href="#">美食</a>
-          <a href="#">景點</a>
-          <a href="#">活動</a>
-          <a href="#">住宿</a>
-          <a href="#">交通</a>
-          <a href="#">
-            <img src="./images/cart.png" style={{ width: 25 }} />
-          </a>
-
-          <a href="http://localhost:3000/login" className="loginbutton">
-            登出
-            {/* <a href="http://localhost:3000/login" className="loginbutton">
-            登入|註冊 */}
-
-          </a>
-        </div>
-        <form className="example" action="">
-          <input type="text" placeholder="Search.." name="search" />
-          <button type="submit">
-            <i className="fa fa-search"></i>
-          </button>
-        </form>
+  if (Object.keys(cookie).length===0) {
+  return (
+    <div className="header">
+      <a href="/">
+              <img
+                src="/images/群組 1.png"
+                alt=""
+                // width={20} height={20}
+                style={{
+                    width: 90,
+                    top: -8,
+                    position: "relative"
+                }}
+            />
+            </a>
+      <div className="header-right">
+        <a href="#">美食</a>
+        <a href="#">景點</a>
+        <a href="#">活動</a>
+        <a href="#">住宿</a>
+        <a href="#">交通</a>
+        <a href="#">
+          <img src="./images/cart.png" style={{ width: 25 }} />
+        </a>
+        <a href="http://localhost:3000/login" className="loginbutton">
+          登入|註冊
+        </a>
       </div>
-    )
-  } else {
+      <form className="example" action="">
+        <input type="text" placeholder="Search.." name="search" />
+        <button type="submit">
+          <i className="fa fa-search"></i>
+        </button>
+      </form>
+    </div>
+  ) }else{
     return (
-      <div className="header">
-        <img
-          src="/images/群組 1.png"
-          alt=""
-          // width={20} height={20}
-          style={{
-            width: 90,
-            top: -8,
-            position: "relative"
-          }}
-        />
-        <div className="header-right">
-          <a href="#">美食</a>
-          <a href="#">景點</a>
-          <a href="#">活動</a>
-          <a href="#">住宿</a>
-          <a href="#">交通</a>
-          <a href="#">
-            <img
-              src="/images/cart.png"
-              alt=""
-              width={20} height={20} />
-          </a>
-          <a href="/company" className="loginbutton" onClick={RemoveCookie}>
-            登出
-          </a>
+        <div className="header">
+            <a href="#">
+              <img
+                src="/images/群組 1.png"
+                alt=""
+                // width={20} height={20}
+                style={{
+                    width: 90,
+                    top: -8,
+                    position: "relative"
+                }}
+            />
+            </a>
+            <div className="header-right">
+                <a href="#">美食</a>
+                <a href="#">景點</a>
+                <a href="#">活動</a>
+                <a href="#">住宿</a>
+                <a href="#">交通</a>
+                <a href="#">
+                    <img
+                        src="/images/cart.png"
+                        alt=""
+                        width={20} height={20} />
+                </a>
+                <a href="/memberCenter">會員中心</a>
+                <a href="/login" className="loginbutton" onClick={RemoveCookie}>
+                    登出
+                </a>
+            </div>
+            <form className="example" action="">
+                <input type="text" placeholder="Search.." name="search" />
+                <button type="submit">
+                    <i className="fa fa-search"></i>
+                </button>
+            </form>
         </div>
-        <form className="example" action="">
-          <input type="text" placeholder="Search.." name="search" />
-          <button type="submit">
-            <i className="fa fa-search"></i>
-          </button>
-        </form>
-      </div>
     );
   }
 }
@@ -191,6 +196,8 @@ function MemberAccount(props) {
   const [userPassword, setuserPassword] = useState(props.accountList[0].userPassword);
 
   const [passwordType, setPasswordType] = useState("password");
+
+  const [cookie, setCookie,removeCookie] = useCookies(["user","firm"])
 
 
   const togglePassword = () => {
@@ -254,7 +261,7 @@ function MemberAccount(props) {
           <option value="men" selected >{accountList[0].userGender}</option>
           <option value="girl">女</option>
         </select>
-        {/* <button onClick={test1}>123</button> */}
+        <button onClick={()=>console.log(cookie.user.data[0].userId)}>cookie</button>
 
       </div>
       <br />
