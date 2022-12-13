@@ -1,9 +1,9 @@
 
 // 變更頭像圖片
-document.getElementById("cameraBtn").onclick = function (){
-    document.getElementById("chengImgBtn").click();
-    // console.log('ok')
-}
+// document.getElementById("cameraBtn").onclick = function (){
+//     document.getElementById("chengImgBtn").click();
+//     // console.log('ok')
+// }
 
 // function upload(e) {
 //     console.log(chengImgBtn.files);  //FileList {0: File, length: 1}
@@ -16,4 +16,4 @@ document.getElementById("cameraBtn").onclick = function (){
 //     dog.readAsDataURL(chengImgBtn.files[0]);
 // }
 
-document.getElementById("defaultOpenB").focus();
+// document.getElementById("defaultOpenB").focus();

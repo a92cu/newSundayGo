@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { runSQL } from "../../lib/mysql";
 import { format, parseISO } from "date-fns";
 import * as R from "ramda";
@@ -95,86 +95,89 @@ function Footer() {
   );
 }
 function Header() {
-  const [cookie, setCookie,removeCookie] = useCookies(["user","firm"])
+  const [cookie, setCookie, removeCookie] = useCookies(["user", "firm"])
 
-   const RemoveCookie=()=>{
+  const RemoveCookie = () => {
     removeCookie('user');
     removeCookie('firm');
 
     setTimeout(() => {
       Router.replace("/company");
-  }, 10);
-    };
+    }, 10);
+  };
 
   //判斷有無cookie 去切換登入登出
-  if (Object.keys(cookie).length===0) {
-  return (
-    <div className="header">
-      <img
-        src="./images/群組 1.png"
-        alt="logo"
-        style={{ width: 90, top: -8, position: "relative" }}
-      />
-      <div className="header-right">
-        <a href="#">美食</a>
-        <a href="#">景點</a>
-        <a href="#">活動</a>
-        <a href="#">住宿</a>
-        <a href="#">交通</a>
-        <a href="#">
-          <img src="./images/cart.png" style={{ width: 25 }} />
-        </a>
-
-        <a href="http://localhost:3000/login" className="loginbutton">
-          登入|註冊
-
-        </a>
-      </div>
-      <form className="example" action="">
-        <input type="text" placeholder="Search.." name="search" />
-        <button type="submit">
-          <i className="fa fa-search"></i>
-        </button>
-      </form>
-    </div>
-  ) }else{
+  if (Object.keys(cookie).length === 0) {
     return (
-        <div className="header">
-            <img
-                src="/images/群組 1.png"
-                alt=""
-                // width={20} height={20}
-                style={{
-                    width: 90,
-                    top: -8,
-                    position: "relative"
-                }}
-            />
-            <div className="header-right">
-                <a href="#">美食</a>
-                <a href="#">景點</a>
-                <a href="#">活動</a>
-                <a href="#">住宿</a>
-                <a href="#">交通</a>
-                <a href="#">
-                    <img
-                        src="/images/cart.png"
-                        alt=""
-                        width={20} height={20} />
-                </a>
-                <a href="/company" className="loginbutton" onClick={RemoveCookie}>
-                    登出
-                </a>
-            </div>
-            <form className="example" action="">
-                <input type="text" placeholder="Search.." name="search" />
-                <button type="submit">
-                    <i className="fa fa-search"></i>
-                </button>
-            </form>
+      <div className="header">
+        <img
+          src="./images/群組 1.png"
+          alt="logo"
+          style={{ width: 90, top: -8, position: "relative" }}
+        />
+        <div className="header-right">
+          <a href="#">美食</a>
+          <a href="#">景點</a>
+          <a href="#">活動</a>
+          <a href="#">住宿</a>
+          <a href="#">交通</a>
+          <a href="#">
+            <img src="./images/cart.png" style={{ width: 25 }} />
+          </a>
+
+          <a href="http://localhost:3000/login" className="loginbutton">
+            登出
+            {/* <a href="http://localhost:3000/login" className="loginbutton">
+            登入|註冊 */}
+
+          </a>
         </div>
+        <form className="example" action="">
+          <input type="text" placeholder="Search.." name="search" />
+          <button type="submit">
+            <i className="fa fa-search"></i>
+          </button>
+        </form>
+      </div>
+    )
+  } else {
+    return (
+      <div className="header">
+        <img
+          src="/images/群組 1.png"
+          alt=""
+          // width={20} height={20}
+          style={{
+            width: 90,
+            top: -8,
+            position: "relative"
+          }}
+        />
+        <div className="header-right">
+          <a href="#">美食</a>
+          <a href="#">景點</a>
+          <a href="#">活動</a>
+          <a href="#">住宿</a>
+          <a href="#">交通</a>
+          <a href="#">
+            <img
+              src="/images/cart.png"
+              alt=""
+              width={20} height={20} />
+          </a>
+          <a href="/company" className="loginbutton" onClick={RemoveCookie}>
+            登出
+          </a>
+        </div>
+        <form className="example" action="">
+          <input type="text" placeholder="Search.." name="search" />
+          <button type="submit">
+            <i className="fa fa-search"></i>
+          </button>
+        </form>
+      </div>
     );
-}
+  }
 }
 
 // 帳號設定修改 OK 性別暫時PASS 
@@ -197,8 +200,8 @@ function MemberAccount(props) {
     }
     setPasswordType("password")
   }
-  
-  const test1=()=>{
+
+  const test1 = () => {
     console.log(accountList[0].userGender);
   }
 
@@ -220,20 +223,20 @@ function MemberAccount(props) {
         userEmail: userEmail,
         userPassword: userPassword,
       })
-      
-    })
-    .then(()=>{alert("已修改資料")})
-    .catch(e=>{
-      console.log(e);
 
     })
+      .then(() => { alert("已修改資料") })
+      .catch(e => {
+        console.log(e);
+
+      })
     // location.reload();
-    Router.replace('/memberCenter') ;
+    Router.replace('/memberCenter');
     // window.location.replace('/memberCenter');
 
   }
   return (<div id="information" className="tabcontentB">
-    
+
     <h2>帳號設定 </h2>
     <div className="setBodyB">
       <span style={{ color: "#8C5C02" }}> <b>基本資料</b> </span>
@@ -304,7 +307,7 @@ function MemberAccount(props) {
       </div>
       <div className="basicBtn">
         <button className="informationBtn" onClick={() => saveAccount()}> <b>儲存</b> </button>
-        
+
       </div>
     </div>
   </div>
@@ -326,7 +329,7 @@ function Discount(props) {
                 <div className={(ele.couponUse > 0 ? "discountDivUsed" : "discountDiv")} key={idx}>
                   <span>{ele.couponName}</span> <br />
                   <span>訂單金額須滿100元</span> <br />
-                  <span>有效期限: 剩餘{(ele.couponUse < 1)?Math.abs(Date.parse(ele.couponEndTime) - Date.parse(theDate)) / (1000 * 60 * 60 * 24):0}天</span> <br />
+                  <span>有效期限: 剩餘{(ele.couponUse < 1) ? Math.abs(Date.parse(ele.couponEndTime) - Date.parse(theDate)) / (1000 * 60 * 60 * 24) : 0}天</span> <br />
                 </div>
               )
             })}
@@ -388,13 +391,13 @@ function Rebate(props) {
 
 // 七天簽到 OK (目前折扣是寫死的)
 function SevenDay() {
-  let checkCount=0;
+  let checkCount = 0;
   let registDate;
   let gotdate;
   let thisDate = new Date() // 拿到會員當下時間
-  let thisDate_ts = +new Date(); 
+  let thisDate_ts = +new Date();
   let fetureDate = new Date();
-  fetureDate.setTime(thisDate_ts + 7 * 1000 * 60 * 60 * 24); 
+  fetureDate.setTime(thisDate_ts + 7 * 1000 * 60 * 60 * 24);
   // console.log(thisDate)
   async function checkTime(e) {
     let count = parseInt(e.target.id.substr(-1)); // 1 
@@ -402,56 +405,53 @@ function SevenDay() {
       .then((res) => {
         let datedata = res.data.data[0].userLoginEventTime;
         gotdate = new Date(datedata) // 拿到會員上次登入時間
-        let registDateData=res.data.data[0].userRegisterDate;
-        registDate=new Date(registDateData) // 拿到會員註冊時間
-        checkCount=res.data.data[0].userLoginEventCount; // 拿到會員活動次數
+        let registDateData = res.data.data[0].userRegisterDate;
+        registDate = new Date(registDateData) // 拿到會員註冊時間
+        checkCount = res.data.data[0].userLoginEventCount; // 拿到會員活動次數
       })
-    console.log(checkCount,count)
-    console.log(checkCount-count)
+    console.log(checkCount, count)
+    console.log(checkCount - count)
     // 每個折價券做判斷
-    if(thisDate.getFullYear() >= gotdate.getFullYear() && thisDate.getMonth() >= gotdate.getMonth()){
-      if (thisDate.getDate() - gotdate.getDate() > 0){
-        if(registDate.getDate() == gotdate.getDate() && (checkCount - count==0)){
-          alert('您已領取折扣券');
-            axios.put(`/api/memberCentre/taketime`, {
-              timeData: format(thisDate, "yyyy-MM-dd"),
-              discountdate: format(fetureDate, "yyyy-MM-dd"),
-              count: checkCount + 1,
-            });
-        }else{
-          switch (checkCount - count) {
-            case 0:
-              alert("您今日已領取折價券，請明日再來");
-              break;
-            case 1:case 2:case 3:case 4:case 5: case 6:
-              alert('您已領取折扣券');
+    if (checkCount !== 0) {
+      if (checkCount >= count) {
+        if (checkCount < 7) {
+          if (thisDate.getFullYear() >= gotdate.getFullYear() && thisDate.getMonth() >= gotdate.getMonth()) {
+            if (thisDate.getDate() > gotdate.getDate()) {
+              console.log(thisDate, gotdate)
+              alert('您已領取折扣券')
               axios.put(`/api/memberCentre/taketime`, {
                 timeData: format(thisDate, "yyyy-MM-dd"),
                 discountdate: format(fetureDate, "yyyy-MM-dd"),
                 count: checkCount + 1,
               });
-              break;
-            default:
-              alert("您尚未滿足條件")
-              break;
+            } else {
+              alert("尚未滿足條件")
+            }
+          } else {
+            alert("尚未滿足條件")
           }
+        } else {
+          alert("您已領取所有折價券，感謝您參與")
+        }
+      } else {
+        alert("尚未滿足條件")
       }
-    }else{
-      if(registDate.getMonth()==gotdate.getMonth() && registDate.getDate()==gotdate.getDate()){
+    } else {
+      if (registDate.getMonth() == gotdate.getMonth() && registDate.getDate() == gotdate.getDate()) {
         alert("您今日尚不能領取折價券，請明日再來");
-        if(checkCount==0){
+        if (checkCount == 0) {
           axios.put(`/api/memberCentre/taketime`, {
             timeData: format(thisDate, "yyyy-MM-dd"),
             count: checkCount + 1,
           });
         }
-      }else{
+      } else {
         alert("您今日已領取折價券，請明日再來");
       }
     }
+    e.target.style.filter = "brightness(50%)"
   }
-  e.target.style.filter = "brightness(50%)"
-}
+
   return (
     <div id="sevenDay" className="tabcontentB">
       <h2>登入七天簽到活動</h2>
@@ -652,6 +652,7 @@ function Collect({ itemList, imgList, setItemList }) {
 }
 
 export default function MemberCentre(props) {
+
   const [tab, setTab] = useState('information');
   const [userName, setuserName] = useState(props.accountList[0].userName);
   const [userAvatar, setuserAvatar] = useState(props.accountList[0].userAvatar); // 變更頭像
@@ -660,7 +661,7 @@ export default function MemberCentre(props) {
   const [orderList, setOrderList] = useState(props.orderList);
   const [discountList, setDiscountList] = useState(props.discountList);
   // const { userAvatar, changeHandler } = useFile();
-  
+
 
   const getUrl = (index, originUrl) => {
     if (index === 0) return userAvatar === null ? originUrl : userAvatar;
@@ -682,8 +683,8 @@ export default function MemberCentre(props) {
     // });
 
   }
-  
-  return <> 
+
+  return <>
     <Header />
     <div className="MemberCentre">
       <div className="tabb">
@@ -693,8 +694,8 @@ export default function MemberCentre(props) {
           <div>
             <input id="chengImgBtn"
               type="file"
-              // style={{ display: "none" }}
-            // onChange={(e) => changeHandler()}
+              style={{ display: "none" }}
+            // onChange={upload}
             />
 
             <button type="button" id="cameraBtn" >
@@ -705,23 +706,35 @@ export default function MemberCentre(props) {
         </div>
 
         <div className="tabBtnB">
-          <button className="tablinksB defaultOpenB" onClick={() => setTab('information')} id="defaultOpenB">
+          <button
+            className={`tablinksB ${tab === "information" ? "tabB_btn_selected" : ""}`}
+            onClick={() => setTab('information')} >
             <span><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle" }} />&emsp;帳號設定</span>
           </button>
-          <button className="tablinksB" onClick={() => setTab('discount')}>
-            <span><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle " }} />&emsp; 折扣券</span>
+          <button
+            className={`tablinksB ${tab === "discount" ? "tabB_btn_selected" : ""}`}
+            onClick={() => setTab('discount')}>
+            <span ><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle " }} />&emsp; 折扣券</span>
           </button>
-          <button className="tablinksB" onClick={() => setTab('rebate')}>
-            <span><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle " }} />&emsp; 回饋金</span>
+          <button
+            className={`tablinksB ${tab === "rebate" ? "tabB_btn_selected" : ""}`}
+            onClick={() => setTab('rebate')}>
+            <span ><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle " }} />&emsp; 回饋金</span>
           </button>
-          <button className="tablinksB" onClick={() => setTab('sevenDay')}>
+          <button
+            className={`tablinksB ${tab === "sevenDay" ? "tabB_btn_selected" : ""}`}
+            onClick={() => setTab('sevenDay')}>
             <span><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle " }} />&emsp;
               登入七天簽到活動</span>
           </button>
-          <button className="tablinksB" onClick={() => setTab('memberOrder')}>
+          <button
+            className={`tablinksB ${tab === "memberOrder" ? "tabB_btn_selected" : ""}`}
+            onClick={() => setTab('memberOrder')}>
             <span><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle " }} />&emsp; 訂單管理</span>
           </button>
-          <button className="tablinksB" onClick={() => setTab('collect')}>
+          <button
+            className={`tablinksB ${tab === "collect" ? "tabB_btn_selected" : ""}`}
+            onClick={() => setTab('collect')}>
             <span><img src="./images/flower.png" style={{ width: "30px", verticalAlign: "middle " }} />&emsp; 我的收藏</span>
           </button>
 
@@ -759,10 +772,13 @@ export default function MemberCentre(props) {
     <Script src="/js/MemberCentre.js" />
     <Footer />
   </>
-} 
+}
 
 //頁面產生出來之後從params去找出特定需要的那一頁
 export async function getStaticProps({ params }) {
+
+
+
   // 帳號設定抓的資料 (userBirthday有問題)
   // const sq1 = `SELECT userId, userPassword, userName, useGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
   const sq1 = `SELECT * FROM usertable WHERE userId = "u123456789"`;

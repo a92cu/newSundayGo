@@ -51,8 +51,8 @@
 }
 
 /* 置中留白 */
-.MemberCentre {   
-    width: 1280px; 
+.MemberCentre {
+    width: 1280px;
     margin: 0 auto;
     height: 800px;
 }
@@ -96,25 +96,24 @@
 
 
 /* 分頁按鈕hover */
+.tabBtnB button.tabB_btn_selected {
+    color: #F29F04;
+    border-left: 4px #F29F04 solid;
+}
+
 .tabBtnB button:hover {
     color: #F29F04;
     border-left: 4px #F29F04 solid;
-    
+
 }
+
 /* 按鈕裡圖片的hover */
-.tabBtnB>button:hover img{
+.tabBtnB>button:hover img {
     filter: grayscale(0%);
 }
 
 /* 分頁按鈕選中的顏色 */
-
-.tabBtnB button:focus {
-    color: #F29F04;
-    border-left: 4px #F29F04 solid;
-    
-}
-
-.tabBtnB>button:focus img{
+.tabBtnB>button.tabB_btn_selected img {
     filter: grayscale(0%);
 }
 
