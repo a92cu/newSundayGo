@@ -99,10 +99,11 @@ function Header() {
         <a href="#">住宿</a>
         <a href="#">交通</a>
         <a href="#">
-          <img src="/images/cart.png" style={{ width: 25 }} />
+            <img src="/images/cart.png" style={{ width: 25 }} />
         </a>
-        <a href="#divOne" className="loginbutton">
-          登入|註冊
+        <a href="/memberCenter">會員中心</a>
+          <a href="#divOne" className="loginbutton">
+          登出
         </a>
       </div>
       <form className="example" action="">
