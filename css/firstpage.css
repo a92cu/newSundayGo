@@ -143,6 +143,7 @@ main {
     width: 20px;
     /* float: left; */
     /* margin-right:60px ; */
+    /* margin-left: 60px; */
     visibility: hidden;
 } 
 
@@ -151,6 +152,7 @@ main {
 }
 
 .homebtn {
+    margin: auto;
     text-align: center ;
     position: relative;
     /* top: 150%;*/

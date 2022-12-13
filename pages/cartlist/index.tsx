@@ -127,7 +127,10 @@ function Orderman({
             <div className="cartsidebar">
                 <div className="cartsidebar__inner">
                     <button className="cartaccordion ">
-                        <h3><img className="shopimg" src="./images/flower.png" /> 訂購人資料</h3>
+
+                        <h3>            
+                            <img className="shopimg" src="./images/flower.png" />
+                            訂購人資料</h3>
                         <hr />
                     </button>
                     <div className="cartpanel">
@@ -218,11 +221,13 @@ function Orderman({
 //             <div className="cartsidebar">
 //                 <div className="cartsidebar__inner">
 //                     <button className="cartaccordion">
-//                         <h3>旅客資料</h3>
+//                         <h3>
+                        <img className="shopimg" src="./images/flower.png" />
+                            旅客資料</h3>
 //                         <hr />
 //                     </button>
 //                     <div className="cartpanel">
-//                         {getItem.map((i) => 
+//                         {getItem.map((i) =>
 //                             <div className="carthomeProduct">
 //                                 {/* <!-- 圖片框 --> */}
 //                                 <div className="cartpicPlace">
@@ -269,7 +274,9 @@ function Paylist() {
             <div className="cartsidebar">
                 <div className="cartsidebar__inner">
                     <button className="cartaccordion">
-                        <h3>請選擇付款方式</h3>
+                        <h3>
+                        <img className="shopimg" src="./images/flower.png" />
+                            請選擇付款方式</h3>
                         <hr />
                     </button>
                     <div className="cartpanel">

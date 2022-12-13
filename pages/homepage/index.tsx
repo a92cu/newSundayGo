@@ -29,7 +29,7 @@ function Header() {
                 <a href="/homepage/play">活動</a>
                 <a href="/homepage/lodging">住宿</a>
                 <a href="/homepage/traffic">交通</a>
-                <a href="#"><img src="/images/cart.png" style={{ width: '25px' }} /></a>
+                <a href="/memberCenter"><img src="/images/cart.png" style={{ width: '25px' }} /></a>
                 <a href="#">登入|註冊</a>
             </div>
             <form className="example" action="">
@@ -102,14 +102,30 @@ function Footer() {
 export const Placezone = (dateList, itemList2) => {
     var [tryre, settryre] = useState([]);
     const router = useRouter();
-
     var [homepagelist, setlist] = useState([]);
+
+    function test2(itemId) {
+
+        var a = document.querySelectorAll(".homeProduct")
+        console.log(55, a);
+        a.forEach((el) => {
+            el.addEventListener("click", function (event) {
+                console.log(55, event);
+                // console.log(this); 
+                // console.log($(this).attr("data-name"));111
+                [0]
+            })
+        })
+    }
+
     // useEffect(() => {fetchdata()}, []);
     //生命週期先執行一次,2個參數，1.{裡面放要執行或宣告的動態},2.[]放個空陣列useState狀態有改變才再執行
     useEffect(() => {
         fetchdata();
         // $(function (){
         // trytry();
+
+
 
         // console.log(homepagelist)
         $(function () {
@@ -153,11 +169,19 @@ export const Placezone = (dateList, itemList2) => {
             // $(this)(".filterBtn").hide()
             $(this).parent('button').hide()
         });
+        //測試資料
+        // console.log(88, itemList2)
+        // var xx = [`${dateList.dateList[0].itemStartDate}`, `${itemList2.itemList2}`];
+        // console.log(91, xx)
 
-        console.log(88, itemList2)
-        var xx = [`${dateList.dateList[0].itemStartDate}`, `${itemList2.itemList2}`];
-        console.log(91, xx)
+
+
+
+        // test2();
+
     }, [])
+
+
 
     async function fetchdata() {
         await axios("/api/home/homepage")
@@ -252,7 +276,7 @@ export const Placezone = (dateList, itemList2) => {
                 <div id="main-content" className="main homeleft" >
                     <div id="sidebar" className="sidebar" >
                         <div className="sidebar__inner" >
-                            <img className="homeimg" src="../../public/images/flower.png" />
+                            <img className="homeimg2" src="./images/flower.png" />
                             篩選目的地
                             <br />
                             <button className="accordion">
@@ -330,6 +354,7 @@ export const Placezone = (dateList, itemList2) => {
                         </div>
                         {/* <!-- 商品類別篩選 --> */}
                         <div className="sidebar__inner2">
+                            <img className="homeimg2" src="./images/flower.png" />
                             商品類別篩選
                             <br />
                             <button className="accordion">
@@ -369,7 +394,7 @@ export const Placezone = (dateList, itemList2) => {
 
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />交通
+                                <input type="checkbox" className="allcheck areanum" />交通
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />租車
@@ -389,9 +414,10 @@ export const Placezone = (dateList, itemList2) => {
                 < div className="homeright" >
                     {/* <!-- 顯示篩選 --> */}
                     < div className="homerightup" >
-                        共篩選出
-                        < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
-                        項行程
+                        <b className="areanum">
+                            共篩選出
+                            < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
+                            項行程</b>
                         {noredata.map((i) =>
                             <button className="filterBtn" >
                                 {i}<span className="delbtn">X</span>
@@ -414,18 +440,24 @@ export const Placezone = (dateList, itemList2) => {
                         <button className="filterBtn">
                             33<span className="delbtn" style={{ float: 'right', marginright: '10    0px' }}>X</span>
                         </button> */}
-
                         <hr />
-                        <span className="homerightup2"><b>排序方式</b> |
-                            <button type="button" className="sortBtn" onClick={() => restar()}>評價</button>|
-                            <button type="button" className="sortBtn" onClick={() => reprice()}>商品價格</button>|
-                            <button type="button" className="sortBtn" onClick={() => rearea()}>地區</button>
+                        <span className="homerightup2"><b className="areanum">排序方式</b> |
+                            <button type="button" className="sortBtn" onClick={() => restar()}>
+                                <img className="homeimg2" src="./images/star.png" />評價
+                            </button>|
+                            <button type="button" className="sortBtn" onClick={() => reprice()}>
+                                <img className="homeimg2" src="./images/money.png" />商品價格
+                            </button>|
+                            <button type="button" className="sortBtn" onClick={() => rearea()}>
+                                <img className="homeimg2" src="./images/area.png" />地區
+                            </button>
                         </span>
                     </div >
                     <div id="content" className="content">
                         {/* <!-- 商品顯示主體 --> */}
                         {homepagelist.map((item, index) =>
-                            <div className="homeProduct" onClick={() => router.push(`/item/${item.itemId}`)}>
+                            <div className="homeProduct" >
+                                {/* onClick={() => router.push(`/item/${item.itemId}`)} */}
                                 {/* <!-- 圖片框 --> */}
                                 <div className="picPlace">
 
@@ -434,17 +466,17 @@ export const Placezone = (dateList, itemList2) => {
                                 </div>
                                 {/* <!-- 介紹欄 --> */}
                                 <div className="intro">
-                                    {item.itemTitle}
+                                    <b>{item.itemTitle}</b>
                                     {/* <!-- 商品標題 --> */}
-                                    <span className="introp">
+                                    <button className="introp collectHeart" onClick={() => test2(item.itemId)} style={{ zIndex: '99' }}>
                                         {/* <!-- 愛心圖案 --> */}
-                                        <a href="./index.html">
+                                       
                                             <img className="introimg" src="/images/heart.png"
                                                 style={{ width: '20px', marginLeft: '130px' }} alt="" />
-                                        </a>
-                                    </span>
+                            
+                                    </button>
 
-                                    {/* 商品標題 */}
+                                    {/* 商品說明 */}
                                     <p className="iteminfo">
                                         {item.itemInfo}
 

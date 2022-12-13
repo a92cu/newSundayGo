@@ -152,9 +152,35 @@ export const Traffic = (dateList) => {
             })
 
     }
+      //傳送資料庫資料
+      const favIdsend = async (i) => {
+        console.log(4, i)
+        if (window.confirm("已加入最愛") === true) 
+        await fetch("/api/home/lodging", {
+            method: "post",
+            // body:imgId
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json;charset=utf-8",
+            },
+            body: JSON.stringify({
+                // favId: 7,
+                userId: 'u123456789',
+                itemId: 9
+            })
+        })
+            .then((res) => res.json())
+        // .then(console.log('已加入最愛'))
+        // console.log(5, favId)
+        // .then(data => {
+        //     /*接到request data後要做的事情*/
+        //     console.log("使用者資料",data.data[0].imgId);
+        // })
+    }
+    //POST結束
     //按星星排序
     const restar = () => {
-        axios(`/api/sort/star`)
+        axios(`/api/sort/traffic/star`)
             .then((result2) => {
                 console.log(33, result2)
                 result2.data.data.forEach((i) => {
@@ -174,7 +200,7 @@ export const Traffic = (dateList) => {
     }
     //按價格排序
     const reprice = () => {
-        axios('/api/sort/price')
+        axios('/api/sort/traffic/price')
             .then((result2) => {
                 console.log(33, result2)
                 result2.data.data.forEach((i) => {
@@ -189,7 +215,7 @@ export const Traffic = (dateList) => {
     }
     //按地區排序
     const rearea = () => {
-        axios('/api/sort/area')
+        axios('/api/sort/traffic/area')
             .then((result2) => {
                 console.log(33, result2)
                 result2.data.data.forEach((i) => {
@@ -207,6 +233,14 @@ export const Traffic = (dateList) => {
         return item.itemFilter2;
     });
     var noredata = redata.filter(function (item, index, array) {
+        return array.indexOf(item) === index;
+        // console.log(only);
+    });
+
+    var redata2 = homepagelist.map(function (item) {
+        return item.itemFilter3;
+    });
+    var noredata2 = redata2.filter(function (item, index, array) {
         return array.indexOf(item) === index;
         // console.log(only);
     });
@@ -359,9 +393,10 @@ export const Traffic = (dateList) => {
                 < div className="homeright" >
                     {/* <!-- 顯示篩選 --> */}
                     < div className="homerightup" >
-                        共篩選出
-                        < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
-                        項行程
+                    <b className="areanum">
+                            共篩選出
+                            < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
+                            項行程</b>
                         {noredata.map((i) =>
                             <button className="filterBtn" >
                                 {i}<span className="delbtn">X</span>
@@ -388,33 +423,39 @@ export const Traffic = (dateList) => {
                             <span className="delbtn">X</span>
                         </button>
                         <hr />
-                        <span className="homerightup2"><b>排序方式</b> |
-                            <button type="button" className="sortBtn" onClick={() => restar()}>評價</button>|
-                            <button type="button" className="sortBtn" onClick={() => reprice()}>商品價格</button>|
-                            <button type="button" className="sortBtn" onClick={() => rearea()}>地區</button>
+                        <span className="homerightup2"><b className="areanum">排序方式</b> |
+                            <button type="button" className="sortBtn" onClick={() => restar()}>
+                                <img className="homeimg2" src="../images/star.png" />評價
+                            </button>|
+                            <button type="button" className="sortBtn" onClick={() => reprice()}>
+                                <img className="homeimg2" src="../images/money.png" />商品價格
+                            </button>|
+                            <button type="button" className="sortBtn" onClick={() => rearea()}>
+                                <img className="homeimg2" src="../images/area.png" />地區
+                            </button>
                         </span>
                     </div >
                     <div id="content" className="content">
                         {/* <!-- 商品顯示主體 --> */}
                         {homepagelist.map((item, index) =>
-                            <div className="homeProduct" onClick={() => router.push(`/item/${item.itemId}`)}>
+                            <div className="homeProduct" >
                                 {/* <!-- 圖片框 --> */}
                                 <div className="picPlace">
 
-                                    <img className="proPic" src={item.itemImgUrl} alt="" />
+                                    <img className="proPic" src={item.itemImgUrl} alt="" onClick={() => router.push(`/item/${item.itemId}`)}/>
                                     {/* ))} */}
                                 </div>
                                 {/* <!-- 介紹欄 --> */}
                                 <div className="intro">
-                                    {item.itemTitle}
+                                    <b>{item.itemTitle}</b>
                                     {/* <!-- 商品標題 --> */}
-                                    <span className="introp">
+                                    <button className="introp collectHeart" onClick={() => favIdsend(item.itemId)} style={{ zIndex: '99' }}>
                                         {/* <!-- 愛心圖案 --> */}
-                                        <a href="./index.html">
+                                       
                                             <img className="introimg" src="/images/heart.png"
                                                 style={{ width: '20px', marginLeft: '130px' }} alt="" />
-                                        </a>
-                                    </span>
+                            
+                                    </button>
 
                                     {/* 商品標題 */}
                                     <p className="iteminfo">

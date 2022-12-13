@@ -43,7 +43,7 @@ function Homevideo() {
       </div> */}
       <div className="table_image">
         <video className="video-player" x5-video-player-type="h5" x-webkit-airplay="true" webkit-playsinline="true" loop autoPlay muted
-          style={{ width: '1280px', marginLeft: '100px' }}
+          style={{ width: '1500px' ,margin: 'auto' }}
         >
           <source src={require('/public/images/taiwan.mp4')} type="video/mp4" />
         </video>
@@ -62,7 +62,6 @@ export default function Home() {
       <Homevideo />
 
       <button className="homebtn" type="button">
-        <img className="homeimg" src="./images/flower.png" />
         <a href='/homepage' >出發吧&gt;&gt;&gt;</a>
         <img className="homeimg" src="./images/flower.png" />
       </button>

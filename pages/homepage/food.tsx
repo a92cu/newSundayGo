@@ -115,7 +115,7 @@ function Food(dateList) {
         // console.log(1,setlist)
         fetchdata();
         //加入最愛
-        favIdsend(i);
+        // favIdsend(i);
         // $(function (){
         // console.log(homepagelist)
         var acc = document.getElementsByClassName("accordion");
@@ -217,18 +217,18 @@ function Food(dateList) {
     const fetchdata = async () => {
         console.log(2, setlist)
         // if (homepagelist == "") 
-           await axios("/api/home/food")
-              
-                .then((result) => {
-                    result.data.data.forEach((i) => {
-                        var img = Buffer.from(i.itemImgUrl).toString('base64');
-                        var call = Buffer.from(img, 'base64').toString('ascii');
-                        var replaceCallAll = call.replaceAll('\x00', '');
-                        i.itemImgUrl = replaceCallAll;
-                    })
-                    // console.log(3, result.data)
-                    setlist(result.data.data);
-                });
+        await axios("/api/home/food")
+
+            .then((result) => {
+                result.data.data.forEach((i) => {
+                    var img = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call = Buffer.from(img, 'base64').toString('ascii');
+                    var replaceCallAll = call.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll;
+                })
+                // console.log(3, result.data)
+                setlist(result.data.data);
+            });
         // if (setlist !== "") {
         //     [...setlist]
         // }
@@ -237,6 +237,7 @@ function Food(dateList) {
     //傳送資料庫資料
     const favIdsend = async (i) => {
         console.log(4, i)
+        if (window.confirm("已加入最愛") === true) 
         await fetch("/api/home/food", {
             method: "post",
             // body:imgId
@@ -247,7 +248,7 @@ function Food(dateList) {
             body: JSON.stringify({
                 // favId: 7,
                 userId: 'u123456789',
-                itemId: 10
+                itemId: 4
             })
         })
             .then((res) => res.json())
@@ -259,56 +260,56 @@ function Food(dateList) {
         // })
     }
     //POST結束
+    //按星星排序
+    const restar = () => {
+        axios(`/api/sort/food/star`)
+            .then((result2) => {
+                console.log(33, result2)
+                result2.data.data.forEach((i) => {
+                    var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                    var replaceCallAll2 = call2.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll2;
+                })
+                // console.log(3, result.data)
+                setlist(result2.data.data);
+                //
+            })
 
-    const restar =  () => {
-        axios(`/api/sort/star`)
-           .then((result2) => {
-               console.log(33,result2)
-               result2.data.data.forEach((i) => {
-                   var img2 = Buffer.from(i.itemImgUrl).toString('base64');
-                   var call2 = Buffer.from(img2, 'base64').toString('ascii');
-                   var replaceCallAll2 = call2.replaceAll('\x00', '');
-                   i.itemImgUrl = replaceCallAll2;
-               })
-               // console.log(3, result.data)
-               setlist(result2.data.data);
-               //
-           })
-       
-       // if (setlist !== "") {
-       //     [...setlist]
-       // }
-   }
-   //按價格排序
-   const reprice =  () => {
-       axios('/api/sort/price')
-          .then((result2) => {
-              console.log(33,result2)
-              result2.data.data.forEach((i) => {
-                  var img2 = Buffer.from(i.itemImgUrl).toString('base64');
-                  var call2 = Buffer.from(img2, 'base64').toString('ascii');
-                  var replaceCallAll2 = call2.replaceAll('\x00', '');
-                  i.itemImgUrl = replaceCallAll2;
-              })
-              // console.log(3, result.data)
-              setlist(result2.data.data);
-          })
-  }
-   //按地區排序
-   const rearea =  () => {
-       axios('/api/sort/area')
-          .then((result2) => {
-              console.log(33,result2)
-              result2.data.data.forEach((i) => {
-                  var img2 = Buffer.from(i.itemImgUrl).toString('base64');
-                  var call2 = Buffer.from(img2, 'base64').toString('ascii');
-                  var replaceCallAll2 = call2.replaceAll('\x00', '');
-                  i.itemImgUrl = replaceCallAll2;
-              })
-              // console.log(3, result.data)
-              setlist(result2.data.data);
-          })
-  }
+        // if (setlist !== "") {
+        //     [...setlist]
+        // }
+    }
+    //按價格排序
+    const reprice = () => {
+        axios('/api/sort/food/price')
+            .then((result2) => {
+                console.log(33, result2)
+                result2.data.data.forEach((i) => {
+                    var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                    var replaceCallAll2 = call2.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll2;
+                })
+                // console.log(3, result.data)
+                setlist(result2.data.data);
+            })
+    }
+    //按地區排序
+    const rearea = () => {
+        axios('/api/sort/food/area')
+            .then((result2) => {
+                console.log(33, result2)
+                result2.data.data.forEach((i) => {
+                    var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                    var replaceCallAll2 = call2.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll2;
+                })
+                // console.log(3, result.data)
+                setlist(result2.data.data);
+            })
+    }
 
     //加入最愛
     // const newfav = (favId) => {
@@ -492,11 +493,12 @@ function Food(dateList) {
                     {/* <!-- 顯示篩選 --> */}
 
                     < div className="homerightup" >
-                        共篩選出
-                        < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
-                        項行程
-                        {noredata.map((i) =>
+                        <b className="areanum">
+                            共篩選出
+                            < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
+                            項行程</b>
 
+                        {noredata.map((i) =>
                             <button className="filterBtn" >
                                 {/* onClick={() => handleclick(e)} */}
                                 {i}<span className="delbtn">X</span>
@@ -515,35 +517,38 @@ function Food(dateList) {
                         </button>
                         {/* )} */}
                         <hr />
-                        <span className="homerightup2"> 排序方式|
-                        <button type="button" className="sortBtn" onClick={() => restar()}>評價</button>|
-                        <button type="button" className="sortBtn" onClick={() => reprice()}>商品價格</button>|
-                        <button type="button" className="sortBtn" onClick={() => rearea()}>地區</button>
+                        <span className="homerightup2"><b className="areanum">排序方式</b> |
+                            <button type="button" className="sortBtn" onClick={() => restar()}>
+                                <img className="homeimg2" src="../images/star.png" />評價
+                            </button>|
+                            <button type="button" className="sortBtn" onClick={() => reprice()}>
+                                <img className="homeimg2" src="../images/money.png" />商品價格
+                            </button>|
+                            <button type="button" className="sortBtn" onClick={() => rearea()}>
+                                <img className="homeimg2" src="../images/area.png" />地區
+                            </button>
                         </span>
                     </div >
                     <div id="content" className="content">
                         {/* <!-- 商品顯示主體 --> */}
                         {homepagelist.map((item) =>
                             // const star = (item.itemTotalStar)
-                            <div className="homeProduct" onClick={() => router.push(`/item/${item.itemId}`)}>
+                            <div className="homeProduct" >
                                 {/* <!-- 圖片框 --> */}
                                 <div className="picPlace">
 
-                                    <img className="proPic" src={item.itemImgUrl} alt="" />
+                                    <img className="proPic" src={item.itemImgUrl} alt="" onClick={() => router.push(`/item/${item.itemId}`)}/>
                                     {/* ))} */}
                                 </div>
                                 {/* <!-- 介紹欄 --> */}
                                 <div className="intro">
-                                    {item.itemTitle}
+                                    <b>{item.itemTitle}</b>
                                     {/* <!-- 商品標題 --> */}
-                                    <span className="introp">
+                                    <button className="introp collectHeart" onClick={() => favIdsend(item.itemId)} style={{ zIndex: '99' }}>
                                         {/* <!-- 愛心圖案 --> */}
-                                        <a href="/memberCenter">
                                             <img className="introimg" src="/images/heart.png"
-                                                style={{ width: '20px', marginLeft: '130px' }} alt=""
-                                                onClick={() => favIdsend(event)} />
-                                        </a>
-                                    </span>
+                                                style={{ width: '20px', marginLeft: '130px' }} alt="" />
+                                    </button>
 
                                     {/* 商品標題 */}
                                     <p className="iteminfo">

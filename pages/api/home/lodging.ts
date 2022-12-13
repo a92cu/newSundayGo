@@ -23,6 +23,30 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
       }
       // Get data from your database
       break;
+      case "POST":
+        try {
+          const keys = Object.keys(req.body);
+          const values = Object.values(req.body).map((i, index) => {
+            return typeof i === "string" ? `"${i}"`.trim() : i;
+          });
+          let query = "";
+          for (let j = 0; j < keys.length; j++) {
+            query =
+              query + keys[j] + "=" + values[j] + (j === keys.length - 1 ? "" : ",");
+          }
+      
+  
+          // 新增商品內容
+          // const sq1 = `INSERT INTO item (${keys},userId,userPassword) VALUES (${values},"${id}","${id}")`;
+          const sq1 = `INSERT INTO favorite (userId ,itemId ) VALUES ('u123456789',${req.body.itemId})`;
+          // const sq1 = `INSERT INTO favorite  VALUES (5,'u123456789',30)`;
+          runSQL(sq1);
+          res.status(200).json({ message: "ok" });
+        } catch (error) {
+          res.status(500);
+        }
+        break;
+  
     default:
       res.setHeader('Allow', ['GET', 'PUT'])
       res.status(405).end(`Method ${method} Not Allowed`)

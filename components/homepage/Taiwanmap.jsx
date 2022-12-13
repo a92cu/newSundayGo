@@ -332,12 +332,12 @@ export const Mapselect = () => {
             {
                 tag: "orchid_island",
                 place: "蘭嶼",
-                img: "https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_123118/20210923082907_q5z4b/jpg",
-                itemname: "朝日溫泉門票 ",
-                img2: "https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_116949/20210407135033_a5Mtp/jpg",
-                itemname2: " BBQ燒烤吃到飽餐券",
-                img3: "https://image.kkday.com/v2/image/get/h_650%2Cc_fit/s1.kkday.com/product_118919/20210419072801_cxacU/png",
-                itemname3: "蘭嶼綠島交通船票"
+                img: "https://image.kkday.com/v2/image/get/w_481%2Ch_358%2Cc_fill%2Cq_55%2Ct_webp/s1.kkday.com/product_39664/20200508032900_MVmFz/jpg",
+                itemname: "台灣蘭嶼2日/ 3日遊 | 兩隻魚海景民宿贈機車 ",
+                img2: "https://image.kkday.com/v2/image/get/w_481%2Ch_358%2Cc_fill%2Cq_55%2Ct_webp/s1.kkday.com/product_129200/20220515143230_lLSnq/jpg",
+                itemname2: "環島解說半日體驗",
+                img3: "https://image.kkday.com/v2/image/get/w_481%2Ch_280%2Cc_fill%2Cq_55%2Ct_webp/s1.kkday.com/product_39824/20200524074437_FLAGf/jpg",
+                itemname3: "夜間生態觀察、潮間帶解說"
             },
             {
                 tag: "liuqiu",
@@ -407,12 +407,26 @@ export const Mapselect = () => {
     return (
         <main style={{ width: '1280px', margin: '0 auto' }}>
             {/* 左邊圖片 */}
-            <div id="app" style={{ backgroundColor: 'red', width: '300px' }} >
+          
+            <div id="app" style={{  width: '300px' }} >
                 {/* <div className="title_area">
                     {/* <h1>Taiwan<br>Weather Map<br></h1> */}
                 {/* <hr /> */}
                 {/* </div> */}
-                <div className="homecard">
+                <div className="homecard2" style={{ width: '300px', }}>
+                <img className='mapimg2' src="./images/flower.png" alt="" />
+                <div class="homecontainer item2">
+                    <h4><b></b></h4>
+                </div>
+                <div style={{ marginLeft: '50px', width: '150px', float: 'right' }}>
+                    <ReactStars
+                        Rating
+                        value={5}
+                        edit={false} />
+                </div>
+                <p className='t2' style={{ width: '200px' }} ></p>
+            </div>
+            <div className="homecard" style={{ width: '300px', }}>
                 <img className='mapimg1' src="./images/flower.png" alt="" />
                 <div class="homecontainer item1">
                     <h4><b></b></h4>
@@ -425,7 +439,6 @@ export const Mapselect = () => {
                 </div>
                 <p className='t1' style={{ width: '200px' }} ></p>
             </div>
-
             <div className="homecard3" style={{ width: '300px', }}>
                 <img className='mapimg3' src="./images/flower.png" alt="" />
                 <div class="homecontainer item3">
@@ -440,23 +453,13 @@ export const Mapselect = () => {
                 <p className='t3' style={{ width: '200px' }} ></p>
             </div>
 
-            <div className="homecard2">
-                <img className='mapimg2' src="./images/flower.png" alt="" />
-                <div class="homecontainer item2">
-                    <h4><b></b></h4>
-                </div>
-                <div style={{ marginLeft: '50px', width: '150px', float: 'right' }}>
-                    <ReactStars
-                        Rating
-                        value={5}
-                        edit={false} />
-                </div>
-                <p className='t2' style={{ width: '200px' }} ></p>
-            </div>
+
+
+
 
 
             </div>
-            
+
             <div style={{ width: '800px', zIndex: '20', display: 'inline', marginLeft: '0' }}>
                 <svg width="500" height="1200" id="cf503461-00bd-459a-aeb5-062ebc913211" data-name="圖層 1" xmlns="http://www.w3.org/2000/svg" s
                     viewBox="0 0 595.28 841.89">
