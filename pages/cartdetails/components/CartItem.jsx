@@ -199,7 +199,7 @@ export var CartItem = () => {
                     </div>
                     <div>
                         <span>回饋金</span>
-                        <span id="gold">{totalCash * 0.2}</span>
+                        <span id="gold">{Math.floor(totalCash * 0.02)}</span>
                     </div>
                 </div>
                 <a href="#" onClick={gotopay}>前往結帳</a>
