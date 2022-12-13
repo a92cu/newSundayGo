@@ -207,13 +207,13 @@ export default function ItemPage(props) {
   const [item, setItem] = useState<any>({});
   const [] = useState([]);
   useEffect(() => {
-    const Flickity = require("flickity");
-    new Flickity(".main-carousel");
+
     async function initData() {
       const id = props.id;
       const { data: imgListRaw } = await fetch(`/api/itemimg/${id}`).then((i) =>
         i.json()
       );
+      console.log(imgListRaw);
       const { data: orderListRaw } = await fetch(`/api/ordertable/${id}`).then(
         (i) => i.json()
       );
@@ -228,6 +228,12 @@ export default function ItemPage(props) {
           "yyyy-MM-dd"
         );
         orderList.push({ ...ordertable });
+
+        setTimeout(() => {
+          const Flickity = require("flickity");
+          new Flickity(".main-carousel"), 0;
+        })
+
       });
 
       //下面是在轉日期格式

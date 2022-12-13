@@ -71,7 +71,7 @@
   border-left: 4px #f29f04 solid;
 }
 
-.tabBtn > button:focus img {
+.tabBtn > button.tab_btn_selected img {
   filter: grayscale(0%);
 }
 
