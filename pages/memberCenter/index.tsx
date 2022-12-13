@@ -107,80 +107,81 @@ function Header() {
   };
 
   //判斷有無cookie 去切換登入登出
-  if (Object.keys(cookie).length===0) {
-  return (
-    <div className="header">
-      <a href="/">
-              <img
-                src="/images/群組 1.png"
-                alt=""
-                // width={20} height={20}
-                style={{
-                    width: 90,
-                    top: -8,
-                    position: "relative"
-                }}
-            />
-            </a>
-      <div className="header-right">
-        <a href="#">美食</a>
-        <a href="#">景點</a>
-        <a href="#">活動</a>
-        <a href="#">住宿</a>
-        <a href="#">交通</a>
-        <a href="#">
-          <img src="./images/cart.png" style={{ width: 25 }} />
-        </a>
-        <a href="http://localhost:3000/login" className="loginbutton">
-          登入|註冊
-        </a>
-      </div>
-      <form className="example" action="">
-        <input type="text" placeholder="Search.." name="search" />
-        <button type="submit">
-          <i className="fa fa-search"></i>
-        </button>
-      </form>
-    </div>
-  ) }else{
+  if (Object.keys(cookie).length === 0) {
     return (
-        <div className="header">
-            <a href="#">
-              <img
-                src="/images/群組 1.png"
-                alt=""
-                // width={20} height={20}
-                style={{
-                    width: 90,
-                    top: -8,
-                    position: "relative"
-                }}
-            />
-            </a>
-            <div className="header-right">
-                <a href="#">美食</a>
-                <a href="#">景點</a>
-                <a href="#">活動</a>
-                <a href="#">住宿</a>
-                <a href="#">交通</a>
-                <a href="#">
-                    <img
-                        src="/images/cart.png"
-                        alt=""
-                        width={20} height={20} />
-                </a>
-                <a href="/memberCenter">會員中心</a>
-                <a href="/login" className="loginbutton" onClick={RemoveCookie}>
-                    登出
-                </a>
-            </div>
-            <form className="example" action="">
-                <input type="text" placeholder="Search.." name="search" />
-                <button type="submit">
-                    <i className="fa fa-search"></i>
-                </button>
-            </form>
+      <div className="header">
+        <a href="/">
+          <img
+            src="/images/群組 1.png"
+            alt=""
+            // width={20} height={20}
+            style={{
+              width: 90,
+              top: -8,
+              position: "relative"
+            }}
+          />
+        </a>
+        <div className="header-right">
+          <a href="#">美食</a>
+          <a href="#">景點</a>
+          <a href="#">活動</a>
+          <a href="#">住宿</a>
+          <a href="#">交通</a>
+          <a href="#">
+            <img src="./images/cart.png" style={{ width: 25 }} />
+          </a>
+          <a href="http://localhost:3000/login" className="loginbutton">
+            登入|註冊
+          </a>
         </div>
+        <form className="example" action="">
+          <input type="text" placeholder="Search.." name="search" />
+          <button type="submit">
+            <i className="fa fa-search"></i>
+          </button>
+        </form>
+      </div>
+    )
+  } else {
+    return (
+      <div className="header">
+        <a href="#">
+          <img
+            src="/images/群組 1.png"
+            alt=""
+            // width={20} height={20}
+            style={{
+              width: 90,
+              top: -8,
+              position: "relative"
+            }}
+          />
+        </a>
+        <div className="header-right">
+          <a href="#">美食</a>
+          <a href="#">景點</a>
+          <a href="#">活動</a>
+          <a href="#">住宿</a>
+          <a href="#">交通</a>
+          <a href="#">
+            <img
+              src="/images/cart.png"
+              alt=""
+              width={20} height={20} />
+          </a>
+          <a href="/memberCenter">會員中心</a>
+          <a href="/login" className="loginbutton" onClick={RemoveCookie}>
+            登出
+          </a>
+        </div>
+        <form className="example" action="">
+          <input type="text" placeholder="Search.." name="search" />
+          <button type="submit">
+            <i className="fa fa-search"></i>
+          </button>
+        </form>
+      </div>
     );
   }
 }
@@ -197,7 +198,7 @@ function MemberAccount(props) {
 
   const [passwordType, setPasswordType] = useState("password");
 
-  const [cookie, setCookie,removeCookie] = useCookies(["user","firm"])
+  const [cookie, setCookie, removeCookie] = useCookies(["user", "firm"])
 
 
   const togglePassword = () => {
@@ -261,7 +262,7 @@ function MemberAccount(props) {
           <option value="men" selected >{accountList[0].userGender}</option>
           <option value="girl">女</option>
         </select>
-        <button onClick={()=>console.log(cookie.user.data[0].userId)}>cookie</button>
+        <button onClick={() => console.log(cookie.user.data[0].userId)}>cookie</button>
 
       </div>
       <br />
@@ -419,46 +420,53 @@ function SevenDay() {
     console.log(checkCount, count)
     console.log(checkCount - count)
     // 每個折價券做判斷
-    if (checkCount !== 0) {
-      if (checkCount >= count) {
-        if (checkCount < 7) {
-          if (thisDate.getFullYear() >= gotdate.getFullYear() && thisDate.getMonth() >= gotdate.getMonth()) {
-            if (thisDate.getDate() > gotdate.getDate()) {
-              console.log(thisDate, gotdate)
-              alert('您已領取折扣券')
+    if (thisDate.getFullYear() >= gotdate.getFullYear() && thisDate.getMonth() >= gotdate.getMonth()) {
+      if (thisDate.getDate() - gotdate.getDate() > 0) {
+        if (registDate.getDate() == gotdate.getDate() && (checkCount - count == 0)) {
+          alert('您已領取折扣券');
+          axios.put(`/api/memberCentre/taketime`, {
+            timeData: format(thisDate, "yyyy-MM-dd"),
+            discountdate: format(fetureDate, "yyyy-MM-dd"),
+            count: checkCount + 1,
+          });
+        } else {
+          switch (checkCount - count) {
+            case 0:
+              alert("您今日已領取折價券，請明日再來");
+              break;
+            case 1:
+              alert('您已領取折扣券');
               axios.put(`/api/memberCentre/taketime`, {
                 timeData: format(thisDate, "yyyy-MM-dd"),
                 discountdate: format(fetureDate, "yyyy-MM-dd"),
                 count: checkCount + 1,
               });
-            } else {
-              alert("尚未滿足條件")
-            }
-          } else {
-            alert("尚未滿足條件")
+              break;
+            case 2: case 3: case 4: case 5: case 6:
+              alert('您已領取過這天的折扣券，請選擇下一天');
+              break;
+            case -1:case -2:case -3:case -4:case -5:case -6:
+            default:
+              alert("您之前有尚未領取過的折扣券，領取完後才有資格領取之後的折扣券")
+              break;
+          }
+        }
+      } else {
+        if (registDate.getMonth() == gotdate.getMonth() && registDate.getDate() == gotdate.getDate()) {
+          alert("您今日尚不能領取折價券，請明日再來");
+          if (checkCount == 0) {
+            axios.put(`/api/memberCentre/taketime`, {
+              timeData: format(thisDate, "yyyy-MM-dd"),
+              count: checkCount + 1,
+            });
           }
         } else {
-          alert("您已領取所有折價券，感謝您參與")
+          alert("您今日已領取折價券，請明日再來");
         }
-      } else {
-        alert("尚未滿足條件")
       }
-    } else {
-      if (registDate.getMonth() == gotdate.getMonth() && registDate.getDate() == gotdate.getDate()) {
-        alert("您今日尚不能領取折價券，請明日再來");
-        if (checkCount == 0) {
-          axios.put(`/api/memberCentre/taketime`, {
-            timeData: format(thisDate, "yyyy-MM-dd"),
-            count: checkCount + 1,
-          });
-        }
-      } else {
-        alert("您今日已領取折價券，請明日再來");
-      }
+      e.target.style.filter = "brightness(50%)"
     }
-    e.target.style.filter = "brightness(50%)"
   }
-
   return (
     <div id="sevenDay" className="tabcontentB">
       <h2>登入七天簽到活動</h2>
