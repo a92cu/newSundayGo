@@ -68,7 +68,7 @@ function HotItem() {
                     loop={true} // 循環播放
                     nav={false} // 顯示點點
                     autoplay={true} // 自動撥放
-                    autoplayTimeout={2000} //每 2 秒滑到一個圖片
+                    autoplayTimeout={2500} //每 2 秒滑到一個圖片
                     autoplaySpeed={600} // 滑動速度
                     responsive={Responsive}
                 >
