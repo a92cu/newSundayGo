@@ -676,29 +676,6 @@ export default function MemberCentre(props) {
   const [itemList, setItemList] = useState(props.itemList);
   const [orderList, setOrderList] = useState(props.orderList);
   const [discountList, setDiscountList] = useState(props.discountList);
-  // const { userAvatar, changeHandler } = useFile();
-
-
-  const getUrl = (index, originUrl) => {
-    if (index === 0) return userAvatar === null ? originUrl : userAvatar;
-  };
-  const changeHandler = (blob, callback) => {
-    console.log('ok?')
-    console.log(blob) //FileList {0: File, length: 1}      
-
-    // fetch(`http://localhost:3000/api/itemimg/${imgList[0].imgId}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     itemImgUrl: image1Url,
-    //     userAvatarUrl: userAvatar,
-    //   }),
-    // });
-
-  }
 
   return <>
     <Header />
@@ -711,7 +688,10 @@ export default function MemberCentre(props) {
             <input id="chengImgBtn"
               type="file"
               style={{ display: "none" }}
-            // onChange={upload}
+              // onChange={(e) => setuserAvatar(e.target.value)}
+              // onChange={chengImgBtn}
+
+
             />
 
             <button type="button" id="cameraBtn" >
