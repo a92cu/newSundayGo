@@ -115,7 +115,7 @@ export var CartItem = () => {
                     setshopcaritem(Id, date, count, price);
                 }
             })
-            // window.location = "/cartlist" //前往結帳頁面
+            window.location = "/cartlist" //前往結帳頁面
         }
         function setshopcaritem(itemId, date, count, price) {
             window.localStorage.setItem(
