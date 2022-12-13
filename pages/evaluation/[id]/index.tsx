@@ -219,9 +219,9 @@ export default function EvaluationB(props) {
         <>
             <Header />
             <div id="id01" className="modal">
-                <br />
+                
                 <form className="modal-content animate">
-                    <br />
+                    
                     <img className="modalImg" src="../images/評價.png" alt="" />
                     <p>{itemTitle}</p>
                     <div className="evaluationStar">

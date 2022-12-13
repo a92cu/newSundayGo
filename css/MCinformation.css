@@ -289,6 +289,7 @@ select {
     border: 1px solid rgb(0, 0, 0, 0.5);
     /* background-color: lightgreen; */
     float: left;
+    cursor: pointer; 
 
 }
 
@@ -394,6 +395,7 @@ select {
     display: block;
     object-fit: cover;
     object-position: center;
+    cursor: pointer; 
 }
 
 .collectName>h3 {
@@ -510,7 +512,7 @@ select {
     margin: auto;
     border: 1px solid #F29F04;
     width: 1280px;
-    height: 600px;
+    height: 500px;
     font-size: 18px;
     padding: 5px 0 5px 10px;
     text-align: center;    
@@ -609,10 +611,12 @@ select {
     color: #8C5C02;
 }
 
-.evaluationSendBtn:hover {
+.evaluationSendBtn:hover,
+.evaluationSendBtn:hover a{
     background-color: #F29F04;
     color: white;
 }
+
 
 /* 七天簽到頁面 */
 .dayOneSeven>img {

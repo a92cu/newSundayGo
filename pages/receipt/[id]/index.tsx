@@ -24,10 +24,10 @@ function ReceiptPage(orderList) {
       var docDefinition = {
         content: [{
           image: data,
-          width: 595
+          width: 1500
         }],
-        pageSize: 'A7',
-        pageMargins: [0, 20, 0, 0]
+        pageSize: 'A4',
+        pageMargins: [-450, 50, 0, 0]
       };
 
       pdfMake.createPdf(docDefinition).download('receipt.pdf');
