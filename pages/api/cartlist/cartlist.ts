@@ -7,7 +7,6 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
     query: { id, name ,userId},
     method,
   } = req
-
   switch (method) {
     case 'GET':
         try{
@@ -22,34 +21,26 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
         catch(error){
             res.status(500);
         }
+      break;
       // Get data from your database
-      case "POST":
+      case "PUT":
         try {
-          const keys = Object.keys(req.body);
-          const values = Object.values(req.body).map((i, index) => {
-            return typeof i === "string" ? `"${i}"`.trim() : i;
+          // 更改PUT邏輯 以陣列執行
+          req.body.allData.forEach((element) => {
+            let sq1=`INSERT INTO ordertable (userId, itemId, orderReceipt, orderDate, orderQua) VALUES ("${element.userId}", ${element.itemId}, '${element.orderReceipt}', '${element.date}', '${element.count}')`;
+            runSQL(sq1);
           });
-          let query = "";
-          for (let j = 0; j < keys.length; j++) {
-            query =
-              query + keys[j] + "=" + values[j] + (j === keys.length - 1 ? "" : ",");
-          }
-          
-    
-  
-          // 新增商品內容
-          // const sq1 = `INSERT INTO item (${keys},userId,userPassword) VALUES (${values},"${id}","${id}")`;
-          const sq1 = `INSERT INTO ordertable (userId, itemId, orderReceipt, orderDate, orderQua) VALUES ('u123456789', '1', 'order000012', '2022-12-12', '3');`;
+          // // 新增商品內容
+          // // const sq1 = `INSERT INTO item (${keys},userId,userPassword) VALUES (${values},"${id}","${id}")`;
+          // const sq1 = `INSERT INTO ordertable (userId, itemId, orderReceipt, orderDate, orderQua) VALUES ('u123456789', '1', 'order000012', '2022-12-12', '3');`;
         
-          // const sq1 = `INSERT INTO favorite  VALUES (5,'u123456789',30)`;
-          runSQL(sq1);
-          res.status(200).json({ message: "ok" });
+          // // const sq1 = `INSERT INTO favorite  VALUES (5,'u123456789',30)`;
+          // runSQL(sq1);
+          // res.status(200).json({ message: "ok" });
         } catch (error) {
           res.status(500);
         }
         break;
-  
-      break;
       // case "POST":
       //   try {
       //       const keys = Object.keys(req.body).join(",");
