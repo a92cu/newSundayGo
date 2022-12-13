@@ -289,6 +289,7 @@ select {
     border: 1px solid rgb(0, 0, 0, 0.5);
     /* background-color: lightgreen; */
     float: left;
+    cursor: pointer; 
 
 }
 
@@ -394,6 +395,7 @@ select {
     display: block;
     object-fit: cover;
     object-position: center;
+    cursor: pointer; 
 }
 
 .collectName>h3 {

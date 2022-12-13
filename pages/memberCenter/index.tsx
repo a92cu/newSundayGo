@@ -499,7 +499,8 @@ function MemberOrder(orderList, imgList) {
           <div id="memberOrderReady" className="memberOrderBody">
             {/* 準備出發 */}
             {orderList.orderList.map((i) => {
-              // console.log(i); //{}
+              let TTp = i.itemPrice*i.orderQua
+              // console.log(TTp); //{}
               if (i.orderDeter === 1) {
                 return (
                   <div className="OrderReadyDiv" key={i.orderNumber}>
@@ -518,9 +519,9 @@ function MemberOrder(orderList, imgList) {
                         <h4>{i.itemTitle}</h4>
                         <span>訂單編號</span><span>#{i.orderReceipt}</span>
                       </div>
-                      <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
+                      <div className="ORRightPrice">TWD<span>{`${TTp}`}</span></div>
                       <div className="ORRightBtn">
-                        <button > <a href={`/receipt/${i.orderNumber}`} target="_blank">查看憑證</a> </button>
+                        <button > <a href={`/receipt/${i.orderNumber}`}>查看憑證</a> </button>
                       </div>
                     </div>
                   </div>
@@ -546,11 +547,11 @@ function MemberOrder(orderList, imgList) {
                           <h4>{i.itemTitle}</h4>
                           <span>訂單編號</span><span>#{i.orderReceipt}</span>
                         </div>
-                        <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
+                        <div className="ORRightPrice">TWD<span>{`${TTp}`}</span></div>
                         <div className="ORRightBtn">
                           {/* onClick={() => GoEvaluation()} */}
                           <button onClick={() => router.push(`/evaluation/${i.orderNumber}`)} id="GoEvaluationBtn" >前往評價</button>
-                          <button><a href={`/receipt/${i.orderNumber}`} target="_blank">查看憑證</a></button>
+                          <button><a href={`/receipt/${i.orderNumber}`}>查看憑證</a></button>
                         </div>
                       </div>
                     </div>
@@ -576,10 +577,10 @@ function MemberOrder(orderList, imgList) {
                           <h4>{i.itemTitle}</h4>
                           <span>訂單編號</span><span>#{i.orderReceipt}</span>
                         </div>
-                        <div className="ORRightPrice">TWD<span>{i.itemPrice}</span></div>
+                        <div className="ORRightPrice">TWD<span>{`${TTp}`}</span></div>
                         <div className="ORRightBtn">
                           <button id="GoEvaluationBtn" style={{ backgroundColor: "#DCDCDC" }}>已評價</button>
-                          <button><a href={`/receipt/${i.orderNumber}`} target="_blank">查看憑證</a></button>
+                          <button><a href={`/receipt/${i.orderNumber}`} >查看憑證</a></button>
                         </div>
                       </div>
                     </div>
