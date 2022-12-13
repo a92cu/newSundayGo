@@ -2,11 +2,15 @@ import Image from "next/image";
 import { useState, useEffect } from 'react';
 import Script from "next/script";
 import { runSQL } from "../../lib/mysql";
-import { format, parseJSON } from "date-fns";
+import { format } from "date-fns";
 import * as R from "ramda";
 import { useRouter } from 'next/router'
 import Listdemo from "./component/Listdemo.jsx";
 
+// 將功能做成component 兩邊都能使用
+import Travelman from "./component/Travelman.jsx";
+import Billtotal from "./component/Billtotal.jsx";
+import Paybill from "./component/Paybill.jsx";
 
 //   header
 function Header() {
@@ -22,8 +26,11 @@ function Header() {
                 <a href="/homepage/play">活動</a>
                 <a href="/homepage/lodging">住宿</a>
                 <a href="/homepage/traffic">交通</a>
-                <a href="#"><img src="/images/cart.png" style={{ width: '25px' }} /></a>
-                <a href="#">登入|註冊</a>
+                <a href="#">
+                    <img src="./images/cart.png" style={{ width: 25 }} />
+                </a>
+                <a href="#">會員中心</a>
+                <a href="#divOne" className="loginbutton">登出</a>
             </div>
             <form className="example" action="">
                 <input type="text" placeholder="Search.." name="search" />
@@ -120,7 +127,6 @@ function Orderman({
             <div className="cartsidebar">
                 <div className="cartsidebar__inner">
                     <button className="cartaccordion ">
-                    
                         <h3><img className="shopimg" src="./images/flower.png" /> 訂購人資料</h3>
                         <hr />
                     </button>
@@ -129,16 +135,12 @@ function Orderman({
                             <span>名字</span>
                             <br />
                             <input type="text" name="userName" id="CartuserName" value={userName} required />
-
-
                             <div>
                                 <span>電子信箱</span>
                                 <br />
                                 <input type="email" name="usermail" value={userEmail} required />
                             </div>
-
                         </div>
-
                         <div className="orderright">
                             <div>
                                 <span>性別</span>
@@ -152,8 +154,6 @@ function Orderman({
                             </div>
                         </div>
                         <br />
-
-
                         {/* <!-- <input class="orderbtn" type="submit"> --> */}
                     </div>
                 </div>
@@ -161,106 +161,106 @@ function Orderman({
         </section>
     )
 }
-//旅客資料
-function Travelman(itemList) {
-    const [getItem,setGetItem]=useState([])
-    useEffect(()=>{
-        let shopList=JSON.parse(window.localStorage.getItem("sureshopcar"));
-        for (const key in shopList) {
-            itemList.itemList.forEach(element => {
-                if(shopList[key].itemId==element.itemId){
-                    let getOneItem=[{
-                        itemId:element.itemId,
-                        itemPrice:element.itemPrice,
-                        itemTitle:element.itemTitle,
-                        itemImgUrl:element.itemImgUrl,
-                        count:shopList[key].count,
-                        date:shopList[key].date
-                    }]
-                    setGetItem(getOneItem);
-                }
-            });
-        }
-    },[])
+// //旅客資料
+// function Travelman(itemList) {
+//     const [getItem,setGetItem]=useState([])
+//     useEffect(()=>{
+//         let shopList=JSON.parse(window.localStorage.getItem("sureshopcar"));
+//         for (const key in shopList) {
+//             itemList.itemList.forEach(element => {
+//                 if(shopList[key].itemId==element.itemId){
+//                     let getOneItem=[{
+//                         itemId:element.itemId,
+//                         itemPrice:element.itemPrice,
+//                         itemTitle:element.itemTitle,
+//                         itemImgUrl:element.itemImgUrl,
+//                         count:shopList[key].count,
+//                         date:shopList[key].date
+//                     }]
+//                     setGetItem(getOneItem);
+//                 }
+//             });
+//         }
+//     },[])
     
-    // useEffect(() => {
-    //     let shopcar = JSON.parse(localStorage.getItem("sureshopcar"))||[]; // 如果購物車沒有東西就空[]
-    //     // console.log(1, shopcar);
-    //     // console.log(2, shopcar[1]);
-    //     // console.log(2, shopcar[1]);
-    //     let shoplist = [];
-    //     let dataAll = itemList.itemList
-    //     var dataint = dataAll.map(x => x.itemId).indexOf();
-    //     // //得到item1的圖片
-    //     // console.log(3, dataAll[dataint].itemImgUrl)
-    //     // console.log(3, dataAll[dataint].itemImgUrl)
-    //     // // 商品標題
-    //     // console.log(4, dataAll[dataint].itemTitle)
-    //     // //價格
-    //     // console.log(5, shopcar[1].price, shopcar[1].date)
+//     // useEffect(() => {
+//     //     let shopcar = JSON.parse(localStorage.getItem("sureshopcar"))||[]; // 如果購物車沒有東西就空[]
+//     //     // console.log(1, shopcar);
+//     //     // console.log(2, shopcar[1]);
+//     //     // console.log(2, shopcar[1]);
+//     //     let shoplist = [];
+//     //     let dataAll = itemList.itemList
+//     //     var dataint = dataAll.map(x => x.itemId).indexOf();
+//     //     // //得到item1的圖片
+//     //     // console.log(3, dataAll[dataint].itemImgUrl)
+//     //     // console.log(3, dataAll[dataint].itemImgUrl)
+//     //     // // 商品標題
+//     //     // console.log(4, dataAll[dataint].itemTitle)
+//     //     // //價格
+//     //     // console.log(5, shopcar[1].price, shopcar[1].date)
 
-    //     itemList.itemList.push({
-    //         itemTitle: dataAll[dataint].itemTitle,
-    //         itemPrice: dataAll[dataint].total,
-    //         itemImgUrl: dataAll[dataint].itemImgUrl,
-    //     })
-    //     let new1 = itemList.itemList.slice(73, 74)
-    //     console.log(6, itemList);
-    //     console.log(8, new1);
-    //     setshoplist(shoplist)
-    //     console.log(7, shoplist);
-    //     var app = itemList.itemList.splice(0, 73)
-    //     console.log(app)
-    // }, []);
+//     //     itemList.itemList.push({
+//     //         itemTitle: dataAll[dataint].itemTitle,
+//     //         itemPrice: dataAll[dataint].total,
+//     //         itemImgUrl: dataAll[dataint].itemImgUrl,
+//     //     })
+//     //     let new1 = itemList.itemList.slice(73, 74)
+//     //     console.log(6, itemList);
+//     //     console.log(8, new1);
+//     //     setshoplist(shoplist)
+//     //     console.log(7, shoplist);
+//     //     var app = itemList.itemList.splice(0, 73)
+//     //     console.log(app)
+//     // }, []);
 
-    return (
-        <section className="travelman">
-            <div className="cartsidebar">
-                <div className="cartsidebar__inner">
-                    <button className="cartaccordion">
-                        <h3>旅客資料</h3>
-                        <hr />
-                    </button>
-                    <div className="cartpanel">
-                        {getItem.map((i) => 
-                            <div className="carthomeProduct">
-                                {/* <!-- 圖片框 --> */}
-                                <div className="cartpicPlace">
-                                    <img className="cartproPic" src={i.itemImgUrl} alt="" />
-                                    {/* {i.itemImgUrl} */}
-                                </div>
-                                {/* <!-- 介紹欄 --> */}
-                                <div className="cartinco">
-                                    <h3>
-                                        <p>
-                                            {i.itemTitle}
-                                        </p>
-                                    </h3>
-                                    {/* <!-- 地區標籤 --> */}
-                                    <div>
-                                        <div className="carttagplace">
-                                            新竹市
-                                        </div>
-                                        <div>
-                                            活動日期 ：2022-12-07
-                                            {/* {i.date} */}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+//     return (
+//         <section className="travelman">
+//             <div className="cartsidebar">
+//                 <div className="cartsidebar__inner">
+//                     <button className="cartaccordion">
+//                         <h3>旅客資料</h3>
+//                         <hr />
+//                     </button>
+//                     <div className="cartpanel">
+//                         {getItem.map((i) => 
+//                             <div className="carthomeProduct">
+//                                 {/* <!-- 圖片框 --> */}
+//                                 <div className="cartpicPlace">
+//                                     <img className="cartproPic" src={i.itemImgUrl} alt="" />
+//                                     {/* {i.itemImgUrl} */}
+//                                 </div>
+//                                 {/* <!-- 介紹欄 --> */}
+//                                 <div className="cartinco">
+//                                     <h3>
+//                                         <p>
+//                                             {i.itemTitle}
+//                                         </p>
+//                                     </h3>
+//                                     {/* <!-- 地區標籤 --> */}
+//                                     <div>
+//                                         <div className="carttagplace">
+//                                             新竹市
+//                                         </div>
+//                                         <div>
+//                                             活動日期 ：2022-12-07
+//                                             {/* {i.date} */}
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                             </div>
 
-                        )}
-                        {/* 迴圈結束 */}
-                        <h4>特殊需求備註</h4>
-                        <div>
-                            <textarea placeholder="此欄位僅限資料備註，不保證提供"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
-}
+//                         )}
+//                         {/* 迴圈結束 */}
+//                         <h4>特殊需求備註</h4>
+//                         <div>
+//                             <textarea placeholder="此欄位僅限資料備註，不保證提供"></textarea>
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+//         </section>
+//     )
+// }
 
 //付款方式 
 function Paylist() {
@@ -351,94 +351,88 @@ function Paylist() {
 //         </section>
 //     )
 // }
-//付款明細
-function Billtotal(itemList) {
-    const [getItem,setGetItem]=useState([])
-    useEffect(()=>{
-        let shopList=JSON.parse(window.localStorage.getItem("sureshopcar"));
-        for (const key in shopList) {
-            itemList.itemList.forEach(element => {
-                if(shopList[key].itemId==element.itemId){
-                    let getOneItem=[{
-                        itemId:element.itemId,
-                        itemPrice:element.itemPrice,
-                        itemTitle:element.itemTitle,
-                        itemImgUrl:element.itemImgUrl,
-                        count:shopList[key].count,
-                        date:shopList[key].date
-                    }]
-                    setGetItem(getOneItem);
-                }
-            });
-        }
-    },[])
-    return (
-        <section className="billtotal">
-            <div className="cartsidebar">
-                <div className="cartsidebar__inner">
-                    <button className="cartaccordion">
-                        <h3>付款明細</h3>
-                        <hr />
-                    </button>
-                    <div className="cartpanel">
-                        {getItem.map((i) =>
-                            <div className="carthomeProduct">
-                                {/* <!-- 圖片框 --> */}
-                                <div className="cartpicPlace">
-                                    <img className="cartproPic" src={i.itemImgUrl} alt="" />
-                                    {/* {itemList.itemList[73].itemImgUrl}  */}
-                                    {/* itemList.itemList[0].itemImgUrl */}
-                                    {/* {i.itemImgUrl} */}
-                                </div>
-                                {/* <!-- 介紹欄 --> */}
-                                <div className="cartinco">
-                                    <h3>
-                                        <p>
-                                            {i.itemTitle}
-                                            {/* {itemList.itemList[73].itemTitle} */}
-                                        </p>
-                                    </h3>
-                                    {/* <!-- 地區標籤 --> */}
-                                    <div>
-                                        <div className="carttagplace">
-                                            {/* {i.itemFilter2} */}
-                                        </div>
-                                        <div>
-                                            活動日期 ：2022-12-07
-                                            {i.date}
-                                            <br />
-                                            人數 : 1人
-                                        </div>
 
-                                        <div>
-                                            商品數量:{i.count}
-                                        </div>
+// //付款明細
+// function Billtotal(itemList) {
+//     const [getItem,setGetItem]=useState([])
+//     useEffect(()=>{
+//         let shopList=JSON.parse(window.localStorage.getItem("sureshopcar"));
+//         for (const key in shopList) {
+//             itemList.itemList.forEach(element => {
+//                 if(shopList[key].itemId==element.itemId){
+//                     let getOneItem=[{
+//                         itemId:element.itemId,
+//                         itemPrice:element.itemPrice,
+//                         itemTitle:element.itemTitle,
+//                         itemImgUrl:element.itemImgUrl,
+//                         count:shopList[key].count,
+//                         date:shopList[key].date
+//                     }]
+//                     setGetItem(getOneItem);
+//                 }
+//             });
+//         }
+//     },[])
+//     return (
+//         <section className="billtotal">
+//             <div className="cartsidebar">
+//                 <div className="cartsidebar__inner">
+//                     <button className="cartaccordion">
+//                         <h3>付款明細</h3>
+//                         <hr />
+//                     </button>
+//                     <div className="cartpanel">
+//                         {getItem.map((i,key) =>
+//                             <div className="carthomeProduct" key={key}>
+//                                 {/* <!-- 圖片框 --> */}
+//                                 <div className="cartpicPlace">
+//                                     <img className="cartproPic" src={i.itemImgUrl} alt="IMG" />
+//                                 </div>
+//                                 {/* <!-- 介紹欄 --> */}
+//                                 <div className="cartinco">
+//                                     <h3>
+//                                         <p>
+//                                             {i.itemTitle}
+//                                             {/* {itemList.itemList[73].itemTitle} */}
+//                                         </p>
+//                                     </h3>
+//                                     {/* <!-- 地區標籤 --> */}
+//                                     <div>
+//                                         <div className="carttagplace">
+//                                             {/* {i.itemFilter2} */}
+//                                         </div>
+//                                         <div>
+//                                             活動日期 ：2022-12-07
+//                                             {i.date}
+//                                             <br />
+//                                             人數 : 1人
+//                                         </div>
+//                                         <div>
+//                                             商品數量:{i.count}
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                         )}
+//                         {/* 商品迴圈結束 */}
+//                         <span className="carthrline">總金額 TWD</span>
+//                         {/* {itemList.itemList.map((i) => */}
+//                         <span className="paybill1">{getItem.map(i=>i.itemPrice*i.count)}</span>
+//                         {/* )} */}
+//                         <hr />
+//                         <span className="carthrline">點數折抵 TWD</span>
+//                         <span className="billcount">{getItem.map(i=>Math.floor(i.itemPrice*i.count*0.02))}</span>
+//                         <hr />
+//                         <span className="carthrline">支付金額 TWD</span>
+//                         <span className="paybill2">{getItem.map(i=>i.itemPrice*i.count)}</span>
+//                         <hr />
+//                     </div>
+//                 </div>
+//             </div>
 
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        )}
-                        {/* 商品迴圈結束 */}
-                        <span className="carthrline">總金額 TWD</span>
-                        {/* {itemList.itemList.map((i) => */}
-                        <span className="paybill1">{getItem.map(i=>i.itemPrice*i.count)}</span>
-                        {/* )} */}
-                        <hr />
-                        <span className="carthrline">點數折抵 TWD</span>
-                        <span className="billcount">{getItem.map(i=>Math.floor(i.itemPrice*i.count*0.02))}</span>
-                        <hr />
-                        <span className="carthrline">支付金額 TWD</span>
-                        <span className="paybill2">{getItem.map(i=>i.itemPrice*i.count)}</span>
-                        <hr />
-                    </div>
-                </div>
-            </div>
-
-        </section>
-    )
-}
+//         </section>
+//     )
+// }
 // export const CartItem = (itemList) => {
 //     const [shoplist, setshoplist] = useState([]);
 //     useEffect(() => {
@@ -455,9 +449,7 @@ function Billtotal(itemList) {
 //         console.log(4, dataAll[dataint].itemTitle)
 //         //價格
 //         console.log(5, shopcar[1].price, shopcar[1].date)
-
 //         shoplist.push({
-
 //             itemTitle: dataAll[dataint].itemTitle,
 //             itemPrice: dataAll[dataint].itemPrice,
 //             itemImgUrl: dataAll[dataint].itemImgUrl,
@@ -473,51 +465,48 @@ function Billtotal(itemList) {
 
 
 //結帳區
-function Paybill() {
-    const favIdsend = async (i) => {
-        console.log(4, i)
-        await fetch("/api/cartlist/cartlist", {
-            method: "post",
-            // body:imgId
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json;charset=utf-8",
-            },
-            body: JSON.stringify({
-                userId: 'u123456789',
-                itemId: 1,
-                orderReceipt: 'order000012',
-                orderDate: '2022-12-12',
-                orderQua: 3
+// function Paybill() {
+//     const favIdsend = async () => { 
+//         await fetch("/api/cartlist/cartlist", {
+//             method: "post",
+//             // body:imgId
+//             headers: {
+//                 Accept: "application/json",
+//                 "Content-Type": "application/json;charset=utf-8",
+//             },
+//             body: JSON.stringify({
+//                 userId: 'u123456789',
+//                 itemId: 1,
+//                 orderReceipt: 'order000012',
+//                 orderDate: '2022-12-12',
+//                 orderQua: 3
+//             })
+//         }).then((res) => res.json())
+//         // .then(alert('已成功付款'))
+//         // .then(console.log('已加入最愛'))
 
-            })
-        }).then((res) => res.json())
-        window.location = "/cartdetails/countComplete" // 跳轉到訂單頁面(依然可以使用)
-        // .then(alert('已成功付款'))
-        // .then(console.log('已加入最愛'))
+//         // console.log(5, favId)
+//         // .then(data => {
+//         //     /*接到request data後要做的事情*/
+//         //     console.log("使用者資料",data.data[0].imgId);
 
-        // console.log(5, favId)
-        // .then(data => {
-        //     /*接到request data後要做的事情*/
-        //     console.log("使用者資料",data.data[0].imgId);
-
-        // })
+//         // })
         
-    }
-    //POST結束
+//     }
+//     //POST結束
 
-    return (
-        <section className="paybill">
-            <span>商品合計      </span> <span className="cartprdtit">TWD 1760</span>
-            <br /><br />
-            <span className="prdtit2">訂單完成後回饋金 TWD</span><span className="prdtit3">35</span>
+//     return (
+//         <section className="paybill">
+//             <span>商品合計      </span> <span className="cartprdtit">TWD 1760</span>
+//             <br /><br />
+//             <span className="prdtit2">訂單完成後回饋金 TWD</span><span className="prdtit3">35</span>
 
-            <input type="submit" value="確認付款" id="billok" onClick={() => favIdsend(event)} />
-            {/* onClick={() => { setNewLocalS() }} */}
-        </section>
-    )
+//             <input type="submit" value="確認付款" id="billok" onClick={() => favIdsend()} />
+//             {/* onClick={() => { setNewLocalS() }} */}
+//         </section>
+//     )
 
-}
+// }
 
 
 
@@ -525,15 +514,12 @@ function Paybill() {
 export default function cartlist(props) {
     const [userName, setuserName] = useState(props.userName);
     const [itemList, setItemList] = useState(props.itemList);
-
     // const setNewLocalS = () => {
     //     //塞資料進去
     //     localStorage.setItem("newData", JSON.stringify(newData));
-
     // }
     return (
         <>
-
             <Header />
             <Titlebar />
             {/* <Listdemo /> */}
@@ -553,14 +539,9 @@ export default function cartlist(props) {
                     <Paybill />
                 </form>
             </main>
-
             <Footer />
             <Script src="/js/home.js" />
-
         </>
-
-
-
     )
 }
 
@@ -568,7 +549,6 @@ export async function getStaticProps({ params }) {
     // const itemList: any = [];
     const sq1 = `SELECT item.itemId,item.itemPrice, item.itemTitle, item.itemFilter2, itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;`;
     const sq2 = `SELECT userId, userPassword, userName, userGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
-
     const itemList: any = [];
     // itemTitle itemFilter2 itemImgUrl
     const imgListRaw: any = await runSQL(sq1); // 所有項目
@@ -577,8 +557,6 @@ export async function getStaticProps({ params }) {
         item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
         itemList.push({ ...item });
     });
-
-
     //把要的資料拿出來
     return {
         props: {
