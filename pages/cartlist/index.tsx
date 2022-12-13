@@ -163,37 +163,55 @@ function Orderman({
 }
 //旅客資料
 function Travelman(itemList) {
-    const [shoplist, setshoplist] = useState([]);
-    useEffect(() => {
-        let shopcar = JSON.parse(localStorage.getItem("sureshopcar"))||[]; // 如果購物車沒有東西就空[]
-        // console.log(1, shopcar);
-        // console.log(2, shopcar[1]);
-        // console.log(2, shopcar[1]);
-        let shoplist = [];
-        let dataAll = itemList.itemList
-        var dataint = dataAll.map(x => x.itemId).indexOf();
-        // //得到item1的圖片
-        // console.log(3, dataAll[dataint].itemImgUrl)
-        // console.log(3, dataAll[dataint].itemImgUrl)
-        // // 商品標題
-        // console.log(4, dataAll[dataint].itemTitle)
-        // //價格
-        // console.log(5, shopcar[1].price, shopcar[1].date)
+    const [getItem,setGetItem]=useState([])
+    useEffect(()=>{
+        let shopList=JSON.parse(window.localStorage.getItem("sureshopcar"));
+        for (const key in shopList) {
+            itemList.itemList.forEach(element => {
+                if(shopList[key].itemId==element.itemId){
+                    let getOneItem=[{
+                        itemId:element.itemId,
+                        itemPrice:element.itemPrice,
+                        itemTitle:element.itemTitle,
+                        itemImgUrl:element.itemImgUrl,
+                        count:shopList[key].count,
+                        date:shopList[key].date
+                    }]
+                    setGetItem(getOneItem);
+                }
+            });
+        }
+    },[])
+    
+    // useEffect(() => {
+    //     let shopcar = JSON.parse(localStorage.getItem("sureshopcar"))||[]; // 如果購物車沒有東西就空[]
+    //     // console.log(1, shopcar);
+    //     // console.log(2, shopcar[1]);
+    //     // console.log(2, shopcar[1]);
+    //     let shoplist = [];
+    //     let dataAll = itemList.itemList
+    //     var dataint = dataAll.map(x => x.itemId).indexOf();
+    //     // //得到item1的圖片
+    //     // console.log(3, dataAll[dataint].itemImgUrl)
+    //     // console.log(3, dataAll[dataint].itemImgUrl)
+    //     // // 商品標題
+    //     // console.log(4, dataAll[dataint].itemTitle)
+    //     // //價格
+    //     // console.log(5, shopcar[1].price, shopcar[1].date)
 
-        itemList.itemList.push({
-
-            itemTitle: dataAll[dataint].itemTitle,
-            itemPrice: dataAll[dataint].total,
-            itemImgUrl: dataAll[dataint].itemImgUrl,
-        })
-        let new1 = itemList.itemList.slice(73, 74)
-        console.log(6, itemList);
-        console.log(8, new1);
-        setshoplist(shoplist)
-        console.log(7, shoplist);
-        var app = itemList.itemList.splice(0, 73)
-        console.log(app)
-    }, []);
+    //     itemList.itemList.push({
+    //         itemTitle: dataAll[dataint].itemTitle,
+    //         itemPrice: dataAll[dataint].total,
+    //         itemImgUrl: dataAll[dataint].itemImgUrl,
+    //     })
+    //     let new1 = itemList.itemList.slice(73, 74)
+    //     console.log(6, itemList);
+    //     console.log(8, new1);
+    //     setshoplist(shoplist)
+    //     console.log(7, shoplist);
+    //     var app = itemList.itemList.splice(0, 73)
+    //     console.log(app)
+    // }, []);
 
     return (
         <section className="travelman">
@@ -204,7 +222,7 @@ function Travelman(itemList) {
                         <hr />
                     </button>
                     <div className="cartpanel">
-                        {itemList.itemList.map((i) => 
+                        {getItem.map((i) => 
                             <div className="carthomeProduct">
                                 {/* <!-- 圖片框 --> */}
                                 <div className="cartpicPlace">
@@ -335,8 +353,25 @@ function Paylist() {
 // }
 //付款明細
 function Billtotal(itemList) {
-    
-
+    const [getItem,setGetItem]=useState([])
+    useEffect(()=>{
+        let shopList=JSON.parse(window.localStorage.getItem("sureshopcar"));
+        for (const key in shopList) {
+            itemList.itemList.forEach(element => {
+                if(shopList[key].itemId==element.itemId){
+                    let getOneItem=[{
+                        itemId:element.itemId,
+                        itemPrice:element.itemPrice,
+                        itemTitle:element.itemTitle,
+                        itemImgUrl:element.itemImgUrl,
+                        count:shopList[key].count,
+                        date:shopList[key].date
+                    }]
+                    setGetItem(getOneItem);
+                }
+            });
+        }
+    },[])
     return (
         <section className="billtotal">
             <div className="cartsidebar">
@@ -346,7 +381,7 @@ function Billtotal(itemList) {
                         <hr />
                     </button>
                     <div className="cartpanel">
-                        {itemList.itemList.map((i) =>
+                        {getItem.map((i) =>
                             <div className="carthomeProduct">
                                 {/* <!-- 圖片框 --> */}
                                 <div className="cartpicPlace">
@@ -376,8 +411,7 @@ function Billtotal(itemList) {
                                         </div>
 
                                         <div>
-                                            商品數量:3
-                                            {/* {i.count} */}
+                                            商品數量:{i.count}
                                         </div>
 
                                     </div>
@@ -389,14 +423,14 @@ function Billtotal(itemList) {
                         {/* 商品迴圈結束 */}
                         <span className="carthrline">總金額 TWD</span>
                         {/* {itemList.itemList.map((i) => */}
-                        <span className="paybill1">2640</span>
+                        <span className="paybill1">{getItem.map(i=>i.itemPrice*i.count)}</span>
                         {/* )} */}
                         <hr />
                         <span className="carthrline">點數折抵 TWD</span>
-                        <span className="billcount">100</span>
+                        <span className="billcount">{getItem.map(i=>Math.floor(i.itemPrice*i.count*0.02))}</span>
                         <hr />
                         <span className="carthrline">支付金額 TWD</span>
-                        <span className="paybill2">2540</span>
+                        <span className="paybill2">{getItem.map(i=>i.itemPrice*i.count)}</span>
                         <hr />
                     </div>
                 </div>
@@ -457,8 +491,8 @@ function Paybill() {
                 orderQua: 3
 
             })
-        })
-            .then((res) => res.json())
+        }).then((res) => res.json())
+        window.location = "/cartdetails/countComplete" // 跳轉到訂單頁面(依然可以使用)
         // .then(alert('已成功付款'))
         // .then(console.log('已加入最愛'))
 
@@ -468,14 +502,15 @@ function Paybill() {
         //     console.log("使用者資料",data.data[0].imgId);
 
         // })
+        
     }
     //POST結束
 
     return (
         <section className="paybill">
-            <span>商品合計      </span> <span className="cartprdtit">TWD 2540</span>
+            <span>商品合計      </span> <span className="cartprdtit">TWD 1760</span>
             <br /><br />
-            <span className="prdtit2">訂單完成後回饋金 TWD</span><span className="prdtit3">50</span>
+            <span className="prdtit2">訂單完成後回饋金 TWD</span><span className="prdtit3">35</span>
 
             <input type="submit" value="確認付款" id="billok" onClick={() => favIdsend(event)} />
             {/* onClick={() => { setNewLocalS() }} */}
@@ -489,7 +524,7 @@ function Paybill() {
 
 export default function cartlist(props) {
     const [userName, setuserName] = useState(props.userName);
-    const [itemList, setItemList] = useState(props.itemList)
+    const [itemList, setItemList] = useState(props.itemList);
 
     // const setNewLocalS = () => {
     //     //塞資料進去
@@ -531,7 +566,7 @@ export default function cartlist(props) {
 
 export async function getStaticProps({ params }) {
     // const itemList: any = [];
-    const sq1 = `SELECT  item.itemTitle, item.itemFilter2, itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;`;
+    const sq1 = `SELECT item.itemId,item.itemPrice, item.itemTitle, item.itemFilter2, itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;`;
     const sq2 = `SELECT userId, userPassword, userName, userGender, userPhone, userEmail FROM usertable WHERE userId = "u123456789"`;
 
     const itemList: any = [];
