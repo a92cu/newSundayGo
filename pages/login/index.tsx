@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Login } from "./login";
-import { Register } from "./register";
+import Register from "../../components/Register";
 
 
 

@@ -7,11 +7,8 @@ import Script from "next/script";
 import { runSQL } from "../../lib/mysql";
 //整理日期格式
 import { format } from "date-fns";
-import React, { Component } from 'react';
-// import Link from 'next/link';s
-import Mapselect from "./component/Taiwanmap.jsx";
-// import Placezone from "./component/Placezone2.jsx";
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState  } from 'react';
+import Mapselect from "../../components/homepage/Taiwanmap";
 import ReactStars from 'react-stars';
 import { useRouter } from 'next/router';
 import $ from 'jquery';
