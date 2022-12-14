@@ -13,7 +13,7 @@ export default function Paybill() {
             takeTotal+=shopList[key].count*shopList[key].price;
             setTotal(takeTotal) // 設置total金額
         }
-    })
+    },[])
     // 傳送資料
     const favIdsend = async () => {
 
@@ -38,6 +38,7 @@ export default function Paybill() {
         await axios.put("/api/cartlist/cartlist",{
             allData:obj
         })
+        window.location="/cartdetails/countComplete"
     }
 
     return (
@@ -45,7 +46,7 @@ export default function Paybill() {
             <span>商品合計</span> <span className="cartprdtit">TWD {total}</span>
             <br /><br />
             <span className="prdtit2">訂單完成後回饋金 TWD</span><span className="prdtit3">{Math.floor(total*0.02)}</span>
-            <input type="submit" value="確認付款" id="billok" onClick={() => favIdsend()} />
+            <input type="button" value="確認付款" id="billok" onClick={favIdsend} />
         </section>
     )
 

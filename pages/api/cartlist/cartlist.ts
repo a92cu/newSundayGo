@@ -25,10 +25,11 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
       // Get data from your database
       case "PUT":
         try {
+          let data;
           // 更改PUT邏輯 以陣列執行
           req.body.allData.forEach((element) => {
             let sq1=`INSERT INTO ordertable (userId, itemId, orderReceipt, orderDate, orderQua) VALUES ("${element.userId}", ${element.itemId}, '${element.orderReceipt}', '${element.date}', '${element.count}')`;
-            runSQL(sq1);
+            data=runSQL(sq1);
           });
           // // 新增商品內容
           // // const sq1 = `INSERT INTO item (${keys},userId,userPassword) VALUES (${values},"${id}","${id}")`;
@@ -37,6 +38,9 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
           // // const sq1 = `INSERT INTO favorite  VALUES (5,'u123456789',30)`;
           // runSQL(sq1);
           // res.status(200).json({ message: "ok" });
+
+          // 創造一個東西回傳
+          res.status(200).json({ data });
         } catch (error) {
           res.status(500);
         }
