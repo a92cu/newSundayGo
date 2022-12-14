@@ -1,7 +1,7 @@
 //嵌入img
 import Image from "next/image";
+import * as R from "ramda";
 //引入NEXT內建的script
-import Script from "next/script";
 //lib裡的指令重複使用
 import { runSQL } from "../../../lib/mysql";
 //整理日期格式
@@ -207,7 +207,6 @@ export default function ItemPage(props) {
   const [item, setItem] = useState<any>({});
   const [] = useState([]);
   useEffect(() => {
-
     async function initData() {
       const id = props.id;
       const { data: imgListRaw } = await fetch(`/api/itemimg/${id}`).then((i) =>
@@ -228,12 +227,6 @@ export default function ItemPage(props) {
           "yyyy-MM-dd"
         );
         orderList.push({ ...ordertable });
-
-        setTimeout(() => {
-          const Flickity = require("flickity");
-          new Flickity(".main-carousel"), 2000;
-        })
-
       });
 
       //下面是在轉日期格式
@@ -246,6 +239,15 @@ export default function ItemPage(props) {
     }
     initData();
   }, []);
+  useEffect(() => {
+    if (!R.isEmpty(item) && !R.isEmpty(imgList)) {
+      console.log('tttttt')
+      setTimeout(() => {
+        const Flickity = require("flickity");
+        new Flickity(".main-carousel");
+      }, 0);
+    }
+  }, [item, imgList]);
   const {
     itemFilter2,
     itemPrice,
@@ -261,6 +263,7 @@ export default function ItemPage(props) {
     itemTraffic,
   } = item;
   if (Object.keys(item).length === 0) return null;
+
   return (
     <>
       <Header />
