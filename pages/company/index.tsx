@@ -158,7 +158,7 @@ function MemberOrder({ itemList, imgList, setItemList }) {
                         </a>
                       </div>
                     </td>
-                    <td>{i.itemName}</td>
+                    <td>{i.itemTitle}</td>
                     <td>{i.itemPrice}</td>
                     <td>
                       <p>
