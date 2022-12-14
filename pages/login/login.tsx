@@ -2,12 +2,19 @@ import React, { useState } from "react";
 import { useCookies } from "react-cookie"
 import Router from "next/router";
 
+import { useSession, signIn, signOut } from "next-auth/react";
+
 
 
 export const Login = (props) => {
-    const [cookie, setCookie,removeCookie] = useCookies(["user","firm"])
+    const [cookie, setCookie, removeCookie] = useCookies(["user", "firm"])
     const [userId, setuserId] = useState("");
     const [userPassword, setuserPassword] = useState("");
+
+    const { data: session } = useSession()
+
+    //session 資料 
+    console.log(session)
 
 
     // // 刪除 cookie 登出
@@ -42,7 +49,7 @@ export const Login = (props) => {
                     || data.data[0].userId != `${userId}`
                     || data.data[0].userPassword != `${userPassword}`
                 ) {
-                    console.log(Object.keys(cookie).length===0);
+                    console.log(Object.keys(cookie).length === 0);
 
                     alert("帳號或密碼輸入錯誤");
 
@@ -78,20 +85,36 @@ export const Login = (props) => {
 
     }
 
-    return (
-        <div className="auth-form-container">
+    if (session) {
+        return (
+            <div>
+                <div>
+                <h2>歡迎光臨，{session.user.name}</h2>
+            <img src={session.user.image} alt="" style={{borderRadius:"30px"}} />
+                </div>
+                <button onClick={() => signOut()} >登出</button>
+            </div>
+
+        )
+          
+    } else {
+        return (
+            <div className="auth-form-container">
             <h2>會員登入</h2>
             <form className="login-form" >
                 <label htmlFor="userId">帳號</label>
-                <input value={userId} onChange={(e) => setuserId(e.target.value)}type="email" placeholder="輸入帳號" id="email" name="email" />
+                <input value={userId} onChange={(e) => setuserId(e.target.value)} type="email" placeholder="輸入帳號" id="email" name="email" />
                 <label htmlFor="userPassword">密碼</label>
                 <input value={userPassword} onChange={(e) => setuserPassword(e.target.value)} type="password" placeholder="********" id="password" name="password" />
                 <button className="sub-btn" type="submit" onClick={handleSubmit}>送出</button>
             </form>
-            <button    className="link-btn" onClick={() => props.onFormSwitch('register')}>沒有帳號？點此註冊</button>
-            <button className="link-btn" onClick={() => window.location.href="http://localhost:3000/firmlogin"} >廠商登入請按此</button>
+            <button className="link-btn" onClick={() => props.onFormSwitch('register')}>沒有帳號？點此註冊</button>
+            <button className="link-btn" onClick={() => window.location.href = "http://localhost:3000/firmlogin"} >廠商登入請按此</button>
+            <button className="link-btn" onClick={() => signIn()} >使用GOOGLE登入</button>
         </div>
     )
+
+    }
 }
 
 export default Login;

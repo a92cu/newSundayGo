@@ -231,7 +231,7 @@ export default function ItemPage(props) {
 
         setTimeout(() => {
           const Flickity = require("flickity");
-          new Flickity(".main-carousel"), 0;
+          new Flickity(".main-carousel"), 2000;
         })
 
       });
