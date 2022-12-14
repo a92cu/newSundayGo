@@ -259,8 +259,8 @@ function MemberAccount(props) {
       </div>
       <div className="basic">
         <span>性別</span>
-        <select name="" id="">
-          <option value="men" selected >{accountList[0].userGender}</option>
+        <select defaultValue={"men"} name="" id="">
+          <option value="men"  >{accountList[0].userGender}</option>
           <option value="girl">女</option>
         </select>
         {/* <button onClick={() => console.log(cookie.user.data[0].userId)}>cookie</button> */}

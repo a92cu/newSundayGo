@@ -18,10 +18,10 @@ import Head from "next/head";
 
 import { SessionProvider } from "next-auth/react";
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps ,session}) {
   return (
   
-    <SessionProvider>
+    <SessionProvider session={session}>
       <Script src="/js/itemCountBtn.js" />
       <Head>
         <link
