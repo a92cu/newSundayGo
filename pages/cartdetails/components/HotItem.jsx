@@ -38,6 +38,26 @@ const imgstyles = {
     "objectPosition": "center"
 }
 function HotItem(props) {
+    // 如果今天不是用getStaticProps就走下方
+    // let [HotItemData, setHotItemData] = useState([]);
+    // // useEffect渲染會有一個問題，在你抓資料的同時他在渲染畫面，導致資料進不去畫面
+    // // 因為是非同步進行，所以必須讓useEffect執行兩次
+    // let [far,setfar]=useState(false);
+    // useEffect(()=>{
+    //     async function axiosdata(){
+    //             await Axios.get("/api/cart/HotItem").then((dataresult) => {
+    //                     dataresult.data.data.forEach((i)=>{
+    //                     let img=Buffer.from(i.itemImgUrl).toString('base64');
+    //                     let call=Buffer.from(img, 'base64').toString('ascii');
+    //                     let replaceCallAll=call.replaceAll('\x00', '');
+    //                     i.itemImgUrl=replaceCallAll;
+    //                 })
+    //                 setHotItemData(dataresult.data.data);
+    //             })
+    //     }
+    //     axiosdata();
+    //     setfar(true);
+    // },[far])
     return (
         <>
             <div className="cartcontainer">

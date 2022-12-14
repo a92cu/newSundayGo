@@ -141,7 +141,7 @@ export async function getStaticProps({ params }) {
   const hotItemList: any = [];   // 最終要放hotItem的地方
   const hotItemListRaw: any = await runSQL(sq1); // 獲得hotitem資料的地方
 
-  // forEach是在轉格式,原本出來是database物件
+  // 轉換圖片跟日期格式
   hotItemListRaw.forEach((item: any) => {
     item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
     item.itemListedDate = format(item.itemListedDate, "yyyy-MM-dd");
@@ -152,8 +152,6 @@ export async function getStaticProps({ params }) {
   //把要的資料拿出來
   return {
     props: {
-      // 帳號設定抓的資料
-      // memberCentre: { ...memberCentre },
       hotItemList
     },
   };
