@@ -1,8 +1,8 @@
 import Image from "next/image";
-// import { runSQL } from "../../lib/mysql";
+import { format } from "date-fns";
+import { runSQL } from "../../lib/mysql";
 import CartItem from "./components/CartItem.jsx";
 import HotItem from "./components/HotItem.jsx";
-
 function Header() {
     return (
       <div className="header">
@@ -119,13 +119,42 @@ function Footer() {
     );
 }
 
-export default function CartDetails(){
+export default function CartDetails(props){
     return(
         <>  
             <Header/>
             <CartItem/>
-            <HotItem/>
+            <HotItem 
+              hotItemData={props.hotItemList}/>
             <Footer/>
         </>
     )
+}
+
+
+//頁面產生出來之後從params去找出特定需要的那一頁
+export async function getStaticProps({ params }) {
+
+  // 抓資料
+  const sq1 = 'SELECT * FROM `itemimg` Left JOIN `item` ON itemimg.itemId=item.itemId WHERE imgLead=1 ORDER BY item.itemTotalStar DESC LIMIT 10;';
+  
+  const hotItemList: any = [];   // 最終要放hotItem的地方
+  const hotItemListRaw: any = await runSQL(sq1); // 獲得hotitem資料的地方
+
+  // forEach是在轉格式,原本出來是database物件
+  hotItemListRaw.forEach((item: any) => {
+    item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
+    item.itemListedDate = format(item.itemListedDate, "yyyy-MM-dd");
+    item.itemStartDate = format(item.itemStartDate, "yyyy-MM-dd");
+    item.itemEndDate = format(item.itemEndDate, "yyyy-MM-dd");
+    hotItemList.push({ ...item });
+  })
+  //把要的資料拿出來
+  return {
+    props: {
+      // 帳號設定抓的資料
+      // memberCentre: { ...memberCentre },
+      hotItemList
+    },
+  };
 }

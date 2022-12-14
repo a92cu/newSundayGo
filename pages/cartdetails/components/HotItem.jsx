@@ -1,6 +1,5 @@
-import React, {useState,useEffect } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
-import Axios from "axios";
 // import { runSQL } from "../../../lib/mysql";
 // 貓頭鷹輪播
 var $ = require("jquery");
@@ -38,26 +37,7 @@ const imgstyles = {
     "objectFit": "cover",
     "objectPosition": "center"
 }
-function HotItem() {
-    let [HotItemData, setHotItemData] = useState([]);
-    // useEffect渲染會有一個問題，在你抓資料的同時他在渲染畫面，導致資料進不去畫面
-    // 因為是非同步進行，所以必須讓useEffect執行兩次
-    let [far,setfar]=useState(false);
-    useEffect(()=>{
-        async function axiosdata(){
-                await Axios.get("/api/cart/HotItem").then((dataresult) => {
-                        dataresult.data.data.forEach((i)=>{
-                        let img=Buffer.from(i.itemImgUrl).toString('base64');
-                        let call=Buffer.from(img, 'base64').toString('ascii');
-                        let replaceCallAll=call.replaceAll('\x00', '');
-                        i.itemImgUrl=replaceCallAll;
-                    })
-                    setHotItemData(dataresult.data.data);
-                })
-        }
-        axiosdata();
-        setfar(true);
-    },[far])
+function HotItem(props) {
     return (
         <>
             <div className="cartcontainer">
@@ -72,7 +52,7 @@ function HotItem() {
                     autoplaySpeed={600} // 滑動速度
                     responsive={Responsive}
                 >
-                    {HotItemData.map((i,index)=>
+                    {props.hotItemData.map((i,index)=>
                         <div className="item" key={index}>
                             <a href={`/item/${i.itemId}`} style={fontstyles}>
                                 <img src={i.itemImgUrl} style={imgstyles} alt="img" />
