@@ -28,7 +28,7 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
           let data;
           // 更改PUT邏輯 以陣列執行
           req.body.allData.forEach((element) => {
-            let sq1=`INSERT INTO ordertable (userId, itemId, orderReceipt, orderDate, orderQua) VALUES ("${element.userId}", ${element.itemId}, '${element.orderReceipt}', '${element.date}', '${element.count}')`;
+            let sq1=`INSERT INTO ordertable (userId, itemId, orderReceipt, orderDate, orderQua, orderRebate) VALUES ("${element.userId}", ${element.itemId}, '${element.orderReceipt}', '${element.date}', '${element.count}',${element.orderRebate})`;
             data=runSQL(sq1);
           });
           // // 新增商品內容
