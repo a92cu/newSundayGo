@@ -1,23 +1,23 @@
 import { useEffect, useState} from "react";
-import axios from "axios";
-import Product from "./CartItem_item.jsx"
+import Product from "./CartItem_item.jsx";
+// import axios from "axios";
 
-export var CartItem = () => {
+var CartItem = (props) => {
+    // console.log(props.shopItemList)
     let itemarray = [];
     // 停止輪迴
     let [stopState, setstopState] = useState(false);
     // 讓getshopitem()可以動作
-    const [counts, setcounts] = useState(0);
     const [shoppingcar, setshoppingcar] = useState([]);
 
     const [totalCash, setTotalCash] = useState(0);  // totalCash預設值為0
 
     // 還是有小bug
-    const calculate = () => {
+    let calculate = () => {
         let totalPrice=document.querySelectorAll('.itemTotal')
         let total=0;
         totalPrice.forEach((e)=>{
-            console.log(e.parentElement.parentElement.children[0].children[0].checked)
+            // console.log(e.parentElement.parentElement.children[0].children[0].checked)
             if(e.parentElement.parentElement.children[0].children[0].checked){
                 total += parseInt(e.innerHTML)
             }
@@ -43,40 +43,51 @@ export var CartItem = () => {
     }, [stopState])
 
     // 處理撈取的資料
-    async function getshopitem(id, date, count) {
-        await axios.get("/api/cart/ShopItem")
-            .then((dataresult) => {
-                let dataAll = dataresult.data.data
-                // 找到itemId=id的陣列，並將位置傳出
-                var dataint = dataAll.map(x => x.itemId).indexOf(parseInt(id))
-                // console.log(dataAll[dataint])
+    function getshopitem(id, date, count) {
+        props.shopItemList
+        var dataint = props.shopItemList.map(x => x.itemId).indexOf(parseInt(id))
+        itemarray.push({
+            id: `${id}`, // 不知道為甚麼1號變成數字而不是字串
+            date: date,
+            count: count,
+            itemTitle: props.shopItemList[dataint].itemTitle,
+            itemPrice: props.shopItemList[dataint].itemPrice,
+            itemImgUrl: props.shopItemList[dataint].itemImgUrl,
+        });
+        // 如果不用 getStaticProps 的話就要走下面
+        // await axios.get("/api/cart/ShopItem")
+        //     .then((dataresult) => {
+        //         let dataAll = dataresult.data.data
+        //         // 找到itemId=id的陣列，並將位置傳出
+        //         var dataint = dataAll.map(x => x.itemId).indexOf(parseInt(id))
+        //         // console.log(dataAll[dataint])
 
-                // 將該位置的圖片轉碼
-                dataAll[dataint].itemImgUrl = getImgUrl(dataAll[dataint].itemImgUrl);
-                // console.log(dataAll[dataint].itemImgUrl)
+        //         // 將該位置的圖片轉碼
+        //         dataAll[dataint].itemImgUrl = getImgUrl(dataAll[dataint].itemImgUrl);
+        //         // console.log(dataAll[dataint].itemImgUrl)
 
-                // 將所需資料放進itemarray
-                itemarray.push({
-                    id: `${id}`, // 不知道為甚麼1號變成數字而不是字串
-                    date: date,
-                    count: count,
-                    itemTitle: dataAll[dataint].itemTitle,
-                    itemPrice: dataAll[dataint].itemPrice,
-                    itemImgUrl: dataAll[dataint].itemImgUrl,
-                });
+        //         // 將所需資料放進itemarray
+        //         itemarray.push({
+        //             id: `${id}`, // 不知道為甚麼1號變成數字而不是字串
+        //             date: date,
+        //             count: count,
+        //             itemTitle: dataAll[dataint].itemTitle,
+        //             itemPrice: dataAll[dataint].itemPrice,
+        //             itemImgUrl: dataAll[dataint].itemImgUrl,
+        //         });
 
-                // // 因為畫面會無限迴圈,所以設定setcounts讓畫面只更新一次
-                setcounts(c => c + 1)
+        //         // // 因為畫面會無限迴圈,所以設定setcounts讓畫面只更新一次
+        //         setcounts(c => c + 1)
 
-                // 幫圖片轉碼
-                function getImgUrl(itemImg) {
-                    var img = Buffer.from(itemImg).toString('base64');
-                    var call = Buffer.from(img, 'base64').toString('ascii');
-                    var replaceCallAll = call.replaceAll('\x00', '');
-                    return replaceCallAll;
-                }
-            }
-            )
+        //         // 幫圖片轉碼
+        //         function getImgUrl(itemImg) {
+        //             var img = Buffer.from(itemImg).toString('base64');
+        //             var call = Buffer.from(img, 'base64').toString('ascii');
+        //             var replaceCallAll = call.replaceAll('\x00', '');
+        //             return replaceCallAll;
+        //         }
+        //     }
+        //     )
     }
 
     // 做全選框 -- 成功 (用改資料的方式)
@@ -96,7 +107,7 @@ export var CartItem = () => {
         calculate();// 計算全部價錢
     }
 
-    // 將商品丟進local storage 前往結帳頁面
+    // 將商品丟進localStorage 前往結帳頁面
     function gotopay() {
         if (totalCash == 0) {
             alert("請選擇商品")
