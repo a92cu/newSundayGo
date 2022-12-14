@@ -13,7 +13,7 @@ export default async function userHandler(
     case "GET":
       try {
         // 取得商品內容
-        const sql = `SELECT * FROM itemimg WHERE imgId = "${id}"`;
+        const sql = `SELECT * FROM itemimg WHERE itemId = "${id}"`;
         const imgListRaw = (await runSQL(sql)) as any;
         const imgList = [];
         imgListRaw.forEach((item: any) => {
