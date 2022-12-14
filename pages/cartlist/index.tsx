@@ -222,8 +222,8 @@ function Orderman({
 //                 <div className="cartsidebar__inner">
 //                     <button className="cartaccordion">
 //                         <h3>
-                        <img className="shopimg" src="./images/flower.png" />
-                            旅客資料</h3>
+                        // <img className="shopimg" src="./images/flower.png" />
+                        //     旅客資料</h3>
 //                         <hr />
 //                     </button>
 //                     <div className="cartpanel">

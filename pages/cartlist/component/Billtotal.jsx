@@ -34,7 +34,9 @@ export default function Billtotal(itemList) {
             <div className="cartsidebar">
                 <div className="cartsidebar__inner">
                     <button className="cartaccordion">
-                        <h3>付款明細</h3>
+                        <h3>
+                        <img className="shopimg" src="./images/flower.png" />
+                            付款明細</h3>
                         <hr />
                     </button>
                     <div className="cartpanel">

@@ -1,38 +1,40 @@
-import {useEffect,useState}  from 'react';
+import { useEffect, useState } from 'react';
 
 // 旅客資料 成功
 export default function Travelman(itemList) {
-    let getAllItem=[];
-    const [getItem,setGetItem]=useState([])
-    useEffect(()=>{
-        let shopList=JSON.parse(window.localStorage.getItem("sureshopcar"));
+    let getAllItem = [];
+    const [getItem, setGetItem] = useState([])
+    useEffect(() => {
+        let shopList = JSON.parse(window.localStorage.getItem("sureshopcar"));
         for (const key in shopList) {
             itemList.itemList.forEach(element => {
-                if(shopList[key].itemId==element.itemId){
-                    let getOneItem={
-                        itemId:element.itemId,
-                        itemPrice:element.itemPrice,
-                        itemTitle:element.itemTitle,
-                        itemImgUrl:element.itemImgUrl,
-                        count:shopList[key].count,
-                        date:shopList[key].date
+                if (shopList[key].itemId == element.itemId) {
+                    let getOneItem = {
+                        itemId: element.itemId,
+                        itemPrice: element.itemPrice,
+                        itemTitle: element.itemTitle,
+                        itemImgUrl: element.itemImgUrl,
+                        count: shopList[key].count,
+                        date: shopList[key].date
                     }
                     getAllItem.push(getOneItem);
                     setGetItem(getAllItem);
                 }
             });
         }
-    },[])
+    }, [])
     return (
         <section className="travelman">
             <div className="cartsidebar">
                 <div className="cartsidebar__inner">
                     <button className="cartaccordion">
-                        <h3>旅客資料</h3>
+                        <h3>
+                            <img className="shopimg" src="./images/flower.png" />
+                            旅客資料</h3>
                         <hr />
                     </button>
                     <div className="cartpanel">
-                        {getItem.map((i,key) => 
+                        {getItem.map((i, key) =>
                             <div className="carthomeProduct" key={key}>
                                 {/* <!-- 圖片框 --> */}
                                 <div className="cartpicPlace">

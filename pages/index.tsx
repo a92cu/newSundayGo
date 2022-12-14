@@ -61,9 +61,9 @@ export default function Home() {
       <Header />
       <Homevideo />
 
-      <button className="homebtn" type="button">
+      <button className="homebtn animate__animated animate__bounce" type="button">
         <a href='/homepage' >出發吧&gt;&gt;&gt;</a>
-        <img className="homeimg" src="./images/flower.png" />
+        <img className="homeimg " src="./images/flower.png" />
       </button>
       <Script src="/js/homepage.js" />
     </>
