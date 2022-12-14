@@ -2,10 +2,6 @@ import Image from "next/image";
 import { useState, useEffect } from 'react';
 import Script from "next/script";
 import { runSQL } from "../../lib/mysql";
-import { format } from "date-fns";
-import * as R from "ramda";
-import { useRouter } from 'next/router'
-import Listdemo from "./component/Listdemo.jsx";
 
 // 將功能做成component 兩邊都能使用
 import Travelman from "./component/Travelman.jsx";
@@ -127,8 +123,7 @@ function Orderman({
             <div className="cartsidebar">
                 <div className="cartsidebar__inner">
                     <button className="cartaccordion ">
-
-                        <h3>            
+                        <h3>
                             <img className="shopimg" src="./images/flower.png" />
                             訂購人資料</h3>
                         <hr />
@@ -322,10 +317,6 @@ function Paylist() {
                                     請參考其相關服務政策和規定，並向你所選的交易服務商取得更多資訊。</b>
                             </li>
                         </ul>
-
-
-
-
                     </div>
                 </div>
             </div>
