@@ -132,7 +132,8 @@ function Header() {
             <img src="./images/cart.png" style={{ width: 25 }} />
           </a>
           <a href="http://localhost:3000/login" className="loginbutton">
-            登入|註冊
+            {/* 登入|註冊 */}
+            登出
           </a>
         </div>
         <form className="example" action="">
@@ -262,7 +263,7 @@ function MemberAccount(props) {
           <option value="men" selected >{accountList[0].userGender}</option>
           <option value="girl">女</option>
         </select>
-        <button onClick={() => console.log(cookie.user.data[0].userId)}>cookie</button>
+        {/* <button onClick={() => console.log(cookie.user.data[0].userId)}>cookie</button> */}
 
       </div>
       <br />
@@ -667,6 +668,9 @@ function Collect({ itemList, imgList, setItemList }) {
   )
 }
 
+// const imgTest = localStorage.getItem('imgTest');
+
+
 export default function MemberCentre(props) {
 
   const [tab, setTab] = useState('information');
@@ -676,22 +680,22 @@ export default function MemberCentre(props) {
   const [itemList, setItemList] = useState(props.itemList);
   const [orderList, setOrderList] = useState(props.orderList);
   const [discountList, setDiscountList] = useState(props.discountList);
+  
 
   return <>
+  
     <Header />
     <div className="MemberCentre">
       <div className="tabb">
         {/* 頭像 */}
         <div className="MemberImg">
+          
+          {/* <img id="MemberImgId" src={`${imgTest}`} alt="" /> */}
           <img id="MemberImgId" src={userAvatar} alt="" />
           <div>
             <input id="chengImgBtn"
               type="file"
               style={{ display: "none" }}
-              // onChange={(e) => setuserAvatar(e.target.value)}
-              // onChange={chengImgBtn}
-
-
             />
 
             <button type="button" id="cameraBtn" >

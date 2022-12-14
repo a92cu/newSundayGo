@@ -33,10 +33,12 @@ function ReceiptPage(orderList) {
       pdfMake.createPdf(docDefinition).download('receipt.pdf');
     });
   }
+  const router = useRouter()
   return (
+    
     <div id="downloadReceipt">
       <div className="receiptTitle">
-        <img src="../images/群組 1.png" alt="" />憑證
+        <img onClick={() => router.push(`/memberCenter`)} src="../images/群組 1.png" alt="" />憑證
       </div>
       <br />
       <div className="receiptBody">
