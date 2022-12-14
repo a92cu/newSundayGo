@@ -51,17 +51,15 @@ export default function Billtotal(itemList) {
                                     <h3>
                                         <p>
                                             {i.itemTitle}
-                                            {/* {itemList.itemList[73].itemTitle} */}
                                         </p>
                                     </h3>
                                     {/* <!-- 地區標籤 --> */}
                                     <div>
                                         <div className="carttagplace">
-                                            {/* {i.itemFilter2} */}
+                                            {i.itemFilter2}
                                         </div>
                                         <div>
-                                            活動日期 ：2022-12-07
-                                            {i.date}
+                                            活動日期 ：{i.date}
                                             <br />
                                             人數 : 1人
                                         </div>
