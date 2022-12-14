@@ -53,8 +53,7 @@ export default function Travelman(itemList) {
                                             新竹市
                                         </div>
                                         <div>
-                                            活動日期 ：2022-12-07
-                                            {/* {i.date} */}
+                                            活動日期 ：{i.date}
                                         </div>
                                     </div>
                                 </div>
