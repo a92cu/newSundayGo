@@ -25,18 +25,22 @@ export default function Register(props) {
       .then((res) => {
         console.log("資料庫使用者帳號", res);
         alert("註冊成功");
+        
+        //成功後跳轉login
+        props.onFormSwitch('login')
+
       })
 
+
+      
       .catch((e) => {
         console.log("錯誤:", e);
         alert("錯誤");
       });
 
-    // 註冊後跳轉到設定頁面
-    // setTimeout(() => {
-    //     Router.replace("/memberCenter");
-    // }, 100);
+      // Router.replace("/login")
   };
+
 
   return (
     <div className="auth-form-container">
@@ -55,7 +59,7 @@ export default function Register(props) {
         <input
           value={userPassword}
           onChange={(e) => setuserPassword(e.target.value)}
-          type="輸入密碼"
+          type="password"
           placeholder="********"
           id="password"
           name="password"
