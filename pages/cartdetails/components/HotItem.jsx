@@ -1,6 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
-// import { runSQL } from "../../../lib/mysql";
+
 // 貓頭鷹輪播
 var $ = require("jquery");
 if (typeof window !== "undefined") {
