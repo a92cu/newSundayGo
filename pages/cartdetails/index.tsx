@@ -146,18 +146,18 @@ export async function getStaticProps({ params }) {
   // 轉換圖片跟日期格式
   hotItemListRaw.forEach((item: any) => {
     item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
-    item.itemListedDate = format(item.itemListedDate, "yyyy-MM-dd");
-    item.itemStartDate = format(item.itemStartDate, "yyyy-MM-dd");
-    item.itemEndDate = format(item.itemEndDate, "yyyy-MM-dd");
+    item.itemListedDate = format(new Date(item.itemListedDate), "yyyy-MM-dd");
+    item.itemStartDate = format(new Date(item.itemStartDate), "yyyy-MM-dd");
+    item.itemEndDate = format(new Date(item.itemEndDate), "yyyy-MM-dd");
     hotItemList.push({ ...item });
-  });
-  shopItemListRaw.forEach((item: any) => {
+  })
+  shopItemListRaw.forEach((item: any)=>{
     item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
-    item.itemListedDate = format(item.itemListedDate, "yyyy-MM-dd");
-    item.itemStartDate = format(item.itemStartDate, "yyyy-MM-dd");
-    item.itemEndDate = format(item.itemEndDate, "yyyy-MM-dd");
+    item.itemListedDate = format(new Date(item.itemListedDate), "yyyy-MM-dd");
+    item.itemStartDate = format(new Date(item.itemStartDate),"yyyy-MM-dd");
+    item.itemEndDate = format(new Date(item.itemEndDate), "yyyy-MM-dd");
     shopItemList.push({ ...item });
-  });
+  })
   //把要的資料拿出來
   return {
     props: {

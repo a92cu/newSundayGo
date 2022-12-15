@@ -44,9 +44,8 @@ var CartItem = (props) => {
 
     // 處理撈取的資料
     function getshopitem(id, date, count) {
-        props.shopItemList
-        var dataint = props.shopItemList.map(x => x.itemId).indexOf(parseInt(id))
-        itemarray.push({
+        var dataint = props.shopItemList.map(x => x.itemId).indexOf(id)
+            itemarray.push({
             id: `${id}`, // 不知道為甚麼1號變成數字而不是字串
             date: date,
             count: count,
