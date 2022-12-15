@@ -241,7 +241,6 @@ export default function ItemPage(props) {
   }, []);
   useEffect(() => {
     if (!R.isEmpty(item) && !R.isEmpty(imgList)) {
-      console.log('tttttt')
       setTimeout(() => {
         const Flickity = require("flickity");
         new Flickity(".main-carousel");

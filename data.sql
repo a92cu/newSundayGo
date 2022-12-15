@@ -102,7 +102,7 @@ INSERT INTO `firm` (`firmId`, `firmPassword`, `firmName`, `taxId`, `firmHeadName
 --
 
 CREATE TABLE `item` (
-  `itemId` int(10) NOT NULL,
+  `itemId` varchar(200) NOT NULL,
   `firmId` varchar(200) NOT NULL,
   `itemTitle` varchar(150) NOT NULL,
   `itemPrice` int(5) NOT NULL,
@@ -211,8 +211,8 @@ INSERT INTO `item` (`itemId`, `firmId`, `itemTitle`, `itemPrice`, `itemName`, `i
 --
 
 CREATE TABLE `itemimg` (
-  `imgId` int(100) NOT NULL,
-  `itemId` int(218) NOT NULL,
+  `imgId` varchar(200) NOT NULL,
+  `itemId` varchar(200) NOT NULL,
   `itemImgUrl` longblob NOT NULL,
   `imgLead` varchar(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_unicode_ci;
@@ -449,7 +449,7 @@ INSERT INTO `itemimg` (`imgId`, `itemId`, `itemImgUrl`, `imgLead`) VALUES
 CREATE TABLE `ordertable` (
   `orderNumber` int(10) NOT NULL,
   `userId` varchar(30) NOT NULL,
-  `itemId` int(20) NOT NULL,
+  `itemId` varchar(200) NOT NULL,
   `orderReceipt` varchar(100) DEFAULT NULL,
   `orderReview` varchar(1500) DEFAULT NULL,
   `orderStar` int(3) NOT NULL,
@@ -575,13 +575,13 @@ ALTER TABLE `favorite`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `item`
 --
 ALTER TABLE `item`
-  MODIFY `itemId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `itemId` varchar(200) NOT NULL;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `itemimg`
 --
 ALTER TABLE `itemimg`
-  MODIFY `imgId` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=218;
+  MODIFY `imgId` varchar(200) NOT NULL;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `ordertable`
