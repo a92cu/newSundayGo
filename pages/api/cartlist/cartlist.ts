@@ -26,10 +26,13 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
       case "PUT":
         try {
           let data;
+          let data2;
           // 更改PUT邏輯 以陣列執行
           req.body.allData.forEach((element) => {
             let sq1=`INSERT INTO ordertable (userId, itemId, orderReceipt, orderDate, orderQua, orderRebate) VALUES ("${element.userId}", ${element.itemId}, '${element.orderReceipt}', '${element.date}', '${element.count}',${element.orderRebate})`;
+            let sq2=`UPDATE item SET item.itemSales=item.itemSales+${element.count},item.itemInvent=item.itemInvent-${element.count} WHERE item.itemId=${element.itemId}`
             data=runSQL(sq1);
+            data2=runSQL(sq2);
           });
           // // 新增商品內容
           // // const sq1 = `INSERT INTO item (${keys},userId,userPassword) VALUES (${values},"${id}","${id}")`;
@@ -40,7 +43,7 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
           // res.status(200).json({ message: "ok" });
 
           // 創造一個東西回傳
-          res.status(200).json({ data });
+          res.status(200).json({ data,data2 });
         } catch (error) {
           res.status(500);
         }
