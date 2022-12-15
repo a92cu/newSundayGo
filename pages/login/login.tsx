@@ -112,7 +112,7 @@ export const Login = (props) => {
                 </form>
                 <button className="link-btn" onClick={() => props.onFormSwitch('register')}>沒有帳號？點此註冊</button>
                 <button className="link-btn" onClick={() => window.location.href = "http://localhost:3000/firmlogin"} >廠商登入請按此</button>
-                <button className="link-btn" onClick={() => signIn()} >使用GOOGLE登入</button>
+                <button className="link-btn" onClick={() => signIn()} >使用第三方登入</button>
             </div>
         )
 
