@@ -454,12 +454,15 @@ h5 {
   }
 
   #retop{
-    background-image: url(../public/images/0.png);
+    width: 100px;
+    /* background-image: url(../public/images/20220520170357-1298d211.jpg); */
     position: fixed;
-    bottom: 0;
+    /* bottom: 0; */
+    top: 600px;
     right: 0;
-    background-color:red;
+    background-color:transparent;
     background-size: contain;
     background-repeat:no-repeat ;
     background-position: center;
+    
   }

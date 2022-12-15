@@ -322,9 +322,7 @@ export const Placezone = (dateList, itemList2) => {
     });
     return (
         <div style={{ width: '1280px', margin: '0 auto' }} >
-            <a href="#" style={{display:"bolck"}}>
-                <div id="retop"></div>
-            </a>
+
             {/* <!-- 主要篩選區 --> */}
             <div className="hometop" >
                 {/* <!-- 左側篩選欄 --> */}
@@ -509,6 +507,9 @@ export const Placezone = (dateList, itemList2) => {
                         </span>
                     </div >
                     <div id="content" className="content">
+                        <a href="#" style={{ display: "block" }}>
+                            <div id="retop">TOP</div>
+                        </a>
                         {/* <!-- 商品顯示主體 --> */}
                         {homepagelist.map((item, index) =>
                             <div className="homeProduct" id={item.itemId} >
