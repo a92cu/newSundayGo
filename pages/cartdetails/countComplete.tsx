@@ -1,5 +1,5 @@
 import Image from "next/image";
-import CountComplete from "./components/CountComplete.jsx"
+import CountComplete from "../../components/cartdetails/CountComplete.jsx"
 function Footer() {
   return (
     <div className="footer">
