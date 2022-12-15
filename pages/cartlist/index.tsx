@@ -118,6 +118,22 @@ function Orderman({
     userEmail,
     userGender }
 ) {
+    const [name,setName]=useState(userName)
+    function namegotset(e){
+        // setName(e.value)
+    }
+
+    //---------- 改 input 資料 && 拿 input 資料
+    const [gender,setGender]=useState(userGender)
+    function gendergotset(e){
+        console.log('a')
+        setGender(e.value)
+
+        console.log(name)
+    }
+    //----------
+    
+    
     return (
         <section className="orderman" >
             <div className="cartsidebar">
@@ -132,7 +148,7 @@ function Orderman({
                         <div className="orderleft">
                             <span>名字</span>
                             <br />
-                            <input type="text" name="userName" id="CartuserName" value={userName} required />
+                            <input type="text" name="userName" id="CartuserName" value={name} required onChange={namegotset} />
                             <div>
                                 <span>電子信箱</span>
                                 <br />
@@ -143,7 +159,7 @@ function Orderman({
                             <div>
                                 <span>性別</span>
                                 <br />
-                                <input type="text" name="username2" value={userGender} required />
+                                <input type="text" name="username2" value={gender} required onChange={gendergotset} />
                             </div>
                             <div>
                                 <span>連絡電話</span>
