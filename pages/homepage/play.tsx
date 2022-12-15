@@ -33,7 +33,7 @@ function Header() {
                 <a href="/homepage/lodging">住宿</a>
                 <a href="/homepage/traffic">交通</a>
                 <a href="#"><img src="/images/cart.png" style={{ width: '25px' }} /></a>
-                <a href="#">登入|註冊</a>
+                <a href="#">會員中心 &nbsp;&nbsp;&nbsp; 登出</a>
             </div>
             <form className="example" action="">
                 <input type="text" placeholder="Search.." name="search" />
@@ -150,32 +150,32 @@ export const Play = (dateList) => {
                 //setlist(result.data))
             })
     }
- //傳送資料庫資料
- const favIdsend = async (i) => {
-    console.log(4, i)
-    if (window.confirm("已加入最愛") === true) 
-    await fetch("/api/home/play", {
-        method: "post",
-        // body:imgId
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-            // favId: 7,
-            userId: 'u123456789',
-            itemId: 36
-        })
-    })
-        .then((res) => res.json())
-    // .then(console.log('已加入最愛'))
-    // console.log(5, favId)
-    // .then(data => {
-    //     /*接到request data後要做的事情*/
-    //     console.log("使用者資料",data.data[0].imgId);
-    // })
-}
-//POST結束
+    //傳送資料庫資料
+    const favIdsend = async (i) => {
+        console.log(4, i)
+        if (window.confirm("已加入最愛") === true)
+            await fetch("/api/home/play", {
+                method: "post",
+                // body:imgId
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json;charset=utf-8",
+                },
+                body: JSON.stringify({
+                    // favId: 7,
+                    userId: 'u123456789',
+                    itemId: 36
+                })
+            })
+                .then((res) => res.json())
+        // .then(console.log('已加入最愛'))
+        // console.log(5, favId)
+        // .then(data => {
+        //     /*接到request data後要做的事情*/
+        //     console.log("使用者資料",data.data[0].imgId);
+        // })
+    }
+    //POST結束
 
     //按星星排序
     const restar = () => {
@@ -257,74 +257,74 @@ export const Play = (dateList) => {
                             篩選目的地
                             <br />
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />北部
+                                <input type="checkbox" className="allcheck" checked />北部
                             </button>
                             <div className="panel" >
-                                <input type="checkbox" name="citys" />基隆市
+                                <input type="checkbox" name="citys" value={'基隆市'} className="ckbox" checked />基隆市
                                 <br />
-                                <input type="checkbox" name="citys" />新北市
+                                <input type="checkbox" name="citys" checked />新北市
                                 <br />
-                                <input type="checkbox" name="citys" />台北市
+                                <input type="checkbox" name="citys" checked />台北市
                                 <br />
-                                <input type="checkbox" name="citys" />桃園市
+                                <input type="checkbox" name="citys" checked />桃園市
                             </div>
 
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />中部
+                                <input type="checkbox" className="allcheck" checked />中部
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" />新竹縣
+                                <input type="checkbox" name="citys" checked />新竹縣
                                 <br />
-                                <input type="checkbox" name="citys" />新竹市
+                                <input type="checkbox" name="citys" checked />新竹市
                                 <br />
-                                <input type="checkbox" name="citys" />苗栗縣
+                                <input type="checkbox" name="citys" checked />苗栗縣
                                 <br />
-                                <input type="checkbox" name="citys" />台中市
+                                <input type="checkbox" name="citys" checked />台中市
                                 <br />
-                                <input type="checkbox" name="citys" />雲林縣
+                                <input type="checkbox" name="citys" checked />雲林縣
                                 <br />
-                                <input type="checkbox" name="citys" />南投縣
+                                <input type="checkbox" name="citys" checked />南投縣
                                 <br />
                             </div>
 
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />南部
+                                <input type="checkbox" className="allcheck" checked />南部
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" />嘉義縣
+                                <input type="checkbox" name="citys" checked />嘉義縣
                                 <br />
-                                <input type="checkbox" name="citys" />嘉義市
+                                <input type="checkbox" name="citys" checked />嘉義市
                                 <br />
-                                <input type="checkbox" name="citys" />台南市
+                                <input type="checkbox" name="citys" checked />台南市
                                 <br />
-                                <input type="checkbox" name="citys" />高雄市
+                                <input type="checkbox" name="citys" checked />高雄市
                                 <br />
-                                <input type="checkbox" name="citys" />屏東縣
+                                <input type="checkbox" name="citys" checked />屏東縣
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />東部
+                                <input type="checkbox" className="allcheck" checked />東部
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" />宜蘭縣
+                                <input type="checkbox" name="citys" checked />宜蘭縣
                                 <br />
-                                <input type="checkbox" name="citys" />花蓮縣
+                                <input type="checkbox" name="citys" checked />花蓮縣
                                 <br />
-                                <input type="checkbox" name="citys" />台東縣
+                                <input type="checkbox" name="citys" checked />台東縣
                                 <br />
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />離島
+                                <input type="checkbox" className="allcheck" checked />離島
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" />澎湖
+                                <input type="checkbox" name="citys" checked />澎湖
                                 <br />
-                                <input type="checkbox" name="citys" />金門
+                                <input type="checkbox" name="citys" checked />金門
                                 <br />
-                                <input type="checkbox" name="citys" />馬祖
+                                <input type="checkbox" name="citys" checked />馬祖
                                 <br />
-                                <input type="checkbox" name="citys" />綠島
+                                <input type="checkbox" name="citys" checked />綠島
                                 <br />
-                                <input type="checkbox" name="citys" />蘭嶼
+                                <input type="checkbox" name="citys" checked />蘭嶼
                             </div>
 
 
@@ -390,7 +390,7 @@ export const Play = (dateList) => {
                 < div className="homeright" >
                     {/* <!-- 顯示篩選 --> */}
                     < div className="homerightup" >
-                    <b className="areanum">
+                        <b className="areanum">
                             共篩選出
                             < span style={{ color: '#F29F04' }}>{homepagelist.length}</span>
                             項行程</b>
@@ -405,15 +405,15 @@ export const Play = (dateList) => {
                             </button>
                         )} */}
                         <button className="filterBtn">
-                                {/* {item.itemFilter3} */}
-                                戶外活動
-                                <span className="delbtn">X</span>
-                            </button>
-                            <button className="filterBtn">
-                                {/* {item.itemFilter3} */}
-                                藝文活動
-                                <span className="delbtn">X</span>
-                                </button>
+                            {/* {item.itemFilter3} */}
+                            戶外活動
+                            <span className="delbtn">X</span>
+                        </button>
+                        <button className="filterBtn">
+                            {/* {item.itemFilter3} */}
+                            藝文活動
+                            <span className="delbtn">X</span>
+                        </button>
                         <hr />
                         <span className="homerightup2"><b className="areanum">排序方式</b> |
                             <button type="button" className="sortBtn" onClick={() => restar()}>
@@ -434,7 +434,7 @@ export const Play = (dateList) => {
                                 {/* <!-- 圖片框 --> */}
                                 <div className="picPlace">
 
-                                    <img className="proPic" src={item.itemImgUrl} alt="" onClick={() => router.push(`/item/${item.itemId}`)}/>
+                                    <img className="proPic" src={item.itemImgUrl} alt="" onClick={() => router.push(`/item/${item.itemId}`)} />
                                     {/* ))} */}
                                 </div>
                                 {/* <!-- 介紹欄 --> */}
@@ -443,10 +443,10 @@ export const Play = (dateList) => {
                                     {/* <!-- 商品標題 --> */}
                                     <button className="introp collectHeart" onClick={() => favIdsend(item.itemId)} style={{ zIndex: '99' }}>
                                         {/* <!-- 愛心圖案 --> */}
-                                       
-                                            <img className="introimg" src="/images/heart.png"
-                                                style={{ width: '20px', marginLeft: '130px' }} alt="" />
-                            
+
+                                        <img className="introimg" src="/images/heart.png"
+                                            style={{ width: '20px', marginLeft: '130px' }} alt="" />
+
                                     </button>
 
                                     {/* 商品標題 */}
@@ -536,7 +536,7 @@ export default function homepage(props) {
         <>
             <Header />
 
-            <Play dateList={dateList}/>
+            <Play dateList={dateList} />
 
             <Footer />
             {/* <Script src="/js/home.js" /> */}
