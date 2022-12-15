@@ -104,6 +104,17 @@ export const Placezone = (dateList, itemList2) => {
     const router = useRouter();
     var [homepagelist, setlist] = useState([]);
 
+    // 處理收藏onclick
+    // const [uuu,setUUU]=useState()
+    // async function getdata(e){
+    //     console.log(e.target.parentElement.parentElement.parentElement.id)
+    //     await axios.get("/api/changeFav").then(res=>setUUU(res.data.data.itemId));
+    //     (uuu!==e.target.parentElement.parentElement.parentElement.id)?
+    //         await axios.put("/api/changeFav",{
+    //             id:e.target.parentElement.parentElement.parentElement.id
+    //         }):null
+        
+    // }
     function test2(itemId) {
 
         var a = document.querySelectorAll(".homeProduct")
@@ -500,7 +511,7 @@ export const Placezone = (dateList, itemList2) => {
                     <div id="content" className="content">
                         {/* <!-- 商品顯示主體 --> */}
                         {homepagelist.map((item, index) =>
-                            <div className="homeProduct" >
+                            <div className="homeProduct" id={item.itemId} >
                                 {/* onClick={() => router.push(`/item/${item.itemId}`)} */}
                                 {/* <!-- 圖片框 --> */}
                                 <div className="picPlace">
@@ -512,9 +523,10 @@ export const Placezone = (dateList, itemList2) => {
                                 <div className="intro">
                                     <b>{item.itemTitle}</b>
                                     {/* <!-- 商品標題 --> */}
-                                    <button className="introp collectHeart" style={{ zIndex: '99' }}>
+                                    <button className="introp collectHeart" style={{ zIndex: '99' }} >
                                         {/* <!-- 愛心圖案 --> */}
 
+                                        {/* 處理onClick onClick={getdata} */}
                                         <img className="introimg" src="/images/heart.png"
                                             style={{ width: '20px', marginLeft: '130px' }} alt="" />
 
