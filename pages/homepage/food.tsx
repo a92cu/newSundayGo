@@ -32,7 +32,7 @@ function Header() {
                 <a href="/homepage/lodging">住宿</a>
                 <a href="/homepage/traffic">交通</a>
                 <a href="#"><img src="/images/cart.png" style={{ width: '25px' }} /></a>
-                <a href="#">登入|註冊</a>
+                <a href="#">會員中心 &nbsp;&nbsp;&nbsp; 登出</a>
             </div>
             <form className="example" action="">
                 <input type="text" placeholder="Search.." name="search" />
@@ -189,23 +189,25 @@ function Food(dateList) {
 
         // handleForm();
         // setlist(result.data)
+        // 點擊新增對應按鈕
+        // function cekbox() {
+        //     var arr = [];
+        //     $('input[type="checkbox"]').on('click', function () {
 
-        function cekbox() {
-            var arr = [];
-            $('input[type="checkbox"]').on('click', function () {
+        //         $(this).each(function (i) {
+        //             arr.push($(this).parent().text());
+        //             console.log(arr);
+        //             $(".homerightup").append(`<input type="button"  value="${arr}" class="filterBtn">`)
 
-                $(this).each(function (i) {
-                    arr.push($(this).parent().text());
-                    console.log(arr);
-                    $(".homerightup").append(`<input type="button"  value="${arr}" class="filterBtn">`)
+        //         })
+        //         // var text = "";
+        //         // text += $(this).parent().text();
 
-                })
-                // var text = "";
-                // text += $(this).parent().text();
+        //     })
+        // }
+        // cekbox();
 
-            })
-        }
-        cekbox();
+
         // return()=>{
         //     console.log(4,'ok')
         //     // setlist(result.data)
@@ -359,74 +361,74 @@ function Food(dateList) {
                             篩選目的地
                             <br />
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />北部
+                                <input type="checkbox" className="allcheck" checked/>北部
                             </button>
                             <div className="panel" >
-                                <input type="checkbox" name="citys" value={'基隆市'} className="ckbox" />基隆市
+                                <input type="checkbox" name="citys" value={'基隆市'} className="ckbox" checked/>基隆市
                                 <br />
-                                <input type="checkbox" name="citys" />新北市
+                                <input type="checkbox" name="citys" checked/>新北市
                                 <br />
-                                <input type="checkbox" name="citys" />台北市
+                                <input type="checkbox" name="citys" checked/>台北市
                                 <br />
-                                <input type="checkbox" name="citys" />桃園市
+                                <input type="checkbox" name="citys" checked/>桃園市
                             </div>
 
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />中部
+                                <input type="checkbox" className="allcheck" checked/>中部
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" />新竹縣
+                                <input type="checkbox" name="citys" checked/>新竹縣
                                 <br />
-                                <input type="checkbox" name="citys" />新竹市
+                                <input type="checkbox" name="citys" checked/>新竹市
                                 <br />
-                                <input type="checkbox" name="citys" />苗栗縣
+                                <input type="checkbox" name="citys" checked/>苗栗縣
                                 <br />
-                                <input type="checkbox" name="citys" />台中市
+                                <input type="checkbox" name="citys" checked/>台中市
                                 <br />
-                                <input type="checkbox" name="citys" />雲林縣
+                                <input type="checkbox" name="citys" checked/>雲林縣
                                 <br />
-                                <input type="checkbox" name="citys" />南投縣
+                                <input type="checkbox" name="citys" checked/>南投縣
                                 <br />
                             </div>
 
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />南部
+                                <input type="checkbox" className="allcheck" checked/>南部
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" />嘉義縣
+                                <input type="checkbox" name="citys" checked/>嘉義縣
                                 <br />
-                                <input type="checkbox" name="citys" />嘉義市
+                                <input type="checkbox" name="citys" checked/>嘉義市
                                 <br />
-                                <input type="checkbox" name="citys" />台南市
+                                <input type="checkbox" name="citys" checked/>台南市
                                 <br />
-                                <input type="checkbox" name="citys" />高雄市
+                                <input type="checkbox" name="citys" checked/>高雄市
                                 <br />
-                                <input type="checkbox" name="citys" />屏東縣
+                                <input type="checkbox" name="citys" checked/>屏東縣
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />東部
+                                <input type="checkbox" className="allcheck" checked/>東部
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" />宜蘭縣
+                                <input type="checkbox" name="citys" checked/>宜蘭縣
                                 <br />
-                                <input type="checkbox" name="citys" />花蓮縣
+                                <input type="checkbox" name="citys" checked/>花蓮縣
                                 <br />
-                                <input type="checkbox" name="citys" />台東縣
+                                <input type="checkbox" name="citys" checked/>台東縣
                                 <br />
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />離島
+                                <input type="checkbox" className="allcheck" checked/>離島
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" />澎湖
+                                <input type="checkbox" name="citys" checked/>澎湖
                                 <br />
-                                <input type="checkbox" name="citys" />金門
+                                <input type="checkbox" name="citys" checked/>金門
                                 <br />
-                                <input type="checkbox" name="citys" />馬祖
+                                <input type="checkbox" name="citys" checked/>馬祖
                                 <br />
-                                <input type="checkbox" name="citys" />綠島
+                                <input type="checkbox" name="citys" checked/>綠島
                                 <br />
-                                <input type="checkbox" name="citys" />蘭嶼
+                                <input type="checkbox" name="citys" checked/>蘭嶼
                             </div>
 
 
@@ -439,9 +441,9 @@ function Food(dateList) {
                                 <input type="checkbox" className="allcheck" checked />美食
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" />餐廳
+                                <input type="checkbox" name="citys" checked/>餐廳
                                 <br />
-                                <input type="checkbox" name="citys" />甜點、飲料
+                                <input type="checkbox" name="citys" checked/>甜點、飲料
                             </div>
                             <button className="accordion">
                                 <input type="checkbox" className="allcheck" />景點
