@@ -65,16 +65,18 @@ export const Login = (props) => {
                     })
 
                     //存於cookie的userId
-                    console.log(cookie.user.data[0].userId);
+                    // console.log(cookie.user.data[0].userId);
 
                     // cookie判斷是否存在
                     // if (Object.keys(cookie).length!==0) {
                     //     console.log("cookie已存");
                     // }
                     //跳轉到會員頁  
-                    setTimeout(() => {
-                        Router.replace("/memberCenter");
-                    }, 10);
+                    Router.replace('/memberCenter');
+
+                    // setTimeout(() => {
+                    //     Router.replace("/memberCenter");
+                    // }, 10);
                 }
             })
 
@@ -89,30 +91,30 @@ export const Login = (props) => {
         return (
             <div>
                 <div>
-                <h2>歡迎光臨，{session.user.name}</h2>
-            <img src={session.user.image} alt="" style={{borderRadius:"30px"}} />
+                    <h2>歡迎光臨，{session.user.name}</h2>
+                    <img src={session.user.image} alt="" style={{ borderRadius: "30px" }} />
                 </div>
                 <button onClick={() => signOut()} >登出</button>
             </div>
 
         )
-          
+
     } else {
         return (
             <div className="auth-form-container">
-            <h2>會員登入</h2>
-            <form className="login-form" >
-                <label htmlFor="userId">帳號</label>
-                <input value={userId} onChange={(e) => setuserId(e.target.value)} type="email" placeholder="輸入帳號" id="email" name="email" />
-                <label htmlFor="userPassword">密碼</label>
-                <input value={userPassword} onChange={(e) => setuserPassword(e.target.value)} type="password" placeholder="********" id="password" name="password" />
-                <button className="sub-btn" type="submit" onClick={handleSubmit}>送出</button>
-            </form>
-            <button className="link-btn" onClick={() => props.onFormSwitch('register')}>沒有帳號？點此註冊</button>
-            <button className="link-btn" onClick={() => window.location.href = "http://localhost:3000/firmlogin"} >廠商登入請按此</button>
-            <button className="link-btn" onClick={() => signIn()} >使用GOOGLE登入</button>
-        </div>
-    )
+                <h2>會員登入</h2>
+                <form className="login-form" >
+                    <label htmlFor="userId">帳號</label>
+                    <input value={userId} onChange={(e) => setuserId(e.target.value)} type="email" placeholder="輸入帳號" id="email" name="email" />
+                    <label htmlFor="userPassword">密碼</label>
+                    <input value={userPassword} onChange={(e) => setuserPassword(e.target.value)} type="password" placeholder="********" id="password" name="password" />
+                    <button className="sub-btn" type="submit" onClick={handleSubmit}>送出</button>
+                </form>
+                <button className="link-btn" onClick={() => props.onFormSwitch('register')}>沒有帳號？點此註冊</button>
+                <button className="link-btn" onClick={() => window.location.href = "http://localhost:3000/firmlogin"} >廠商登入請按此</button>
+                <button className="link-btn" onClick={() => signIn()} >使用GOOGLE登入</button>
+            </div>
+        )
 
     }
 }

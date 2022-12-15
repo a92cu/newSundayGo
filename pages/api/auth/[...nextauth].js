@@ -1,16 +1,23 @@
 import NextAuth from 'next-auth/next'
 import GoogleProvider from 'next-auth/providers/google'
-import CredentialspProvider from 'next-auth/providers/credentials';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 export default NextAuth({
-    providers:[
+    // session: {
+    //     jwt: true,
+    //   },
+
+
+    providers: [
+        
         GoogleProvider({
-            clientId:process.env.GOOGLE_CLIENT_ID,
-            clientSecret:process.env.GOOGLE_CLIENT_SECRET,
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
+
     ],
-    
-    secret:process.env.JWT_SECRET
+
+    secret: process.env.JWT_SECRET
 },
 
 );
