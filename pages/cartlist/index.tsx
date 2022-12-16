@@ -118,22 +118,22 @@ function Orderman({
     userEmail,
     userGender }
 ) {
-    const [name,setName]=useState(userName)
-    function namegotset(e){
+    const [name, setName] = useState(userName)
+    function namegotset(e) {
         // setName(e.value)
     }
 
     //---------- 改 input 資料 && 拿 input 資料
-    const [gender,setGender]=useState(userGender)
-    function gendergotset(e){
+    const [gender, setGender] = useState(userGender)
+    function gendergotset(e) {
         console.log('a')
         setGender(e.value)
 
         console.log(name)
     }
     //----------
-    
-    
+
+
     return (
         <section className="orderman" >
             <div className="cartsidebar">
@@ -196,7 +196,7 @@ function Orderman({
 //             });
 //         }
 //     },[])
-    
+
 //     // useEffect(() => {
 //     //     let shopcar = JSON.parse(localStorage.getItem("sureshopcar"))||[]; // 如果購物車沒有東西就空[]
 //     //     // console.log(1, shopcar);
@@ -233,8 +233,8 @@ function Orderman({
 //                 <div className="cartsidebar__inner">
 //                     <button className="cartaccordion">
 //                         <h3>
-                        // <img className="shopimg" src="./images/flower.png" />
-                        //     旅客資料</h3>
+// <img className="shopimg" src="./images/flower.png" />
+//     旅客資料</h3>
 //                         <hr />
 //                     </button>
 //                     <div className="cartpanel">
@@ -286,7 +286,7 @@ function Paylist() {
                 <div className="cartsidebar__inner">
                     <button className="cartaccordion">
                         <h3>
-                        <img className="shopimg" src="./images/flower.png" />
+                            <img className="shopimg" src="./images/flower.png" />
                             請選擇付款方式</h3>
                         <hr />
                     </button>
@@ -310,14 +310,20 @@ function Paylist() {
                                 </label>
                                 <br />
                                 <div className="carttoggle">
-                                    信用卡號碼
-                                    <input type="text" className="cardint" pattern="[0-9]{12}" placeholder="0000 0000 0000" required />
+                                    <span>
+                                        信用卡號碼
+                                        <input type="text" className="cardint" pattern="[0-9]{12}" placeholder="0000 0000 0000" required />
+                                    </span>
                                     <br />
-                                    有效期限 &nbsp; &nbsp;
-                                    <input type="text" className="cardint" name="" placeholder="MM/YY" required />
+                                    <span>
+                                        有效期限
+                                        <input type="text" className="cardint" name="" placeholder="MM/YY" required />
+                                    </span>
                                     <br />
-                                    背面末3碼
-                                    <input type="text" className="cardint" placeholder="CVC/CCV" />
+                                    <span>
+                                        背面末3碼
+                                        <input type="text" className="cardint" placeholder="CVC/CCV" />
+                                    </span>
                                 </div>
                             </li>
                             <li className="payway">
@@ -326,7 +332,8 @@ function Paylist() {
                                     <span>網路ATM</span>
                                 </label>
                             </li>
-                            <li className="payway">
+
+                            <li className="payway2">
                                 <b>
                                     請注意本平台不會向您收取任何平台交易手續費，
                                     但你下單時使用的信用卡或第三方支付平台可能會向您收取相關手續費，
@@ -505,7 +512,7 @@ function Paylist() {
 //         //     console.log("使用者資料",data.data[0].imgId);
 
 //         // })
-        
+
 //     }
 //     //POST結束
 

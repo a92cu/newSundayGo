@@ -79,14 +79,16 @@
     width: 180px;
 
 }
+
 .orderright input {
     border-radius: 5px;
     border: 2px solid #F29F04;
     width: 180px;
 }
-.orderleft>span{
-/* float: left; */
-flex-wrap:wrap;
+
+.orderleft>span {
+    /* float: left; */
+    flex-wrap: wrap;
 
 }
 
@@ -100,14 +102,17 @@ flex-wrap:wrap;
 
 .orderright {
     position: relative;
-    /* left: 50%; */
+    /* background-color: #8C5C02; */
+    width: 50%;
+    left: 30%;
     /* left: 500px; */
 }
-.orderright>span{
+
+.orderright>span {
     /* float: left; */
-    flex-wrap:wrap;
-    
-    }
+    flex-wrap: wrap;
+
+}
 
 .orderbtn {
     float: right;
@@ -117,6 +122,7 @@ flex-wrap:wrap;
     content: "*";
     color: red;
 }
+
 .orderright span::after {
     content: "*";
     color: red;
@@ -127,9 +133,10 @@ flex-wrap:wrap;
     color: red;
 }
 
-div span~input{
-    padding:  5px 0;
+div span~input {
+    padding: 5px 0;
 }
+
 /* 旅客資料 */
 /* .travelman {
     border: 2px solid #F29F04;
@@ -138,7 +145,7 @@ div span~input{
     margin-top: 50px;
 
 } */
-.travelman textarea{
+.travelman textarea {
     width: 300px;
     height: 100px;
 }
@@ -159,13 +166,18 @@ div span~input{
 /* label:hover {
     cursor: pointer;
 } */
-.payway{
+.payway {
     /* display:grid; */
     float: left;
     /* flex-wrap:wrap; */
-    clear: both
-    /* background-color: red; */
+    clear: both;
 }
+
+.payway2 {
+    clear: both;
+    text-align: left;
+}
+
 /* 當核許框為勾選時，隱藏.toogle-box區塊 */
 input[type="radio"]:checked div {
     opacity: 0;
@@ -183,9 +195,20 @@ input[type="radio"]:checked div {
     overflow: hidden;
     transition: opacity 1.0s linear;
 }
+
 /* 信用卡輸入框 */
-.carttoggle .cardint{
-    width: 70%   ;
+.carttoggle .cardint {
+    width: 70%;
+}
+
+.carttoggle span {
+    margin-left: 10px;
+    float: left;
+    clear: both;
+}
+
+.carttoggle {
+    background-color:transparent;
 }
 
 
@@ -198,24 +221,43 @@ input[type="radio"]:checked div {
 
 } */
 /* 付款明細 */
-.billtotal .carthomeProduct{
+.billtotal .carthomeProduct {
     width: 60%;
     margin: 20px auto 20px auto;
 }
 
-.carthrline{
-    margin-left: 50px;
+.carttagplace2>span{
+    margin-right: 100px;
+    
+}
+.carttagplace3{
+    margin-right: 93px;
 }
 
-.carthrline+span{
-    float: right;
-    margin-right: 50px;
+.carthrline {
+    margin-left: 80px;
 }
+.paymoney3{
+    margin-left: 10px;
+
+}
+.paymoney2{
+    margin-left: 3px;
+
+}
+.paymoney{
+    margin-left: 12px;
+}
+
+.carthrline+span {
+    float: right; 
+     margin-right: 50px;
+} 
+
 .carthrline~hr {
     width: 55%;
     margin-left: 500px;
-        /* float: right; */
-
+    /* float: right; */
     border: none;
     border-bottom: solid 2px #F29F04
 }
@@ -233,25 +275,38 @@ input[type="radio"]:checked div {
 
 }
 
-.paybill~span{
+/* .paybill~span {
     margin: auto auto;
-}
+} */
+
 /* 回饋金 */
-.prdtit2{
-    margin-left: 230px;
+.prdtit2 {
+    margin-left: 250px;
+    /* margin-right: 100px; */
+    position: relative;
 }
-.prdtit3{
+
+.prdtit3 {
+    margin-left: 400px;
     color: #F29F04;
 }
+
 /* nth-child(3) */
 /* .paybill+span+span{
     margin-left: 45660px;
 } */
-.cartprdtit{
-    margin-left: 60px;
+.cartprdtit {
+    margin-right: 200px;
+    float: right;
 }
-#billok{
-    border: 2px solid  #F29F04;
+.paybill>span{
+    /* position: relative;s */
+    background-color: #F29F04;
+    margin-left: 300px;
+}
+
+#billok {
+    border: 2px solid #F29F04;
     /* width: 10%; */
     background-color: #F29F04;
     color: #8C5C02;
@@ -262,6 +317,7 @@ input[type="radio"]:checked div {
     float: right;
     margin: 0 50px 50px 0;
 }
+
 #billok:hover {
     color: #8C5C02;
     background-color: #FAEF8B;
@@ -314,6 +370,7 @@ input:active {
     outline: none;
     transition: 0.4s;
 }
+
 /* 手風琴標頭 */
 .cartaccordion h3 {
     margin-left: 10px;
@@ -400,10 +457,10 @@ input:active {
     background-size:cover ;
 
 } */
-    /* content: '\142F'; */
-    /* Unicode 字符*/
+/* content: '\142F'; */
+/* Unicode 字符*/
 
-     /* font-weight: bold;
+/* font-weight: bold;
     float: left;
     margin: 25px 25px;
 }  */
@@ -411,18 +468,18 @@ input:active {
 
 /* .cartactive:before {
     /* content: "&#711"; */
-    /* content: '\142F'; */
-    /* content: '\1431'; */
-    /* 愛心 */
-    /* content: '\2661'; */
-    /* font-weight: bold;
+/* content: '\142F'; */
+/* content: '\1431'; */
+/* 愛心 */
+/* content: '\2661'; */
+/* font-weight: bold;
     /* Unicode 字符 - 号 */
 /* }   */
 /* .cartaccordion::before{
     /* background-image: url("../public/images/flower.png"); */
-    /* background-size: 100% 100%; */
-/* } */ 
-.shopimg{
+/* background-size: 100% 100%; */
+/* } */
+.shopimg {
     width: 40px;
     /* display: inline;  */
     /* background-color: aquamarine; */

@@ -101,6 +101,10 @@ function Food(dateList) {
     // function clickButton(){
     //     setShow(false)
     //   }
+    function getdata(e){
+        console.log(e.target.parentElement.parentElement.parentElement.id)
+        console.log(e.target.parentElement.parentElement.parentElement)
+}
 
     // const handleclick = (e) => {
     //     var wantdel = document.getElementsByClassName('delbtn');
@@ -154,7 +158,7 @@ function Food(dateList) {
         // }
         // myFunction()
         $(".delbtn").click(function () {
-            console.log(this)
+            // console.log(this)
             // $(this)(".filterBtn").hide()
             $(this).parent('button').hide()
         });
@@ -217,7 +221,7 @@ function Food(dateList) {
 
 
     const fetchdata = async () => {
-        console.log(2, setlist)
+        // console.log(2, setlist)
         // if (homepagelist == "") 
         await axios("/api/home/food")
 
@@ -238,7 +242,7 @@ function Food(dateList) {
 
     //傳送資料庫資料
     const favIdsend = async (i) => {
-        console.log(4, i)
+        // console.log(4, i)
         if (window.confirm("已加入最愛") === true) 
         await fetch("/api/home/food", {
             method: "post",
@@ -255,7 +259,7 @@ function Food(dateList) {
         })
             .then((res) => res.json())
         // .then(console.log('已加入最愛'))
-        console.log(5, favId)
+        // console.log(5, favId)
         // .then(data => {
         //     /*接到request data後要做的事情*/
         //     console.log("使用者資料",data.data[0].imgId);
@@ -546,10 +550,11 @@ function Food(dateList) {
                                 <div className="intro">
                                     <b>{item.itemTitle}</b>
                                     {/* <!-- 商品標題 --> */}
-                                    <button className="introp collectHeart" onClick={() => favIdsend(item.itemId)} style={{ zIndex: '99' }}>
+                                    <button className="introp collectHeart"  style={{ zIndex: '99' }}>
+                                    {/* onClick={() => favIdsend(item.itemId)} */}
                                         {/* <!-- 愛心圖案 --> */}
                                             <img className="introimg" src="/images/heart.png"
-                                                style={{ width: '20px', marginLeft: '130px' }} alt="" />
+                                                style={{ width: '20px', marginLeft: '130px' }} alt="" onClick={getdata}/>
                                     </button>
 
                                     {/* 商品標題 */}

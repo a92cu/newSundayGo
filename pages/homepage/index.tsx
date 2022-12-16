@@ -105,16 +105,25 @@ export const Placezone = (dateList, itemList2) => {
     var [homepagelist, setlist] = useState([]);
 
     // 處理收藏onclick
-    // const [uuu,setUUU]=useState()
-    // async function getdata(e){
-    //     console.log(e.target.parentElement.parentElement.parentElement.id)
-    //     await axios.get("/api/changeFav").then(res=>setUUU(res.data.data.itemId));
-    //     (uuu!==e.target.parentElement.parentElement.parentElement.id)?
-    //         await axios.put("/api/changeFav",{
-    //             id:e.target.parentElement.parentElement.parentElement.id
-    //         }):null
-        
+    const [favitem,setfavitem]=useState()
+    async function getdata(e){
+        console.log(e.target.parentElement.parentElement.parentElement.id)
+        await axios.get("/api/home/homepage").then(res=>setfavitem(res.data.data.itemId));
+        if(favitem!==e.target.parentElement.parentElement.parentElement.id){
+            await axios.post("/api/home/homepage",{
+                itemId:e.target.parentElement.parentElement.parentElement.id
+            })
+        }else{
+            
+        }
+          
+             }
+    // function getdata(e){
+    //         console.log(e.target.parentElement.parentElement.parentElement.id)
+            
     // }
+        
+   
     function test2(itemId) {
 
         var a = document.querySelectorAll(".homeProduct")
@@ -529,7 +538,7 @@ export const Placezone = (dateList, itemList2) => {
 
                                         {/* 處理onClick onClick={getdata} */}
                                         <img className="introimg" src="/images/heart.png"
-                                            style={{ width: '20px', marginLeft: '130px' }} alt="" />
+                                            style={{ width: '20px', marginLeft: '130px' }} alt="" onClick={getdata}/>
 
                                     </button>
 
