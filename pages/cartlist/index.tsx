@@ -53,7 +53,7 @@ function Titlebar() {
                     </li>
                     <li>
                         填寫資料及付款
-                        <img src="./images/flower.png" />
+                        <img src="./images/flower.png" className="ffTest" />
                     </li>
                     <li>
                         訂購完成

@@ -34,6 +34,10 @@
     filter: grayscale(100%);
 }         */
 
+.ffTest {
+    filter: grayscale(0%) !important;
+}
+
 .cartList>li:nth-child(3)>img {
     filter: grayscale(100%);
 }

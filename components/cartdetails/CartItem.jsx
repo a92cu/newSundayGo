@@ -149,7 +149,7 @@ var CartItem = (props) => {
             <div id="progressBar">
                 {/* <!-- 進度條 --> */}
                 <div>
-                    <span></span>
+                    <span className="progressBarA"></span>
                 </div>
                 {/* <!-- 花跟字 --> */}
                 <ol className="cartList">
