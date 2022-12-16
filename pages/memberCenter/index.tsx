@@ -454,12 +454,15 @@ function SevenDay() {
         }
       } else {
         if (registDate.getMonth() == gotdate.getMonth() && registDate.getDate() == gotdate.getDate()) {
-          alert("您今日尚不能領取折價券，請明日再來");
           if (checkCount == 0) {
             axios.put(`/api/memberCentre/taketime`, {
+              discountdate: format(fetureDate, "yyyy-MM-dd"),
               timeData: format(thisDate, "yyyy-MM-dd"),
               count: checkCount + 1,
             });
+            alert('您已領取折扣券');
+          }else{
+            alert("您今日已領取折價券，請明日再來");
           }
         } else {
           alert("您今日已領取折價券，請明日再來");
