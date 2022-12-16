@@ -423,14 +423,6 @@ function SevenDay() {
     // 每個折價券做判斷
     if (thisDate.getFullYear() >= gotdate.getFullYear() && thisDate.getMonth() >= gotdate.getMonth()) {
       if (thisDate.getDate() - gotdate.getDate() > 0) {
-        if (registDate.getDate() == gotdate.getDate() && (checkCount - count == 0)) {
-          alert('您已領取折扣券');
-          axios.put(`/api/memberCentre/taketime`, {
-            timeData: format(thisDate, "yyyy-MM-dd"),
-            discountdate: format(fetureDate, "yyyy-MM-dd"),
-            count: checkCount + 1,
-          });
-        } else {
           switch (checkCount - count) {
             case 0:
               alert("您今日已領取折價券，請明日再來");
@@ -451,7 +443,6 @@ function SevenDay() {
               alert("您之前有尚未領取過的折扣券，領取完後才有資格領取之後的折扣券")
               break;
           }
-        }
       } else {
         if (registDate.getMonth() == gotdate.getMonth() && registDate.getDate() == gotdate.getDate()) {
           if (checkCount == 0) {
