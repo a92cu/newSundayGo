@@ -160,13 +160,14 @@ function MemberOrder({ itemList, imgList, setItemList }) {
                     </td>
                     <td>{i.itemTitle}</td>
                     <td>{i.itemPrice}</td>
-                    <td>
-                      <p>
-                        庫存 <span>{i.itemInvent}</span>
-                      </p>
-                      <p>
-                        銷售數 <span>{i.itemSales}</span>
-                      </p>
+                    <td >
+                      <div className="testTD2">庫存</div>
+                      <div className="testTD3">{i.itemInvent}</div>
+                      {/* <td className="testTD">庫存</td>
+                      <td className="testTD">{i.itemInvent}</td> */}
+                      <div className="testTD2">銷售數</div>
+                      <div className="testTD3">{i.itemSales}</div>
+
                       <p>
                         上架時間 <br />
                         <span>
@@ -308,11 +309,11 @@ function Account(props) {
             onChange={(e) => setFirmEmail(e.target.value)}
           />
         </div>
-        <div className="basic">
+        <div className="basic" style={{ width: "475px" }}>
           <span>
             密碼<b>*</b>
           </span>
-          &emsp;&emsp;&emsp;
+          {/* &emsp;&emsp;&emsp; */}
           <input
             type={passwordType}
             onChange={(e) => setFirmPassword(e.target.value)}
@@ -322,7 +323,7 @@ function Account(props) {
             className="form-control"
             placeholder="Password"
           />
-          &emsp;&emsp;
+          {/* &emsp;&emsp; */}
           <input
             style={{
               width: "15px",
@@ -335,7 +336,7 @@ function Account(props) {
           顯示密碼
         </div>
       </div>
-      <div className="basicBtn">
+      <div className="basicBtn" style={{ width: "843px" }}>
         <button className="informationBtn" onClick={() => saveAccount()}>
           {" "}
           <b>儲存</b>{" "}
@@ -358,9 +359,8 @@ export default function Company(props) {
         <div className="tab">
           <div className="tabBtn">
             <button
-              className={`tablinks ${
-                tab === "account" ? "tab_btn_selected" : ""
-              }`}
+              className={`tablinks ${tab === "account" ? "tab_btn_selected" : ""
+                }`}
               onClick={() => setTab("account")}
             >
               <span>
@@ -372,9 +372,8 @@ export default function Company(props) {
               </span>
             </button>
             <button
-              className={`tablinks ${
-                tab === "memberOrder" ? "tab_btn_selected" : ""
-              }`}
+              className={`tablinks ${tab === "memberOrder" ? "tab_btn_selected" : ""
+                }`}
               onClick={() => setTab("memberOrder")}
             >
               <span>

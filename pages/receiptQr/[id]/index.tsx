@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useState } from 'react';
 import Router from "next/router";
 import { format } from "date-fns";
+// import { compareAsc, format } from 'date-fns'
 
 function ReceiptQr({
   userName,
@@ -21,9 +22,14 @@ function ReceiptQr({
         orderDeter: 2,
       }),
     });    
+    
+    var today = format(new Date(), 'yyyy-MM-dd HH:MM');
+
     document.getElementById("XBtn").style.backgroundColor = "#d5c8ae";
     document.getElementById("XBtn").style.color = "white";
     document.getElementById("XBtn").innerText = "已核銷";
+    document.getElementById("xPersonnel").innerText = "石上湯屋渡假村";
+    document.getElementById("xTime").innerText = `${today}`;
     
 
     // console.log(userName, orderReceipt, itemTitle)
@@ -37,6 +43,8 @@ function ReceiptQr({
           <h3>{itemTitle}</h3>
           <p> 訂購人：<span>{userName}</span> </p>
           <p>訂單編號：<span>{orderReceipt}</span> <button id="XBtn" onClick={() => XBtn()}>核銷</button></p>
+          <p>核銷人員：<span id="xPersonnel"></span> </p>
+          <p>核銷時間：<span id="xTime"></span> </p>
         </div>
       </div>
     </div>  
@@ -84,23 +92,12 @@ export async function getStaticProps({ params }) {
   const sq1 = `SELECT orderDeter, orderNumber, userName, orderReceipt, itemTitle FROM ordertable, usertable, item WHERE usertable.userId = ordertable.userId AND ordertable.itemId = item.itemId AND orderNumber = "${params.id}"`;
   const data = (await runSQL(sq1))[0]; 
 
-  // //V2
-  // const sq1 = `SELECT item.itemId ,orderNumber, userId, orderReceipt, orderDate, orderQua, orderDeter , itemTitle FROM ordertable, item WHERE ordertable.itemId = item.itemId and orderNumber = "${params.id}"`;
-  // const orderList: any = [];
-  // const orderListRaw: any = (await runSQL(sq1)); 
-  // //轉日期格式
-  // orderListRaw.forEach((ordertable: any) => {
-  //   ordertable.orderDate = format(ordertable.orderDate, "yyyy-MM-dd");
-  //   orderList.push({ ...ordertable });
-  // });
-
 
   //把要的資料拿出來
   return {
     props: {
       data: { ...data },
-      // ...data,
-      // orderList,
+
     },
   };
 }

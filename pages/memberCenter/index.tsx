@@ -248,16 +248,17 @@ function MemberAccount(props) {
 
     <h2>帳號設定 </h2>
     <div className="setBodyB">
-      <span style={{ color: "#8C5C02" }}> <b>基本資料</b> </span>
+    &emsp;&emsp;&emsp;&emsp;
+      <span className="ttSpan" style={{ color: "#8C5C02" }}> <b>基本資料</b> </span>
       <br /><br />
-      <div className="basic">
+      <div className="basicB">
         <span>姓名<b>*</b> </span>
         <input type="text"
           value={userName}
           onChange={(e) => setuserName(e.target.value)}
         />
       </div>
-      <div className="basic">
+      <div className="basicB">
         <span>性別</span>
         <select defaultValue={"men"} name="" id="">
           <option value="men"  >{accountList[0].userGender}</option>
@@ -267,7 +268,7 @@ function MemberAccount(props) {
 
       </div>
       <br />
-      <div className="basic">
+      <div className="basicB">
         <span>出生日期</span>
         <input
           type="date"
@@ -276,7 +277,7 @@ function MemberAccount(props) {
         />
       </div>
       <br />
-      <div className="basic">
+      <div className="basicB">
         <span>電話號碼<b>*</b></span>
         <input type="tel"
           value={userPhone}
@@ -284,7 +285,7 @@ function MemberAccount(props) {
         />
       </div>
       <br />
-      <div className="basic">
+      <div className="basicB">
         <span>連絡信箱<b>*</b></span>
         <input type="email"
           value={userEmail}
@@ -292,7 +293,7 @@ function MemberAccount(props) {
         />
       </div>
       <br />
-      <div className="basic">
+      <div className="basicB">
         <span>密碼<b>*</b></span>
         &emsp;&emsp;&emsp;&emsp;&emsp;
         <input
@@ -315,7 +316,7 @@ function MemberAccount(props) {
 
       </div>
       <div className="basicBtn">
-        <button className="informationBtn" onClick={() => saveAccount()}> <b>儲存</b> </button>
+        <button className="informationBtn" onClick={() => saveAccount()}>儲存 </button>
 
       </div>
     </div>
@@ -667,7 +668,7 @@ function Collect({ itemList, imgList, setItemList }) {
 
 export default function MemberCentre(props) {
 
-  const [tab, setTab] = useState('information');
+  const [tab, setTab] = useState('memberOrder');
   const [userName, setuserName] = useState(props.accountList[0].userName);
   const [userAvatar, setuserAvatar] = useState(props.accountList[0].userAvatar); // 變更頭像
   const [accountList, setaccountList] = useState(props.accountList);

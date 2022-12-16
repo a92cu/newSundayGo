@@ -26,7 +26,7 @@
 /* 輸入框設定 */
 .setBodyB input,
 select {
-    width: 200px;
+    width: 280px;
     height: 40px;
     background-color: white;
     outline: 2px solid rgba(0, 0, 0, 0.2);
@@ -35,7 +35,7 @@ select {
     border-radius: 10px;
 }
 
-.basic {
+.basicB {
     /* background-color: lawngreen; */
     /* padding: 10px px; */
     width: 50%;
@@ -43,24 +43,55 @@ select {
     float: left;
     text-align: center;
 }
+.basicB input {
+    margin-top: 12px;
+    font-size: large;
+    height: 30px;
+    padding: 8px;
+    border: none;
+}
+.basicB input:focus {
+    box-shadow: 0 0 5px rgb(242, 159, 4);
 
-.basic>span {
+    border: 1px;
+}
+.basicB select{
+    font-size: large;
+    width: 300px;
+    height: 45px;
+    padding: 8px;
+    border: none;
+    /* height: 30px; */
+    /* padding: 5px; */
+}
+.basicB>span {
     display: block;
-    width: 200px;
+    width: 300px;
     text-align: left;
     margin: auto;
+    /* background-color: red; */
 }
 
 .informationBtn {
-    width: 80px;
+    width: 100px;
+    height: 30px;
     color: #8C5C02;
-    border: 2px solid rgb(0, 0, 0, 0.5);
+    /* border: 2px solid rgb(0, 0, 0, 0.5); */
     border-radius: 10px;
     background-color: rgb(234, 242, 4, 0.3);
+    border-radius: 5px;
+    border: none;
 }
+
 
 .basicBtn {
     text-align: right;
+    /* background-color: aqua; */
+    width: 846px;
+}
+.informationBtn:hover{
+    color: white;
+    background-color: #F29F04;
 }
 
 /* 折扣券|回饋金頁面 */
