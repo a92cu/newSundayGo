@@ -122,7 +122,7 @@
   width: 50%;
   height: 120px;
   float: left;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .basic > span {
@@ -285,6 +285,7 @@ textarea {
   margin-top: 6px;
   margin-bottom: 16px;
   resize: vertical;
+  margin-left: 10px;
 }
 
 .setBody input[type="tel"],
@@ -297,6 +298,7 @@ textarea {
   margin-top: 6px;
   margin-bottom: 16px;
   resize: vertical;
+  
 }
 .setBody input[type="email"],
 textarea {
@@ -308,6 +310,7 @@ textarea {
   margin-top: 6px;
   margin-bottom: 16px;
   resize: vertical;
+  margin-left: 10px;
 }
 .setBody input[type="password"],
 textarea {
@@ -319,4 +322,5 @@ textarea {
   margin-top: 6px;
   margin-bottom: 16px;
   resize: vertical;
+  margin-left: 10px;
 }
