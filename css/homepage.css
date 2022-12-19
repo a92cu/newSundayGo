@@ -130,6 +130,7 @@
     height: 250px;
     margin-bottom: 30px;
     width: 1000px;
+    padding: 10px;
 }
 
 .proPic:hover {
@@ -225,6 +226,7 @@ background-color: transparent;
     overflow-wrap: break-word;
     line-height: 2;
     -webkit-line-clamp: 3;
+    text-align:justify;
     max-height: 100px;
     text-overflow: ellipsis;
     /* z-index: 20; */
@@ -454,15 +456,18 @@ h5 {
   }
 
   #retop{
-    width: 100px;
+    width: 50px;
+    height: 50px;
     /* background-image: url(../public/images/20220520170357-1298d211.jpg); */
     position: fixed;
     /* bottom: 0; */
     top: 600px;
     right: 0;
-    background-color:transparent;
+    border-radius:50%;
+    text-align:center;
+    background-color:#8C5C02;
     background-size: contain;
     background-repeat:no-repeat ;
     background-position: center;
-    
+    visibility: hidden;
   }

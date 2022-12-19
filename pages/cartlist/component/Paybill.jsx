@@ -43,13 +43,15 @@ export default function Paybill() {
 
     return (
         <section className="paybill">
-            <div>
+            {/* <div>
             <span>商品合計</span> <span className="cartprdtit">TWD {total}</span>
+            </div> */}
+            
+            <div className="prdtit">  
+            <span className="prdtit2 carthrline">訂單完成後回饋金 </span><span className="prdtit3">TWD &nbsp;&nbsp;&nbsp;{Math.floor(total*0.02)}</span>
             </div>
-            <div>  
-            <span className="prdtit2">訂單完成後回饋金 </span><span className="prdtit3">TWD {Math.floor(total*0.02)}</span>
-            </div>
-            <input type="button" value="確認付款" id="billok" onClick={favIdsend} />
+            <hr />
+            <input className="prdtit4" type="button" value="確認付款" id="billok" onClick={favIdsend} />
         </section>
     )
 

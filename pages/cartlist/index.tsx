@@ -22,7 +22,7 @@ function Header() {
                 <a href="/homepage/play">活動</a>
                 <a href="/homepage/lodging">住宿</a>
                 <a href="/homepage/traffic">交通</a>
-                <a href="#">
+                <a href="/cartdetails">
                     <img src="./images/cart.png" style={{ width: 25 }} />
                 </a>
                 <a href="#">會員中心</a>
@@ -557,7 +557,7 @@ export default function cartlist(props) {
                         itemList={itemList}
                     // onCalculate={calculate}
                     />
-                    <Paybill />
+                    {/* <Paybill /> */}
                 </form>
             </main>
             <Footer />

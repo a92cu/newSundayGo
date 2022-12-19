@@ -149,6 +149,17 @@ div span~input {
     margin-top: 50px;
 
 } */
+.cartlist1 {
+    float: left;
+    margin-left: 60px;
+    margin-top: 20px;
+}
+
+.cartlist2 {
+    float: right;
+    margin-right: 100px;
+}
+
 .travelman textarea {
     width: 300px;
     height: 100px;
@@ -162,6 +173,9 @@ div span~input {
     border-radius: 10px;
     margin-top: 50px;
 } */
+.cartoggle {
+    text-align: left;
+}
 
 /* label {
     display: block;
@@ -212,7 +226,7 @@ input[type="radio"]:checked div {
 }
 
 .carttoggle {
-    background-color:transparent;
+    background-color: transparent;
 }
 
 
@@ -225,42 +239,59 @@ input[type="radio"]:checked div {
 
 } */
 /* 付款明細 */
+.billtotal {
+    margin-bottom: 50px;
+}
+
 .billtotal .carthomeProduct {
-    width: 60%;
-    margin: 20px auto 20px auto;
+    width: 600px;
+    margin: 20px 0;
 }
 
-.carttagplace2>span{
+.billtotalleft {
+    /* background-color: #FAEF8B; */
+    width: 600px;
+    float: left;
+}
+
+.billtotalright {
+    /* width: 50%; */
+    /* display: inline-block; */
+    /* background-color: red; */
+    /* width: 600px; */
+    /* margin-left: 600px; */
+    margin-top: 50px;
+    float: right;
+    text-align: left;
+    /* margin-bottom: 400px; */
+}
+
+.carttagplace2>span {
     margin-right: 100px;
-    
-}
-.carttagplace3{
-    margin-right: 93px;
+
 }
 
-.carthrline {
+.carttagplace3,
+.carttagplace2,
+.carttagplace {
+    /* margin-right: 93px; */
+    text-align: left;
+}
+
+/* .carthrline {
     margin-left: 80px;
-}
-.paymoney3{
-    margin-left: 10px;
+} */
 
-}
-.paymoney2{
-    margin-left: 3px;
-
-}
-.paymoney{
-    margin-left: 12px;
-}
-
+/* 
 .carthrline+span {
-    float: right; 
-     margin-right: 50px;
-} 
+    text-align: left;
+} */
 
-.carthrline~hr {
-    width: 55%;
-    margin-left: 500px;
+
+.carthrline~hr,
+.paybill hr {
+    /* width: 100%; */
+    /* margin-left: 600px; */
     /* float: right; */
     border: none;
     border-bottom: solid 2px #F29F04
@@ -270,7 +301,7 @@ input[type="radio"]:checked div {
 
 
 .paybill {
-    border: 2px solid #F29F04;
+    /* border: 2px solid #F29F04; */
     height: 100px;
     border-radius: 10px;
     /* text-align:right; */
@@ -284,16 +315,37 @@ input[type="radio"]:checked div {
 } */
 
 /* 回饋金 */
-.prdtit2 {
-    margin-left: 250px;
-    /* margin-right: 100px; */
-    position: relative;
+
+.billcount{
+    width: 300px;
+    background-color: aqua;
+    margin-left: 435px;
+    color: #F29F04;
+    text-align: right;
+}
+
+.paybill2,
+.paybill1 {
+    margin-left: 440px;
+    color: #F29F04;
+    text-align: right;
 }
 
 .prdtit3 {
-    margin-left: 400px;
+    margin-left: 370px;
     color: #F29F04;
+    text-align: right;
 }
+
+.prdtit4 {
+    margin-top: 200px;
+}
+
+.paybill1 {
+    margin-left: 450px;
+    text-align: left;
+}
+
 
 /* nth-child(3) */
 /* .paybill+span+span{
@@ -303,7 +355,12 @@ input[type="radio"]:checked div {
     margin-right: 200px;
     float: right;
 }
-.paybill>span{
+
+.prdtit {
+    margin-top: -40px;
+}
+
+.paybill>span {
     /* position: relative;s */
     background-color: #F29F04;
     margin-left: 300px;
@@ -413,8 +470,9 @@ input:active {
     border-radius: 10px;
     height: 180px;
     width: 50%;
+    /* width: 100px; */
     margin-bottom: 20px;
-    margin-left: 300px;
+    /* margin-left: 300px; */
 
     /* float: right; */
 
