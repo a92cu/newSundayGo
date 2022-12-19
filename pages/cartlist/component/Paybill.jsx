@@ -31,7 +31,7 @@ export default function Paybill() {
             e.userId='u123456789'; // 寫死
             e.orderRebate=Math.floor((e.count*e.price)*0.02);
             e.total=e.count*e.price;
-            e.orderReceipt='order000012'; // 寫死
+            e.orderReceipt='22SS250516463'; // 寫死
         })
         console.log(obj)
         // 傳送資料到API
