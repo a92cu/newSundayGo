@@ -118,22 +118,28 @@ function Orderman({
     userEmail,
     userGender }
 ) {
+    //---------- 改 input 資料 && 拿 input 資料
+    // 名字
     const [name, setName] = useState(userName)
     function namegotset(e) {
-        // setName(e.value)
+        setName(e.value)
     }
-
-    //---------- 改 input 資料 && 拿 input 資料
+    // 性別
     const [gender, setGender] = useState(userGender)
     function gendergotset(e) {
-        console.log('a')
         setGender(e.value)
-
-        console.log(name)
+    }
+    // 連絡電話
+    const [phone, setPhone] = useState(userPhone)
+    function phonegotset(e) {
+        setPhone(e.value)
+    }
+    // 電子信箱
+    const [email, setEmail] = useState(userEmail)
+    function emailgotset(e) {
+        setEmail(e.value)
     }
     //----------
-
-
     return (
         <section className="orderman" >
             <div className="cartsidebar">
@@ -152,7 +158,7 @@ function Orderman({
                             <div>
                                 <span>電子信箱</span>
                                 <br />
-                                <input type="email" name="usermail" value={userEmail} required />
+                                <input type="email" name="usermail" value={email} onChange={emailgotset} required />
                             </div>
                         </div>
                         <div className="orderright">
@@ -164,7 +170,7 @@ function Orderman({
                             <div>
                                 <span>連絡電話</span>
                                 <br />
-                                <input type="tel" name="userPhone" pattern="[0-9]{10}" id="CartuserPhone" value={userPhone} required />
+                                <input type="tel" name="userPhone" pattern="[0-9]{10}" id="CartuserPhone" value={phone}  onChange={phonegotset} required />
                             </div>
                         </div>
                         <br />
