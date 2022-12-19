@@ -35,7 +35,7 @@ export default function Travelman(itemList) {
                     </button>
                     <div className="cartpanel">
                         {getItem.map((i, key) =>
-                            <div className="carthomeProduct" key={key}>
+                            <div className="carthomeProduct cartlist1" key={key}>
                                 {/* <!-- 圖片框 --> */}
                                 <div className="cartpicPlace">
                                     <img className="cartproPic" src={i.itemImgUrl} alt="" />
@@ -50,10 +50,10 @@ export default function Travelman(itemList) {
                                     {/* <!-- 地區標籤 --> */}
                                     <div>
                                         <div className="carttagplace">
-                                            新竹市
+                                            活動地區：新竹市
                                         </div>
-                                        <div>
-                                            活動日期 ：{i.date}
+                                        <div className="carttagplace">
+                                            活動日期：{i.date}
                                         </div>
                                     </div>
                                 </div>
@@ -61,9 +61,11 @@ export default function Travelman(itemList) {
 
                         )}
                         {/* 迴圈結束 */}
-                        <h4>特殊需求備註</h4>
-                        <div>
-                            <textarea placeholder="此欄位僅限資料備註，不保證提供"></textarea>
+                        <div className='cartlist2'>
+                            <h4 >特殊需求備註</h4>
+                            <div>
+                                <textarea placeholder="此欄位僅限資料備註，不保證提供"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>

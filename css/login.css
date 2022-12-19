@@ -79,9 +79,19 @@
     border: none;
     background: none;
     color: white;
-    text-decoration: underline;
+    /* text-decoration: underline; */
     transition-duration: 0.4s;
 }
+
+.sub-btn:hover{
+    /* margin:; */
+    border: none;
+    background-color: #8C5C02; 
+    color: white;
+    /* text-decoration: underline; */
+    transition-duration: 0.4s;
+}
+
 
 .link-btn:hover  {
     /* margin:; */

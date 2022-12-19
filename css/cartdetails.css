@@ -30,13 +30,18 @@
 }
 
 .carHeader div {
-    width: 200px;
+    /* background-color: aqua; */
+    width: 230px;
     line-height: 30px;
+}
+.carChecked {
+    width: 100px !important;
 }
 
 .carHeader .carDetail {
-    width: 50%;
+    width: 40%;
 }
+
 
 .carBody {
     margin-top: 10px;
@@ -54,10 +59,30 @@
     object-position: center;
 }
 
+/* V1 至中 */
 .carDetail .name {
-    margin-left: 100px;
+    width: 100%;
+    margin-top: 20px;
+    /* background-color: #8C5C02; */
+}
+
+.carDetail .title {
+    width: 100%;
+    /* background-color: aquamarine; */
+}
+/* V2 */
+/* .carDetail .name {
+    padding-left: 70px;
+    text-align: left;
+    width: 100%;
     margin-top: 20px;
 }
+
+.carDetail .title {
+    padding-left: 70px;
+    width: 100%;
+    text-align: left;
+} */
 
 /* 購物車下層更多熱銷 */
 .toMoreHot {
@@ -82,6 +107,15 @@
     font-size: 20px;
     text-decoration:none;
     text-align: center;
+}
+.item>a>div {
+    /* color: #8C5C02; */
+    color: black;
+
+}
+.item>a>div:hover {
+    color: #F29F04;
+
 }
 .operate>i {
     cursor: pointer;
@@ -179,7 +213,7 @@
     width: 100%;
     height: 5px;
     position: absolute;
-    top: 50%;
+    top: 25%;
     left: 0;
     margin-top: 12px;
     background: #ccc;
@@ -193,6 +227,16 @@
     height:5px;
     /* 第一階段購物車清單改25% 訂購完成改100% */
     width: 25%;
+}
+
+.progressBarA {
+    z-index:18;
+    position: absolute;
+    display: inline-block;
+    background: rgb(242, 159, 4);
+    height:5px;
+    /* 第一階段購物車清單改25% 訂購完成改100% */
+    width: 23% !important ;
 }
 
 /* 第二朵花灰階 */

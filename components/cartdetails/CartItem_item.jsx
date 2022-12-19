@@ -43,14 +43,14 @@ function Product({
                 </div>
                 <div className="carDetail">
                     <div className="name" >{date}</div>
-                    <div className="title" style={{width:'100%'}}>{itemTitle}</div>
+                    <div className="title">{itemTitle}</div>
                 </div>
                 <div>$ <span className="itemPrice">{itemPrice}</span> </div>
                 <div className="count">
                     {/* <!-- 商品個別+- --> */}
-                    <p className="reduce"><input type="button" value="-" onClick={decrement} /></p>
+                    <span className="reduce"><input type="button" value="-" onClick={decrement} />&nbsp;</span>
                     <span className="countCar">{quantity}</span>
-                    <p className="add"><input type="button" value="+" onClick={increment} /></p>
+                    <span className="add">&nbsp;<input type="button" value="+" onClick={increment} /></span>
                 </div>
                 {/* <!-- 商品個別小計 --> */}
                 <div className="amount">

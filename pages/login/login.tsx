@@ -91,9 +91,11 @@ export const Login = (props) => {
             <div>
                 <div>
                     <h2>歡迎光臨，{session.user.name}</h2>
-                    <img src={session.user.image} alt="" style={{ borderRadius: "30px" }} />
+                    <img src={session.user.image} alt="" style={{ borderRadius: "30px", width:"100px",height:"100px" }} />
                 </div>
-                <button onClick={() => signOut()} >登出</button>
+                <br />
+                <div>登入成功，即將挑轉至會員中心...</div>
+                <button className="sub-btn" onClick={() => signOut()} >登出</button>
             </div>
 
         )
