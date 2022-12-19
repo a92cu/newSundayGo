@@ -18,6 +18,7 @@
     "fs": "^0.0.1-security",
     "html2canvas": "^1.4.1",
     "jquery": "^3.6.1",
+    "js-cookie": "^3.0.1",
     "mysql": "^2.18.1",
     "net": "^1.0.2",
     "next": "latest",
