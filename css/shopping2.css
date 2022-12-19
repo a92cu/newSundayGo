@@ -158,6 +158,8 @@ div span~input {
 .cartlist2 {
     float: right;
     margin-right: 100px;
+    margin-top: -200px;
+
 }
 
 .travelman textarea {
@@ -216,17 +218,20 @@ input[type="radio"]:checked div {
 
 /* 信用卡輸入框 */
 .carttoggle .cardint {
-    width: 70%;
+    width: 90%;
 }
 
-.carttoggle span {
-    margin-left: 10px;
-    float: left;
-    clear: both;
+.card1{
+    text-align:left;
+    letter-spacing: 3px;
+
 }
+
+
 
 .carttoggle {
     background-color: transparent;
+    margin-left: 21px;
 }
 
 
@@ -245,7 +250,9 @@ input[type="radio"]:checked div {
 
 .billtotal .carthomeProduct {
     width: 600px;
+    height: 200px;
     margin: 20px 0;
+    padding-top: 10px;
 }
 
 .billtotalleft {
@@ -281,11 +288,25 @@ input[type="radio"]:checked div {
 /* .carthrline {
     margin-left: 80px;
 } */
+.moneyicon{
+    position: relative;
+    color: #F29F04;  
+    left: 435px;
+}
+.moneyicon2{
+    position: relative;
+    color: #F29F04;  
+    left: 418px;
+}
+.moneyicon3{
+    position: relative;
+    color: #F29F04;  
+    left: 350px;
+}
 
-/* 
 .carthrline+span {
     text-align: left;
-} */
+} 
 
 
 .carthrline~hr,
@@ -317,35 +338,41 @@ input[type="radio"]:checked div {
 /* 回饋金 */
 
 .billcount{
-    width: 300px;
-    background-color: aqua;
+    /* width: 300px; */
     margin-left: 435px;
     color: #F29F04;
     text-align: right;
+    position: relative;
+    right: -40px;
 }
 
-.paybill2,
-.paybill1 {
+.paybill2 {
     margin-left: 440px;
     color: #F29F04;
     text-align: right;
 }
 
 .prdtit3 {
-    margin-left: 370px;
+    margin-left: 390px;
     color: #F29F04;
     text-align: right;
 }
 
-.prdtit4 {
-    margin-top: 200px;
-}
+
 
 .paybill1 {
-    margin-left: 450px;
-    text-align: left;
-}
+    margin-left: 460px;
+    text-align: right;
+    color: #F29F04;
 
+
+}
+/* 付款按鈕 */
+.prdtit4 {
+position: relative;
+right: -50px;
+top:20px
+}
 
 /* nth-child(3) */
 /* .paybill+span+span{
@@ -471,7 +498,7 @@ input:active {
     height: 180px;
     width: 50%;
     /* width: 100px; */
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     /* margin-left: 300px; */
 
     /* float: right; */

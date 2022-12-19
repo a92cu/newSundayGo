@@ -62,13 +62,13 @@ export default function Billtotal(itemList) {
                                                 {i.itemFilter2}
                                             </div>
                                             <div className="carttagplace2">
-                                                活動日期 ：{i.date}
+                                                活動日期：{i.date}
                                                 <br />
-                                                <span>人數 : 1人</span>
+                                                <span>人數&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 1人</span>
 
                                             </div>
                                             <div className="carttagplace3">
-                                                商品數量:{i.count}
+                                                商品數量：{i.count}
                                             </div>
                                         </div>
                                     </div>
@@ -77,19 +77,19 @@ export default function Billtotal(itemList) {
                         </div>
                         {/* 商品迴圈結束 */}
                         <div className="billtotalright">
-                            <span className="carthrline paymoney3">總金額  </span>
+                            <span className="carthrline paymoney3">總金額</span>
                             {/* {itemList.itemList.map((i) => */}
-
-                            <span className="paybill1"><span>TWD</span>&nbsp;&nbsp;{total}</span>
+                            <span className="moneyicon">TWD</span>
+                            <span className="paybill1">&nbsp;&nbsp;{total}</span>
                             {/* )} */}
                             <hr />
                             <span className="carthrline paymoney2">點數折抵</span>
- 
-                            <span className="billcount "> <span>TWD</span> 0</span>
+                            <span className="moneyicon2">TWD</span>
+                            <span className="billcount ">0</span>
                             <hr />
                             <span className="carthrline paymoney">支付金額</span>
-
-                            <span className="paybill2"><span>TWD</span>&nbsp;&nbsp;&nbsp;{total}</span>
+                            <span className="moneyicon2">TWD</span>
+                            <span className="paybill2">&nbsp;&nbsp;&nbsp;{total}</span>
                             <hr />
                             <Paybill />
                         </div>

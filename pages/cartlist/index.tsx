@@ -300,7 +300,7 @@ function Paylist() {
                                 </label>
                             </li>
                             <li className="payway">
-                                <label htmlFor="cardeit">
+                                <label className="payway2" htmlFor="cardeit">
 
                                     <input type="radio" id="cardeit" name="payway" />
                                     <span className="">信用卡/簽帳金融卡</span>
@@ -310,20 +310,21 @@ function Paylist() {
                                 </label>
                                 <br />
                                 <div className="carttoggle">
-                                    <span>
+                                    <div className="card1">
                                         信用卡號碼
                                         <input type="text" className="cardint" pattern="[0-9]{12}" placeholder="0000 0000 0000" required />
-                                    </span>
-                                    <br />
-                                    <span>
+                                    </div>
+                            
+                                    
+                                    <div className="card1">
                                         有效期限
                                         <input type="text" className="cardint" name="" placeholder="MM/YY" required />
-                                    </span>
-                                    <br />
-                                    <span>
+                                    </div>
+                                
+                                    <div className="card1">
                                         背面末3碼
                                         <input type="text" className="cardint" placeholder="CVC/CCV" />
-                                    </span>
+                                    </div>
                                 </div>
                             </li>
                             <li className="payway">

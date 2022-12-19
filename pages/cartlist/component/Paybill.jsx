@@ -48,7 +48,10 @@ export default function Paybill() {
             </div> */}
             
             <div className="prdtit">  
-            <span className="prdtit2 carthrline">訂單完成後回饋金 </span><span className="prdtit3">TWD &nbsp;&nbsp;&nbsp;{Math.floor(total*0.02)}</span>
+            <span className="prdtit2 carthrline">訂單完成後回饋金 </span>
+            <span className="moneyicon3">TWD</span>
+
+            <span className="prdtit3"> &nbsp;&nbsp;&nbsp;{Math.floor(total*0.02)}</span>
             </div>
             <hr />
             <input className="prdtit4" type="button" value="確認付款" id="billok" onClick={favIdsend} />
