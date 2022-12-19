@@ -2,7 +2,7 @@ import Image from "next/image";
 import CountComplete from "../../components/cartdetails/CountComplete.jsx"
 function Footer() {
   return (
-    <div className="footer">
+    <div className="footer" style={{ position: "fixed" }}>
       <div className="footerCenter">
         <div className="footerBody">
           <ul>
