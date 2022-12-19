@@ -156,10 +156,8 @@ div span~input {
 }
 
 .cartlist2 {
-    float: right;
+    float: right top;
     margin-right: 100px;
-    margin-top: -200px;
-
 }
 
 .travelman textarea {
