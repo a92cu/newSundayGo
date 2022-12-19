@@ -217,8 +217,6 @@ export const Placezone = (dateList, itemList2) => {
 
     }, [])
 
-
-
     async function fetchdata() {
         await axios("/api/home/homepage")
 
@@ -228,6 +226,11 @@ export const Placezone = (dateList, itemList2) => {
                     var call = Buffer.from(img, 'base64').toString('ascii');
                     var replaceCallAll = call.replaceAll('\x00', '');
                     i.itemImgUrl = replaceCallAll;
+                    //  轉換時間
+                    var startDate=format(new Date(i.itemStartDate),"yyyy-MM-dd");
+                    var EndDate=format(new Date(i.itemEndDate),"yyyy-MM-dd");
+                    i.itemStartDate=startDate;
+                    i.itemEndDate=EndDate
                 })
                 console.log(result.data)
                 setlist(result.data.data);
@@ -271,6 +274,10 @@ export const Placezone = (dateList, itemList2) => {
                     var call2 = Buffer.from(img2, 'base64').toString('ascii');
                     var replaceCallAll2 = call2.replaceAll('\x00', '');
                     i.itemImgUrl = replaceCallAll2;
+                    var startDate=format(new Date(i.itemStartDate),"yyyy-MM-dd");
+                    var EndDate=format(new Date(i.itemEndDate),"yyyy-MM-dd");
+                    i.itemStartDate=startDate;
+                    i.itemEndDate=EndDate
                 })
                 // console.log(3, result.data)
                 setlist(result2.data.data);
@@ -291,6 +298,10 @@ export const Placezone = (dateList, itemList2) => {
                     var call2 = Buffer.from(img2, 'base64').toString('ascii');
                     var replaceCallAll2 = call2.replaceAll('\x00', '');
                     i.itemImgUrl = replaceCallAll2;
+                    var startDate=format(new Date(i.itemStartDate),"yyyy-MM-dd");
+                    var EndDate=format(new Date(i.itemEndDate),"yyyy-MM-dd");
+                    i.itemStartDate=startDate;
+                    i.itemEndDate=EndDate
                 })
                 // console.log(3, result.data)
                 setlist(result2.data.data);
@@ -306,6 +317,10 @@ export const Placezone = (dateList, itemList2) => {
                     var call2 = Buffer.from(img2, 'base64').toString('ascii');
                     var replaceCallAll2 = call2.replaceAll('\x00', '');
                     i.itemImgUrl = replaceCallAll2;
+                    var startDate=format(new Date(i.itemStartDate),"yyyy-MM-dd");
+                    var EndDate=format(new Date(i.itemEndDate),"yyyy-MM-dd");
+                    i.itemStartDate=startDate;
+                    i.itemEndDate=EndDate
                 })
                 // console.log(3, result.data)
                 setlist(result2.data.data);
@@ -567,7 +582,8 @@ export const Placezone = (dateList, itemList2) => {
                                         <span className="fa fa-calendar-o" aria-hidden="true"></span>
                                         <span>
                                             {/* 最早可預訂日 ：{item.itemStartDate} */}
-                                            銷售期間 ：{dateList.dateList[0].itemStartDate}至{dateList.dateList[0].itemEndDate}                                        </span>
+                                            銷售期間 ：{item.itemStartDate}至{item.itemEndDate}                                
+                                            </span> 
                                     </div>
                                     {/* <!-- 星星評價 --> */}
                                     <div className="prostar">
