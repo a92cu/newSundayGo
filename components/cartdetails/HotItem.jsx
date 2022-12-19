@@ -37,7 +37,7 @@ const imgstyles = {
     "objectFit": "cover",
     "objectPosition": "center"
 }
-function HotItem(props) {
+export default function HotItem(props) {
     // 如果今天不是用getStaticProps就走下方
     // let [HotItemData, setHotItemData] = useState([]);
     // // useEffect渲染會有一個問題，在你抓資料的同時他在渲染畫面，導致資料進不去畫面
@@ -86,4 +86,3 @@ function HotItem(props) {
     )
 }
 
-export default HotItem;
