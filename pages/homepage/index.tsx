@@ -12,8 +12,6 @@ import Mapselect from "../../components/homepage/Taiwanmap";
 import ReactStars from 'react-stars';
 import { useRouter } from 'next/router';
 import $ from 'jquery';
-import { BACKGROUND_CLIP } from "html2canvas/dist/types/css/property-descriptors/background-clip";
-
 
 //   header
 function Header() {

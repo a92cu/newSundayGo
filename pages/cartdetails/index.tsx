@@ -9,7 +9,7 @@ function Header() {
     <div className="header">
       <img
         src="./images/群組 1.png"
-        alt=""
+        alt="logo"
         style={{ width: 90, top: -8, position: "relative" }}
       />
       <div className="header-right">
@@ -21,7 +21,7 @@ function Header() {
         <a href="#">
           <img src="./images/cart.png" style={{ width: 25 }} />
         </a>
-        <a href="#">會員中心</a>
+        <a href="/memberCenter">會員中心</a>
         <a href="#divOne" className="loginbutton">
           登出
         </a>
