@@ -96,28 +96,14 @@ function Header() {
     <div className="header">
       <img
         src="../images/群組 1.png"
+        onClick={() => Router.push("/homepage")}
         alt=""
         style={{ width: 90, top: -8, position: "relative" }}
       />
       <div className="header-right">
-        <a href="#">美食</a>
-        <a href="#">景點</a>
-        <a href="#">活動</a>
-        <a href="#">住宿</a>
-        <a href="#">交通</a>
-        <a onClick={() => Router.push("/cartdetails")}>
-          <img src="/images/cart.png" style={{ width: 25 }} />
-        </a>
-        <a href="#divOne" className="loginbutton">
-          登出
+        <a href="#divOne" className="loginbutton">廠商登出
         </a>
       </div>
-      <form className="example" action="">
-        <input type="text" placeholder="Search.." name="search" />
-        <button type="submit">
-          <i className="fa fa-search"></i>
-        </button>
-      </form>
     </div>
   );
 }
