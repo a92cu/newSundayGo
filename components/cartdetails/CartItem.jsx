@@ -5,15 +5,15 @@ import Product from "./CartItem_item.jsx";
 var CartItem = (props) => {
     // console.log(props.shopItemList)
     let itemarray = [];
-    // 停止輪迴
-    let [stopState, setstopState] = useState(false);
+    // 如果發生可以停止輪迴
+    // let [stopState, setstopState] = useState(false);
     // 讓getshopitem()可以動作
     const [shoppingcar, setshoppingcar] = useState([]);
 
     const [totalCash, setTotalCash] = useState(0);  // totalCash預設值為0
 
     // 還是有小bug
-    let calculate = () => {
+    let calculate = async () => {
         let totalPrice=document.querySelectorAll('.itemTotal')
         let total=0;
         totalPrice.forEach((e)=>{
@@ -39,8 +39,8 @@ var CartItem = (props) => {
         // console.log(itemarray);
         calculate()
         // 停止迴圈
-        setstopState(true)
-    }, [stopState])
+        // setstopState(true)
+    }, [])
 
     // 處理撈取的資料
     function getshopitem(id, date, count) {
@@ -92,6 +92,8 @@ var CartItem = (props) => {
     // 做全選框 -- 成功 (用改資料的方式)
     function handleOnChange(e) {
         const { value, checked } = e.target;
+        console.log(value,checked,e.target)
+        calculate();// 計算全部價錢
         if (value === "on") {
             let doAllCheck = shoppingcar.map((test) => {
                 return { ...test, isCheck: checked };
@@ -103,7 +105,7 @@ var CartItem = (props) => {
             );
             setshoppingcar(doAllCheck);
         }
-        calculate();// 計算全部價錢
+        
     }
 
     // 將商品丟進localStorage 前往結帳頁面
@@ -118,10 +120,10 @@ var CartItem = (props) => {
                 let count = parseInt(element.parentElement.nextSibling.nextSibling.nextSibling.nextSibling.children[1].innerHTML);
                 let price = parseInt(element.parentElement.nextSibling.nextSibling.nextSibling.children[0].innerHTML);
                 if (element.checked) {
-                    console.log(element.value) // itemId
-                    console.log(element.parentElement.nextSibling.nextSibling.nextSibling.nextSibling.children[1].innerHTML) // count
-                    console.log(element.parentElement.nextSibling.nextSibling.children[0].innerHTML) // date
-                    console.log(element.parentElement.nextSibling.nextSibling.nextSibling.children[0].innerHTML);// 價錢
+                    // console.log(element.value) // itemId
+                    // console.log(element.parentElement.nextSibling.nextSibling.nextSibling.nextSibling.children[1].innerHTML) // count
+                    // console.log(element.parentElement.nextSibling.nextSibling.children[0].innerHTML) // date
+                    // console.log(element.parentElement.nextSibling.nextSibling.nextSibling.children[0].innerHTML);// 價錢
                     setshopcaritem(Id, date, count, price);
                 }
             })
