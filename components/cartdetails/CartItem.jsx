@@ -215,7 +215,7 @@ var CartItem = (props) => {
                 <a href="#" onClick={gotopay}>前往結帳</a>
             </div>
             <div className="continueBtn">
-                <a href="/#">繼續購物
+                <a href="/homepage">繼續購物
                     <i className="fa fa-angle-double-right" aria-hidden="true"></i>
                 </a>
             </div>
