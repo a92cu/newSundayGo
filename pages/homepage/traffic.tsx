@@ -93,9 +93,23 @@ function Footer() {
 export const Traffic = (dateList) => {
     const router = useRouter();
     var [homepagelist, setlist] = useState([]);
+    var [foodlist, setfoodlist] = useState([]);
     // useEffect(() => fetchdata(), []);
+    const [isActive, setActive] = useState("false");
+    const [isActive2, setActive2] = useState("false");
+    // const [show, setShow] = useState(false);
+
+
+    const handleToggle = () => {
+        setActive(!isActive);
+    };
+    const handleToggle2 = () => {
+        setActive2(!isActive2);
+    };
+
     useEffect(() => {
         fetchdata();
+        fetchdata2();
         // $(function (){
 
 
@@ -134,6 +148,8 @@ export const Traffic = (dateList) => {
             // $(this)(".filterBtn").hide()
             $(this).parent('button').hide()
         });
+
+
     }, [])
     async function fetchdata() {
         await axios("/api/home/traffic")
@@ -147,6 +163,24 @@ export const Traffic = (dateList) => {
                 })
                 console.log(result.data)
                 setlist(result.data.data);
+                //
+                //setlist(result.data))
+            })
+
+    }
+
+    async function fetchdata2() {
+        await axios("/api/home/food")
+
+            .then((result) => {
+                result.data.data.forEach((i) => {
+                    var img = Buffer.from(i.itemImgUrl).toString('base64');
+                    var call = Buffer.from(img, 'base64').toString('ascii');
+                    var replaceCallAll = call.replaceAll('\x00', '');
+                    i.itemImgUrl = replaceCallAll;
+                })
+                console.log(result.data)
+                setfoodlist(result.data.data);
                 //
                 //setlist(result.data))
             })
@@ -178,6 +212,36 @@ export const Traffic = (dateList) => {
         // })
     }
     //POST結束
+
+    //篩選隱藏
+    function filtercar(e) {
+        var ck2 = document.querySelectorAll('.filfood');
+        var car2 = document.querySelectorAll('.car');
+        car2.forEach((i) => {
+            // var ck1 = document.querySelectorAll('[name="filcar"]:checked');
+            var ck1 = document.querySelectorAll('.filcar');
+            // i[0].style.visibility = "hidden";
+            // if (ck1) {
+            //     console.log(11, 'hi')
+            //     i.style.display = "none";
+            // } else {
+            //     i.style.display = "block";
+            //     console.log(12, 'hello')
+            // }
+            // ck1.classList.toggle("hidecar");
+        })
+        //    console.log(car2[0].hidden='true')
+        // car2[0].style.
+        alert('ok')
+        // car1.addEventListener("change",function(){
+        // })
+
+
+
+
+
+    }
+
     //按星星排序
     const restar = () => {
         axios(`/api/sort/traffic/star`)
@@ -250,7 +314,10 @@ export const Traffic = (dateList) => {
 
 
     return (
-        <div style={{ width: '1280px', margin: '0 auto' }} >
+        <div style={{ width: '1280px', margin: '10px auto' }} >
+             <a href="#" className="retopa" style={{ display: "block" }}>
+                <div id="retop">TOP</div>
+            </a>
             {/* <!-- 主要篩選區 --> */}
             <div className="hometop" >
                 {/* <!-- 左側篩選欄 --> */}
@@ -337,7 +404,7 @@ export const Traffic = (dateList) => {
                             商品類別篩選
                             <br />
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />美食
+                                <input type="checkbox" className="allcheck filfood" onChange={handleToggle2} />美食
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />餐廳
@@ -345,7 +412,7 @@ export const Traffic = (dateList) => {
                                 <input type="checkbox" name="citys" />甜點、飲料
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />景點
+                                <input type="checkbox" className="allcheck" onChange={handleToggle} />景點
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />觀光景點
@@ -354,7 +421,7 @@ export const Traffic = (dateList) => {
                             </div>
 
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />活動
+                                <input type="checkbox" className="allcheck" onChange={handleToggle} />活動
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />戶外活動
@@ -364,7 +431,7 @@ export const Traffic = (dateList) => {
                             </div>
 
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />住宿
+                                <input type="checkbox" className="allcheck" onChange={handleToggle} />住宿
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />民宿
@@ -373,10 +440,10 @@ export const Traffic = (dateList) => {
 
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" checked />交通
+                                <input type="checkbox" className="allcheck filcar" name="filcar" onChange={handleToggle} checked/>交通
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" checked />租車
+                                <input type="checkbox" name="citys" />租車
                                 <br />
                                 <input type="checkbox" name="citys" checked />飛機
                                 <br />
@@ -437,8 +504,9 @@ export const Traffic = (dateList) => {
                     </div >
                     <div id="content" className="content">
                         {/* <!-- 商品顯示主體 --> */}
+                        {/* 交通 */}
                         {homepagelist.map((item, index) =>
-                            <div className="homeProduct" >
+                            <div className={`homeProduct car ${isActive ? "showcar" : "hidecar"}`}>
                                 {/* <!-- 圖片框 --> */}
                                 <div className="picPlace">
 
@@ -448,6 +516,314 @@ export const Traffic = (dateList) => {
                                 {/* <!-- 介紹欄 --> */}
                                 <div className="intro">
                                     <b>{item.itemTitle}</b>
+                                    {/* <!-- 商品標題 --> */}
+                                    <button className="introp collectHeart" onClick={() => favIdsend(item.itemId)} style={{ zIndex: '99' }}>
+                                        {/* <!-- 愛心圖案 --> */}
+
+                                        <img className="introimg" src="/images/heart.png"
+                                            style={{ width: '20px', marginLeft: '130px' }} alt="" />
+
+                                    </button>
+
+                                    {/* 商品標題 */}
+                                    <p className="iteminfo">
+                                        {item.itemInfo}
+
+                                    </p>
+                                    {/* <!-- 地區標籤 --> */}
+                                    <div>
+                                        <img src="/images/place.jpg" style={{ width: '20px', float: 'left' }} alt="" />
+                                        {/* <span className="fa fa-tags" aria-hidden="true"></span>  */}
+                                        <div className="tagplace">
+                                            {item.itemFilter1}
+                                        </div>
+                                        <div className="tagplace">
+                                            {item.itemFilter2}
+                                        </div>
+
+                                        <div className="tagplace">
+                                            {item.itemFilter3}
+                                        </div>
+                                        <div className="tagplace">
+                                            {item.itemFilter4}
+                                        </div>
+                                        <span className="fa fa-calendar-o" aria-hidden="true"></span>
+                                        <span>
+                                            {/* 最早可預訂日 ：{item.itemListedDate} */}
+                                            銷售期間 ：{dateList.dateList[0].itemStartDate}至{dateList.dateList[0].itemEndDate}
+                                        </span>
+                                    </div>
+                                    {/* <!-- 星星評價 --> */}
+                                    <div className="prostar">
+                                        <div className="collectstar">
+                                            <ReactStars
+                                                Rating
+                                                value={item.itemTotalStar}
+                                                edit={false} />
+
+                                            <div>({item.itemTotalStar})</div>
+                                        </div>
+
+                                        <div className="homepri">
+                                            <p>TWD {item.itemPrice}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* <!-- 星星圖樣 --> */}
+                                    {/* <div className="star" style="background-color: red;">
+                                  <svg className="homestar" height="210" width="550">
+                                      <polygon points="100,10 40,198 190,78 10,78 160,198"
+                                          style="fill:#FAEF8B;stroke-width:5;fill-rule:nonzero;" />
+                                      Sorry, your browser does not support inline SVG.
+                                  </svg>
+                              </div>  */}
+                                </div>
+
+                            </div>
+                        )}
+                        {/* 美食 */}
+                        {foodlist.map((item, index) =>
+                            <div className={`homeProduct food ${isActive2 ? "hidecar" : "showcar"}`}>
+                                {/* <!-- 圖片框 --> */}
+                                <div className="picPlace">
+
+                                    <img className="proPic" src={item.itemImgUrl} alt="" onClick={() => router.push(`/item/${item.itemId}`)} />
+                                    {/* ))} */}
+                                </div>
+                                {/* <!-- 介紹欄 --> */}
+                                <div className="intro">
+                                    <b>{item.itemTitle}</b>
+                                    {/* <!-- 商品標題 --> */}
+                                    <button className="introp collectHeart" onClick={() => favIdsend(item.itemId)} style={{ zIndex: '99' }}>
+                                        {/* <!-- 愛心圖案 --> */}
+
+                                        <img className="introimg" src="/images/heart.png"
+                                            style={{ width: '20px', marginLeft: '130px' }} alt="" />
+
+                                    </button>
+
+                                    {/* 商品標題 */}
+                                    <p className="iteminfo">
+                                        {item.itemInfo}
+
+                                    </p>
+                                    {/* <!-- 地區標籤 --> */}
+                                    <div>
+                                        <img src="/images/place.jpg" style={{ width: '20px', float: 'left' }} alt="" />
+                                        {/* <span className="fa fa-tags" aria-hidden="true"></span>  */}
+                                        <div className="tagplace">
+                                            {item.itemFilter1}
+                                        </div>
+                                        <div className="tagplace">
+                                            {item.itemFilter2}
+                                        </div>
+
+                                        <div className="tagplace">
+                                            {item.itemFilter3}
+                                        </div>
+                                        <div className="tagplace">
+                                            {item.itemFilter4}
+                                        </div>
+                                        <span className="fa fa-calendar-o" aria-hidden="true"></span>
+                                        <span>
+                                            {/* 最早可預訂日 ：{item.itemListedDate} */}
+                                            銷售期間 ：{dateList.dateList[0].itemStartDate}至{dateList.dateList[0].itemEndDate}
+                                        </span>
+                                    </div>
+                                    {/* <!-- 星星評價 --> */}
+                                    <div className="prostar">
+                                        <div className="collectstar">
+                                            <ReactStars
+                                                Rating
+                                                value={item.itemTotalStar}
+                                                edit={false} />
+
+                                            <div>({item.itemTotalStar})</div>
+                                        </div>
+
+                                        <div className="homepri">
+                                            <p>TWD {item.itemPrice}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* <!-- 星星圖樣 --> */}
+                                    {/* <div className="star" style="background-color: red;">
+                                  <svg className="homestar" height="210" width="550">
+                                      <polygon points="100,10 40,198 190,78 10,78 160,198"
+                                          style="fill:#FAEF8B;stroke-width:5;fill-rule:nonzero;" />
+                                      Sorry, your browser does not support inline SVG.
+                                  </svg>
+                              </div>  */}
+                                </div>
+
+                            </div>
+                        )}
+                        {/* 住宿 */}
+                        {homepagelist.map((item, index) =>
+                            <div className={`homeProduct car ${isActive ? "hidecar" : "showcar"}`}>
+                                {/* <!-- 圖片框 --> */}
+                                <div className="picPlace">
+
+                                    <img className="proPic" src={item.itemImgUrl} alt="" onClick={() => router.push(`/item/${item.itemId}`)} />
+                                    {/* ))} */}
+                                </div>
+                                {/* <!-- 介紹欄 --> */}
+                                <div className="intro">
+                                    <b>{item.itemTitle} food</b>
+                                    {/* <!-- 商品標題 --> */}
+                                    <button className="introp collectHeart" onClick={() => favIdsend(item.itemId)} style={{ zIndex: '99' }}>
+                                        {/* <!-- 愛心圖案 --> */}
+
+                                        <img className="introimg" src="/images/heart.png"
+                                            style={{ width: '20px', marginLeft: '130px' }} alt="" />
+
+                                    </button>
+
+                                    {/* 商品標題 */}
+                                    <p className="iteminfo">
+                                        {item.itemInfo}
+
+                                    </p>
+                                    {/* <!-- 地區標籤 --> */}
+                                    <div>
+                                        <img src="/images/place.jpg" style={{ width: '20px', float: 'left' }} alt="" />
+                                        {/* <span className="fa fa-tags" aria-hidden="true"></span>  */}
+                                        <div className="tagplace">
+                                            {item.itemFilter1}
+                                        </div>
+                                        <div className="tagplace">
+                                            {item.itemFilter2}
+                                        </div>
+
+                                        <div className="tagplace">
+                                            {item.itemFilter3}
+                                        </div>
+                                        <div className="tagplace">
+                                            {item.itemFilter4}
+                                        </div>
+                                        <span className="fa fa-calendar-o" aria-hidden="true"></span>
+                                        <span>
+                                            {/* 最早可預訂日 ：{item.itemListedDate} */}
+                                            銷售期間 ：{dateList.dateList[0].itemStartDate}至{dateList.dateList[0].itemEndDate}
+                                        </span>
+                                    </div>
+                                    {/* <!-- 星星評價 --> */}
+                                    <div className="prostar">
+                                        <div className="collectstar">
+                                            <ReactStars
+                                                Rating
+                                                value={item.itemTotalStar}
+                                                edit={false} />
+
+                                            <div>({item.itemTotalStar})</div>
+                                        </div>
+
+                                        <div className="homepri">
+                                            <p>TWD {item.itemPrice}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* <!-- 星星圖樣 --> */}
+                                    {/* <div className="star" style="background-color: red;">
+                                  <svg className="homestar" height="210" width="550">
+                                      <polygon points="100,10 40,198 190,78 10,78 160,198"
+                                          style="fill:#FAEF8B;stroke-width:5;fill-rule:nonzero;" />
+                                      Sorry, your browser does not support inline SVG.
+                                  </svg>
+                              </div>  */}
+                                </div>
+
+                            </div>
+                        )}
+                        {/* 景點 */}
+                        {homepagelist.map((item, index) =>
+                            <div className={`homeProduct car ${isActive ? "hidecar" : "showcar"}`}>
+                                {/* <!-- 圖片框 --> */}
+                                <div className="picPlace">
+
+                                    <img className="proPic" src={item.itemImgUrl} alt="" onClick={() => router.push(`/item/${item.itemId}`)} />
+                                    {/* ))} */}
+                                </div>
+                                {/* <!-- 介紹欄 --> */}
+                                <div className="intro">
+                                    <b>{item.itemTitle} food</b>
+                                    {/* <!-- 商品標題 --> */}
+                                    <button className="introp collectHeart" onClick={() => favIdsend(item.itemId)} style={{ zIndex: '99' }}>
+                                        {/* <!-- 愛心圖案 --> */}
+
+                                        <img className="introimg" src="/images/heart.png"
+                                            style={{ width: '20px', marginLeft: '130px' }} alt="" />
+
+                                    </button>
+
+                                    {/* 商品標題 */}
+                                    <p className="iteminfo">
+                                        {item.itemInfo}
+
+                                    </p>
+                                    {/* <!-- 地區標籤 --> */}
+                                    <div>
+                                        <img src="/images/place.jpg" style={{ width: '20px', float: 'left' }} alt="" />
+                                        {/* <span className="fa fa-tags" aria-hidden="true"></span>  */}
+                                        <div className="tagplace">
+                                            {item.itemFilter1}
+                                        </div>
+                                        <div className="tagplace">
+                                            {item.itemFilter2}
+                                        </div>
+
+                                        <div className="tagplace">
+                                            {item.itemFilter3}
+                                        </div>
+                                        <div className="tagplace">
+                                            {item.itemFilter4}
+                                        </div>
+                                        <span className="fa fa-calendar-o" aria-hidden="true"></span>
+                                        <span>
+                                            {/* 最早可預訂日 ：{item.itemListedDate} */}
+                                            銷售期間 ：{dateList.dateList[0].itemStartDate}至{dateList.dateList[0].itemEndDate}
+                                        </span>
+                                    </div>
+                                    {/* <!-- 星星評價 --> */}
+                                    <div className="prostar">
+                                        <div className="collectstar">
+                                            <ReactStars
+                                                Rating
+                                                value={item.itemTotalStar}
+                                                edit={false} />
+
+                                            <div>({item.itemTotalStar})</div>
+                                        </div>
+
+                                        <div className="homepri">
+                                            <p>TWD {item.itemPrice}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* <!-- 星星圖樣 --> */}
+                                    {/* <div className="star" style="background-color: red;">
+                                  <svg className="homestar" height="210" width="550">
+                                      <polygon points="100,10 40,198 190,78 10,78 160,198"
+                                          style="fill:#FAEF8B;stroke-width:5;fill-rule:nonzero;" />
+                                      Sorry, your browser does not support inline SVG.
+                                  </svg>
+                              </div>  */}
+                                </div>
+
+                            </div>
+                        )}
+                        {/* 活動 */}
+                        {homepagelist.map((item, index) =>
+                            <div className={`homeProduct car ${isActive ? "hidecar" : "showcar"}`}>
+                                {/* <!-- 圖片框 --> */}
+                                <div className="picPlace">
+
+                                    <img className="proPic" src={item.itemImgUrl} alt="" onClick={() => router.push(`/item/${item.itemId}`)} />
+                                    {/* ))} */}
+                                </div>
+                                {/* <!-- 介紹欄 --> */}
+                                <div className="intro">
+                                    <b>{item.itemTitle} food</b>
                                     {/* <!-- 商品標題 --> */}
                                     <button className="introp collectHeart" onClick={() => favIdsend(item.itemId)} style={{ zIndex: '99' }}>
                                         {/* <!-- 愛心圖案 --> */}
@@ -538,12 +914,16 @@ export const Traffic = (dateList) => {
 //homepage 畫面路由
 export default function homepage(props) {
     const [dateList, setdateList] = useState(props.dateList)
+    
 
     return (
         <>
             <Header />
 
-            <Traffic dateList={dateList} />
+            <Traffic 
+            dateList={dateList}
+            
+            />
 
             <Footer />
             {/* <Script src="/js/home.js" /> */}
@@ -556,16 +936,22 @@ export async function getStaticProps({ params }) {
     // const sq1 = 'SELECT * FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and itemFilter3 = "美食";';
     const sq2 = 'SELECT itemFilter2 FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;';
     const sq3 = `SELECT  itemListedDate, itemStartDate, itemEndDate FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and itemFilter3 = "美食";`;
+    // const sq4 = 'SELECT  item.itemTitle,item.itemInfo, item.itemFilter1,item.itemFilter2,item.itemFilter3,item.itemFilter4,item.itemTotalStar,item.itemPrice itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and itemFilter3 = "美食";';
     const itemList: any = [];
+    // const itemfood: any = [];
     const dateList: any = [];
+
 
     // itemTitle itemFilter2 itemImgUrl
     const imgListRaw: any = await runSQL(sq1); // 所有項目
+   
     const dateListRaw: any = await runSQL(sq3); // 日期
     imgListRaw.forEach((item: any) => {
         item.itemImgUrl = new TextDecoder("utf-8").decode(item.itemImgUrl);
         itemList.push({ ...item });
     });
+
+  
     dateListRaw.forEach((item: any) => {
         item.itemListedDate = format(item.itemListedDate, "yyyy-MM-dd");
         item.itemStartDate = format(item.itemStartDate, "yyyy-MM-dd");
@@ -579,7 +965,8 @@ export async function getStaticProps({ params }) {
         props: {
             //所有項目
             itemList,
-            dateList
+            dateList,
+          
         },
     };
 

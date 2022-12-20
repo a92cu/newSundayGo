@@ -247,7 +247,10 @@ export const Play = (dateList) => {
     });
 
     return (
-        <div style={{ width: '1280px', margin: '0 auto' }} >
+        <div style={{ width: '1280px', margin: '10px auto' }} >
+             <a href="#" className="retopa" style={{ display: "block" }}>
+                <div id="retop">TOP</div>
+            </a>
             {/* <!-- 主要篩選區 --> */}
             <div className="hometop" >
                 {/* <!-- 左側篩選欄 --> */}

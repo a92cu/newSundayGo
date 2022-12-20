@@ -407,60 +407,60 @@ export const Mapselect = () => {
     return (
         <main style={{ width: '1280px', margin: '0 auto' }}>
             {/* 左邊圖片 */}
-          
-            <div id="app" style={{  width: '300px' }} >
+
+            <div id="app" style={{ width: '300px' }} >
                 {/* <div className="title_area">
                     {/* <h1>Taiwan<br>Weather Map<br></h1> */}
                 {/* <hr /> */}
                 {/* </div> */}
                 <div className="homecard2" style={{ width: '300px', }}>
-                <img className='mapimg2' src="./images/flower.png" alt="" />
-                <div class="homecontainer item2">
-                    <h4><b></b></h4>
+                    <img className='mapimg2' src="./images/flower.png" alt="" />
+                    <div class="homecontainer item2">
+                        <h4><b></b></h4>
+                    </div>
+                    <div style={{ marginLeft: '50px', width: '150px', float: 'right' }}>
+                        <ReactStars
+                            Rating
+                            value={5}
+                            edit={false} />
+                    </div>
+                    <p className='t2' style={{ width: '200px' }} ></p>
                 </div>
-                <div style={{ marginLeft: '50px', width: '150px', float: 'right' }}>
-                    <ReactStars
-                        Rating
-                        value={5}
-                        edit={false} />
+                <div className="homecard" style={{ width: '300px', }}>
+                    <img className='mapimg1' src="./images/flower.png" alt="" />
+                    <div class="homecontainer item1">
+                        <h4><b></b></h4>
+                    </div>
+                    <div style={{ marginLeft: '50px', width: '150px', float: 'right' }}>
+                        <ReactStars
+                            Rating
+                            value={5}
+                            edit={false} />
+                    </div>
+                    <p className='t1' style={{ width: '200px' }} ></p>
                 </div>
-                <p className='t2' style={{ width: '200px' }} ></p>
+                <div className="homecard3" style={{ width: '300px', }}>
+                    <img className='mapimg3' src="./images/flower.png" alt="" />
+                    <div class="homecontainer item3">
+                        <h4><b></b></h4>
+                    </div>
+                    <div style={{ marginLeft: '50px', width: '150px', float: 'right' }}>
+                        <ReactStars
+                            Rating
+                            value={5}
+                            edit={false} />
+                    </div>
+                    <p className='t3' style={{ width: '200px' }} ></p>
+                </div>
+
+
+
+
+
+
             </div>
-            <div className="homecard" style={{ width: '300px', }}>
-                <img className='mapimg1' src="./images/flower.png" alt="" />
-                <div class="homecontainer item1">
-                    <h4><b></b></h4>
-                </div>
-                <div style={{ marginLeft: '50px', width: '150px', float: 'right' }}>
-                    <ReactStars
-                        Rating
-                        value={5}
-                        edit={false} />
-                </div>
-                <p className='t1' style={{ width: '200px' }} ></p>
-            </div>
-            <div className="homecard3" style={{ width: '300px', }}>
-                <img className='mapimg3' src="./images/flower.png" alt="" />
-                <div class="homecontainer item3">
-                    <h4><b></b></h4>
-                </div>
-                <div style={{ marginLeft: '50px', width: '150px', float: 'right' }}>
-                    <ReactStars
-                        Rating
-                        value={5}
-                        edit={false} />
-                </div>
-                <p className='t3' style={{ width: '200px' }} ></p>
-            </div>
 
-
-
-
-
-
-            </div>
-
-            <div style={{ width: '800px', zIndex: '20', display: 'inline', marginLeft: '0' }}>
+            <div className='taimap' style={{ width: '800px', zIndex: '20', display: 'inline', marginLeft: '0' }}>
                 <svg width="500" height="1200" id="cf503461-00bd-459a-aeb5-062ebc913211" data-name="圖層 1" xmlns="http://www.w3.org/2000/svg" s
                     viewBox="0 0 595.28 841.89">
                     {/* viewBox="0 0 595.28 841.89"> */}

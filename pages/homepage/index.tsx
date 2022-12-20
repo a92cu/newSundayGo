@@ -103,26 +103,27 @@ export const Placezone = (dateList, itemList2) => {
     const router = useRouter();
     var [homepagelist, setlist] = useState([]);
 
+    console.log(99, dateList)
     // 處理收藏onclick
-    const [favitem,setfavitem]=useState()
-    async function getdata(e){
+    const [favitem, setfavitem] = useState()
+    async function getdata(e) {
         console.log(e.target.parentElement.parentElement.parentElement.id)
-        await axios.get("/api/home/homepage").then(res=>setfavitem(res.data.data.itemId));
-        if(favitem!==e.target.parentElement.parentElement.parentElement.id){
-            await axios.post("/api/home/homepage",{
-                itemId:e.target.parentElement.parentElement.parentElement.id
+        await axios.get("/api/home/homepage").then(res => setfavitem(res.data.data.itemId));
+        if (favitem !== e.target.parentElement.parentElement.parentElement.id) {
+            await axios.post("/api/home/homepage", {
+                itemId: e.target.parentElement.parentElement.parentElement.id
             })
-        }else{
-            
+        } else {
+
         }
-          
-             }
+
+    }
     // function getdata(e){
     //         console.log(e.target.parentElement.parentElement.parentElement.id)
-            
+
     // }
-        
-   
+
+
     function test2(itemId) {
 
         var a = document.querySelectorAll(".homeProduct")
@@ -137,10 +138,16 @@ export const Placezone = (dateList, itemList2) => {
         })
     }
 
+    // function delbtn2(e) {
+    //     var del1 = document.querySelectorAll('filterBtn');
+    //     del1.style.display = "none";
+    //     console.log(e)
+    // }
     // useEffect(() => {fetchdata()}, []);
     //生命週期先執行一次,2個參數，1.{裡面放要執行或宣告的動態},2.[]放個空陣列useState狀態有改變才再執行
     useEffect(() => {
         fetchdata();
+        
         // $(function (){
         // trytry();
 
@@ -154,6 +161,16 @@ export const Placezone = (dateList, itemList2) => {
             })
             // console.log("ok")
         });
+
+        function get(){
+            var top1=document.documentElement.scrollTop;
+            var top2=document.body.scrollHeight;
+            if(top1>=top2/3){
+                document.getElementById("retop").style.display="inherit"
+            }else{
+                document.getElementById("retop").style.display="none";
+            }
+        }
         var acc = document.getElementsByClassName("accordion");
         var i;
         for (i = 0; i < acc.length; i++) {
@@ -226,10 +243,10 @@ export const Placezone = (dateList, itemList2) => {
                     var replaceCallAll = call.replaceAll('\x00', '');
                     i.itemImgUrl = replaceCallAll;
                     //  轉換時間
-                    var startDate=format(new Date(i.itemStartDate),"yyyy-MM-dd");
-                    var EndDate=format(new Date(i.itemEndDate),"yyyy-MM-dd");
-                    i.itemStartDate=startDate;
-                    i.itemEndDate=EndDate
+                    var startDate = format(new Date(i.itemStartDate), "yyyy-MM-dd");
+                    var EndDate = format(new Date(i.itemEndDate), "yyyy-MM-dd");
+                    i.itemStartDate = startDate;
+                    i.itemEndDate = EndDate
                 })
                 console.log(result.data)
                 setlist(result.data.data);
@@ -273,10 +290,10 @@ export const Placezone = (dateList, itemList2) => {
                     var call2 = Buffer.from(img2, 'base64').toString('ascii');
                     var replaceCallAll2 = call2.replaceAll('\x00', '');
                     i.itemImgUrl = replaceCallAll2;
-                    var startDate=format(new Date(i.itemStartDate),"yyyy-MM-dd");
-                    var EndDate=format(new Date(i.itemEndDate),"yyyy-MM-dd");
-                    i.itemStartDate=startDate;
-                    i.itemEndDate=EndDate
+                    var startDate = format(new Date(i.itemStartDate), "yyyy-MM-dd");
+                    var EndDate = format(new Date(i.itemEndDate), "yyyy-MM-dd");
+                    i.itemStartDate = startDate;
+                    i.itemEndDate = EndDate
                 })
                 // console.log(3, result.data)
                 setlist(result2.data.data);
@@ -297,10 +314,10 @@ export const Placezone = (dateList, itemList2) => {
                     var call2 = Buffer.from(img2, 'base64').toString('ascii');
                     var replaceCallAll2 = call2.replaceAll('\x00', '');
                     i.itemImgUrl = replaceCallAll2;
-                    var startDate=format(new Date(i.itemStartDate),"yyyy-MM-dd");
-                    var EndDate=format(new Date(i.itemEndDate),"yyyy-MM-dd");
-                    i.itemStartDate=startDate;
-                    i.itemEndDate=EndDate
+                    var startDate = format(new Date(i.itemStartDate), "yyyy-MM-dd");
+                    var EndDate = format(new Date(i.itemEndDate), "yyyy-MM-dd");
+                    i.itemStartDate = startDate;
+                    i.itemEndDate = EndDate
                 })
                 // console.log(3, result.data)
                 setlist(result2.data.data);
@@ -316,10 +333,10 @@ export const Placezone = (dateList, itemList2) => {
                     var call2 = Buffer.from(img2, 'base64').toString('ascii');
                     var replaceCallAll2 = call2.replaceAll('\x00', '');
                     i.itemImgUrl = replaceCallAll2;
-                    var startDate=format(new Date(i.itemStartDate),"yyyy-MM-dd");
-                    var EndDate=format(new Date(i.itemEndDate),"yyyy-MM-dd");
-                    i.itemStartDate=startDate;
-                    i.itemEndDate=EndDate
+                    var startDate = format(new Date(i.itemStartDate), "yyyy-MM-dd");
+                    var EndDate = format(new Date(i.itemEndDate), "yyyy-MM-dd");
+                    i.itemStartDate = startDate;
+                    i.itemEndDate = EndDate
                 })
                 // console.log(3, result.data)
                 setlist(result2.data.data);
@@ -343,9 +360,12 @@ export const Placezone = (dateList, itemList2) => {
         return array.indexOf(item) === index;
         // console.log(only);
     });
+    console.log(homepagelist)
     return (
-        <div style={{ width: '1280px', margin: '0 auto' }} >
-
+        <div style={{ width: '1280px', margin: '-100px auto 0 auto' }} >
+            <a href="#" className="retopa" style={{ display: "block" }}>
+                <div id="retop">TOP</div>
+            </a>
             {/* <!-- 主要篩選區 --> */}
             <div className="hometop" >
                 {/* <!-- 左側篩選欄 --> */}
@@ -369,61 +389,61 @@ export const Placezone = (dateList, itemList2) => {
                             </div>
 
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" checked />中部
+                                <input type="checkbox" className="allcheck2" checked />中部
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" checked />新竹縣
+                                <input type="checkbox" name="citys2" checked />新竹縣
                                 <br />
-                                <input type="checkbox" name="citys" checked />新竹市
+                                <input type="checkbox" name="citys2" checked />新竹市
                                 <br />
-                                <input type="checkbox" name="citys" checked />苗栗縣
+                                <input type="checkbox" name="citys2" checked />苗栗縣
                                 <br />
-                                <input type="checkbox" name="citys" checked />台中市
+                                <input type="checkbox" name="citys2" checked />台中市
                                 <br />
-                                <input type="checkbox" name="citys" checked />雲林縣
+                                <input type="checkbox" name="citys2" checked />雲林縣
                                 <br />
-                                <input type="checkbox" name="citys" checked />南投縣
+                                <input type="checkbox" name="citys2" checked />南投縣
                                 <br />
                             </div>
 
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" checked />南部
+                                <input type="checkbox" className="allcheck3" checked />南部
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" checked />嘉義縣
+                                <input type="checkbox" name="citys3" checked />嘉義縣
                                 <br />
-                                <input type="checkbox" name="citys" checked />嘉義市
+                                <input type="checkbox" name="citys3" checked />嘉義市
                                 <br />
-                                <input type="checkbox" name="citys" checked />台南市
+                                <input type="checkbox" name="citys3" checked />台南市
                                 <br />
-                                <input type="checkbox" name="citys" checked />高雄市
+                                <input type="checkbox" name="citys3" checked />高雄市
                                 <br />
-                                <input type="checkbox" name="citys" checked />屏東縣
+                                <input type="checkbox" name="citys3" checked />屏東縣
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" checked />東部
+                                <input type="checkbox" className="allcheck4" checked />東部
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" checked />宜蘭縣
+                                <input type="checkbox" name="citys4" checked />宜蘭縣
                                 <br />
-                                <input type="checkbox" name="citys" checked />花蓮縣
+                                <input type="checkbox" name="citys4" checked />花蓮縣
                                 <br />
-                                <input type="checkbox" name="citys" checked />台東縣
+                                <input type="checkbox" name="citys4" checked />台東縣
                                 <br />
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" checked />離島
+                                <input type="checkbox" className="allcheck5" checked />離島
                             </button>
                             <div className="panel">
-                                <input type="checkbox" name="citys" checked />澎湖
+                                <input type="checkbox" name="citys5" checked />澎湖
                                 <br />
-                                <input type="checkbox" name="citys" checked />金門
+                                <input type="checkbox" name="citys5" checked />金門
                                 <br />
-                                <input type="checkbox" name="citys" checked />馬祖
+                                <input type="checkbox" name="citys5" checked />馬祖
                                 <br />
-                                <input type="checkbox" name="citys" checked />綠島
+                                <input type="checkbox" name="citys5" checked />綠島
                                 <br />
-                                <input type="checkbox" name="citys" checked />蘭嶼
+                                <input type="checkbox" name="citys5" checked />蘭嶼
                             </div>
 
 
@@ -496,7 +516,7 @@ export const Placezone = (dateList, itemList2) => {
                             項行程</b>
                         {noredata.map((i) =>
                             <button className="filterBtn" >
-                                {i}<span className="delbtn">X</span>
+                                {i}<span className="delbtn" >X</span>
                             </button>
                         )}
                         {noredata2.map((i) =>
@@ -530,9 +550,7 @@ export const Placezone = (dateList, itemList2) => {
                         </span>
                     </div >
                     <div id="content" className="content">
-                        <a href="#" style={{ display: "block" }}>
-                            <div id="retop">TOP</div>
-                        </a>
+
                         {/* <!-- 商品顯示主體 --> */}
                         {homepagelist.map((item, index) =>
                             <div className="homeProduct" id={item.itemId} >
@@ -552,7 +570,7 @@ export const Placezone = (dateList, itemList2) => {
 
                                         {/* 處理onClick onClick={getdata} */}
                                         <img className="introimg" src="/images/heart.png"
-                                            style={{ width: '20px', marginLeft: '130px' }} alt="" onClick={getdata}/>
+                                            style={{ width: '20px', marginLeft: '130px' }} alt="" onClick={getdata} />
 
                                     </button>
 
@@ -579,10 +597,11 @@ export const Placezone = (dateList, itemList2) => {
                                             {item.itemFilter4}
                                         </div>
                                         <span className="fa fa-calendar-o" aria-hidden="true"></span>
+                                        {/* {dateList.dateList.map((item) => */}
                                         <span>
                                             {/* 最早可預訂日 ：{item.itemStartDate} */}
-                                            銷售期間 ：{item.itemStartDate}至{item.itemEndDate}                                
-                                            </span> 
+                                            銷售期間 ：{item.itemStartDate}至{item.itemEndDate}
+                                        </span>
                                     </div>
                                     {/* <!-- 星星評價 --> */}
                                     <div className="prostar">
@@ -617,6 +636,7 @@ export const Placezone = (dateList, itemList2) => {
                             </div>
                         )}
                         {/* map結尾 */}
+
                     </div>
                 </div >
 
@@ -660,10 +680,10 @@ export default function homepage(props) {
 
 export async function getStaticProps({ params }) {
     // const itemList: any = [];
-    const sq1 = `SELECT  item.itemTitle, item.itemFilter2, itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;`;
+    const sq1 = `SELECT item.itemTitle, item.itemFilter2, itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;`;
     // const sq1 = 'SELECT * FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and itemFilter3 = "美食";';
     const sq2 = 'SELECT itemFilter2 FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1;';
-    const sq3 = `SELECT  itemListedDate, itemStartDate, itemEndDate FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and itemFilter3 = "美食";`;
+    const sq3 = `SELECT  itemListedDate, itemStartDate, itemEndDate FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 ;`;
     const sq4 = `SELECT item.itemFilter2, item.itemName,item.itemTotalStar,itemimg.itemImgUrl FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId  WHERE itemimg.imgLead=1 ORDER by itemFilter2;`;
 
     const itemList: any = [];
