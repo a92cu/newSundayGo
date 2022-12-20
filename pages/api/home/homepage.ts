@@ -26,11 +26,6 @@ export default async function userHandler(req: NextApiRequest, res: NextApiRespo
       break;
       case "POST":
         try {
-          const keys = Object.keys(req.body);
-          const values = Object.values(req.body).map((i, index) => {
-            return typeof i === "string" ? `"${i}"`.trim() : i;
-          });
-    
           // 新增商品內容
           // const sq1 = `INSERT INTO item (${keys},userId,userPassword) VALUES (${values},"${id}","${id}")`;
           // const sq1 = `INSERT INTO favorite (userId ,itemId ) VALUES ('u123456789',${req.body.itemId}) where not exists(select itemId from favorite where itemId =${req.body.itemId}) limit=1`;
