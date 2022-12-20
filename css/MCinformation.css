@@ -301,7 +301,7 @@ select {
 
 /* 訂單明細大小 */
 .OrderReadyDiv {
-    width: 95%;
+    width: 865px;
     height: 160px;
     margin: auto;
     /* margin-top: 5px; */
@@ -315,7 +315,7 @@ select {
 
 /* 訂單左邊圖片大小 */
 .OrderReadyImg {
-    width: 35%;
+    width: 295px;
     height: 160px;
     border-radius: 20px;
     border: 1px solid rgb(0, 0, 0, 0.5);
