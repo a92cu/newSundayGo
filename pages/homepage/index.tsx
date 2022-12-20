@@ -30,7 +30,8 @@ function Header() {
                 <a href="/memberCenter"><img src="/images/cart.png" style={{ width: '25px' }} /></a>
                 <a href="#">會員中心 &nbsp;&nbsp;&nbsp; 登出</a>
             </div>
-            <form className="example" action="">
+            {/* 會移動到搜尋頁面 */}
+            <form className="example" action="/cartdetails/searchResult" target="_self">
                 <input type="text" placeholder="Search.." name="search" />
                 <button type="submit"><i className="fa fa-search"></i></button>
             </form>

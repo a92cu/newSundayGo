@@ -8,13 +8,12 @@ export default async function userHandler(
     query: { id },
     method,
   } = req;
-  // console.log(req.query,req.method);
-  console.log(req.body.searchResult)
+  // console.log(req.body.searchResult)
   switch (method) {
     case "POST":
       try {
         // 取得商品內容
-        const sq1 = `SELECT * FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and (item.itemTitle LIKE "%${req.body.searchResult}%" OR item.itemFilter1 LIKE "%${req.body.searchResult}%" OR item.itemFilter2 LIKE "%${req.body.searchResult}%");`;
+        const sq1 = `SELECT * FROM item LEFT JOIN itemimg ON itemimg.itemId=item.itemId where imgLead=1 and (item.itemTitle LIKE "%${req.body.searchResult}%" OR item.itemFilter1 LIKE "%${req.body.searchResult}%" OR item.itemFilter2 LIKE "%${req.body.searchResult}%" OR item.itemFilter3 LIKE "%${req.body.searchResult}%" OR item.itemFilter4 LIKE "%${req.body.searchResult}%" OR item.itemAddr LIKE "%${req.body.searchResult}%" OR item.itemLocation LIKE "%${req.body.searchResult}%");`;
         const data = await runSQL(sq1);
         // console.log(data);
         res.status(200).json({ data });
