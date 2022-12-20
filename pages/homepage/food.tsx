@@ -354,6 +354,48 @@ function Food(dateList) {
     //     fetch("../api/homepage").then((res) => res.json()).then((result) => setlist(result.data))
 
 
+
+    // //// 篩選
+    function filter1(e){
+        let a=[...homepagelist]
+        console.log(e.target.parentElement.innerText)// "景點"
+        axios({
+            url:"/api/cartlist/test",
+            method:"POST",
+            data:{
+                data:e.target.parentElement.innerText
+            }
+        }).then(res=>{
+            res.data.data.forEach((i) => {
+                var img2 = Buffer.from(i.itemImgUrl).toString('base64');
+                var call2 = Buffer.from(img2, 'base64').toString('ascii');
+                var replaceCallAll2 = call2.replaceAll('\x00', '');
+                i.itemImgUrl = replaceCallAll2;
+                var startDate=format(new Date(i.itemStartDate),"yyyy-MM-dd");
+                var EndDate=format(new Date(i.itemEndDate),"yyyy-MM-dd");
+                i.itemStartDate=startDate;
+                i.itemEndDate=EndDate
+            })
+            // console.log(3, result.data)
+            if(e.target.checked){
+                console.log(a,0)
+                res.data.data.forEach(element => {
+                    a.push(element)
+                })
+                console.log(a,1)
+                setlist(a)
+            }else{
+                let filtertest=a.filter(function(item,index,array){
+                    if(item.itemFilter3===e.target.parentElement.innerText){
+                        array.splice(item);
+                    }
+                    return array
+                })
+                console.log(filtertest)
+                setlist(filtertest)
+            }
+        })
+    }
     return (
         <div style={{ width: '1280px', margin: '0 auto' }} >
             {/* <!-- 主要篩選區 --> */}
@@ -442,7 +484,7 @@ function Food(dateList) {
                             商品類別篩選
                             <br />
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" checked />美食
+                                <input type="checkbox" className="allcheck" checked  onChange={filter1}/>美食
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" checked/>餐廳
@@ -450,7 +492,7 @@ function Food(dateList) {
                                 <input type="checkbox" name="citys" checked/>甜點、飲料
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />景點
+                                <input type="checkbox" className="allcheck" onChange={filter1} />景點
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />觀光景點
@@ -459,7 +501,7 @@ function Food(dateList) {
                             </div>
 
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />活動
+                                <input type="checkbox" className="allcheck"  onChange={filter1}/>活動
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />戶外活動
@@ -469,7 +511,7 @@ function Food(dateList) {
                             </div>
 
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />住宿
+                                <input type="checkbox" className="allcheck" onChange={filter1}/>住宿
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />民宿
@@ -478,7 +520,7 @@ function Food(dateList) {
 
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" />交通
+                                <input type="checkbox" className="allcheck" onChange={filter1}/>交通
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />租車
