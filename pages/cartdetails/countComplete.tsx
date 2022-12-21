@@ -106,7 +106,7 @@ function Header() {
           登出
         </a>
       </div>
-      <form className="example" action="">
+      <form className="example" action="/cartdetails/searchResult" target="_self">
         <input type="text" placeholder="Search.." name="search" />
         <button type="submit">
           <i className="fa fa-search"></i>
