@@ -86,33 +86,28 @@ function Footer() {
 }
 function Header() {
   return (
-    <div className="header">
-      <img
-        src="/images/群組 1.png"
-        alt=""
-        style={{ width: 90, top: -8, position: "relative" }}
-      />
-      <div className="header-right">
-        <a href="#">美食</a>
-        <a href="#">景點</a>
-        <a href="#">活動</a>
-        <a href="#">住宿</a>
-        <a href="#">交通</a>
-        <a href="#">
-            <img src="/images/cart.png" style={{ width: 25 }} />
-        </a>
-        <a href="/memberCenter">會員中心</a>
-          <a href="#divOne" className="loginbutton">
-          登出
-        </a>
-      </div>
-      <form className="example" action="">
-        <input type="text" placeholder="Search.." name="search" />
-        <button type="submit">
-          <i className="fa fa-search"></i>
-        </button>
-      </form>
-    </div>
+    <div className="header ">
+            <a href="/homepage">
+                <img src="/images/群組 1.png"
+                    alt=""
+                    style={{ width: '90px', top: '-8px', position: 'relative' }} /></a>
+            <div className="header-right">
+                <a href="/homepage/food">美食</a>
+                <a href="/homepage/sight">景點</a>
+                <a href="/homepage/play">活動</a>
+                <a href="/homepage/lodging">住宿</a>
+                <a href="/homepage/traffic">交通</a>
+                <a href="/cartdetails">
+                    <img src="./images/cart.png" style={{ width: 25 }} />
+                </a>
+                <a href="#">會員中心</a>
+                <a href="#divOne" className="loginbutton">登出</a>
+            </div>
+            <form className="example" action="/cartdetails/searchResult" target="_self">
+                <input type="text" placeholder="Search.." name="search" />
+                <button type="submit"><i className="fa fa-search"></i></button>
+            </form>
+        </div>
   );
 }
 
