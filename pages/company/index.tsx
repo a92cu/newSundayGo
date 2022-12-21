@@ -120,7 +120,7 @@ function MemberOrder({ itemList, imgList, setItemList }) {
   return (
     <div id="memberOrder" className="tabcontentQ">
       <div className="setBody">
-        <h2 className="memberOrderH2">訂單管理</h2>
+        <h2 className="memberOrderH2">商品管理</h2>
         <a href="/item/add" className="addCommodity">
           +上架新商品
         </a>
@@ -367,7 +367,7 @@ export default function Company(props) {
                   src="./images/flower.png"
                   style={{ width: 30, verticalAlign: "middle" }}
                 />
-                &nbsp; 訂單管理
+                &nbsp; 商品管理
               </span>
             </button>
           </div>
