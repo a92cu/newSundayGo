@@ -34,9 +34,11 @@ function Header() {
                 <a href="/homepage/lodging">住宿</a>
                 <a href="/homepage/traffic">交通</a>
                 <a href="#"><img src="/images/cart.png" style={{ width: '25px' }} /></a>
-                <a href="#">會員中心 &nbsp;&nbsp;&nbsp; 登出</a>
+                <a href="/memberCenter">會員中心</a>
+                <a href="#divOne" className="loginbutton">登出</a>
             </div>
-            <form className="example" action="">
+            {/* 會移動到搜尋頁面 */}
+            <form className="example" action="/cartdetails/searchResult" target="_self">
                 <input type="text" placeholder="Search.." name="search" />
                 <button type="submit"><i className="fa fa-search"></i></button>
             </form>
@@ -99,13 +101,13 @@ export const Traffic = (dateList) => {
     const [isActive2, setActive2] = useState("false");
     // const [show, setShow] = useState(false);
 
-
-    const handleToggle = () => {
-        setActive(!isActive);
-    };
-    const handleToggle2 = () => {
-        setActive2(!isActive2);
-    };
+    //篩選隱藏
+    // const handleToggle = () => {
+    //     setActive(!isActive);
+    // };
+    // const handleToggle2 = () => {
+    //     setActive2(!isActive2);
+    // };
 
     useEffect(() => {
         fetchdata();
@@ -189,7 +191,7 @@ export const Traffic = (dateList) => {
     //傳送資料庫資料
     const favIdsend = async (i) => {
         console.log(4, i)
-        if (window.confirm("已加入最愛") === true)
+        if (window.confirm("已加入最愛，可到會員中心查看") === true){
             await fetch("/api/home/lodging", {
                 method: "post",
                 // body:imgId
@@ -204,6 +206,9 @@ export const Traffic = (dateList) => {
                 })
             })
                 .then((res) => res.json())
+            }else {
+                (window.confirm("已移除最愛") === false)
+            }
         // .then(console.log('已加入最愛'))
         // console.log(5, favId)
         // .then(data => {
@@ -404,7 +409,7 @@ export const Traffic = (dateList) => {
                             商品類別篩選
                             <br />
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck filfood" onChange={handleToggle2} />美食
+                                <input type="checkbox" className="allcheck filfood"  />美食
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />餐廳
@@ -412,7 +417,7 @@ export const Traffic = (dateList) => {
                                 <input type="checkbox" name="citys" />甜點、飲料
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" onChange={handleToggle} />景點
+                                <input type="checkbox" className="allcheck"  />景點
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />觀光景點
@@ -421,7 +426,7 @@ export const Traffic = (dateList) => {
                             </div>
 
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" onChange={handleToggle} />活動
+                                <input type="checkbox" className="allcheck" />活動
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />戶外活動
@@ -431,7 +436,7 @@ export const Traffic = (dateList) => {
                             </div>
 
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck" onChange={handleToggle} />住宿
+                                <input type="checkbox" className="allcheck"  />住宿
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />民宿
@@ -440,7 +445,8 @@ export const Traffic = (dateList) => {
 
                             </div>
                             <button className="accordion">
-                                <input type="checkbox" className="allcheck filcar" name="filcar" onChange={handleToggle} checked/>交通
+                                <input type="checkbox" className="allcheck filcar" name="filcar"  checked/>交通
+                                {/* onChange={handleToggle} */}
                             </button>
                             <div className="panel">
                                 <input type="checkbox" name="citys" />租車

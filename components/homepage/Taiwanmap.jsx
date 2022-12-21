@@ -421,7 +421,7 @@ export const Mapselect = () => {
                     <div style={{ marginLeft: '50px', width: '150px', float: 'right' }}>
                         <ReactStars
                             Rating
-                            value={5}
+                            value={4}
                             edit={false} />
                     </div>
                     <p className='t2' style={{ width: '200px' }} ></p>

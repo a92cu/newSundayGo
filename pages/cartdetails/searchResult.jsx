@@ -229,7 +229,7 @@ export default function searchResult() {
                 <br/>
                 <div className="content">
                     <div style={{marginLeft:"40%",marginTop:"1%",fontSize:"24px"}}>
-                    查無資料，請確認查詢文字無誤!!!!
+                    查無資料，請輸入其他關鍵字!!!!
                     </div>
                 </div>
                 <br/>

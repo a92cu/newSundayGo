@@ -183,19 +183,19 @@ main {
 @keyframes example {
     0% {
         color: #F29F04;
-        left:50px; top:0px;
+        left:40px; top:0px;
         left:0px; top:0px;
     }
 
     25% {
        color: yellow;
-       left:50px; top:0px;
+       left:40px; top:0px;
 
     }
 
     50% {
        color: blue;
-       left:50px; top:0px;
+       left:40px; top:0px;
 
     }
 

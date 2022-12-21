@@ -28,7 +28,8 @@ function Header() {
                 <a href="/homepage/lodging">住宿</a>
                 <a href="/homepage/traffic">交通</a>
                 <a href="/memberCenter"><img src="/images/cart.png" style={{ width: '25px' }} /></a>
-                <a href="#">會員中心 &nbsp;&nbsp;&nbsp; 登出</a>
+                <a href="/memberCenter">會員中心</a>
+                <a href="#divOne" className="loginbutton">登出</a>
             </div>
             {/* 會移動到搜尋頁面 */}
             <form className="example" action="/cartdetails/searchResult" target="_self">
@@ -103,7 +104,6 @@ export const Placezone = (dateList, itemList2) => {
     const router = useRouter();
     var [homepagelist, setlist] = useState([]);
 
-    console.log(99, dateList)
     // 處理收藏onclick
     const [favitem, setfavitem] = useState()
     async function getdata(e) {
@@ -147,7 +147,7 @@ export const Placezone = (dateList, itemList2) => {
     //生命週期先執行一次,2個參數，1.{裡面放要執行或宣告的動態},2.[]放個空陣列useState狀態有改變才再執行
     useEffect(() => {
         fetchdata();
-        
+
         // $(function (){
         // trytry();
 
@@ -161,16 +161,18 @@ export const Placezone = (dateList, itemList2) => {
             })
             // console.log("ok")
         });
-
-        function get(){
-            var top1=document.documentElement.scrollTop;
-            var top2=document.body.scrollHeight;
-            if(top1>=top2/3){
-                document.getElementById("retop").style.display="inherit"
-            }else{
-                document.getElementById("retop").style.display="none";
+        //隱藏top按鈕
+        function get() {
+            var top1 = document.documentElement.scrollTop;
+            var top2 = document.body.scrollHeight;
+            if (top1 >= top2 / 3) {
+                document.getElementById("retop").style.display = "none";
+            } else {
+                document.getElementById("retop").style.display = "block"
             }
         }
+
+        //手風琴
         var acc = document.getElementsByClassName("accordion");
         var i;
         for (i = 0; i < acc.length; i++) {

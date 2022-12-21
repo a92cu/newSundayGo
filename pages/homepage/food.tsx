@@ -32,9 +32,11 @@ function Header() {
                 <a href="/homepage/lodging">住宿</a>
                 <a href="/homepage/traffic">交通</a>
                 <a href="#"><img src="/images/cart.png" style={{ width: '25px' }} /></a>
-                <a href="#">會員中心 &nbsp;&nbsp;&nbsp; 登出</a>
+                <a href="/memberCenter">會員中心</a>
+                <a href="#divOne" className="loginbutton">登出</a>
             </div>
-            <form className="example" action="">
+            {/* 會移動到搜尋頁面 */}
+            <form className="example" action="/cartdetails/searchResult" target="_self">
                 <input type="text" placeholder="Search.." name="search" />
                 <button type="submit"><i className="fa fa-search"></i></button>
             </form>
@@ -243,7 +245,7 @@ function Food(dateList) {
     //傳送資料庫資料
     const favIdsend = async (i) => {
         // console.log(4, i)
-        if (window.confirm("已加入最愛") === true) 
+        if (window.confirm("已加入最愛，可到會員中心查看") === true) 
         await fetch("/api/home/food", {
             method: "post",
             // body:imgId
@@ -595,7 +597,7 @@ function Food(dateList) {
                                 <div className="intro">
                                     <b>{item.itemTitle}</b>
                                     {/* <!-- 商品標題 --> */}
-                                    <button className="introp collectHeart"  style={{ zIndex: '99' }}>
+                                    <button className="introp collectHeart"  style={{ zIndex: '99' }}  onClick={() => favIdsend(item.itemId)}>
                                     {/* onClick={() => favIdsend(item.itemId)} */}
                                         {/* <!-- 愛心圖案 --> */}
                                             <img className="introimg" src="/images/heart.png"
